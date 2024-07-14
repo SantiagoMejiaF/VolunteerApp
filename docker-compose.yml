@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  user-management-db:
+    image: postgres
+    restart: always
+    container_name: user-management-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: fcHRH2TPJTPKmbd3
+      POSTGRES_DB: VolunteerAppDB
+
+  user-management:
+    image: user-management:1.0
+    container_name: user-management
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8085"
+    environment:
+      DB_URL: jdbc:postgresql://user-management-db:5432/VolunteerAppDB
+      DB_USERNAME: postgres
+      DB_PASSWORD: fcHRH2TPJTPKmbd3
+    depends_on:
+      - user-management-db+
