@@ -1,6 +1,6 @@
 package com.constructiveactivists.usermanagementmodule.services;
 
-import com.constructiveactivists.usermanagementmodule.entities.User;
+import com.constructiveactivists.usermanagementmodule.entities.user.UserEntity;
 import com.constructiveactivists.usermanagementmodule.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,16 +14,16 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public List<User> getAllUsers() {
+    public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUserById(Integer id) {
+    public Optional<UserEntity> getUserById(Integer id) {
         return userRepository.findById(id);
     }
 
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public UserEntity saveUser(UserEntity userEntity) {
+        return userRepository.save(userEntity);
     }
 
     public void deleteUser(Integer id) {

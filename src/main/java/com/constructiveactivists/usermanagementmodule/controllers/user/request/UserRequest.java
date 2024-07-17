@@ -1,6 +1,6 @@
-package com.constructiveactivists.usermanagementmodule.controllers.request;
+package com.constructiveactivists.usermanagementmodule.controllers.user.request;
 
-import com.constructiveactivists.usermanagementmodule.entities.enums.Role;
+import com.constructiveactivists.usermanagementmodule.entities.user.enums.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.*;

@@ -1,8 +1,9 @@
-package com.constructiveactivists.usermanagementmodule.controllers;
+package com.constructiveactivists.usermanagementmodule.controllers.user;
 
-import com.constructiveactivists.usermanagementmodule.controllers.mappers.UserMapper;
-import com.constructiveactivists.usermanagementmodule.controllers.request.UserRequest;
-import com.constructiveactivists.usermanagementmodule.entities.User;
+import com.constructiveactivists.usermanagementmodule.controllers.user.configuration.UserAPI;
+import com.constructiveactivists.usermanagementmodule.controllers.user.mappers.UserMapper;
+import com.constructiveactivists.usermanagementmodule.controllers.user.request.UserRequest;
+import com.constructiveactivists.usermanagementmodule.entities.user.UserEntity;
 import com.constructiveactivists.usermanagementmodule.services.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -23,20 +24,20 @@ public class UserController implements UserAPI {
     private final UserMapper userMapper;
 
     @Override
-    public List<User> getAllUsers() {
+    public List<UserEntity> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @Override
-    public ResponseEntity<User> getUserById(Integer id) {
-        Optional<User> user = userService.getUserById(id);
+    public ResponseEntity<UserEntity> getUserById(Integer id) {
+        Optional<UserEntity> user = userService.getUserById(id);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @Override
-    public ResponseEntity<User> createUser(@Valid UserRequest userRequest) {
-        User createdUser = userService.saveUser(userMapper.toDomain(userRequest));
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+    public ResponseEntity<UserEntity> createUser(@Valid UserRequest userRequest) {
+        UserEntity createdUserEntity = userService.saveUser(userMapper.toDomain(userRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdUserEntity);
     }
 
     @Override

@@ -1,10 +1,9 @@
-package com.constructiveactivists.usermanagementmodule.controllers;
+package com.constructiveactivists.usermanagementmodule.controllers.user.configuration;
 
-import com.constructiveactivists.usermanagementmodule.controllers.request.UserRequest;
-import com.constructiveactivists.usermanagementmodule.entities.User;
+import com.constructiveactivists.usermanagementmodule.controllers.user.request.UserRequest;
+import com.constructiveactivists.usermanagementmodule.entities.user.UserEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -23,7 +22,7 @@ public interface UserAPI {
             @ApiResponse(responseCode = "404", description = "No encontrado")
     })
     @GetMapping
-    List<User> getAllUsers();
+    List<UserEntity> getAllUsers();
 
     @Operation(summary = "Obtener un usuario por Id")
     @ApiResponses(value = {
@@ -33,7 +32,7 @@ public interface UserAPI {
             @ApiResponse(responseCode = "404", description = "No encontrado")
     })
     @GetMapping("/{id}")
-    ResponseEntity<User> getUserById(@PathVariable Integer id);
+    ResponseEntity<UserEntity> getUserById(@PathVariable Integer id);
 
     @Operation(summary = "Agregar un usuario")
     @ApiResponses(value = {
@@ -43,7 +42,7 @@ public interface UserAPI {
             @ApiResponse(responseCode = "403", description = "Prohibido")
     })
     @PostMapping
-    ResponseEntity<User> createUser(@RequestBody UserRequest user);
+    ResponseEntity<UserEntity> createUser(@RequestBody UserRequest user);
 
     @Operation(summary = "Eliminar un usuario")
     @ApiResponses(value = {

@@ -46,12 +46,6 @@
 
 		<!-- utilities -->
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
 			<version>1.5.3.Final</version>
@@ -90,6 +84,12 @@
 			<artifactId>mockito-core</artifactId>
 			<version>5.2.0</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
@@ -135,5 +135,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

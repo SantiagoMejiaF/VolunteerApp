@@ -1,19 +1,20 @@
-package com.constructiveactivists.usermanagementmodule.entities;
+package com.constructiveactivists.usermanagementmodule.entities.user;
 
-import com.constructiveactivists.usermanagementmodule.entities.enums.Role;
+import com.constructiveactivists.usermanagementmodule.entities.user.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Comment;
 
+
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "USUARIO")
 @Getter
 @Setter
-@SequenceGenerator( name =  "USUARIO_SEQ", sequenceName = "SEQ_USUARIO", allocationSize = 1)
-public class User {
+@SequenceGenerator(name =  "USUARIO_SEQ", sequenceName = "SEQ_USUARIO", allocationSize = 1)
+@Table(name = "USUARIO")
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USUARIO_SEQ")

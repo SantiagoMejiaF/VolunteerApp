@@ -14,9 +14,9 @@ spring:
     name: volunteer-app-backend
 
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/VolunteerAppDB
+    username: postgres
+    password: fcHRH2TPJTPKmbd3
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -31,3 +31,4 @@ spring:
 request-mapping:
   controller:
     user: users
+    volunteer: volunteers
