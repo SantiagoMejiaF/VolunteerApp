@@ -27,7 +27,6 @@ import java.util.Optional;
 @RequestMapping("${request-mapping.controller.user}")
 @CrossOrigin
 public class UserController implements UserAPI {
-
     private final UserService userService;
     private final UserMapper userMapper;
 
