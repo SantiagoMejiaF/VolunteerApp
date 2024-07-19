@@ -12,6 +12,7 @@ import { MisionesComponent } from './landingModule/misiones/misiones.component';
 import { FooterComponent } from './landingModule/footer/footer.component';
 import { LoginComponent } from './authenticationModule/login/login.component';
 import { RegisterComponent } from './authenticationModule/register/register.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RegisterComponent } from './authenticationModule/register/register.comp
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
