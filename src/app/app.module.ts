@@ -11,7 +11,6 @@ import { TestimonialsComponent } from './landingModule/testimonials/testimonials
 import { MisionesComponent } from './landingModule/misiones/misiones.component';
 import { FooterComponent } from './landingModule/footer/footer.component';
 import { LoginComponent } from './authenticationModule/login/login.component';
-import { RegisterComponent } from './authenticationModule/register/register.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
@@ -24,8 +23,7 @@ import { RouterModule } from '@angular/router';
     TestimonialsComponent,
     MisionesComponent,
     FooterComponent,
-    LoginComponent,
-    RegisterComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
