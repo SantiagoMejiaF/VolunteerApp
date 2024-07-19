@@ -1,0 +1,86 @@
+/* About Us Section */
+h3 {
+    font-family: "Quicksand", sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+  }
+  
+  h4 {
+    font-family: "Quicksand", sans-serif;
+    font-weight: bold;
+  }
+  h5 {
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+  }
+  h6 {
+    font-family: "Quicksand", sans-serif;
+    font-weight: 200;
+    font-size: 15px;
+  }
+  
+  p {
+    font-family: "Quicksand", sans-serif;
+    font-weight: regular;
+    font-size: 20px;
+    padding-top: 2%;
+  }
+#about-us p {
+    color: #2d2d2d;
+  }
+  
+  #about-us h3 {
+    color: #1e1450;
+  }
+  
+  #about-us h3 span {
+    font-weight: 400;
+  }
+  #about-us h4 {
+    padding-top: 100px;
+  }
+  #text2 {
+    background-image: url("/assets/img/Mapa.png");
+    background-size: 70%; 
+    background-repeat: no-repeat; 
+    background-position: right top; 
+  }
+  #about-us button {
+    margin-left: 4%;
+    display: block; 
+    width: fit-content; 
+  }
+  
+  @media (max-width: 680px) {
+    #about-us img {
+      width: 400px;
+      height: 450px;
+    }
+  }
+  @media (max-width: 787px) {
+    #about-us h4 {
+      padding-top: 10px;
+    }
+  }
+
+
+.btn-secondary {
+  font-family: "Quicksand", sans-serif;
+  background-color: transparent;
+  border: 2px solid #FFD700; 
+  color: #1E1E1E; 
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 30px;
+  transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: #FFD700; 
+  color: #1E1E1E; 
+}
+
+.btn-secondary:focus {
+  outline: none;
+}

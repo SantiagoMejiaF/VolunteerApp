@@ -1,0 +1,44 @@
+h3 {
+    font-family: "Quicksand", sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+  }
+  
+  h4 {
+    font-family: "Quicksand", sans-serif;
+    font-weight: bold;
+  }
+  h5 {
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+  }
+  h6 {
+    font-family: "Quicksand", sans-serif;
+    font-weight: 200;
+    font-size: 15px;
+  }
+  
+  p {
+    font-family: "Quicksand", sans-serif;
+    font-weight: regular;
+    font-size: 20px;
+    padding-top: 2%;
+  }
+
+  /* Testimonials Section */
+#testimonials {
+    background-image: url("/assets/img/Testimonials.svg");
+    padding: 150px;
+  }
+
+#testimonials .container {
+    background-color: #1E1450;
+    padding-right: 100px; 
+    padding-left: 100px;
+    border-radius: 20px; 
+    margin-right: 10px;
+}
+#testimonials h4,#testimonials h5, #testimonials h3,#testimonials p{
+    color: white;
+}

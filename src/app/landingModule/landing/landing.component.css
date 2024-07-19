@@ -1,0 +1,165 @@
+/* Estilos generales que se aplican siempre */
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+h3 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+h4 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+}
+h5 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+}
+h6 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 200;
+  font-size: 15px;
+}
+
+p {
+  font-family: "Quicksand", sans-serif;
+  font-weight: regular;
+  font-size: 20px;
+  padding-top: 2%;
+}
+
+/* Header Section */
+header {
+  background-size: cover;
+  padding-bottom: 200px;
+  background-image: url("/assets/img/background.svg");
+  padding-right: 200px;
+  padding-left: 200px;
+  align-items: center;
+}
+
+#header h1 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+  color: white !important;
+  font-size: 70px;
+  margin-top: 250px;
+  line-height: 1.2;
+}
+
+#header h2 {
+  font-family: "Qwitcher Grypen", cursive;
+  font-weight: bold;
+  color: #efc940;
+  font-size: 150px;
+  line-height: 1.2;
+}
+
+#header p {
+  color: #e3e3e3;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.custom-h2 {
+  margin-top: -50px; /* Ajusta según sea necesario */
+}
+
+/* Estilos específicos para pantallas más pequeñas */
+@media (max-width: 1155px) {
+  #header h1 {
+    font-size: 50px; /* Reduces the font size of h1 */
+    margin-top: 150px; /* Adjust the margin top of h1 */
+  }
+  #header h2 {
+    font-size: 100px; /* Reduces the font size of h2 */
+  }
+  p {
+    font-size: 16px; /* Reduces the font size of paragraphs */
+  }
+}
+
+@media (max-width: 845px) {
+  header {
+    padding-right: 100px;
+    padding-left: 100px;
+  }
+}
+
+@media (max-width: 747px) {
+  header {
+    padding-right: 50px;
+    padding-left: 50px;
+  }
+  #header h1 {
+    font-size: 50px; /* Reduces the font size of h1 */
+    margin-top: 150px; /* Adjust the margin top of h1 */
+  }
+  #header h2 {
+    font-size: 100px; /* Reduces the font size of h2 */
+  }
+  #header p {
+    font-size: 16px; /* Reduces the font size of paragraphs */
+  }
+}
+
+
+
+/* Benefits Section */
+#benefits {
+  background-image: url("/assets/img/benefitsB.svg");
+}
+#t2 {
+  color: #ed4b4b;
+  font-family: "Quicksand", sans-serif;
+  font-weight: regular;
+  font-size: 30px;
+}
+.bi-search {
+  color: black; /* Cambia el color del ícono a negro */
+}
+.carousel-item .col-4 {
+  padding: 10px; /* Padding between elements */
+}
+
+.carousel-item .item-content {
+  background-color: white;
+  border-radius: 20px;
+  margin-right: 10px;
+  padding: 40px; /* Inner padding for content */
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.item-content h5,
+.item-content h6 {
+  margin: 15px 0;
+}
+
+
+  
+  .btn-secondary {
+    font-family: "Quicksand", sans-serif;
+    background-color: transparent;
+    border: 2px solid #FFD700; 
+    color: white; 
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 30px;
+    transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #FFD700; 
+    color: #1E1E1E; 
+  }
+  
+  .btn-secondary:focus {
+    outline: none;
+  }

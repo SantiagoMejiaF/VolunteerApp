@@ -1,0 +1,55 @@
+body {
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: hidden!;
+  }
+/* Header Section */
+header {
+    background-size: cover;
+    padding-top:100px;
+    padding-bottom: 100px;
+    background-image: url("/assets/img/Fondo.svg");
+    padding-right: 200px;
+    padding-left: 200px;
+  }
+
+h2,p{
+    font-family: "Quicksand", sans-serif;
+    color: white;
+}
+.uno{
+    padding-top:  150px;
+    padding-right: 200px;
+}
+
+h4{
+    font-family: "Quicksand", sans-serif;
+    font-size:20px;
+}
+h5{
+    font-family: "Quicksand", sans-serif;
+    font-size:25px;
+}
+h3{
+    font-family: "Quicksand", sans-serif;
+    font-size:10px;
+}
+h3 span{
+    font-family: "Quicksand", sans-serif;
+    font-weight: bold;
+}
+@media (max-width: 1250px) {
+    header{
+        padding-right: 40px;
+        
+    }
+}
+@media (max-width: 641px) {
+    header{
+        padding-right: 40px;
+        padding-left:40px;
+    }
+    .uno{
+        padding-right: 100px;
+    }
+}
