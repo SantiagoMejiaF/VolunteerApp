@@ -40,23 +40,55 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/home']);
       }
     });
+
+    // Cargar la biblioteca de Google Identity Services
+    this.loadGoogleScript();
+  }
+
+  loadGoogleScript(): void {
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
   }
 
   signInWithGoogle(): void {
-    const clientId = '142245667829-afpupoofnh363onmduragfrhduii4jj5.apps.googleusercontent.com';
-    const redirectUri = 'http://localhost:4200/auth/google/callback';
-    const scope = 'profile email';
-    const responseType = 'code';
-    const state = ''; // Opcional: puedes incluir un estado para CSRF
-
-    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=${responseType}&state=${state}`;
-    window.location.href = url;
+    const intervalId = setInterval(() => {
+      if (window.google && window.google.accounts && window.google.accounts.oauth2) {
+        clearInterval(intervalId);
+        window.google.accounts.oauth2.initTokenClient({
+          client_id: '142245667829-afpupoofnh363onmduragfrhduii4jj5.apps.googleusercontent.com',
+          scope: 'profile email',
+          callback: (response: any) => {
+            if (response && response.access_token) {
+              const tokenGoogle = new TokenDto(response.access_token);
+              console.log('Google access token being sent to backend:', tokenGoogle);
+              this.oauthService.google(tokenGoogle).subscribe(
+                (res) => {
+                  this.tokenService.setToken(res.value);
+                  this.islogged = true;
+                  this.router.navigate(['/home']);
+                },
+                (err) => {
+                  console.log(err);
+                  this.logOut();
+                }
+              );
+            } else {
+              console.error('No access token received');
+            }
+          }
+        }).requestAccessToken();
+      }
+    }, 100);
   }
 
   signInWithFB(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((user) => {
       this.socialUser = user;
       const tokenFace = new TokenDto(this.socialUser.authToken);
+      console.log('Facebook access token being sent to backend:', tokenFace);
       this.oauthService.facebook(tokenFace).subscribe(
         (res) => {
           this.tokenService.setToken(res.value);
