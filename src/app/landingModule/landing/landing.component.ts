@@ -6,6 +6,6 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
   styleUrls: ['./landing.component.css']
 })
 export class LandingComponent  {
-
+//Prueba
   
 }
