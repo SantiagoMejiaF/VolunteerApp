@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider, FacebookLoginProvider } from '@abacritt/angularx-social-login';
+import { HttpClientModule } from '@angular/common/http';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LandingComponent } from './landingModule/landing/landing.component';
@@ -11,7 +15,8 @@ import { TestimonialsComponent } from './landingModule/testimonials/testimonials
 import { MisionesComponent } from './landingModule/misiones/misiones.component';
 import { FooterComponent } from './landingModule/footer/footer.component';
 import { LoginComponent } from './authenticationModule/login/login.component';
-import { RouterModule } from '@angular/router';
+import { HomeComponent } from './homeModule/home/home.component'; // Importa el HomeComponent
+import { TokenService } from './services/token.service'; // Asegúrate de importar el TokenService
 
 @NgModule({
   declarations: [
@@ -23,14 +28,39 @@ import { RouterModule } from '@angular/router';
     TestimonialsComponent,
     MisionesComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent // Asegúrate de que HomeComponent está declarado aquí
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule
+    SocialLoginModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    TokenService, // Asegúrate de que TokenService está registrado como proveedor
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '142245667829-afpupoofnh363onmduragfrhduii4jj5.apps.googleusercontent.com'
+            )
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('8189553181096059')
+          }
+        ],
+        onError: (err) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
