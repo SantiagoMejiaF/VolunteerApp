@@ -14,9 +14,9 @@ spring:
     name: volunteer-app-backend
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/VolunteerAppDB
-    username: postgres
-    password: fcHRH2TPJTPKmbd3
+    url: jdbc:postgresql://db-postgresql-volunteerapp-do-user-10100634-0.e.db.ondigitalocean.com:25060/defaultdb
+    username: doadmin
+    password: AVNS_d2dvzrgSgfOd6J8wJPo
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -27,6 +27,12 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+social:
+  googleClientId: "142245667829-afpupoofnh363onmduragfrhduii4jj5.apps.googleusercontent.com"
+  facebookTokenUrl: "https://graph.facebook.com/v13.0/oauth/access_token"
+  facebookGraphApiUrl: "https://graph.facebook.com/v13.0"
+
 
 request-mapping:
   controller:

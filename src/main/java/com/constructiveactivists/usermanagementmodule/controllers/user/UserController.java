@@ -2,13 +2,20 @@ package com.constructiveactivists.usermanagementmodule.controllers.user;
 
 import com.constructiveactivists.usermanagementmodule.controllers.user.configuration.UserAPI;
 import com.constructiveactivists.usermanagementmodule.controllers.user.mappers.UserMapper;
+import com.constructiveactivists.usermanagementmodule.controllers.user.request.TokenRequest;
 import com.constructiveactivists.usermanagementmodule.controllers.user.request.UserRequest;
 import com.constructiveactivists.usermanagementmodule.entities.user.UserEntity;
 import com.constructiveactivists.usermanagementmodule.services.UserService;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.social.facebook.api.User;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,8 +25,8 @@ import java.util.Optional;
 @RestController
 @AllArgsConstructor
 @RequestMapping("${request-mapping.controller.user}")
+@CrossOrigin
 public class UserController implements UserAPI {
-
     private final UserService userService;
     private final UserMapper userMapper;
 
@@ -45,4 +52,15 @@ public class UserController implements UserAPI {
         userService.deleteUser(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @Override
+    public ResponseEntity<GoogleIdToken.Payload> google(@RequestBody TokenRequest tokenDto)  {
+        return userService.google(tokenDto);
+    }
+
+    @Override
+    public ResponseEntity<User> facebook(@RequestBody TokenRequest tokenDto) {
+        return userService.facebook(tokenDto);
+    }
+
 }
