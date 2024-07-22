@@ -3,12 +3,13 @@ package com.constructiveactivists.usermanagementmodule.controllers.user;
 import com.constructiveactivists.usermanagementmodule.controllers.user.configuration.UserAPI;
 import com.constructiveactivists.usermanagementmodule.controllers.user.mappers.UserMapper;
 import com.constructiveactivists.usermanagementmodule.controllers.user.request.TokenRequest;
+import com.constructiveactivists.usermanagementmodule.controllers.user.request.UserGoogleRequest;
 import com.constructiveactivists.usermanagementmodule.controllers.user.request.UserRequest;
 import com.constructiveactivists.usermanagementmodule.entities.user.UserEntity;
 import com.constructiveactivists.usermanagementmodule.services.UserService;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.social.facebook.api.User;
 
 import org.springframework.http.HttpStatus;
@@ -53,8 +54,9 @@ public class UserController implements UserAPI {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @SneakyThrows
     @Override
-    public ResponseEntity<GoogleIdToken.Payload> google(@RequestBody TokenRequest tokenDto)  {
+    public ResponseEntity<UserGoogleRequest> google(@RequestBody TokenRequest tokenDto) {
         return userService.google(tokenDto);
     }
 
