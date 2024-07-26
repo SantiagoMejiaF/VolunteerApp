@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SocialUser, SocialAuthService } from '@abacritt/angularx-social-login';
 import { Router } from '@angular/router';
-import { TokenService } from '../../services/token.service';
 
 @Component({
   selector: 'app-home',
@@ -9,24 +7,21 @@ import { TokenService } from '../../services/token.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  user!: SocialUser;
+  userInfo: any;
 
-  constructor(
-    private authService: SocialAuthService,
-    private tokenService: TokenService,
-    private router: Router
-  ) { }
+  constructor(private router: Router) {
+    const navigation = this.router.getCurrentNavigation();
+    this.userInfo = navigation?.extras.state?.['userInfo'];
+  }
 
   ngOnInit(): void {
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-    });
+    if (!this.userInfo) {
+      this.router.navigate(['/login']);
+    }
   }
 
   logOut(): void {
-    this.authService.signOut().then(() => {
-      this.tokenService.logOut();
-      this.router.navigate(['/login']);
-    });
+    sessionStorage.clear();
+    this.router.navigate(['/login']);
   }
 }

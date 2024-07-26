@@ -41,16 +41,6 @@ export class LoginComponent implements OnInit {
       }
     });
 
-    // Cargar la biblioteca de Google Identity Services
-    this.loadGoogleScript();
-  }
-
-  loadGoogleScript(): void {
-    const script = document.createElement('script');
-    script.src = 'https://accounts.google.com/gsi/client';
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
   }
 
   signInWithGoogle(): void {
@@ -63,15 +53,15 @@ export class LoginComponent implements OnInit {
           callback: (response: any) => {
             if (response && response.access_token) {
               const tokenGoogle = new TokenDto(response.access_token);
-              console.log('Google access token being sent to backend:', tokenGoogle);
               this.oauthService.google(tokenGoogle).subscribe(
                 (res) => {
+                  console.log('Response from backend (Google):', res); // Imprimir respuesta del backend
                   this.tokenService.setToken(res.value);
                   this.islogged = true;
-                  this.router.navigate(['/home']);
+                  this.router.navigate(['/home'], { state: { userInfo: res } }); // Navega y pasa la información del usuario
                 },
                 (err) => {
-                  console.log(err);
+                  console.log('Error fetching Google user info:', err); // Imprimir error
                   this.logOut();
                 }
               );
@@ -88,20 +78,20 @@ export class LoginComponent implements OnInit {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((user) => {
       this.socialUser = user;
       const tokenFace = new TokenDto(this.socialUser.authToken);
-      console.log('Facebook access token being sent to backend:', tokenFace);
       this.oauthService.facebook(tokenFace).subscribe(
         (res) => {
+          console.log('Response from backend (Facebook):', res); // Imprimir respuesta del backend
           this.tokenService.setToken(res.value);
           this.islogged = true;
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home'], { state: { userInfo: res } }); // Navega y pasa la información del usuario
         },
         (err) => {
-          console.log(err);
+          console.log('Error fetching Facebook user info:', err); // Imprimir error
           this.logOut();
         }
       );
     }).catch((err) => {
-      console.log(err);
+      console.log('Error during Facebook login:', err); // Imprimir error
     });
   }
 

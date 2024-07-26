@@ -15,8 +15,9 @@ import { TestimonialsComponent } from './landingModule/testimonials/testimonials
 import { MisionesComponent } from './landingModule/misiones/misiones.component';
 import { FooterComponent } from './landingModule/footer/footer.component';
 import { LoginComponent } from './authenticationModule/login/login.component';
-import { HomeComponent } from './homeModule/home/home.component'; // Importa el HomeComponent
-import { TokenService } from './services/token.service'; // Asegúrate de importar el TokenService
+import { TokenService } from './services/token.service';
+import { OauthService } from './services/oauth.service';
+import { HomeComponent } from './homeModule/home/home.component'; // Importa el OauthService
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { TokenService } from './services/token.service'; // Asegúrate de import
     MisionesComponent,
     FooterComponent,
     LoginComponent,
-    HomeComponent // Asegúrate de que HomeComponent está declarado aquí
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +39,8 @@ import { TokenService } from './services/token.service'; // Asegúrate de import
     HttpClientModule
   ],
   providers: [
-    TokenService, // Asegúrate de que TokenService está registrado como proveedor
+    TokenService,
+    OauthService,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
