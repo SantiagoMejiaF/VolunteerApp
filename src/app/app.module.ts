@@ -7,17 +7,17 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LandingComponent } from './landingModule/landing/landing.component';
-import { NavbarComponent } from './landingModule/navbar/navbar.component';
-import { AboutComponent } from './landingModule/about/about.component';
-import { BenefitsComponent } from './landingModule/benefits/benefits.component';
-import { TestimonialsComponent } from './landingModule/testimonials/testimonials.component';
-import { MisionesComponent } from './landingModule/misiones/misiones.component';
-import { FooterComponent } from './landingModule/footer/footer.component';
-import { LoginComponent } from './authenticationModule/login/login.component';
+import { LandingComponent } from './Modules/landingModule/landing/landing.component';
+import { NavbarComponent } from './Modules/landingModule/navbar/navbar.component';
+import { AboutComponent } from './Modules/landingModule/about/about.component';
+import { BenefitsComponent } from './Modules/landingModule/benefits/benefits.component';
+import { TestimonialsComponent } from './Modules/landingModule/testimonials/testimonials.component';
+import { MisionesComponent } from './Modules/landingModule/misiones/misiones.component';
+import { FooterComponent } from './Modules/landingModule/footer/footer.component';
+import { LoginComponent } from './Modules/login/login.component';
 import { TokenService } from './services/token.service';
 import { OauthService } from './services/oauth.service';
-import { HomeComponent } from './homeModule/home/home.component'; // Importa el OauthService
+import { HomeComponent } from './Modules/homeModule/home/home.component'; // Importa el OauthService
 
 @NgModule({
   declarations: [
