@@ -1,14 +1,12 @@
 package com.constructiveactivists.usermanagementmodule.controllers.user.configuration;
 
 import com.constructiveactivists.usermanagementmodule.controllers.user.request.TokenRequest;
-import com.constructiveactivists.usermanagementmodule.controllers.user.request.UserGoogleRequest;
 import com.constructiveactivists.usermanagementmodule.controllers.user.request.UserRequest;
 import com.constructiveactivists.usermanagementmodule.entities.user.UserEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.social.facebook.api.User;
 import java.io.IOException;
 import java.util.List;
 
@@ -66,15 +64,7 @@ public interface UserAPI {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @PostMapping("/google")
-    ResponseEntity<UserGoogleRequest> google(@RequestBody TokenRequest tokenDto);
+    ResponseEntity<UserEntity> google(@RequestBody TokenRequest tokenDto) throws IOException;
 
-    @Operation(summary = "Verificar token de Facebook")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Token de Facebook válido"),
-            @ApiResponse(responseCode = "400", description = "Token de Facebook inválido"),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
-    })
-    @PostMapping("/facebook")
-    ResponseEntity<User> facebook(@RequestBody TokenRequest tokenDto) throws IOException;
 }
 

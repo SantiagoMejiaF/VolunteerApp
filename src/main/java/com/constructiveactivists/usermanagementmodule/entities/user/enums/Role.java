@@ -1,5 +1,5 @@
 package com.constructiveactivists.usermanagementmodule.entities.user.enums;
 
 public enum Role {
-    ADMIN, VOLUNTARIO, ORGANIZACION
+    ADMIN, VOLUNTARIO, ORGANIZACION, NINGUNO
 }

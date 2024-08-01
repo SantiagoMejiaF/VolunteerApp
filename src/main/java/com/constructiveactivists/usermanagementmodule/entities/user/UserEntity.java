@@ -34,19 +34,15 @@ public class UserEntity {
     @Comment("Correo electronico del usuario")
     private String email;
 
-    @Column(name = "CONTRASEÑA", length = 16, nullable = false)
+    @Column(name = "CONTRASEÑA", length = 16)
     @Comment("Contraseña del usuario")
     private String password;
-
-    @Column(name = "EDAD", length = 3, nullable = false)
-    @Comment("Edad del usuario")
-    private String age;
 
     @Column(name = "FECHA_REGISTRO", columnDefinition = "DATE", nullable = false)
     @Comment("Fecha de registro del usuario")
     private LocalDate registrationDate;
 
-    @Column(name = "CELULAR", length = 10, nullable = false)
+    @Column(name = "CELULAR", length = 10)
     @Comment("Numero de celular del usuario")
     private String phoneNumber;
 
