@@ -47,9 +47,10 @@ jobs:
         with:
           token: ${{ secrets.GHCR_TOKEN }}
           commit-message: "Merge develop into main"
-          branch: main
           title: "Merge develop into main"
           body: "Auto-generated PR to merge changes from develop to main"
+          base: main
+          head: develop
 
   build_main:
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
