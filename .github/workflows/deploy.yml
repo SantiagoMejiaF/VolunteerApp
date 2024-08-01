@@ -11,29 +11,26 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Actualizado a v3
+        uses: actions/checkout@v2
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2  # Actualizado a v2
+        uses: docker/setup-buildx-action@v1
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
 
       - name: Build and push Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}/back-volunteerapp:${{ github.sha }} .
-          docker push ghcr.io/${{ github.repository }}/back-volunteerapp:${{ github.sha }}
-          docker tag ghcr.io/${{ github.repository }}/back-volunteerapp:${{ github.sha }} ghcr.io/${{ github.repository }}/back-volunteerapp:latest
-          docker push ghcr.io/${{ github.repository }}/back-volunteerapp:latest
+          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:${{ github.sha }} .
+          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:${{ github.sha }}
+          docker tag ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:${{ github.sha }} ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:latest
+          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:latest
 
       - name: Push to main
         if: github.ref == 'refs/heads/develop'
         run: |
-          git config --global user.email "santiagomejiaf@javeriana.edu.co"
-          git config --global user.name "Santiago Mejia Fernandez"
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
           git checkout main
           git merge develop
           git push origin main
@@ -44,16 +41,16 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Actualizado a v3
+        uses: actions/checkout@v2
 
       - name: SSH to server and deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.DIGITALOCEAN_HOST }}
-          username: ${{ secrets.DIGITALOCEAN_USERNAME }}
+          host: 167.99.51.246
+          username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker pull ghcr.io/${{ github.repository }}/back-volunteerapp:latest
+            docker pull ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:latest
             docker stop back-volunteerapp || true
             docker rm back-volunteerapp || true
-            docker run -d --name back-volunteerapp -p 8085:8085 ghcr.io/${{ github.repository }}/back-volunteerapp:latest
+            docker run -d --name back-volunteerapp -p 80:80 ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:latest
