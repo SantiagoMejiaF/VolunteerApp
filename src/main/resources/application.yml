@@ -30,8 +30,6 @@ spring:
 
 social:
   googleClientId: "142245667829-afpupoofnh363onmduragfrhduii4jj5.apps.googleusercontent.com"
-  facebookTokenUrl: "https://graph.facebook.com/v13.0/oauth/access_token"
-  facebookGraphApiUrl: "https://graph.facebook.com/v13.0"
 
 
 request-mapping:
