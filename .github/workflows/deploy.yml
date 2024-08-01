@@ -34,23 +34,13 @@ jobs:
         env:
           GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
 
-      - name: Create or update main branch
-        if: github.ref == 'refs/heads/develop'
-        run: |
-          git config --global user.email "santiagomejiaf@javeriana.edu.co"
-          git config --global user.name "SantiagoMejiaF"
-          git checkout main || git checkout -b main
-          git pull origin main || echo "main branch does not exist, creating it."
-          git push origin main
-        env:
-          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
-
       - name: Push to main
         if: github.ref == 'refs/heads/develop'
         run: |
           git config --global user.email "santiagomejiaf@javeriana.edu.co"
           git config --global user.name "SantiagoMejiaF"
           git checkout main
+          git pull origin main
           git merge develop --no-ff --no-commit
           git commit -m "Merge branch 'develop' into main"
           git push origin main
