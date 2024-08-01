@@ -7,6 +7,7 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
@@ -23,12 +24,15 @@ jobs:
         run: |
           docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:${{ github.sha }} .
           docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:${{ github.sha }}
+          docker tag ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:${{ github.sha }} ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:latest
+          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:latest
 
       - name: Update develop branch
         if: github.ref == 'refs/heads/develop'
         run: |
           git config --global user.email "santiagomejiaf@javeriana.edu.co"
           git config --global user.name "SantiagoMejiaF"
+          git remote set-url origin https://x-access-token:${{ secrets.GHCR_TOKEN }}@github.com/Asesor-Digital/back-volunteerapp.git
           git checkout develop
           git pull origin develop
         env:
@@ -39,6 +43,7 @@ jobs:
         run: |
           git config --global user.email "santiagomejiaf@javeriana.edu.co"
           git config --global user.name "SantiagoMejiaF"
+          git remote set-url origin https://x-access-token:${{ secrets.GHCR_TOKEN }}@github.com/Asesor-Digital/back-volunteerapp.git
           git checkout main
           git pull origin main
           git merge develop --no-ff --no-commit
@@ -55,7 +60,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Deploy to DigitalOcean
-        run: |
-          doctl auth init -t ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-          doctl apps update back-volunteerapp-id --spec .do/app.yaml
+      - name: SSH to server and deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: 167.99.51.246
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker pull ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:latest
+            docker stop back-volunteerapp || true
+            docker rm back-volunteerapp || true
+            docker run -d --name back-volunteerapp -p 80:80 ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:latest
