@@ -64,6 +64,4 @@ public class UserController implements UserAPI {
         UserEntity createdUserEntity = userService.google(tokenMapper.toDomain(tokenRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUserEntity);
     }
-
-
 }

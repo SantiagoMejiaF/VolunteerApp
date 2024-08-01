@@ -1,0 +1,11 @@
+name: back-volunteerapp
+services:
+  - name: web
+    image:
+      registry: docker.io
+      repository: my-docker-hub-santiagomejiafernandez/back-volunteerapp
+      tag: latest
+    run_command: npm start
+    envs:
+      - key: NODE_ENV
+        value: production
