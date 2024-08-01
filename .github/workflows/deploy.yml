@@ -10,49 +10,50 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-    - name: Login to GitHub Container Registry
-      run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
 
-    - name: Build and push Docker image
-      run: |
-        docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:${{ github.sha }} .
-        docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:${{ github.sha }}
-        docker tag ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:${{ github.sha }} ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:latest
-        docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:latest
+      - name: Build and push Docker image
+        run: |
+          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/my-app:${{ github.sha }} .
+          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/my-app:${{ github.sha }}
 
-    - name: Push to main
-      if: github.ref == 'refs/heads/develop'
-      run: |
-        git config --global user.email "santiagomejiaf@javeriana.edu.co"
-        git config --global user.name "Santiago Mejia Fernandez"
-        git remote set-url origin https://x-access-token:${{ secrets.GHCR_TOKEN }}@github.com/Asesor-Digital/back-volunteerapp.git
-        git fetch origin
-        git checkout main
-        git merge develop --allow-unrelated-histories
-        git push origin main
+      - name: Update develop branch
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          git config --global user.email "santiagomejiaf@javeriana.edu.co"
+          git config --global user.name "SantiagoMejiaF"
+          git checkout develop
+          git pull origin develop
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Push to main
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          git config --global user.email "santiagomejiaf@javeriana.edu.co"
+          git config --global user.name "SantiagoMejiaF"
+          git checkout main
+          git merge develop
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: SSH to server and deploy
-      uses: appleboy/ssh-action@master
-      with:
-        host: 167.99.51.246
-        username: root
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          docker pull ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:latest
-          docker stop back-volunteerapp || true
-          docker rm back-volunteerapp || true
-          docker run -d --name back-volunteerapp -p 80:80 ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:latest
+      - name: Deploy to DigitalOcean
+        run: |
+          doctl auth init -t ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          doctl apps update my-app-id --spec .do/app.yaml
