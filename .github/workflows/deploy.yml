@@ -47,10 +47,9 @@ jobs:
         with:
           token: ${{ secrets.GHCR_TOKEN }}
           commit-message: "Merge develop into main"
+          branch: main
           title: "Merge develop into main"
           body: "Auto-generated PR to merge changes from develop to main"
-          base: main
-          head: develop
 
   build_main:
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
@@ -87,6 +86,7 @@ jobs:
           username: ${{ secrets.DIGITALOCEAN_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} -p ${{ secrets.GHCR_TOKEN }}
             docker pull ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:main
             docker stop back-volunteerapp || true
             docker rm back-volunteerapp || true
