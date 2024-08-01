@@ -35,4 +35,12 @@ jobs:
             docker pull ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:develop
             docker stop back-volunteerapp-develop || true
             docker rm back-volunteerapp-develop || true
-            docker run -d --name back-volunteerapp-develop -p 8085:8085 ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:develop
+            docker run -d --name back-volunteerapp-develop -p 8086:8085 ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:develop
+            sudo sed -i 's/8085/8086/' /etc/nginx/sites-available/default
+            sudo nginx -s reload
+            sleep 5
+            docker stop back-volunteerapp || true
+            docker rm back-volunteerapp || true
+            docker rename back-volunteerapp-develop back-volunteerapp
+            sudo sed -i 's/8086/8085/' /etc/nginx/sites-available/default
+            sudo nginx -s reload
