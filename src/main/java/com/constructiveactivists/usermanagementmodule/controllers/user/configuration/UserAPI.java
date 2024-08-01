@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 
-@Tag(name = "Gestión de Usuarios Prueba Despliegue", description = "Operaciones relacionadas con la gestión de usuarios en la aplicación de voluntariado")
+@Tag(name = "Gestión de Usuarios Prueba", description = "Operaciones relacionadas con la gestión de usuarios en la aplicación de voluntariado")
 public interface UserAPI {
 
     @Operation(summary = "Ver una lista de usuarios disponibles")
