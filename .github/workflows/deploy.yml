@@ -29,8 +29,8 @@ jobs:
     - name: Push to main
       if: github.ref == 'refs/heads/develop'
       run: |
-        git config --global user.email "you@example.com"
-        git config --global user.name "Your Name"
+        git config --global user.email "santiagomejiaf@javeriana.edu.co"
+        git config --global user.name "Santiago Mejia Fernandez"
         git remote set-url origin https://x-access-token:${{ secrets.GHCR_TOKEN }}@github.com/Asesor-Digital/back-volunteerapp.git
         git fetch origin
         git checkout main
