@@ -32,7 +32,7 @@ jobs:
           git checkout develop
           git pull origin develop
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
 
       - name: Create or update main branch
         if: github.ref == 'refs/heads/develop'
@@ -43,7 +43,7 @@ jobs:
           git pull origin main || echo "main branch does not exist, creating it."
           git push origin main
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
 
       - name: Push to main
         if: github.ref == 'refs/heads/develop'
@@ -54,7 +54,7 @@ jobs:
           git merge develop
           git push origin main
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
