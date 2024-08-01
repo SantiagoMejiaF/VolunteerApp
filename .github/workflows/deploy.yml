@@ -7,7 +7,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -44,6 +43,7 @@ jobs:
           git config --global user.email "santiagomejiaf@javeriana.edu.co"
           git config --global user.name "SantiagoMejiaF"
           git remote set-url origin https://x-access-token:${{ secrets.GHCR_TOKEN }}@github.com/Asesor-Digital/back-volunteerapp.git
+          git fetch origin
           git checkout main
           git pull origin main
           git merge develop --no-ff --no-commit
