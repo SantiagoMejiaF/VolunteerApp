@@ -34,6 +34,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
+      - name: Create or update main branch
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          git config --global user.email "santiagomejiaf@javeriana.edu.co"
+          git config --global user.name "SantiagoMejiaF"
+          git checkout main || git checkout -b main
+          git pull origin main || echo "main branch does not exist, creating it."
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
       - name: Push to main
         if: github.ref == 'refs/heads/develop'
         run: |
