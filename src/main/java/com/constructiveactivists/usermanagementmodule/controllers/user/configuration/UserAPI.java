@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 
-@Tag(name = "Gestión Prueba", description = "esto es una prueba")
+@Tag(name = "Gestión Prueba", description = "esto es una prueba de witflow")
 public interface UserAPI {
 
     @Operation(summary = "Ver una lista de usuarios disponibles")
