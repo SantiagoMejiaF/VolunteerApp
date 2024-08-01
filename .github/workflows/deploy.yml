@@ -50,10 +50,10 @@ jobs:
           branch: main
           title: "Merge develop into main"
           body: "Auto-generated PR to merge changes from develop to main"
+          delete-branch: false
 
   build_main:
     runs-on: ubuntu-latest
-    needs: create_pull_request
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
 
     steps:
@@ -92,3 +92,22 @@ jobs:
             docker stop back-volunteerapp || true
             docker rm back-volunteerapp || true
             docker run -d --name back-volunteerapp -p 8085:8085 ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:main
+
+  test_develop:
+    runs-on: ubuntu-latest
+    needs: create_pull_request
+    if: github.ref == 'refs/heads/develop'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
+
+      - name: Run Docker image locally for testing after PR creation
+        run: |
+          docker pull ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:develop
+          docker stop back-volunteerapp-test || true
+          docker rm back-volunteerapp-test || true
+          docker run -d --name back-volunteerapp-test -p 8085:8085 ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:develop
