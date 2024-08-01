@@ -4,10 +4,55 @@ on:
   push:
     branches:
       - develop
+  pull_request:
+    types: [closed]
+    branches:
+      - main
 
 jobs:
-  build:
+  build_develop:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
+
+      - name: Build and push Docker image for develop
+        run: |
+          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:develop .
+          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:develop
+
+      - name: Run Docker image locally for testing
+        run: |
+          docker run -d --name back-volunteerapp-test -p 8085:8085 ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:develop
+
+  create_pull_request:
+    runs-on: ubuntu-latest
+    needs: build_develop
+    if: github.ref == 'refs/heads/develop'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Pull Request from develop to main
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GHCR_TOKEN }}
+          commit-message: "Merge develop into main"
+          branch: main
+          title: "Merge develop into main"
+          body: "Auto-generated PR to merge changes from develop to main"
+
+  build_main:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
 
     steps:
@@ -20,42 +65,15 @@ jobs:
       - name: Login to GitHub Container Registry
         run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image for main
         run: |
-          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:${{ github.sha }} .
-          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:${{ github.sha }}
-          docker tag ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:${{ github.sha }} ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:latest
-          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:latest
-
-      - name: Update develop branch
-        if: github.ref == 'refs/heads/develop'
-        run: |
-          git config --global user.email "santiagomejiaf@javeriana.edu.co"
-          git config --global user.name "SantiagoMejiaF"
-          git remote set-url origin https://x-access-token:${{ secrets.GHCR_TOKEN }}@github.com/Asesor-Digital/back-volunteerapp.git
-          git checkout develop
-          git pull origin develop
-        env:
-          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
-
-      - name: Push to main
-        if: github.ref == 'refs/heads/develop'
-        run: |
-          git config --global user.email "santiagomejiaf@javeriana.edu.co"
-          git config --global user.name "SantiagoMejiaF"
-          git remote set-url origin https://x-access-token:${{ secrets.GHCR_TOKEN }}@github.com/Asesor-Digital/back-volunteerapp.git
-          git fetch origin main
-          git checkout main
-          git pull origin main
-          git merge develop --allow-unrelated-histories --no-ff --no-commit
-          git commit -m "Merge branch 'develop' into main"
-          git push origin main
-        env:
-          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:main .
+          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:main
 
   deploy:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
-    needs: build
+    needs: build_main
 
     steps:
       - name: Checkout code
@@ -64,11 +82,11 @@ jobs:
       - name: SSH to server and deploy
         uses: appleboy/ssh-action@master
         with:
-          host: 167.99.51.246
-          username: root
+          host: ${{ secrets.DIGITALOCEAN_HOST }}
+          username: ${{ secrets.DIGITALOCEAN_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker pull ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:latest
+            docker pull ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:main
             docker stop back-volunteerapp || true
             docker rm back-volunteerapp || true
-            docker run -d --name back-volunteerapp -p 80:80 ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:latest
+            docker run -d --name back-volunteerapp -p 8085:8085 ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:main
