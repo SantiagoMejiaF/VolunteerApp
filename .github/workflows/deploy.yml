@@ -45,6 +45,7 @@ jobs:
           git config --global user.name "SantiagoMejiaF"
           git remote set-url origin https://x-access-token:${{ secrets.GHCR_TOKEN }}@github.com/Asesor-Digital/back-volunteerapp.git
           git checkout main
+          git fetch origin main
           git pull origin main
           git merge develop --allow-unrelated-histories --no-ff --no-commit
           git commit -m "Merge branch 'develop' into main"
