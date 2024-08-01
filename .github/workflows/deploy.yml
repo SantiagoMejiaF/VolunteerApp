@@ -21,8 +21,8 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/my-app:${{ github.sha }} .
-          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/my-app:${{ github.sha }}
+          docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:${{ github.sha }} .
+          docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:${{ github.sha }}
 
       - name: Update develop branch
         if: github.ref == 'refs/heads/develop'
@@ -56,4 +56,4 @@ jobs:
       - name: Deploy to DigitalOcean
         run: |
           doctl auth init -t ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-          doctl apps update my-app-id --spec .do/app.yaml
+          doctl apps update back-volunteerapp-id --spec .do/app.yaml
