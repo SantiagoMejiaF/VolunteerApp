@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,7 +59,6 @@ public class UserController implements UserAPI {
     @SneakyThrows
     @Override
     public ResponseEntity<UserEntity> google(@Valid TokenRequest tokenRequest){
-        System.out.println("TokenRequest: " + tokenRequest);
         UserEntity createdUserEntity = userService.google(tokenMapper.toDomain(tokenRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUserEntity);
     }

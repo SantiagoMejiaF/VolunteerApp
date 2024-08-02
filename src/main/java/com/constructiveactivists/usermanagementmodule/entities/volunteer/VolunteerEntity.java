@@ -1,5 +1,6 @@
 package com.constructiveactivists.usermanagementmodule.entities.volunteer;
 
+import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.StatusEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,4 +28,8 @@ public class VolunteerEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "INFORMACION_EMERGENCIA_ID", referencedColumnName = "ID")
     private EmergencyInformationEntity emergencyInformation;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ESTADO", length = 9)
+    private StatusEnum status;
 }

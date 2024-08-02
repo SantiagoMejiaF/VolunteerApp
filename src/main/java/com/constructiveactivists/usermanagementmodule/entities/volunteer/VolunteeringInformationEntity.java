@@ -3,12 +3,10 @@ package com.constructiveactivists.usermanagementmodule.entities.volunteer;
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.AvailabilityEnum;
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.InterestEnum;
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.SkillEnum;
-import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.StatusEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -22,12 +20,6 @@ public class VolunteeringInformationEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VOLUNTEERING_INFO_SEQ")
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
-
-    @Column(name = "FOTO_PERFIL", length = 50, nullable = false)
-    private String profilePicture;
-
-    @Column(name = "FECHA_REGISTRO", columnDefinition = "DATE", nullable = false)
-    private LocalDate registrationDate;
 
     @Column(name = "HORAS_VOLUNTARIADAS", nullable = false)
     private int volunteeredHours;
@@ -50,7 +42,4 @@ public class VolunteeringInformationEntity {
     @Column(name = "HABILIDADES")
     private List<SkillEnum> skillsList;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "ESTADO", length = 9)
-    private StatusEnum status;
 }

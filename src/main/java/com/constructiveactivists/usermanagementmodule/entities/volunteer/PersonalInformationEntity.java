@@ -16,21 +16,15 @@ public class PersonalInformationEntity {
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 
-    @Column(name = "NOMBRE", length = 50, nullable = false)
-    private String firstName;
-
     @Column(name = "APELLIDO", length = 50, nullable = false)
     private String lastName;
 
     @Column(name = "CEDULA", length = 10, unique = true, nullable = false)
     private String identificationCard;
 
-    @Column(name = "CORREO", length = 50, unique = true, nullable = false)
-    private String email;
-
-    @Column(name = "CELULAR", length = 10, nullable = false)
-    private String phoneNumber;
-
     @Column(name = "DIRECCION", length = 50, nullable = false)
     private String address;
+
+    @Column(name = "AGE", length = 150, nullable = false)
+    private Integer age;
 }

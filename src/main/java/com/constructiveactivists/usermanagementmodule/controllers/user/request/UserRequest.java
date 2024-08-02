@@ -19,7 +19,7 @@ public class UserRequest {
     private String firstName;
 
     @NotBlank
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 20)
     @Schema(description = "Apellido del usuario")
     private String lastName;
 
@@ -28,25 +28,15 @@ public class UserRequest {
     @Schema(description = "Correo electronico del usuario")
     private String email;
 
-    @NotBlank
-    @Size(min = 1, max = 16)
-    @Schema(description = "Contraseña del usuario")
-    private String password;
-
-    @NotBlank
-    @Size(min = 1, max = 3)
-    @Schema(description = "Edad del usuario")
-    private String age;
-
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Schema(description = "Fecha de registro del usuario")
     private LocalDate registrationDate;
 
-    @NotBlank
-    @Size(min = 1, max = 10)
-    @Schema(description = "Numero de celular del usuario")
-    private String phoneNumber;
+    @NotNull
+    @Size(min = 1, max = 2048)
+    @Schema(description = "Imagen del usuario")
+    private String image;
 
     @NotNull
     @Schema(description = "Rol del usuario")

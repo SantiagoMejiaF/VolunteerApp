@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TokenEntity {
+public class TokenModel {
     @NotNull
     private String value;
 }
