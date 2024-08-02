@@ -18,7 +18,6 @@ public class UserRequest {
     @Schema(description = "Nombre del usuario")
     private String firstName;
 
-    @NotBlank
     @Size(min = 1, max = 20)
     @Schema(description = "Apellido del usuario")
     private String lastName;
@@ -33,8 +32,8 @@ public class UserRequest {
     @Schema(description = "Fecha de registro del usuario")
     private LocalDate registrationDate;
 
-    @NotNull
     @Size(min = 1, max = 2048)
+    @Pattern(regexp = "^(https?://.*\\.(jpg|jpeg|png|gif|bmp|tiff))$", message = "Formato de imagen no válido. Debe ser una URL de imagen válida.")
     @Schema(description = "Imagen del usuario")
     private String image;
 

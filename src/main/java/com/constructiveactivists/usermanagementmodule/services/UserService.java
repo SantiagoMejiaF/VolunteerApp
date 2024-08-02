@@ -55,7 +55,6 @@ public class UserService {
     }
 
     public UserEntity google(TokenModel tokenDto) throws IOException {
-        System.out.println("Token: " + tokenDto.getValue());
         final NetHttpTransport transport = new NetHttpTransport();
         final JacksonFactory jacksonFactory = JacksonFactory.getDefaultInstance();
         HttpRequestFactory requestFactory = transport.createRequestFactory(request -> request.setParser(new JsonObjectParser(jacksonFactory)));
@@ -72,12 +71,6 @@ public class UserService {
         UserEntity existingUser = userRepository.findByEmail(email).orElse(null);
 
         if (existingUser != null) {
-            logger.info("User already exists:");
-            logger.info("Email: " + existingUser.getEmail());
-            logger.info("First Name: " + existingUser.getFirstName());
-            logger.info("Last Name: " + existingUser.getLastName());
-            logger.info("Registration Date: " + existingUser.getRegistrationDate());
-            logger.info("Role: " + existingUser.getRole().getNameRole());
             return existingUser;
         }
 
@@ -88,6 +81,7 @@ public class UserService {
         user.setFirstName((String) userInfo.get("given_name"));
         user.setLastName((String) userInfo.get("family_name"));
         user.setRegistrationDate(java.time.LocalDate.now());
+        user.setImage((String) userInfo.get("picture"));
 
         String roleName = "NINGUNO";
         RoleEntity role = roleRepository.findByNameRole(roleName)

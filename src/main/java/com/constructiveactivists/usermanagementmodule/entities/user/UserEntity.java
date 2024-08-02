@@ -25,13 +25,17 @@ public class UserEntity {
     @Comment("Nombre del usuario")
     private String firstName;
 
-    @Column(name = "APELLIDO", length = 20, nullable = false)
+    @Column(name = "APELLIDO", length = 20)
     @Comment("Apellido del usuario")
     private String lastName;
 
     @Column(name = "CORREO", length = 50, unique = true, nullable = false)
     @Comment("Correo electronico del usuario")
     private String email;
+
+    @Column(name = "IMAGEN")
+    @Comment("Imagen del usuario")
+    private String image;
 
     @Column(name = "FECHA_REGISTRO", columnDefinition = "DATE", nullable = false)
     @Comment("Fecha de registro del usuario")
