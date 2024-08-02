@@ -26,11 +26,11 @@ import java.util.Optional;
 @RestController
 @AllArgsConstructor
 @RequestMapping("${request-mapping.controller.user}")
-@CrossOrigin
+@CrossOrigin(origins = "https://www.volunteer-app.online")
 public class UserController implements UserAPI {
+
     private final UserService userService;
     private final UserMapper userMapper;
-
     private final TokenMapper tokenMapper;
 
     @Override
