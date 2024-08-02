@@ -25,6 +25,9 @@ public class EmergencyInformationEntity {
     @Column(name = "TELEFONO", length = 10, nullable = false)
     private String emergencyContactPhone;
 
+    @Column(name = "CORREO", length = 50, nullable = false)
+    private String emergencyContactEmail;
+
     @Column(name = "PARENTESCO", length = 7, nullable = false)
     private RelationshipEnum emergencyContactRelationship;
 }

@@ -1,6 +1,5 @@
 package com.constructiveactivists.usermanagementmodule.entities.user;
 
-import com.constructiveactivists.usermanagementmodule.entities.user.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +25,7 @@ public class UserEntity {
     @Comment("Nombre del usuario")
     private String firstName;
 
-    @Column(name = "APELLIDO", length = 50, nullable = false)
+    @Column(name = "APELLIDO", length = 20, nullable = false)
     @Comment("Apellido del usuario")
     private String lastName;
 
@@ -34,20 +33,12 @@ public class UserEntity {
     @Comment("Correo electronico del usuario")
     private String email;
 
-    @Column(name = "CONTRASEÑA", length = 16)
-    @Comment("Contraseña del usuario")
-    private String password;
-
     @Column(name = "FECHA_REGISTRO", columnDefinition = "DATE", nullable = false)
     @Comment("Fecha de registro del usuario")
     private LocalDate registrationDate;
 
-    @Column(name = "CELULAR", length = 10)
-    @Comment("Numero de celular del usuario")
-    private String phoneNumber;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "ROL", length = 12, nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "ROL_ID", nullable = false)
     @Comment("Rol del usuario")
-    private Role role;
+    private RoleEntity role;
 }

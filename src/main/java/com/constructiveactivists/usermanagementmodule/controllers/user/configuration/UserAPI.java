@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.io.IOException;
 import java.util.List;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -64,7 +63,7 @@ public interface UserAPI {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @PostMapping("/google")
-    ResponseEntity<UserEntity> google(@RequestBody TokenRequest tokenDto) throws IOException;
+    ResponseEntity<UserEntity> google(@RequestBody TokenRequest tokenDto);
 
 }
 
