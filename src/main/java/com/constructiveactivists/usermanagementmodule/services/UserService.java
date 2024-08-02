@@ -55,6 +55,7 @@ public class UserService {
     }
 
     public UserEntity google(TokenModel tokenDto) throws IOException {
+        System.out.println("Token: " + tokenDto.getValue());
         final NetHttpTransport transport = new NetHttpTransport();
         final JacksonFactory jacksonFactory = JacksonFactory.getDefaultInstance();
         HttpRequestFactory requestFactory = transport.createRequestFactory(request -> request.setParser(new JsonObjectParser(jacksonFactory)));
@@ -77,6 +78,7 @@ public class UserService {
             logger.info("Last Name: " + existingUser.getLastName());
             logger.info("Registration Date: " + existingUser.getRegistrationDate());
             logger.info("Role: " + existingUser.getRole().getNameRole());
+            return existingUser;
         }
 
 
