@@ -2,8 +2,10 @@ body {
     background: #eee
 }
 
+
+
 #regForm {
-    background-color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.5);
     margin: 0px auto;
     font-family: "Quicksand", sans-serif;
     padding: 40px;
@@ -14,12 +16,33 @@ body {
 
   color: #ED4B4B;
 }
-
+#thanksBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/assets/img/Gracias.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1; 
+}
+#text-message h1 {
+    font-family: "Qwitcher Grypen", cursive;
+    font-weight: bold;
+    color: #efc940;
+    font-size: 80px;
+    line-height: 1.2;
+  }
 h1 {
     font-family: "Quicksand", sans-serif;
     font-weight: regular;
     font-size: 40px;
     text-align: center
+}
+h6{
+    color: #ffffff;
 }
 h3{
     font-family: "Quicksand", sans-serif;
@@ -33,6 +56,13 @@ h4{
     font-weight: regular;
     font-size: 24px;
     color: #1E1450;
+}
+
+p{
+    font-family: "Quicksand", sans-serif;
+    font-weight: regular;
+    font-size: 20px;
+    color: #ffffff;
 }
 
 input {
@@ -63,7 +93,7 @@ input.invalid {
 }
 
 button {
-    background-color: #1E1450;
+    background-color: #EFC940;
     color: #ffffff;
     border: none;
     border-radius: 50%;
@@ -72,7 +102,12 @@ button {
     font-family: Raleway;
     cursor: pointer
 }
-
+#Completo {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    height: 100vh; /* Ocupa el 100% de la altura de la ventana */
+}
 button:hover {
     opacity: 0.8
 }
@@ -107,7 +142,7 @@ button:focus{
     justify-content: center;
     align-items: center;
     font-size: 15px;
-    color: #1E1450;
+    color: #ED4B4B;
     opacity: 0.5;
 }
 
@@ -118,11 +153,10 @@ button:focus{
 
 .step.finish {
    color: #fff;
-   background: #1E1450;
+   background: #EFC940;
    opacity: 1;
 
 }
-
 
 
 .all-steps {
@@ -132,5 +166,6 @@ button:focus{
 }
 
 .thanks-message {
-    display: none
+    display: none;
+    
 }

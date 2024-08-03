@@ -56,6 +56,7 @@ export class FormsOrganizacionComponent {
       document.getElementById('all-steps')!.style.display = 'none';
       document.getElementById('register')!.style.display = 'none';
       document.getElementById('text-message')!.style.display = 'block';
+      document.getElementById('thanksBackground')!.style.display = 'block';
       return;
     }
 

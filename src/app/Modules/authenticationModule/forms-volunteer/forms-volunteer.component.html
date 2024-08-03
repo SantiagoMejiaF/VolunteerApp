@@ -1,6 +1,7 @@
-<div class="container mt-5">
+<div id="thanksBackground"></div>
+<div class="container mt-5" id="Completo">
     <div class="row d-flex justify-content-center align-items-center">
-        <div class="col-md-8">
+        <div class="col">
             <form id="regForm">
                 <h1 id="register">Formulario para Voluntario</h1>
                 <div class="all-steps" id="all-steps">
@@ -24,17 +25,30 @@
                     <p>
                         <input placeholder="Cra 100 #87-56..." oninput="this.className = ''" name="fAdress">
                     </p>
-                    <form [formGroup]="myForm">
-                        <ng-multiselect-dropdown
-                          [placeholder]="'Select City'"
-                          [data]="cities"
-                          formControlName="city"
-                          [disabled]="disabled"
-                          [settings]="dropdownSettings"
-                          (onSelect)="onItemSelect($event)"
-                          (onSelectAll)="onSelectAll($event)">
+                    <h6>Selecciona tus días disponibles</h6>
+                    <form [formGroup]="myForm3" >
+                        <ng-multiselect-dropdown 
+                            [settings]="dropdownSettings3"
+                            [data]="days" formControlName="days"
+                            [disabled]="disabled" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
                         </ng-multiselect-dropdown>
-                      </form>
+                    </form>
+                    <h6>Selecciona tus habilidades</h6>
+                    <form [formGroup]="myForm" >
+                        <ng-multiselect-dropdown 
+                            [settings]="dropdownSettings"
+                            [data]="skills" formControlName="skills"
+                            [disabled]="disabled" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                        </ng-multiselect-dropdown>
+                    </form>
+                    <h6>Selecciona tus intereses</h6>
+                    <form [formGroup]="myForm2" >
+                        <ng-multiselect-dropdown 
+                            [settings]="dropdownSettings2"
+                            [data]="intereses" formControlName="intereses"
+                            [disabled]="disabled" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                        </ng-multiselect-dropdown>
+                    </form>
                 </div>
                 <div class="tab">
                     <h3 id="tittle">Contacto de Emergencia 1</h3>
@@ -69,7 +83,17 @@
 
                 </div>
                 <div class="thanks-message text-center" id="text-message">
-                    <h4>Gracias por tu registro</h4> 
+                    <h1>¡Gracias por tu interés en unirte a Volunteer App! </h1>
+                    <p>
+                        Queremos darte una cálida bienvenida a nuestra comunidad de voluntarios. Tu disposición para colaborar y contribuir a causas que importan es realmente valiosa para nosotros. En Volunteer App, estamos comprometidos a conectar a personas apasionadas como tú con oportunidades de impacto positivo en la comunidad. <br>
+                        
+                        Tu registro ha sido exitoso y estamos emocionados de tenerte a bordo. Pronto recibirás información sobre las próximas oportunidades de voluntariado y cómo puedes empezar a hacer la diferencia. <br>
+                                                
+                        Una vez más, gracias por tu compromiso y por elegir hacer la diferencia. <br>
+                        
+                        Con aprecio, <br>
+                        El Equipo de Volunteer App
+                      </p>
                 </div>
 
                 <div style="overflow:auto;" id="nextprevious">

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-interface City {
+interface Elements {
   item_id: number;
   item_text: string;
 }
@@ -14,12 +14,17 @@ interface City {
 export class FormsVolunteerComponent {
   currentTab = 0;
   myForm: FormGroup;
+  myForm2: FormGroup;
+  myForm3: FormGroup;
   disabled = false;
   ShowFilter = false;
   limitSelection = false;
-  cities: City[] = [];
-  selectedItems: City[] = [];
+  skills: Elements[] = [];
   dropdownSettings: any = {};
+  days: Elements[] = [];
+  dropdownSettings3: any = {};
+  intereses: Elements[] = [];
+  dropdownSettings2: any = {};
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
@@ -32,16 +37,14 @@ export class FormsVolunteerComponent {
       .getElementById('nextBtn')
       ?.addEventListener('click', () => this.nextPrev(1));
 
-    this.cities = [
-      { item_id: 1, item_text: 'New Delhi' },
-      { item_id: 2, item_text: 'Mumbai' },
-      { item_id: 3, item_text: 'Bangalore' },
-      { item_id: 4, item_text: 'Pune' },
-      { item_id: 5, item_text: 'Chennai' },
-      { item_id: 6, item_text: 'Navsari' },
+    this.skills = [
+      { item_id: 1, item_text: 'Angular' },
+      { item_id: 2, item_text: 'Correr' },
+      { item_id: 3, item_text: 'Trabajo en grupo' },
+      { item_id: 4, item_text: 'Liderazgo' },
+      { item_id: 5, item_text: 'Manualidades' },
+      { item_id: 6, item_text: 'Cocina' },
     ];
-
-    console.log('Cities:', this.cities);
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
@@ -51,35 +54,68 @@ export class FormsVolunteerComponent {
       itemsShowLimit: 3,
       allowSearchFilter: this.ShowFilter,
     };
+    this.intereses = [
+      { item_id: 1, item_text: 'Arte' },
+      { item_id: 2, item_text: 'Pedagogía' },
+      { item_id: 3, item_text: 'Ambiente' },
+    ];
+    this.dropdownSettings2 = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: this.ShowFilter,
+    };
+    this.days = [
+      { item_id: 1, item_text: 'Lunes' },
+      { item_id: 2, item_text: 'Martes' },
+      { item_id: 3, item_text: 'Miércoles' },
+      { item_id: 4, item_text: 'Jueves' },
+      { item_id: 5, item_text: 'Viernes' },
+      { item_id: 6, item_text: 'Sábado' },
+    ];
+    this.dropdownSettings3 = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: this.ShowFilter,
+    };
 
-    console.log('Dropdown Settings:', this.dropdownSettings);
     this.myForm = this.fb.group({
-      city: [this.selectedItems],
+      skills: ['']
+    });
+    this.myForm2 = this.fb.group({
+      intereses: ['']
+    });
+    this.myForm3 = this.fb.group({
+      days: ['']
     });
   }
 
   showTab(n: number) {
-    const tabs = document.getElementsByClassName(
-      'tab'
-    ) as HTMLCollectionOf<HTMLElement>;
+    const tabs = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;
     tabs[n].style.display = 'block';
-
+  
     if (n === 0) {
       document.getElementById('prevBtn')!.style.display = 'none';
     } else {
       document.getElementById('prevBtn')!.style.display = 'inline';
     }
-
+  
     if (n === tabs.length - 1) {
-      document.getElementById('nextBtn')!.innerHTML =
-        '<i class="fa fa-angle-double-right"></i>';
+      document.getElementById('nextBtn')!.innerHTML = '<i class="fa fa-angle-double-right"></i>';
     } else {
-      document.getElementById('nextBtn')!.innerHTML =
-        '<i class="fa fa-angle-double-right"></i>';
+      document.getElementById('nextBtn')!.innerHTML = '<i class="fa fa-angle-double-right"></i>';
     }
-
+  
     this.fixStepIndicator(n);
   }
+  
 
   nextPrev(n: number) {
     const tabs = document.getElementsByClassName(
