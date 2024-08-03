@@ -17,8 +17,13 @@ import { FooterComponent } from './Modules/landingModule/footer/footer.component
 import { LoginComponent } from './Modules/login/login.component';
 import { TokenService } from './services/token.service';
 import { OauthService } from './services/oauth.service';
-import { HomeComponent } from './Modules/homeModule/home/home.component'; // Importa el OauthService
-
+import { HomeComponent } from './Modules/homeModule/home/home.component';
+import { AuthComponent } from './Modules/authenticationModule/auth/auth.component'; // Importa el OauthService
+import { FormsModule } from '@angular/forms';
+import { FormsVolunteerComponent } from './Modules/authenticationModule/forms-volunteer/forms-volunteer.component';
+import { FormsOrganizacionComponent } from './Modules/authenticationModule/forms-organizacion/forms-organizacion.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,12 +35,18 @@ import { HomeComponent } from './Modules/homeModule/home/home.component'; // Imp
     MisionesComponent,
     FooterComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    AuthComponent,
+    FormsVolunteerComponent,
+    FormsOrganizacionComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SocialLoginModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgMultiSelectDropDownModule.forRoot(),
     HttpClientModule
   ],
   providers: [

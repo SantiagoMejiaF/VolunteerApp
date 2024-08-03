@@ -1,0 +1,86 @@
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-8">
+            <form id="regForm">
+                <h1 id="register">Formulario para Voluntario</h1>
+                <div class="all-steps" id="all-steps">
+                    <span class="step"><i class="fa fa-user"></i></span>
+                    <span class="step"><i class="fa fa-mobile"></i></span>
+                    <span class="step"><i class="fa fa-mobile"></i></span>
+
+                </div>
+
+                <div class="tab">
+                    <h3 id="tittle">Datos Personales</h3>
+                    <h6>Digita tu cédula</h6>
+                    <p>
+                        <input placeholder="1016517485..." oninput="this.className = ''" name="fDNI">
+                    </p>
+                    <h6>Digita tu número celular</h6>
+                    <p>
+                        <input placeholder="3124687956..." oninput="this.className = ''" name="fCell">
+                    </p>
+                    <h6>Digita tu dirección</h6>
+                    <p>
+                        <input placeholder="Cra 100 #87-56..." oninput="this.className = ''" name="fAdress">
+                    </p>
+                    <form [formGroup]="myForm">
+                        <ng-multiselect-dropdown
+                          [placeholder]="'Select City'"
+                          [data]="cities"
+                          formControlName="city"
+                          [disabled]="disabled"
+                          [settings]="dropdownSettings"
+                          (onSelect)="onItemSelect($event)"
+                          (onSelectAll)="onSelectAll($event)">
+                        </ng-multiselect-dropdown>
+                      </form>
+                </div>
+                <div class="tab">
+                    <h3 id="tittle">Contacto de Emergencia 1</h3>
+                    <h6>Digita el nombre de tu contacto</h6>
+                    <p>
+                        <input placeholder="1016517485..." oninput="this.className = ''" name="fDNI">
+                    </p>
+                    <h6>Digita el apellido de tu contacto</h6>
+                    <p>
+                        <input placeholder="3124687956..." oninput="this.className = ''" name="fCell">
+                    </p>
+                    <h6>Digita la relación con tu contacto</h6>
+                    <p>
+                        <input placeholder="Cra 100 #87-56..." oninput="this.className = ''" name="fAdress">
+                    </p>
+
+                </div>
+                <div class="tab">
+                    <h3 id="register">Contacto de Emergencia 2</h3>
+                    <h6>Digita el nombre de tu contacto</h6>
+                    <p>
+                        <input placeholder="1016517485..." oninput="this.className = ''" name="fDNI">
+                    </p>
+                    <h6>Digita el apellido de tu contacto</h6>
+                    <p>
+                        <input placeholder="3124687956..." oninput="this.className = ''" name="fCell">
+                    </p>
+                    <h6>Digita la relación con tu contacto</h6>
+                    <p>
+                        <input placeholder="Cra 100 #87-56..." oninput="this.className = ''" name="fAdress">
+                    </p>
+
+                </div>
+                <div class="thanks-message text-center" id="text-message">
+                    <h4>Gracias por tu registro</h4> 
+                </div>
+
+                <div style="overflow:auto;" id="nextprevious">
+                    <div style="float:right;">
+                        <button type="button" id="prevBtn" onclick="nextPrev(-1)"><i
+                                class="fa fa-angle-double-left"></i></button>
+                        <button type="button" id="nextBtn" onclick="nextPrev(1)"><i
+                                class="fa fa-angle-double-right"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

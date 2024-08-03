@@ -1,0 +1,42 @@
+<div class="container mt-5">
+  <div class="row d-flex justify-content-center align-items-center">
+      <div class="col-md-8">
+          <form id="regForm">
+              <h1 id="register">Formulario para Organizaciones</h1>
+              <div class="all-steps" id="all-steps">
+                  <span class="step"><i class="fas fa-building"></i></span>
+
+              </div>
+
+              <div class="tab">
+                  <h6>Digita el nombre de tu fundación</h6>
+                  <p>
+                      <input placeholder="Fundación Manitas..." oninput="this.className = ''" name="fNombre">
+                  </p>
+                  <h6>Digita el NIT de tu fundación</h6>
+                  <p>
+                      <input placeholder="87654321..." oninput="this.className = ''" name="fNIT">
+                  </p>
+                  <h6>Digita la página web de tu fundación</h6>
+                  <p>
+                      <input placeholder="www.fundacion.com..." oninput="this.className = ''" name="fWEB">
+                  </p>
+                  
+              </div>
+              
+              <div class="thanks-message text-center" id="text-message">
+                  <h4>Gracias por tu registro</h4> 
+              </div>
+
+              <div style="overflow:auto;" id="nextprevious">
+                  <div style="float:right;">
+                      <button type="button" id="prevBtn" onclick="nextPrev(-1)"><i
+                              class="fa fa-angle-double-left"></i></button>
+                      <button type="button" id="nextBtn" onclick="nextPrev(1)"><i
+                              class="fa fa-angle-double-right"></i></button>
+                  </div>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
