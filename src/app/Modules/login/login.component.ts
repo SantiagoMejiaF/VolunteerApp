@@ -58,8 +58,9 @@ export class LoginComponent implements OnInit {
                 (res) => {
                   console.log('Response from backend (Google):', res); // Imprimir respuesta del backend
                   this.tokenService.setToken(res.value);
+                  localStorage.setItem('userInfo', JSON.stringify(res));
                   this.islogged = true;
-                  this.router.navigate(['/home'], { state: { userInfo: res } }); // Navega y pasa la información del usuario
+                  this.router.navigate(['/forms'], { state: { userInfo: res } }); // Navega y pasa la información del usuario
                 },
                 (err) => {
                   console.log('Error fetching Google user info:', err); // Imprimir error
@@ -83,8 +84,9 @@ export class LoginComponent implements OnInit {
         (res) => {
           console.log('Response from backend (Facebook):', res); // Imprimir respuesta del backend
           this.tokenService.setToken(res.value);
+          localStorage.setItem('userInfo', JSON.stringify(res));
           this.islogged = true;
-          this.router.navigate(['/home'], { state: { userInfo: res } }); // Navega y pasa la información del usuario
+          this.router.navigate(['/forms']); // Navega y pasa la información del usuario
         },
         (err) => {
           console.log('Error fetching Facebook user info:', err); // Imprimir error
