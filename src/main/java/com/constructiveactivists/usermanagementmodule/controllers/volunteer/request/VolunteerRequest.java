@@ -28,4 +28,10 @@ public class VolunteerRequest {
     @Valid
     @Schema(description = "Información de emergencia del voluntario")
     private EmergencyInformationRequest emergencyInformation;
+
+    @NotNull
+    @Valid
+    @Schema(description = "Identificador del usuario al que pertenece el voluntario")
+    private Integer userId;
+
 }

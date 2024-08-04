@@ -8,16 +8,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @SequenceGenerator(name =  "INFORMACION_PERSONAL_SEQ", sequenceName = "SEQ_INFORMACION_PERSONAL", allocationSize = 1)
-@Table(name = "INFORMACION_PERSONAL")
+@Table(name = "INFORMACION_PERSONAL" , schema = "USERMANAGEMENT")
 public class PersonalInformationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USUARIO_SEQ")
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
-
-    @Column(name = "APELLIDO", length = 50, nullable = false)
-    private String lastName;
 
     @Column(name = "CEDULA", length = 10, unique = true, nullable = false)
     private String identificationCard;
@@ -27,4 +24,7 @@ public class PersonalInformationEntity {
 
     @Column(name = "AGE", length = 150, nullable = false)
     private Integer age;
+
+    @Column(name = "TELEFONO", length = 10, nullable = false)
+    private String phoneNumber;
 }

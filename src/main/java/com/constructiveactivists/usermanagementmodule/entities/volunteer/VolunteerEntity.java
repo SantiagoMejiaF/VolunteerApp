@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @SequenceGenerator(name = "VOLUNTARIO_SEQ", sequenceName = "SEQ_VOLUNTARIO", allocationSize = 1)
-@Table(name = "VOLUNTARIO")
+@Table(name = "VOLUNTARIO", schema = "USERMANAGEMENT")
 public class VolunteerEntity {
 
     @Id
@@ -32,4 +32,10 @@ public class VolunteerEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "ESTADO", length = 9)
     private StatusEnum status;
+
+    @Column(name = "ES_LIDER_GRUPO", nullable = false)
+    private boolean isGroupLeader;
+
+    @Column(name = "USUARIO_ID", nullable = false)
+    private Integer userId;
 }

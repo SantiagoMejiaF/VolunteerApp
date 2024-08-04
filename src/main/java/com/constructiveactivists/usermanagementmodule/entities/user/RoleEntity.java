@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @SequenceGenerator(name = "ROLE_SEQ", sequenceName = "SEQ_ROLE", allocationSize = 1)
-@Table(name = "ROLE")
+@Table(name = "ROLE", schema = "USERMANAGEMENT")
 public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

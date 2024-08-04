@@ -1,7 +1,11 @@
 package com.constructiveactivists.usermanagementmodule.services;
 
+import com.constructiveactivists.usermanagementmodule.entities.user.UserEntity;
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.VolunteerEntity;
+import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.StatusEnum;
+import com.constructiveactivists.usermanagementmodule.repositories.UserRepository;
 import com.constructiveactivists.usermanagementmodule.repositories.VolunteerRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +18,8 @@ public class VolunteerService {
 
     private final VolunteerRepository volunteerRepository;
 
+    private final UserRepository userRepository;
+
     public List<VolunteerEntity> getAllVolunteers() {
         return volunteerRepository.findAll();
     }
@@ -23,13 +29,25 @@ public class VolunteerService {
     }
 
     public VolunteerEntity saveVolunteer(VolunteerEntity volunteerEntity) {
-        if (volunteerEntity.getVolunteeringInformation() != null) {
-            volunteerEntity.getVolunteeringInformation().setVolunteeredHours(0);
+        Optional<UserEntity> user = userRepository.findById(volunteerEntity.getUserId());
+        if (user.isEmpty()) {
+            throw new EntityNotFoundException("Usuario con ID " + volunteerEntity.getUserId() + " no existe.");
         }
+
+        userRepository.updateRole(volunteerEntity.getUserId(), 2);
+
+        volunteerEntity.setStatus(StatusEnum.valueOf("ACTIVO"));
+        volunteerEntity.setGroupLeader(false);
+        volunteerEntity.getVolunteeringInformation().setVolunteeredHours(0);
         return volunteerRepository.save(volunteerEntity);
+
     }
 
     public void deleteVolunteer(Integer id) {
-        volunteerRepository.deleteById(id);
+        VolunteerEntity volunteer = volunteerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Volunteer not found with id " + id));
+        volunteerRepository.delete(volunteer);
     }
+
+
 }

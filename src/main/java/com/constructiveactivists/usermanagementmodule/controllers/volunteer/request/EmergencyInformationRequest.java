@@ -2,10 +2,7 @@ package com.constructiveactivists.usermanagementmodule.controllers.volunteer.req
 
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.RelationshipEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +29,12 @@ public class EmergencyInformationRequest {
     @Pattern(regexp = "^\\d{10}$", message = "El teléfono debe contener exactamente 10 dígitos")
     @Schema(description = "Teléfono del contacto de emergencia", example = "3112494942")
     private String emergencyContactPhone;
+
+    @NotBlank
+    @Size(min = 1, max = 50)
+    @Email
+    @Schema(description = "Correo del contacto de emergencia", example = "daniel@gmail.com")
+    private String emergencyContactEmail;
 
     @NotNull
     @Schema(description = "Parentesco del contacto de emergencia con el voluntario", example = "MADRE")

@@ -39,7 +39,8 @@ public interface VolunteerAPI {
             @ApiResponse(responseCode = "201", description = "Voluntario creado"),
             @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
             @ApiResponse(responseCode = "401", description = "No autorizado"),
-            @ApiResponse(responseCode = "403", description = "Prohibido")
+            @ApiResponse(responseCode = "403", description = "Prohibido"),
+            @ApiResponse(responseCode = "409", description = "Conflicto: el voluntario ya existe")
     })
     @PostMapping
     ResponseEntity<VolunteerEntity> createVolunteer(@RequestBody VolunteerRequest volunteerRequest);
@@ -51,6 +52,6 @@ public interface VolunteerAPI {
             @ApiResponse(responseCode = "403", description = "Prohibido"),
             @ApiResponse(responseCode = "404", description = "No encontrado")
     })
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteVolunteer(@PathVariable("id") Integer id);
 }

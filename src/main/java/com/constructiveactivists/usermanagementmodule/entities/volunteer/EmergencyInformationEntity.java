@@ -8,7 +8,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "INFORMACION_EMERGENCIA")
+@Table(name = "INFORMACION_EMERGENCIA", schema = "USERMANAGEMENT")
 public class EmergencyInformationEntity {
 
     @Id

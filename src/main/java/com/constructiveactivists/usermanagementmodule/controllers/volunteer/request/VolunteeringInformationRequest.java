@@ -3,7 +3,6 @@ package com.constructiveactivists.usermanagementmodule.controllers.volunteer.req
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.AvailabilityEnum;
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.InterestEnum;
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.SkillEnum;
-import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.StatusEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -18,11 +17,6 @@ import java.util.List;
 @NoArgsConstructor
 public class VolunteeringInformationRequest {
 
-    @NotBlank
-    @Size(min = 1, max = 50)
-    @Schema(description = "URL de la foto de perfil", example = "foto_perfil.jpg")
-    private String profilePicture;
-
     @NotEmpty
     @Schema(description = "Días disponibles para voluntariado", example = "[\"LUNES\", \"MIERCOLES\", \"VIERNES\"]")
     private List<AvailabilityEnum> availabilityDaysList;
@@ -35,7 +29,4 @@ public class VolunteeringInformationRequest {
     @Schema(description = "Habilidades del voluntario", example = "[\"COMUNICACION\", \"TRABAJO_EN_EQUIPO\", \"LIDERAZGO\"]")
     private List<SkillEnum> skillsList;
 
-    @NotNull
-    @Schema(description = "Estado del voluntario", example = "ACTIVO")
-    private StatusEnum status;
 }

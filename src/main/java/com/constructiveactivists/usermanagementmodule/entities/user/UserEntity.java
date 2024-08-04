@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @SequenceGenerator(name =  "USUARIO_SEQ", sequenceName = "SEQ_USUARIO", allocationSize = 1)
-@Table(name = "USUARIO")
+@Table(name = "USUARIO", schema = "USERMANAGEMENT")
 public class UserEntity {
 
     @Id
@@ -21,7 +21,7 @@ public class UserEntity {
     @Comment("Llave primaria de la tabla usuario autoincrementada por secuencia")
     private Integer id;
 
-    @Column(name = "NOMBRE", length = 20, nullable = false)
+    @Column(name = "NOMBRE", length = 20)
     @Comment("Nombre del usuario")
     private String firstName;
 

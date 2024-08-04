@@ -36,3 +36,4 @@ request-mapping:
   controller:
     user: users
     volunteer: volunteers
+    organization: organizations

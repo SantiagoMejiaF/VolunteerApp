@@ -16,6 +16,7 @@ import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.logging.Logger;
+
 
 @Service
 @AllArgsConstructor
@@ -34,9 +35,6 @@ public class UserService {
     private final RoleRepository roleRepository;
 
     private final SocialProperties socialProperties;
-
-    private static final Logger logger = Logger.getLogger(UserService.class.getName());
-
 
     public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
@@ -61,21 +59,14 @@ public class UserService {
         String userInfoUrl = "https://www.googleapis.com/oauth2/v3/userinfo?access_token=" + tokenDto.getValue();
         HttpRequest request = requestFactory.buildGetRequest(new GenericUrl(userInfoUrl));
         HttpResponse response = request.execute();
-
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> userInfo = objectMapper.readValue(response.getContent(), new TypeReference<>() {});
-
         String email = (String) userInfo.get("email");
-
-
         UserEntity existingUser = userRepository.findByEmail(email).orElse(null);
 
         if (existingUser != null) {
             return existingUser;
         }
-
-
-
         UserEntity user = new UserEntity();
         user.setEmail(email);
         user.setFirstName((String) userInfo.get("given_name"));
@@ -91,4 +82,26 @@ public class UserService {
         userRepository.save(user);
         return user;
     }
+
+
+    public void updateRole(Integer userId, Integer roleId) {
+        // Verifica si el usuario existe
+        Optional<UserEntity> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            throw new EntityNotFoundException("Usuario con ID " + userId + " no existe.");
+        }
+
+        // Verifica si el rol existe
+        Optional<RoleEntity> role = roleRepository.findById(roleId);
+        if (role.isEmpty()) {
+            throw new EntityNotFoundException("Rol con ID " + roleId + " no existe.");
+        }
+
+        // Actualiza el rol del usuario
+        userRepository.updateRole(userId, roleId);
+    }
+
+
+
+
 }

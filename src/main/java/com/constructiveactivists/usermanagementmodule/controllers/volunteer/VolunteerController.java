@@ -17,6 +17,7 @@ import java.util.Optional;
 @RestController
 @AllArgsConstructor
 @RequestMapping("${request-mapping.controller.volunteer}")
+@CrossOrigin(origins = "https://volunteer-app.online")
 public class VolunteerController implements VolunteerAPI {
 
     private final VolunteerService volunteerService;
@@ -36,8 +37,7 @@ public class VolunteerController implements VolunteerAPI {
 
     @Override
     public ResponseEntity<VolunteerEntity> createVolunteer(@Valid @RequestBody VolunteerRequest volunteerRequest) {
-        VolunteerEntity volunteerEntity = volunteerMapper.toEntity(volunteerRequest);
-        VolunteerEntity createdVolunteerEntity = volunteerService.saveVolunteer(volunteerEntity);
+        VolunteerEntity createdVolunteerEntity = volunteerService.saveVolunteer(volunteerMapper.toEntity(volunteerRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdVolunteerEntity);
     }
 
