@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit {
           callback: (response: any) => {
             if (response && response.access_token) {
               const tokenGoogle = new TokenDto(response.access_token);
+              console.log('Google Access Token:', response.access_token);
               this.oauthService.google(tokenGoogle).subscribe(
                 (res) => {
                   console.log('Response from backend (Google):', res); // Imprimir respuesta del backend
