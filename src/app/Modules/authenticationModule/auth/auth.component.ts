@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-auth',
@@ -11,7 +10,7 @@ export class AuthComponent {
   tempRole: string = '';
   userName: string = '';
 
-  constructor(private router: Router, private userService: UserService) {
+  constructor(private router: Router) {
     const userInfo = JSON.parse(localStorage.getItem('userInfo')!);
     if (userInfo) {
       this.userName = userInfo.firstName;
@@ -19,30 +18,10 @@ export class AuthComponent {
   }
 
   onSiguiente() {
-    const userInfo = JSON.parse(localStorage.getItem('userInfo')!);
-    if (!userInfo) {
-      console.error('No se encontró información del usuario');
-      return;
-    }
-    const userId = userInfo.id;
     if (this.tempRole === 'Voluntario') {
-      this.userService.updateRole(Number(userId), 2).subscribe(
-        () => {
-          this.router.navigate(['/formsV']);
-        },
-        (error) => {
-          console.error('Error updating role:', error);
-        }
-      );
+      this.router.navigate(['/formsV']);
     } else if (this.tempRole === 'Organizacion') {
-      this.userService.updateRole(Number(userId), 3).subscribe(
-        () => {
-          this.router.navigate(['/formsO']);
-        },
-        (error) => {
-          console.error('Error updating role:', error);
-        }
-      );
+      this.router.navigate(['/formsO']);
     } else {
       console.error('No se ha seleccionado ningún rol');
     }
