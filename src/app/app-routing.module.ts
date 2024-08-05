@@ -10,12 +10,11 @@ import { FormsOrganizacionComponent } from './Modules/authenticationModule/forms
 const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-  {path: 'forms', component: AuthComponent},
-  {path: 'formsV', component: FormsVolunteerComponent},
-  {path: 'formsO', component: FormsOrganizacionComponent},
+  { path: 'forms', component: AuthComponent },
+  { path: 'formsV', component: FormsVolunteerComponent },
+  { path: 'formsO', component: FormsOrganizacionComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
-  
+
 ];
 
 @NgModule({

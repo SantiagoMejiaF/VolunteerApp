@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
       this.userlogged = user;
       this.islogged = this.userlogged != null && this.tokenService.getToken() != null;
       if (this.islogged) {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/forms']);
       }
     });
 
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       if (token) {
         this.tokenService.setToken(token);
         this.islogged = true;
-        this.router.navigate(['/home']);
+        this.router.navigate(['/forms']);
       }
     });
 
