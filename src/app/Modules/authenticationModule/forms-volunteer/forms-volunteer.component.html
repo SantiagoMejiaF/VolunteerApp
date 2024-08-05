@@ -46,8 +46,10 @@
                     <p><input placeholder="Marcela" formControlName="emergencyContact1Surname"
                             oninput="this.className = ''"></p>
                     <h6>Relación con el contacto</h6>
-                    <p><input placeholder="Madre" formControlName="emergencyContact1Relation"
-                            oninput="this.className = ''"></p>
+                    <ng-multiselect-dropdown [settings]="dropdownSettings4" [data]="relationships"
+                        formControlName="emergencyContact1Relation" [disabled]="disabled"
+                        (onItemSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                    </ng-multiselect-dropdown>
                     <h6>Número de teléfono del contacto</h6>
                     <p><input placeholder="3112494942" formControlName="emergencyContact1Phone"
                             oninput="this.className = ''"></p>

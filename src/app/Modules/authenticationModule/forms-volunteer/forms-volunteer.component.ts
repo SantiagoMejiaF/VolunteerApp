@@ -26,6 +26,8 @@ export class FormsVolunteerComponent implements OnInit {
   dropdownSettings3: any = {};
   intereses: Elements[] = [];
   dropdownSettings2: any = {};
+  relationships: Elements[] = [];
+  dropdownSettings4: any = {};
 
   constructor(private fb: FormBuilder, private volunteerService: VolunteerService) {
     this.myForm = this.fb.group({
@@ -69,14 +71,6 @@ export class FormsVolunteerComponent implements OnInit {
   ngOnInit() {
     this.showTab(this.currentTab);
 
-    this.skills = [
-      { item_id: 1, item_text: 'Angular' },
-      { item_id: 2, item_text: 'Correr' },
-      { item_id: 3, item_text: 'Trabajo en grupo' },
-      { item_id: 4, item_text: 'Liderazgo' },
-      { item_id: 5, item_text: 'Manualidades' },
-      { item_id: 6, item_text: 'Cocina' },
-    ];
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
@@ -86,37 +80,35 @@ export class FormsVolunteerComponent implements OnInit {
       itemsShowLimit: 3,
       allowSearchFilter: this.ShowFilter,
     };
-    this.intereses = [
-      { item_id: 1, item_text: 'Arte' },
-      { item_id: 2, item_text: 'Pedagogía' },
-      { item_id: 3, item_text: 'Ambiente' },
-    ];
-    this.dropdownSettings2 = {
-      singleSelection: false,
+
+    this.dropdownSettings2 = { ...this.dropdownSettings };
+    this.dropdownSettings3 = { ...this.dropdownSettings };
+    this.dropdownSettings4 = {
+      singleSelection: true,  // Permitir solo una selección
       idField: 'item_id',
       textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
       allowSearchFilter: this.ShowFilter,
     };
-    this.days = [
-      { item_id: 1, item_text: 'Lunes' },
-      { item_id: 2, item_text: 'Martes' },
-      { item_id: 3, item_text: 'Miércoles' },
-      { item_id: 4, item_text: 'Jueves' },
-      { item_id: 5, item_text: 'Viernes' },
-      { item_id: 6, item_text: 'Sábado' },
-    ];
-    this.dropdownSettings3 = {
-      singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
-      allowSearchFilter: this.ShowFilter,
-    };
+
+    this.loadDropdownData();
+  }
+
+  loadDropdownData() {
+    this.volunteerService.getSkills().subscribe(data => {
+      this.skills = data.map((item, index) => ({ item_id: index + 1, item_text: item }));
+    });
+
+    this.volunteerService.getInterests().subscribe(data => {
+      this.intereses = data.map((item, index) => ({ item_id: index + 1, item_text: item }));
+    });
+
+    this.volunteerService.getAvailabilities().subscribe(data => {
+      this.days = data.map((item, index) => ({ item_id: index + 1, item_text: item }));
+    });
+
+    this.volunteerService.getRelationships().subscribe(data => {
+      this.relationships = data.map((item, index) => ({ item_id: index + 1, item_text: item }));
+    });
   }
 
   showTab(n: number) {
@@ -213,7 +205,7 @@ export class FormsVolunteerComponent implements OnInit {
       emergencyInformation: {
         emergencyContactFirstName: this.myForm.get('emergencyContact1Name')?.value,
         emergencyContactLastName: this.myForm.get('emergencyContact1Surname')?.value,
-        emergencyContactRelationship: this.myForm.get('emergencyContact1Relation')?.value,
+        emergencyContactRelationship: this.myForm.get('emergencyContact1Relation')?.value[0].item_text,
         emergencyContactPhone: this.myForm.get('emergencyContact1Phone')?.value,
         emergencyContactEmail: this.myForm.get('emergencyContact1Email')?.value,
       }

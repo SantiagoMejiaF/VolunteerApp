@@ -8,11 +8,11 @@ import { Organization } from '../models/organization.model';
   providedIn: 'root'
 })
 export class OrganizationService {
-  private apiUrl = `${environment.apiUrl}/organizations`;
+  private apiUrl = `${environment.apiUrl}`;
 
   constructor(private http: HttpClient) { }
 
   createOrganization(organizationData: Organization): Observable<any> {
-    return this.http.post<any>(this.apiUrl, organizationData);
+    return this.http.post<any>(`${environment.apiUrl}/organizations`, organizationData);
   }
 }

@@ -10,19 +10,19 @@ const cabecera = { headers: new HttpHeaders({ 'Content-Type': 'application/json'
   providedIn: 'root'
 })
 export class OauthService {
-  private oauthUrl = `${environment.apiUrl}/users`;
+  private oauthUrl = `${environment.apiUrl}`;
 
   constructor(private httpClient: HttpClient) { }
 
   public google(tokenDto: TokenDto): Observable<any> {
-    return this.httpClient.post<any>(`${this.oauthUrl}/google`, tokenDto, cabecera);
+    return this.httpClient.post<any>(`${environment.apiUrl}/users/google`, tokenDto, cabecera);
   }
 
   public facebook(tokenDto: TokenDto): Observable<any> {
-    return this.httpClient.post<any>(`${this.oauthUrl}/facebook`, tokenDto, cabecera);
+    return this.httpClient.post<any>(`${environment.apiUrl}/users/facebook`, tokenDto, cabecera);
   }
 
   public apple(tokenDto: TokenDto): Observable<any> {
-    return this.httpClient.post<any>(`${this.oauthUrl}/apple`, tokenDto, cabecera);
+    return this.httpClient.post<any>(`${environment.apiUrl}/users/apple`, tokenDto, cabecera);
   }
 }

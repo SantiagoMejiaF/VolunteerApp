@@ -8,11 +8,27 @@ import { Volunteer } from '../models/volunteer.model';
   providedIn: 'root'
 })
 export class VolunteerService {
-  private apiUrl = `${environment.apiUrl}/volunteers`;
+  private apiUrl = `${environment.apiUrl}`;
 
   constructor(private http: HttpClient) { }
 
   createVolunteer(volunteerData: Volunteer): Observable<any> {
-    return this.http.post<any>(this.apiUrl, volunteerData);
+    return this.http.post<any>(`${environment.apiUrl}/volunteers`, volunteerData);
+  }
+
+  getInterests(): Observable<string[]> {
+    return this.http.get<string[]>(`${environment.apiUrl}/volunteers/interests`);
+  }
+
+  getSkills(): Observable<string[]> {
+    return this.http.get<string[]>(`${environment.apiUrl}/volunteers/skills`);
+  }
+
+  getAvailabilities(): Observable<string[]> {
+    return this.http.get<string[]>(`${environment.apiUrl}/volunteers/availabilities`);
+  }
+
+  getRelationships(): Observable<string[]> {
+    return this.http.get<string[]>(`${environment.apiUrl}/volunteers/relationships`);
   }
 }
