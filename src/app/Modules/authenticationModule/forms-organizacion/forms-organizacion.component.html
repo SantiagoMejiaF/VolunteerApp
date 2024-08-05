@@ -1,70 +1,86 @@
 <div id="thanksBackground"></div>
 <div class="container mt-5" id="Completo">
-  <div class="row d-flex justify-content-center align-items-center">
-      <div class="col-md-8">
-          <form id="regForm">
-              <h1 id="register">Formulario para Organizaciones</h1>
-              <div class="all-steps" id="all-steps">
-                  <span class="step"><i class="fas fa-building"></i></span>
-                  <span class="step"><i class="fa fa-mobile"></i></span>
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-8">
+            <form [formGroup]="myForm" (ngSubmit)="onSubmit()" id="regForm">
+                <h1 id="register">Formulario para Organizaciones</h1>
+                <div class="all-steps" id="all-steps">
+                    <span class="step"><i class="fas fa-building"></i></span>
+                    <span class="step"><i class="fa fa-mobile"></i></span>
+                    <span class="step"><i class="fa fa-check"></i></span>
+                </div>
 
-              </div>
+                <!-- Tab 1: Información de la Fundación -->
+                <div class="tab">
+                    <h6>Digita el nombre de tu fundación</h6>
+                    <p><input placeholder="Fundación Manitas..." formControlName="foundationName"
+                            oninput="this.className = ''"></p>
+                    <h6>Digita el NIT de tu fundación</h6>
+                    <p><input placeholder="87654321..." formControlName="nit" oninput="this.className = ''"></p>
+                    <h6>Digita la página web de tu fundación</h6>
+                    <p><input placeholder="www.fundacion.com..." formControlName="website"
+                            oninput="this.className = ''"></p>
+                </div>
 
-              <div class="tab">
-                  <h6>Digita el nombre de tu fundación</h6>
-                  <p>
-                      <input placeholder="Fundación Manitas..." oninput="this.className = ''" name="fNombre">
-                  </p>
-                  <h6>Digita el NIT de tu fundación</h6>
-                  <p>
-                      <input placeholder="87654321..." oninput="this.className = ''" name="fNIT">
-                  </p>
-                  <h6>Digita la página web de tu fundación</h6>
-                  <p>
-                      <input placeholder="www.fundacion.com..." oninput="this.className = ''" name="fWEB">
-                  </p>
-                  
-              </div>
-              
-              <div class="tab">
-                <h3 id="tittle">Información de contacto</h3>
-                <h6>Digita el celular de tu fundación</h6>
-                <p>
-                    <input placeholder="312456789..." oninput="this.className = ''" name="fNombre">
-                </p>
-                <h6>Digita el correo electrónico</h6>
-                <p>
-                    <input placeholder="fundacion@gmail.com..." oninput="this.className = ''" name="fNIT">
-                </p>
-                <h6>Digita la dirección de tu fundación</h6>
-                <p>
-                    <input placeholder="Cra 57c #86-76..." oninput="this.className = ''" name="fWEB">
-                </p>
-                
-            </div>
-              
-              <div class="thanks-message text-center" id="text-message">
-                  <h1>¡Bienvenido a Volunteer App!</h1> 
-                  <p> 
-                    Queremos agradecerte sinceramente por registrar tu organización en nuestra plataforma. Estamos encantados de colaborar contigo para conectar tus proyectos con voluntarios apasionados que están listos para hacer una diferencia. <br>
-                    
-                    Tu registro ha sido exitoso y pronto recibirás más detalles sobre cómo comenzar a publicar oportunidades de voluntariado y gestionar tu perfil en nuestra plataforma. Estamos aquí para apoyarte en cada paso del proceso y asegurarnos de que tu experiencia con nosotros sea lo más enriquecedora posible. <br>
-                                        
-                    Gracias nuevamente por tu compromiso con el cambio positivo y por elegir a Volunteer App como tu aliado en esta misión. <br>
-                    
-                    Con aprecio, <br>
-                    El Equipo de Volunteer App</p>
-              </div>
+                <!-- Tab 2: Información de Contacto -->
+                <div class="tab">
+                    <h3 id="tittle">Información de contacto</h3>
+                    <h6>Digita el celular de tu fundación</h6>
+                    <p><input placeholder="312456789..." formControlName="phoneNumber" oninput="this.className = ''">
+                    </p>
+                    <h6>Digita el correo electrónico</h6>
+                    <p><input placeholder="fundacion@gmail.com..." formControlName="email"
+                            oninput="this.className = ''"></p>
+                    <h6>Digita la dirección de tu fundación</h6>
+                    <p><input placeholder="Cra 57c #86-76..." formControlName="address" oninput="this.className = ''">
+                    </p>
+                </div>
 
-              <div style="overflow:auto;" id="nextprevious">
-                  <div style="float:right;">
-                      <button type="button" id="prevBtn" onclick="nextPrev(-1)"><i
-                              class="fa fa-angle-double-left"></i></button>
-                      <button type="button" id="nextBtn" onclick="nextPrev(1)"><i
-                              class="fa fa-angle-double-right"></i></button>
-                  </div>
-              </div>
-          </form>
-      </div>
-  </div>
+                <!-- Tab 3: Confirmación -->
+                <div class="tab">
+                    <h3 id="tittle">Confirmación</h3>
+                    <h6>Nombre de la Fundación:</h6>
+                    <p>{{ organizationData.institutionalInformation.foundationName }}</p>
+                    <h6>NIT:</h6>
+                    <p>{{ organizationData.institutionalInformation.nit }}</p>
+                    <h6>Página Web:</h6>
+                    <p>{{ organizationData.institutionalInformation.website }}</p>
+                    <h6>Celular:</h6>
+                    <p>{{ organizationData.contactInformation.phoneNumber }}</p>
+                    <h6>Correo Electrónico:</h6>
+                    <p>{{ organizationData.contactInformation.email }}</p>
+                    <h6>Dirección:</h6>
+                    <p>{{ organizationData.contactInformation.address }}</p>
+                </div>
+
+                <!-- Mensaje de Agradecimiento -->
+                <div class="thanks-message text-center" id="text-message">
+                    <h1>¡Bienvenido a Volunteer App!</h1>
+                    <p>Queremos agradecerte sinceramente por registrar tu organización en nuestra plataforma. Estamos
+                        encantados de colaborar contigo para conectar tus proyectos con voluntarios apasionados que
+                        están listos para hacer una diferencia. <br>
+                        Tu registro ha sido exitoso y pronto recibirás más detalles sobre cómo comenzar a publicar
+                        oportunidades de voluntariado y gestionar tu perfil en nuestra plataforma. Estamos aquí para
+                        apoyarte en cada paso del proceso y asegurarnos de que tu experiencia con nosotros sea lo más
+                        enriquecedora posible. <br>
+                        Gracias nuevamente por tu compromiso con el cambio positivo y por elegir a Volunteer App como tu
+                        aliado en esta misión. <br>
+                        Con aprecio, <br>
+                        El Equipo de Volunteer App
+                    </p>
+                    <button type="submit">Continuar</button>
+                </div>
+
+                <!-- Botones de Navegación -->
+                <div style="overflow:auto;" id="nextprevious">
+                    <div style="float:right;">
+                        <button type="button" id="prevBtn" (click)="nextPrev(-1)"><i
+                                class="fa fa-angle-double-left"></i></button>
+                        <button type="button" id="nextBtn" (click)="nextPrev(1)"><i
+                                class="fa fa-angle-double-right"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

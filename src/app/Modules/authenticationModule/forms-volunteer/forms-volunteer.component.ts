@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { VolunteerService } from '../../../services/volunteer.service';
+import { Volunteer } from '../../../models/volunteer.model';
 
 interface Elements {
   item_id: number;
@@ -15,7 +16,7 @@ interface Elements {
 export class FormsVolunteerComponent implements OnInit {
   currentTab = 0;
   myForm: FormGroup;
-  volunteerData: any = {};
+  volunteerData: Volunteer;
   disabled = false;
   ShowFilter = false;
   limitSelection = false;
@@ -42,7 +43,7 @@ export class FormsVolunteerComponent implements OnInit {
     });
 
     this.volunteerData = {
-      userId: null,
+      userId: 0,
       personalInformation: {
         identificationCard: '',
         phoneNumber: '',
@@ -134,7 +135,6 @@ export class FormsVolunteerComponent implements OnInit {
 
     this.fixStepIndicator(n);
   }
-
 
   nextPrev(n: number) {
     const tabs = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;

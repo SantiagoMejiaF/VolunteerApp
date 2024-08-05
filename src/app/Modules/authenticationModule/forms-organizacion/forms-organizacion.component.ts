@@ -1,28 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { OrganizationService } from '../../../services/organization.service';
+import { Organization } from '../../../models/organization.model';
 
 @Component({
   selector: 'app-forms-organizacion',
   templateUrl: './forms-organizacion.component.html',
-  styleUrl: './forms-organizacion.component.css',
+  styleUrls: ['./forms-organizacion.component.css'],
 })
-export class FormsOrganizacionComponent {
+export class FormsOrganizacionComponent implements OnInit {
   currentTab = 0;
+  myForm: FormGroup;
+  organizationData: Organization;
+
+  constructor(private fb: FormBuilder, private organizationService: OrganizationService) {
+    this.myForm = this.fb.group({
+      foundationName: [''],
+      nit: [''],
+      website: [''],
+      phoneNumber: [''],
+      email: [''],
+      address: ['']
+    });
+
+    this.organizationData = {
+      userId: 0,
+      institutionalInformation: {
+        nit: '',
+        foundationName: '',
+        website: ''
+      },
+      contactInformation: {
+        phoneNumber: '',
+        email: '',
+        address: ''
+      }
+    };
+  }
 
   ngOnInit() {
     this.showTab(this.currentTab);
-
-    document
-      .getElementById('prevBtn')
-      ?.addEventListener('click', () => this.nextPrev(-1));
-    document
-      .getElementById('nextBtn')
-      ?.addEventListener('click', () => this.nextPrev(1));
   }
 
   showTab(n: number) {
-    const tabs = document.getElementsByClassName(
-      'tab'
-    ) as HTMLCollectionOf<HTMLElement>;
+    const tabs = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;
     tabs[n].style.display = 'block';
 
     if (n === 0) {
@@ -32,20 +53,16 @@ export class FormsOrganizacionComponent {
     }
 
     if (n === tabs.length - 1) {
-      document.getElementById('nextBtn')!.innerHTML =
-        '<i class="fa fa-angle-double-right"></i>';
+      document.getElementById('nextBtn')!.innerHTML = 'Confirmar';
     } else {
-      document.getElementById('nextBtn')!.innerHTML =
-        '<i class="fa fa-angle-double-right"></i>';
+      document.getElementById('nextBtn')!.innerHTML = '<i class="fa fa-angle-double-right"></i>';
     }
 
     this.fixStepIndicator(n);
   }
 
   nextPrev(n: number) {
-    const tabs = document.getElementsByClassName(
-      'tab'
-    ) as HTMLCollectionOf<HTMLElement>;
+    const tabs = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;
     if (n === 1 && !this.validateForm()) return;
 
     tabs[this.currentTab].style.display = 'none';
@@ -60,13 +77,15 @@ export class FormsOrganizacionComponent {
       return;
     }
 
+    if (this.currentTab === tabs.length - 1) {
+      this.setOrganizationData();
+    }
+
     this.showTab(this.currentTab);
   }
 
   validateForm(): boolean {
-    const tabs = document.getElementsByClassName(
-      'tab'
-    ) as HTMLCollectionOf<HTMLElement>;
+    const tabs = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;
     const inputs = tabs[this.currentTab].getElementsByTagName('input');
 
     let valid = true;
@@ -78,8 +97,7 @@ export class FormsOrganizacionComponent {
     }
 
     if (valid) {
-      document.getElementsByClassName('step')[this.currentTab].className +=
-        ' finish';
+      document.getElementsByClassName('step')[this.currentTab].className += ' finish';
     }
 
     return valid;
@@ -93,4 +111,33 @@ export class FormsOrganizacionComponent {
     steps[n].className += ' active';
   }
 
+  setOrganizationData() {
+    this.organizationData = {
+      userId: JSON.parse(localStorage.getItem('userInfo')!).id,
+      institutionalInformation: {
+        nit: this.myForm.get('nit')?.value,
+        foundationName: this.myForm.get('foundationName')?.value,
+        website: this.myForm.get('website')?.value,
+      },
+      contactInformation: {
+        phoneNumber: this.myForm.get('phoneNumber')?.value,
+        email: this.myForm.get('email')?.value,
+        address: this.myForm.get('address')?.value,
+      }
+    };
+    console.log('Datos que se enviarán:', JSON.stringify(this.organizationData, null, 2));
+  }
+
+  onSubmit() {
+    this.organizationService.createOrganization(this.organizationData).subscribe(
+      (response) => {
+        console.log('Organization created successfully:', response);
+        // Mostrar mensaje de éxito
+      },
+      (error) => {
+        console.error('Error creating organization:', error);
+        // Mostrar mensaje de error
+      }
+    );
+  }
 }
