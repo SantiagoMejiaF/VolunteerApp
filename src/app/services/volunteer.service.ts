@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { Volunteer } from '../models/volunteer.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VolunteerService {
-  private apiUrl = 'http://localhost:8085/api/v1/user-management/volunteers'; // Cambia esta URL por la de tu backend
+  private apiUrl = `${environment.apiUrl}/volunteers`;
 
   constructor(private http: HttpClient) { }
 
-  createVolunteer(volunteerData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, volunteerData);
+  createVolunteer(volunteerData: Volunteer): Observable<any> {
+    return this.http.post<any>(this.apiUrl, volunteerData);
   }
 }

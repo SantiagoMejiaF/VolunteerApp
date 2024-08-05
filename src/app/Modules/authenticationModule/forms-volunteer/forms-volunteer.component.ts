@@ -32,6 +32,7 @@ export class FormsVolunteerComponent implements OnInit {
       dni: [''],
       cell: [''],
       address: [''],
+      age: [''],
       skills: [''],
       intereses: [''],
       days: [''],
@@ -47,7 +48,8 @@ export class FormsVolunteerComponent implements OnInit {
       personalInformation: {
         identificationCard: '',
         phoneNumber: '',
-        address: ''
+        address: '',
+        age: 0
       },
       volunteeringInformation: {
         availabilityDaysList: [],
@@ -148,6 +150,7 @@ export class FormsVolunteerComponent implements OnInit {
       document.getElementById('all-steps')!.style.display = 'none';
       document.getElementById('register')!.style.display = 'none';
       document.getElementById('text-message')!.style.display = 'block';
+      document.getElementById('thanksBackground')!.style.display = 'block';
       return;
     }
 
@@ -188,6 +191,7 @@ export class FormsVolunteerComponent implements OnInit {
   onItemSelect(item: any) {
     console.log('onItemSelect', item);
   }
+
   onSelectAll(items: any) {
     console.log('onSelectAll', items);
   }
@@ -199,6 +203,7 @@ export class FormsVolunteerComponent implements OnInit {
         identificationCard: this.myForm.get('dni')?.value,
         phoneNumber: this.myForm.get('cell')?.value,
         address: this.myForm.get('address')?.value,
+        age: this.myForm.get('age')?.value
       },
       volunteeringInformation: {
         availabilityDaysList: this.myForm.get('days')?.value.map((item: Elements) => item.item_text),
