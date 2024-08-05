@@ -2,10 +2,7 @@ package com.constructiveactivists.usermanagementmodule.services;
 
 import com.constructiveactivists.usermanagementmodule.entities.user.UserEntity;
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.VolunteerEntity;
-import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.AvailabilityEnum;
-import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.InterestEnum;
-import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.SkillEnum;
-import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.StatusEnum;
+import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.*;
 import com.constructiveactivists.usermanagementmodule.repositories.UserRepository;
 import com.constructiveactivists.usermanagementmodule.repositories.VolunteerRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -63,5 +60,9 @@ public class VolunteerService {
 
     public List<AvailabilityEnum> getAllAvailabilities() {
         return Arrays.asList(AvailabilityEnum.values());
+    }
+
+    public List <RelationshipEnum> getAllRelationships() {
+        return Arrays.asList(RelationshipEnum.values());
     }
 }

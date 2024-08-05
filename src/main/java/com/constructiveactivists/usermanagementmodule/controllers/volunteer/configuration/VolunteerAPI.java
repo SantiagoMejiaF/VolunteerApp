@@ -4,6 +4,7 @@ import com.constructiveactivists.usermanagementmodule.controllers.volunteer.requ
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.AvailabilityEnum;
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.InterestEnum;
+import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.RelationshipEnum;
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.SkillEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -88,4 +89,14 @@ public interface VolunteerAPI {
     })
     @GetMapping("/availabilities")
     ResponseEntity<List<AvailabilityEnum>> getAllAvailabilities();
+
+    @Operation(summary = "Obtener una lista con todas las relaciones disponibles")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "401", description = "No autorizado"),
+            @ApiResponse(responseCode = "403", description = "Prohibido"),
+            @ApiResponse(responseCode = "404", description = "No encontrado")
+    })
+    @GetMapping("/relationships")
+    ResponseEntity<List<RelationshipEnum>> getAllRelationships();
 }

@@ -6,6 +6,7 @@ import com.constructiveactivists.usermanagementmodule.controllers.volunteer.requ
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.AvailabilityEnum;
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.InterestEnum;
+import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.RelationshipEnum;
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.SkillEnum;
 import com.constructiveactivists.usermanagementmodule.services.VolunteerService;
 import jakarta.validation.Valid;
@@ -66,6 +67,12 @@ public class VolunteerController implements VolunteerAPI {
     public ResponseEntity<List<AvailabilityEnum>> getAllAvailabilities() {
         List<AvailabilityEnum> availabilities = volunteerService.getAllAvailabilities();
         return ResponseEntity.ok(availabilities);
+    }
+
+    @Override
+    public ResponseEntity<List<RelationshipEnum>> getAllRelationships() {
+        List<RelationshipEnum> relationships = volunteerService.getAllRelationships();
+        return ResponseEntity.ok(relationships);
     }
 
 }
