@@ -2,6 +2,9 @@ package com.constructiveactivists.usermanagementmodule.controllers.volunteer.con
 
 import com.constructiveactivists.usermanagementmodule.controllers.volunteer.request.VolunteerRequest;
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.VolunteerEntity;
+import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.AvailabilityEnum;
+import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.InterestEnum;
+import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.SkillEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -54,4 +57,35 @@ public interface VolunteerAPI {
     })
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteVolunteer(@PathVariable("id") Integer id);
+
+
+    @Operation(summary = "Obtener una lista con todos los intereses disponibles")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "401", description = "No autorizado"),
+            @ApiResponse(responseCode = "403", description = "Prohibido"),
+            @ApiResponse(responseCode = "404", description = "No encontrado")
+    })
+    @GetMapping("/interests")
+    ResponseEntity<List<InterestEnum>> getAllInterests();
+
+    @Operation(summary = "Obtener una lista con todas las habilidades disponibles")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "401", description = "No autorizado"),
+            @ApiResponse(responseCode = "403", description = "Prohibido"),
+            @ApiResponse(responseCode = "404", description = "No encontrado")
+    })
+    @GetMapping("/skills")
+    ResponseEntity<List<SkillEnum>> getAllSkills();
+
+    @Operation(summary = "Obtener una lista con todas las disponibilidades disponibles")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "401", description = "No autorizado"),
+            @ApiResponse(responseCode = "403", description = "Prohibido"),
+            @ApiResponse(responseCode = "404", description = "No encontrado")
+    })
+    @GetMapping("/availabilities")
+    ResponseEntity<List<AvailabilityEnum>> getAllAvailabilities();
 }

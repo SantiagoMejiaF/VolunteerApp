@@ -4,6 +4,9 @@ import com.constructiveactivists.usermanagementmodule.controllers.volunteer.conf
 import com.constructiveactivists.usermanagementmodule.controllers.volunteer.mappers.VolunteerMapper;
 import com.constructiveactivists.usermanagementmodule.controllers.volunteer.request.VolunteerRequest;
 import com.constructiveactivists.usermanagementmodule.entities.volunteer.VolunteerEntity;
+import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.AvailabilityEnum;
+import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.InterestEnum;
+import com.constructiveactivists.usermanagementmodule.entities.volunteer.enums.SkillEnum;
 import com.constructiveactivists.usermanagementmodule.services.VolunteerService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -46,4 +49,23 @@ public class VolunteerController implements VolunteerAPI {
         volunteerService.deleteVolunteer(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @Override
+    public ResponseEntity<List<InterestEnum>> getAllInterests() {
+        List<InterestEnum> interests = volunteerService.getAllInterests();
+        return ResponseEntity.ok(interests);
+    }
+
+    @Override
+    public ResponseEntity<List<SkillEnum>> getAllSkills() {
+        List<SkillEnum> skills = volunteerService.getAllSkills();
+        return ResponseEntity.ok(skills);
+    }
+
+    @Override
+    public ResponseEntity<List<AvailabilityEnum>> getAllAvailabilities() {
+        List<AvailabilityEnum> availabilities = volunteerService.getAllAvailabilities();
+        return ResponseEntity.ok(availabilities);
+    }
+
 }
