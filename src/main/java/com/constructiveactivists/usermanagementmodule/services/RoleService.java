@@ -28,6 +28,10 @@ public class RoleService {
         return roleRepository.findByRoleType(roleType);
     }
 
+    public RoleEntity createRole(RoleEntity roleEntity) {
+        return roleRepository.save(roleEntity);
+    }
+
     public RoleEntity saveRole(RoleEntity roleEntity) {
         return roleRepository.save(roleEntity);
     }

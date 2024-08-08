@@ -53,11 +53,11 @@ public class AuthenticationService {
 
     private UserEntity registerNewUser(Map<String, Object> userInfo) {
 
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setRoleType(DEFAULT_ROLE_TYPE);
+        RoleEntity defaultRole = roleService.createRole(roleEntity);
+
         UserEntity user = new UserEntity();
-
-        RoleEntity defaultRole = roleService.getRoleByType(DEFAULT_ROLE_TYPE)
-                .orElseThrow(() -> new RuntimeException("El tipo de rol " + DEFAULT_ROLE_TYPE + " no se encontró en la base de datos."));
-
         user.setRoleId(defaultRole.getId());
         user.setAuthorizationType(AuthorizationStatus.PENDIENTE);
         user.setFirstName((String) userInfo.get("given_name"));
