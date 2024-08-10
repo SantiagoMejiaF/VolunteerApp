@@ -39,4 +39,3 @@ request-mapping:
     user: users
     volunteer: volunteers
     organization: organizations
-    facade: facades
