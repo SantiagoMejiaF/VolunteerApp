@@ -21,13 +21,15 @@ export class GestionUsuariosComponent {
         pageLength: 5,
         processing: true,
         lengthMenu: [5, 10, 25],
+        //dom: 'ftip',
+        scrollX:true,
         language: {
-          info: 'Mostrar página _PAGE_ de _PAGES_',
-          search: 'Buscar',
-          infoEmpty: 'No hay registros',
-          infoFiltered: '(Filtrado de _MAX_ registros)',
-          lengthMenu: '_MENU_ registros por página',
-          zeroRecords: 'No se encuentra - perdón',
+          info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
+          search: '<span style="font-size: 0.875rem;">Buscar</span>',
+          infoEmpty: '<span style="font-size: 0.875rem;">No hay registros</span>',
+          infoFiltered: '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
+          lengthMenu: '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
+          zeroRecords: '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
         },
       });
     }, 1);

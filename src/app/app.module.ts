@@ -27,6 +27,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from './Modules/dashboardModule/sidebar/sidebar.component';
 import { GestionUsuariosComponent } from './Modules/AdminUser/gestion-usuarios/gestion-usuarios.component';
 import {DataTablesModule } from 'angular-datatables';
+import { DashboardComponent } from './Modules/AdminUser/dashboard/dashboard.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import {DataTablesModule } from 'angular-datatables';
     FormsOrganizacionComponent,
     SidebarComponent,
     GestionUsuariosComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

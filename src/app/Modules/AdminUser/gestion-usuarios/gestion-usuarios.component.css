@@ -1,13 +1,82 @@
 /* Aplica la fuente Quicksand a todos los textos */
-body, p, h1, h2, h3, h4, h5, h6, span, div, button, input, textarea {
-    font-family: "Quicksand", sans-serif;
+body,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+div,
+button,
+input,
+textarea {
+  font-family: "Quicksand", sans-serif;
 }
 
-
 .table-container {
-    background-color: white; /* Fondo blanco */
-    border-radius: 10px; /* Bordes redondeados */
-    padding: 20px; /* Espaciado interno */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  background-color: white; /* Fondo blanco */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 20px; /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 20px;
+}
+p {
+  font-weight: 600;
+  font-size: 14px;
+  color: #b3abb4;
+}
+th {
+  font-size: 14px;
+}
+td {
+  font-size: 14px;
+  color: #80777c;
+}
+/* Aplica a todos los íconos dentro de un botón */
+button i.fa {
+  color: #80777c;
+  transition: color 0.3s ease; /* Transición suave para el cambio de color */
+}
+
+button:hover i.fa {
+  color: #007bff; /* Color azul al pasar el mouse */
+}
+.modal-footer .aceptar {
+  font-family: "Quicksand", sans-serif;
+  background-color: transparent;
+  border: 2px solid #1E1450;
+  color: #1e1e1e;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 30px;
+  transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+}
+
+.modal-footer .aceptar:hover {
+  background-color: #1E1450;
+  color: white;
+}
+
+.modal-footer .rechazar {
+    font-family: "Quicksand", sans-serif;
+    background-color: transparent;
+    border: 2px solid #ED4B4B;
+    color: #1e1e1e;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 30px;
+    transition: background-color 0.1s, color 0.3s, border-color 0.3s;
   }
   
+  .modal-footer .rechazar:hover {
+    background-color: #ED4B4B;
+    color: white;
+  }
+
+ 
