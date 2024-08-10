@@ -7,7 +7,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name =  "INFORMACION_PERSONAL_SEQ", sequenceName = "SEQ_INFORMACION_PERSONAL", allocationSize = 1)
+@SequenceGenerator(name =  "INFORMACION_PERSONAL_SEQ", sequenceName = "volunteer_management_module.SEQ_INFORMACION_PERSONAL",
+        allocationSize = 1)
 @Table(name = "INFORMACION_PERSONAL" , schema = "VOLUNTEER_MANAGEMENT_MODULE")
 public class PersonalInformationEntity {
 

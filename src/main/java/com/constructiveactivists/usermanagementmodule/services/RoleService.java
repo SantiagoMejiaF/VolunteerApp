@@ -44,4 +44,8 @@ public class RoleService {
         existingRole.setRoleType(updatedRoleEntity.getRoleType());
         return roleRepository.save(existingRole);
     }
+
+    public void deleteRole(Integer roleId) {
+        roleRepository.deleteById(roleId);
+    }
 }

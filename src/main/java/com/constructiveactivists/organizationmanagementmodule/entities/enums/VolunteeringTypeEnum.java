@@ -1,6 +1,6 @@
 package com.constructiveactivists.organizationmanagementmodule.entities.enums;
 
-public enum VolunteeringType {
+public enum VolunteeringTypeEnum {
 
     ADJUNTA,
     DONANTE,

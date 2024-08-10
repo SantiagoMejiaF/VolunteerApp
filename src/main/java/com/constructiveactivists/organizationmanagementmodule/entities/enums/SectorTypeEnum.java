@@ -1,6 +1,6 @@
 package com.constructiveactivists.organizationmanagementmodule.entities.enums;
 
-public enum SectorType {
+public enum SectorTypeEnum {
 
     TECNOLOGIA,
     SALUD,

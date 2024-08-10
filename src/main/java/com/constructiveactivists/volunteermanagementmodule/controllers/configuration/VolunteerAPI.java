@@ -28,6 +28,7 @@ public interface VolunteerAPI {
     @GetMapping
     List<VolunteerEntity> getAllVolunteers();
 
+
     @Operation(summary = "Obtener un voluntario por Id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
@@ -37,6 +38,7 @@ public interface VolunteerAPI {
     })
     @GetMapping("/{id}")
     ResponseEntity<VolunteerEntity> getVolunteerById(@PathVariable("id") Integer id);
+
 
     @Operation(summary = "Agregar un voluntario a la base de datos")
     @ApiResponses(value = {
@@ -49,6 +51,7 @@ public interface VolunteerAPI {
     @PostMapping
     ResponseEntity<VolunteerEntity> createVolunteer(@RequestBody VolunteerRequest volunteerRequest);
 
+
     @Operation(summary = "Eliminar un voluntario de la base de datos")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Voluntario eliminado"),
@@ -60,42 +63,33 @@ public interface VolunteerAPI {
     ResponseEntity<Void> deleteVolunteer(@PathVariable("id") Integer id);
 
 
-    @Operation(summary = "Obtener una lista con todos los intereses disponibles")
+    @Operation(summary = "Obtener todos los intereses que un voluntario puede tener")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
-            @ApiResponse(responseCode = "401", description = "No autorizado"),
-            @ApiResponse(responseCode = "403", description = "Prohibido"),
-            @ApiResponse(responseCode = "404", description = "No encontrado")
     })
     @GetMapping("/interests")
     ResponseEntity<List<InterestEnum>> getAllInterests();
 
-    @Operation(summary = "Obtener una lista con todas las habilidades disponibles")
+
+    @Operation(summary = "Obtener todas las habilidades que un voluntario puede tener")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
-            @ApiResponse(responseCode = "401", description = "No autorizado"),
-            @ApiResponse(responseCode = "403", description = "Prohibido"),
-            @ApiResponse(responseCode = "404", description = "No encontrado")
     })
     @GetMapping("/skills")
     ResponseEntity<List<SkillEnum>> getAllSkills();
 
-    @Operation(summary = "Obtener una lista con todas las disponibilidades disponibles")
+
+    @Operation(summary = "Obtener todos los días de la semana en los que un voluntario puede trabajar")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
-            @ApiResponse(responseCode = "401", description = "No autorizado"),
-            @ApiResponse(responseCode = "403", description = "Prohibido"),
-            @ApiResponse(responseCode = "404", description = "No encontrado")
     })
     @GetMapping("/availabilities")
     ResponseEntity<List<AvailabilityEnum>> getAllAvailabilities();
 
-    @Operation(summary = "Obtener una lista con todas las relaciones disponibles")
+
+    @Operation(summary = "Obtener todos los posibles parentezcos que un voluntario puede tener")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
-            @ApiResponse(responseCode = "401", description = "No autorizado"),
-            @ApiResponse(responseCode = "403", description = "Prohibido"),
-            @ApiResponse(responseCode = "404", description = "No encontrado")
     })
     @GetMapping("/relationships")
     ResponseEntity<List<RelationshipEnum>> getAllRelationships();

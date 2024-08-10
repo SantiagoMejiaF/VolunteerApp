@@ -8,7 +8,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "ROLE_SEQ", sequenceName = "SEQ_ROLE", allocationSize = 1)
+@SequenceGenerator(name = "ROLE_SEQ", sequenceName = "user_management_module.SEQ_ROLE", allocationSize = 1)
 @Table(name = "ROLE", schema = "USER_MANAGEMENT_MODULE")
 public class RoleEntity {
 

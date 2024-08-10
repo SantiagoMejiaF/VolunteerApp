@@ -4,6 +4,9 @@ import com.constructiveactivists.organizationmanagementmodule.controllers.config
 import com.constructiveactivists.organizationmanagementmodule.controllers.mappers.OrganizationMapper;
 import com.constructiveactivists.organizationmanagementmodule.controllers.request.OrganizationRequest;
 import com.constructiveactivists.organizationmanagementmodule.entities.OrganizationEntity;
+import com.constructiveactivists.organizationmanagementmodule.entities.enums.OrganizationTypeEnum;
+import com.constructiveactivists.organizationmanagementmodule.entities.enums.SectorTypeEnum;
+import com.constructiveactivists.organizationmanagementmodule.entities.enums.VolunteeringTypeEnum;
 import com.constructiveactivists.organizationmanagementmodule.services.OrganizationService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -11,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,5 +54,32 @@ public class OrganizationController implements OrganizationAPI {
     public ResponseEntity<Void> deleteOrganization(@PathVariable Integer id) {
         organizationService.deleteOrganization(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @Override
+    public ResponseEntity<List<SectorTypeEnum>> getAllSectors() {
+        List<SectorTypeEnum> sectorTypes = organizationService.getAllSectors();
+        if (sectorTypes.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(sectorTypes);
+    }
+
+    @Override
+    public ResponseEntity<List<OrganizationTypeEnum>> getAllOrganizationTypes() {
+        List<OrganizationTypeEnum> organizationTypes = organizationService.getAllOrganizationTypes();
+        if (organizationTypes.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(organizationTypes);
+    }
+
+    @Override
+    public ResponseEntity<List<VolunteeringTypeEnum>> getAllVolunteeringTypes() {
+        List<VolunteeringTypeEnum> volunteeringTypes = organizationService.getAllVolunteeringTypes();
+        if (volunteeringTypes.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(volunteeringTypes);
     }
 }

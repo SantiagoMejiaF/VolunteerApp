@@ -1,6 +1,6 @@
 package com.constructiveactivists.organizationmanagementmodule.entities.enums;
 
-public enum OrganizationType {
+public enum OrganizationTypeEnum {
 
     EMPRESA,
     ONG,

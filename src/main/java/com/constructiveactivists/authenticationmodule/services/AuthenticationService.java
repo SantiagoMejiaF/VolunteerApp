@@ -35,8 +35,7 @@ public class AuthenticationService {
     private static final String USER_INFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo?access_token=";
     private static final RoleType DEFAULT_ROLE_TYPE = RoleType.SIN_ASIGNAR;
 
-    public UserEntity authenticationByGoogle(TokenModel tokenDto) throws IOException {
-
+    public UserEntity authenticateByGoogle(TokenModel tokenDto) throws IOException {
         Map<String, Object> userInfo = fetchUserInfo(tokenDto.getValue());
         String email = (String) userInfo.get("email");
 
@@ -44,7 +43,6 @@ public class AuthenticationService {
     }
 
     private Map<String, Object> fetchUserInfo(String accessToken) throws IOException {
-
         HttpRequestFactory requestFactory = transport.createRequestFactory(request -> request.setParser(new JsonObjectParser(jacksonFactory)));
         HttpRequest request = requestFactory.buildGetRequest(new GenericUrl(USER_INFO_URL + accessToken));
         HttpResponse response = request.execute();
@@ -52,20 +50,28 @@ public class AuthenticationService {
     }
 
     private UserEntity registerNewUser(Map<String, Object> userInfo) {
+        RoleEntity defaultRole = createDefaultRole();
+        UserEntity user = buildUserEntity(userInfo, defaultRole.getId());
 
+        return userService.saveUser(user);
+    }
+
+    private RoleEntity createDefaultRole() {
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setRoleType(DEFAULT_ROLE_TYPE);
-        RoleEntity defaultRole = roleService.createRole(roleEntity);
+        return roleService.createRole(roleEntity);
+    }
 
+    private UserEntity buildUserEntity(Map<String, Object> userInfo, Integer roleId) {
         UserEntity user = new UserEntity();
-        user.setRoleId(defaultRole.getId());
+        user.setRoleId(roleId);
         user.setAuthorizationType(AuthorizationStatus.PENDIENTE);
         user.setFirstName((String) userInfo.get("given_name"));
         user.setLastName((String) userInfo.get("family_name"));
         user.setEmail((String) userInfo.get("email"));
         user.setImage((String) userInfo.get("picture"));
         user.setRegistrationDate(java.time.LocalDate.now());
-
-        return userService.saveUser(user);
+        return user;
     }
 }
+
