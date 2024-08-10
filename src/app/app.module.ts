@@ -24,6 +24,11 @@ import { FormsVolunteerComponent } from './Modules/authenticationModule/forms-vo
 import { FormsOrganizacionComponent } from './Modules/authenticationModule/forms-organizacion/forms-organizacion.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SidebarComponent } from './Modules/dashboardModule/sidebar/sidebar.component';
+import { GestionUsuariosComponent } from './Modules/AdminUser/gestion-usuarios/gestion-usuarios.component';
+import {DataTablesModule } from 'angular-datatables';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +44,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AuthComponent,
     FormsVolunteerComponent,
     FormsOrganizacionComponent,
+    SidebarComponent,
+    GestionUsuariosComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +54,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     FormsModule,
     NgMultiSelectDropDownModule.forRoot(),
+    DataTablesModule,
     HttpClientModule
   ],
   providers: [
