@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar</title>
+</head>
+<body>
+    <div class="wrapper">
+        <aside id="sidebar">
+            <div class="d-flex">
+                <button class="toggle-btn" type="button">
+                    <i class="bi bi-list" style="font-size: 2rem; color: #292C32;"></i>
+                </button>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-item" >
+                    <a href="#" class="sidebar-link " 
+                        data-bs-target="#admin" aria-expanded="false" aria-controls="admin">
+                        <i class="bi bi-columns-gap" style="font-size: 1.5rem; color: #292C32;"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" 
+                        data-bs-target="#hire" aria-expanded="false" aria-controls="hire">
+                        <i class="bi bi-clipboard2-heart" style="font-size: 1.5rem; color: #292C32;"></i>
+                        <span>Gestión Usuarios</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a [routerLink]="'/editar-perfil'" class="sidebar-link">
+                    <i class="bi bi-person" style="font-size: 1.5rem; color: #292C32;"></i>
+                    <span>Perfil</span>
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i class="bi bi-box-arrow-left" style="font-size: 1.5rem; color: #292C32;" 
+                        routerLink="/login"></i>
+                    <span>Cerrar sesión</span>
+                </a>
+            </div>
+        </aside>
+        <div class="main">
+            <div class="navbar" id="nav">
+                <img src="assets/img/logoColor.png" alt="Logo" class="logo-img">
+            </div>
+            <div class="contenido p-3">
+                <h1>
+                    <router-outlet></router-outlet>
+                </h1>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
