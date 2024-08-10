@@ -1,10 +1,9 @@
 package com.constructiveactivists.organizationmanagementmodule.controllers.request;
 
-import com.constructiveactivists.organizationmanagementmodule.entities.enums.OrganizationType;
-import com.constructiveactivists.organizationmanagementmodule.entities.enums.SectorType;
-import com.constructiveactivists.organizationmanagementmodule.entities.enums.VolunteeringType;
+import com.constructiveactivists.organizationmanagementmodule.entities.enums.OrganizationTypeEnum;
+import com.constructiveactivists.organizationmanagementmodule.entities.enums.SectorTypeEnum;
+import com.constructiveactivists.organizationmanagementmodule.entities.enums.VolunteeringTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -24,21 +23,31 @@ public class OrganizationRequest {
     private Integer userId;
 
     @NotBlank
+    @Size(max = 10)
+    @Schema(description = "Número de identificación de la persona responsable", example = "1000286185")
+    private String responsiblePersonId;
+
+    @NotBlank
+    @Size(max = 10)
+    @Schema(description = "Número de teléfono de la persona responsable", example = "3223045923")
+    private String responsiblePersonPhoneNumber;
+
+    @NotBlank
     @Size(max = 50)
     @Schema(description = "Nombre de la organización", example = "Pontificia Universidad Javeriana")
     private String organizationName;
 
     @NotNull
     @Schema(description = "Tipo de organización", example = "INSTITUCION_EDUCATIVA")
-    private OrganizationType organizationType;
+    private OrganizationTypeEnum organizationTypeEnum;
 
     @NotNull
     @Schema(description = "Sector de la organización", example = "EDUCACION")
-    private SectorType sectorType;
+    private SectorTypeEnum sectorTypeEnum;
 
     @NotNull
     @Schema(description = "Tipo de voluntariado", example = "ADJUNTA")
-    private VolunteeringType volunteeringType;
+    private VolunteeringTypeEnum volunteeringTypeEnum;
 
     @NotBlank
     @Size(max = 10)
@@ -49,15 +58,4 @@ public class OrganizationRequest {
     @Size(max = 50)
     @Schema(description = "Dirección principal de la organización", example = "Carrera 7 N° 40-62")
     private String address;
-
-    @NotBlank
-    @Size(max = 10)
-    @Schema(description = "Número de teléfono principal de la organización", example = "3223045923")
-    private String phoneNumber;
-
-    @NotBlank
-    @Email
-    @Size(max = 50)
-    @Schema(description = "Correo de contacto de la organización", example = "contacto@organizacion.com")
-    private String contactEmail;
 }

@@ -52,7 +52,12 @@ public class UserService {
 
     public Optional<UserEntity> findByEmail(String email) {return userRepository.findByEmail(email); }
 
-    public void deleteUser(Integer id) {
-        userRepository.deleteById(id);
+    public void deleteUser(Integer userId) {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Usuario con ID " + userId + " no existe."));
+
+        roleService.deleteRole(user.getRoleId());
+
+        userRepository.delete(user);
     }
 }

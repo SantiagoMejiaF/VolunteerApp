@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name =  "USUARIO_SEQ", sequenceName = "SEQ_USUARIO", allocationSize = 1)
+@SequenceGenerator(name =  "USUARIO_SEQ", sequenceName = "user_management_module.SEQ_USUARIO", allocationSize = 1)
 @Table(name = "USUARIO", schema = "USER_MANAGEMENT_MODULE")
 public class UserEntity {
 

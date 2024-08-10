@@ -26,7 +26,7 @@ public class AuthenticationController implements AuthenticationAPI {
     @SneakyThrows
     @Override
     public ResponseEntity<UserEntity> authenticationByGoogle(@Valid AuthenticationRequest authenticationRequest){
-        UserEntity createdUserEntity = authenticationService.authenticationByGoogle(authenticationMapper.toDomain(authenticationRequest));
+        UserEntity createdUserEntity = authenticationService.authenticateByGoogle(authenticationMapper.toDomain(authenticationRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUserEntity);
     }
 }

@@ -47,7 +47,10 @@ public class VolunteerService {
 
     public void deleteVolunteer(Integer id) {
         VolunteerEntity volunteer = volunteerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Volunteer not found with id " + id));
+                .orElseThrow(() -> new RuntimeException("Voluntario no encontrado con id " + id));
+
+        userService.deleteUser(volunteer.getUserId());
+
         volunteerRepository.delete(volunteer);
     }
 

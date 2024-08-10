@@ -4,6 +4,7 @@ import com.constructiveactivists.usermanagementmodule.controllers.configuration.
 import com.constructiveactivists.usermanagementmodule.entities.UserEntity;
 import com.constructiveactivists.usermanagementmodule.entities.enums.AuthorizationStatus;
 import com.constructiveactivists.usermanagementmodule.entities.enums.RoleType;
+import com.constructiveactivists.usermanagementmodule.services.ApprovalService;
 import com.constructiveactivists.usermanagementmodule.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class UserController implements UserAPI {
 
     private final UserService userService;
+    private final ApprovalService approvalService;
 
     @Override
     public List<UserEntity> getAllUsers() {
@@ -41,5 +43,12 @@ public class UserController implements UserAPI {
     public ResponseEntity<Void> updateAuthorizationStatus(Integer userId, AuthorizationStatus authorizationStatus) {
         userService.updateAuthorizationStatus(userId, authorizationStatus);
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<String> sendApprovalOrRejectionEmail(@RequestParam Integer userId, @RequestParam boolean approved) {
+        approvalService.sendApprovalResponse(userId, approved);
+        String message = approved ? "Usuario aprobado correctamente." : "Usuario rechazado correctamente.";
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

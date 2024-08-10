@@ -53,4 +53,13 @@ public interface UserAPI {
     })
     @PutMapping("/{userId}")
     ResponseEntity<Void> updateAuthorizationStatus(@PathVariable Integer userId, @RequestParam AuthorizationStatus authorizationStatus);
+
+    @Operation(summary = "Enviar correo de aprobación o rechazo de acceso de un usuario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Correo enviado correctamente"),
+            @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+    })
+    @PostMapping("/{userId}/send-approval-or-rejection-email")
+    ResponseEntity<String> sendApprovalOrRejectionEmail(@PathVariable Integer userId, @RequestParam boolean approved);
 }

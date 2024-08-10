@@ -1,8 +1,8 @@
 package com.constructiveactivists.organizationmanagementmodule.entities;
 
-import com.constructiveactivists.organizationmanagementmodule.entities.enums.OrganizationType;
-import com.constructiveactivists.organizationmanagementmodule.entities.enums.SectorType;
-import com.constructiveactivists.organizationmanagementmodule.entities.enums.VolunteeringType;
+import com.constructiveactivists.organizationmanagementmodule.entities.enums.OrganizationTypeEnum;
+import com.constructiveactivists.organizationmanagementmodule.entities.enums.SectorTypeEnum;
+import com.constructiveactivists.organizationmanagementmodule.entities.enums.VolunteeringTypeEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,42 +10,42 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "ORGANIZACION_SEQ", sequenceName = "SEQ_ORGANIZACION", allocationSize = 1)
+@SequenceGenerator(name = "ORGANIZACION_SEQ", sequenceName = "organization_management_module.SEQ_ORGANIZACION",
+        allocationSize = 1)
 @Table(name = "ORGANIZACION", schema = "ORGANIZATION_MANAGEMENT_MODULE")
 public class OrganizationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORGANIZACION_SEQ")
-    @SequenceGenerator(name = "ORGANIZACION_SEQ", sequenceName = "SEQ_ORGANIZACION", allocationSize = 1)
     private Integer id;
 
-    @Column(name = "USUARIO_ID", nullable = false)
+    @Column(name = "USUARIO_ID", unique = true, nullable = false)
     private Integer userId;
+
+    @Column(name = "CEDULA_RESPONSABLE", length = 10, unique = true, nullable = false)
+    private String responsiblePersonId;
+
+    @Column(name = "TELEFONO_RESPONSABLE", length = 10, nullable = false)
+    private String responsiblePersonPhoneNumber;
 
     @Column(name = "NOMBRE_ORGANIZACION", length = 50, nullable = false)
     private String organizationName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "TIPO_ORGANIZACION", length = 21)
-    private OrganizationType organizationType;
+    private OrganizationTypeEnum organizationTypeEnum;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "SECTOR", length = 50, nullable = false)
-    private SectorType sectorType;
+    private SectorTypeEnum sectorTypeEnum;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "TIPO_VOLUNTARIADO", length = 21)
-    private VolunteeringType volunteeringType;
+    private VolunteeringTypeEnum volunteeringTypeEnum;
 
     @Column(name = "NIT", length = 10, unique = true, nullable = false)
     private String nit;
 
-    @Column(name = "DIRECCION_PRINCIPAL", length = 50, nullable = false)
+    @Column(name = "DIRECCION_ORGANIZACION", length = 50, nullable = false)
     private String address;
-
-    @Column(name = "TELEFONO_DE_CONTACTO", length = 10, nullable = false)
-    private String phoneNumber;
-
-    @Column(name = "CORREO_DE_CONTACTO", length = 50, nullable = false)
-    private String contactEmail;
 }

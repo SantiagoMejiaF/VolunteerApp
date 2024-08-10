@@ -13,7 +13,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "VOLUNTEERING_INFO_SEQ", sequenceName = "VOLUNTEERING_INFO_SEQ", allocationSize = 1)
+@SequenceGenerator(name = "VOLUNTEERING_INFO_SEQ", sequenceName = "volunteer_management_module.VOLUNTEERING_INFO_SEQ",
+        allocationSize = 1)
 @Table(name = "INFORMACION_VOLUNTARIADO", schema = "VOLUNTEER_MANAGEMENT_MODULE")
 public class VolunteeringInformationEntity {
 
