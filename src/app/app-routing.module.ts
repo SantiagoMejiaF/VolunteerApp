@@ -8,6 +8,7 @@ import { FormsVolunteerComponent } from './Modules/authenticationModule/forms-vo
 import { FormsOrganizacionComponent } from './Modules/authenticationModule/forms-organizacion/forms-organizacion.component';
 import { SidebarComponent } from './Modules/dashboardModule/sidebar/sidebar.component';
 import { GestionUsuariosComponent } from './Modules/AdminUser/gestion-usuarios/gestion-usuarios.component';
+import { DashboardAdminComponent} from './Modules/AdminUser/dashboardAdmin/dashboardAdmin.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -25,7 +26,10 @@ const routes: Routes = [
         path: 'gestion-users',
         component: GestionUsuariosComponent,
       },
-      
+      {
+        path: 'dashAdmin',
+        component: DashboardAdminComponent,
+      },
   
       // Ruta hija
       // Puedes añadir más rutas hijas que requieran Navbar aquí

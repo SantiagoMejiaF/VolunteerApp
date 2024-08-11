@@ -164,4 +164,9 @@ a.sidebar-link:hover {
     width: 80px;
     height: auto;
 }
+.contenido {
+    width: 100%; /* Asegúrate de que el contenido use el ancho disponible */
+    padding: 20px; /* Ajusta el padding si es necesario */
+    box-sizing: border-box; /* Incluye padding y bordes en el ancho total */
+}
 

@@ -27,8 +27,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from './Modules/dashboardModule/sidebar/sidebar.component';
 import { GestionUsuariosComponent } from './Modules/AdminUser/gestion-usuarios/gestion-usuarios.component';
 import {DataTablesModule } from 'angular-datatables';
-import { DashboardComponent } from './Modules/AdminUser/dashboard/dashboard.component';
-
+import {NgApexchartsModule} from "ng-apexcharts";
+import { DashboardAdminComponent } from './Modules/AdminUser/dashboardAdmin/dashboardAdmin.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +47,7 @@ import { DashboardComponent } from './Modules/AdminUser/dashboard/dashboard.comp
     FormsOrganizacionComponent,
     SidebarComponent,
     GestionUsuariosComponent,
-    DashboardComponent,
+    DashboardAdminComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +57,7 @@ import { DashboardComponent } from './Modules/AdminUser/dashboard/dashboard.comp
     FormsModule,
     NgMultiSelectDropDownModule.forRoot(),
     DataTablesModule,
+    NgApexchartsModule,
     HttpClientModule
   ],
   providers: [
