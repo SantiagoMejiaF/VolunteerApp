@@ -84,3 +84,10 @@ h3 {
 .btn-secondary:focus {
   outline: none;
 }
+
+@media (max-width: 1200px) {
+  img{
+    width: 400px;
+      height: 450px;
+  }
+}

@@ -1,55 +1,49 @@
 <body>
     <header>
-        <div id="container">
-            <div class="row" id="header">
-                <div class="col uno">
-                    <img src="assets/img/LogoBlancoN.png" alt="">
+        <div class="container-fluid h-100 d-flex align-items-center justify-content-center">
+            <div class="row w-100">
+                <div class="col-lg-6 col-md-12 text-center text-lg-start">
+                    <img src="assets/img/LogoBlancoN.png" alt="" class="img-fluid mb-3">
                     <h2>Construye el <br> futuro...</h2>
                     <p>Inicia sesión para continuar tu experiencia, ya sea gestionando tus voluntarios y misiones, o
-                        participando en actividades que marcan la diferencia. Tu compromiso y dedicación son esenciales
+                        participando en actividades que marcan la diferencia. Tu compromiso y dedicación son esenciales.
                     </p>
                 </div>
-                <div class="col">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col">
-                                <div class="div-section">
-                                    <div class="btn-outlinevertical d-flex flex-column px-5 py-4"
-                                        style="background-color: #fff; height: 80vh; border-radius: 20px;">
-                                        <h4>Bienvenido</h4>
-                                        <h5>Ingresa a tu cuenta</h5>
-                                        <div class="btn-outlinetemplate-1-copy mb-3" id="custom-google-signin-button"
-                                            (click)="signInWithGoogle()"
-                                            style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; display: inline-flex; align-items: center; cursor: pointer;">
-                                            <img class="icons-8-google" src="/assets/img/google.png"
-                                                style="width: 40px; height: 40px; margin-right: 10px;">
-                                            <div class="sign-up-with-google">
-                                                Ingresa con Google
-                                            </div>
-                                        </div>
-                                        <div class="btn-outlinetemplate-1-copy mb-3" (click)="signInWithFB()"
-                                            style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; display: inline-flex; align-items: center; cursor: pointer;">
-                                            <img class="icons-8-facebook" src="/assets/img/face.png"
-                                                style="width: 40px; height: 40px; margin-right: 10px;">
-                                            <div class="sign-up-with-facebook">
-                                                Ingresa con Facebook
-                                            </div>
-                                        </div>
-                                        <div class="btn-outlinetemplate-1-copy mb-3" (click)="signInWithApple()"
-                                            style="display: none; border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; display: inline-flex; align-items: center;">
-                                            <img class="apple" src="/assets/img/apple.png"
-                                                style="width: 40px; height: 40px; margin-right: 10px;">
-                                            <div class="sign-up-with-apple">
-                                                Ingresa con Apple
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="already-have-an-account-login">
-                                        <span class="already-have-an-account-login-sub-16"></span><span></span>
-                                    </p>
+                <div class="col-lg-6 col-md-12 d-flex align-items-center justify-content-center">
+                    <div class="div-section w-100" style="max-width: 400px;">
+                        <div class="btn-outlinevertical d-flex flex-column px-5 py-4"
+                            style="background-color: #fff; border-radius: 20px;">
+                            <h4>Bienvenido</h4>
+                            <h5>Ingresa a tu cuenta</h5>
+                            <div class="btn-outlinetemplate-1-copy mb-3" id="custom-google-signin-button"
+                                (click)="signInWithGoogle()"
+                                style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; display: inline-flex; align-items: center; cursor: pointer;">
+                                <img class="icons-8-google" src="/assets/img/google.png"
+                                    style="width: 40px; height: 40px; margin-right: 10px;">
+                                <div class="sign-up-with-google">
+                                    Ingresa con Google
+                                </div>
+                            </div>
+                            <div class="btn-outlinetemplate-1-copy mb-3" (click)="signInWithFB()"
+                                style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; display: inline-flex; align-items: center; cursor: pointer;">
+                                <img class="icons-8-facebook" src="/assets/img/face.png"
+                                    style="width: 40px; height: 40px; margin-right: 10px;">
+                                <div class="sign-up-with-facebook">
+                                    Ingresa con Facebook
+                                </div>
+                            </div>
+                            <div class="btn-outlinetemplate-1-copy mb-3" (click)="signInWithApple()"
+                                style="display: none; border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; display: inline-flex; align-items: center;">
+                                <img class="apple" src="/assets/img/apple.png"
+                                    style="width: 40px; height: 40px; margin-right: 10px;">
+                                <div class="sign-up-with-apple">
+                                    Ingresa con Apple
                                 </div>
                             </div>
                         </div>
+                        <p class="already-have-an-account-login text-center">
+                            <span class="already-have-an-account-login-sub-16"></span><span></span>
+                        </p>
                     </div>
                 </div>
             </div>

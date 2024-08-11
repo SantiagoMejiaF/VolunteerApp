@@ -98,3 +98,8 @@ button:hover i.fa {
   }
 
  
+  @media (max-width: 770px) {
+    #img2 {
+      display: none;
+    }
+}

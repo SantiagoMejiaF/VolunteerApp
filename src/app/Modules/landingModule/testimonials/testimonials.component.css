@@ -1,44 +1,82 @@
 h3 {
-    font-family: "Quicksand", sans-serif;
-    font-weight: bold;
-    font-size: 40px;
-  }
-  
-  h4 {
-    font-family: "Quicksand", sans-serif;
-    font-weight: bold;
-  }
-  h5 {
-    font-family: "Quicksand", sans-serif;
-    font-weight: 500;
-    font-size: 20px;
-  }
-  h6 {
-    font-family: "Quicksand", sans-serif;
-    font-weight: 200;
-    font-size: 15px;
-  }
-  
-  p {
-    font-family: "Quicksand", sans-serif;
-    font-weight: regular;
-    font-size: 20px;
-    padding-top: 2%;
-  }
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+}
 
-  /* Testimonials Section */
+h4 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+}
+
+h5 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+h6 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 200;
+  font-size: 15px;
+}
+
+p {
+  font-family: "Quicksand", sans-serif;
+  font-weight: regular;
+  font-size: 20px;
+  padding-top: 2%;
+}
+
+/* Testimonials Section */
 #testimonials {
-    background-image: url("/assets/img/Testimonials.svg");
-    padding: 150px;
-  }
+  background-image: url("/assets/img/Testimonials.svg");
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
+  background-position: center; /* Centra la imagen en el contenedor */
+  padding: 50px; /* Ajuste general del padding */
+}
 
 #testimonials .container {
-    background-color: #1E1450;
-    padding-right: 100px; 
-    padding-left: 100px;
-    border-radius: 20px; 
-    margin-right: 10px;
+  background-color: #1E1450;
+  padding: 20px; /* Ajuste del padding general */
+  border-radius: 20px;
+  margin: auto; /* Ajuste para centrar el contenedor */
 }
-#testimonials h4,#testimonials h5, #testimonials h3,#testimonials p{
-    color: white;
+
+#testimonials h4,
+#testimonials h5,
+#testimonials h3,
+#testimonials p {
+  color: white;
+}
+
+/* Media queries para pantallas pequeñas */
+@media (max-width: 768px) {
+  #testimonials {
+      padding: 30px; /* Reducimos el padding para pantallas pequeñas */
+  }
+
+  #testimonials .container {
+      padding: 10px; /* Reducimos aún más el padding lateral en el contenedor */
+      padding-left: 15px;
+      padding-right: 15px;
+  }
+
+  h3 {
+      font-size: 28px; /* Ajustamos el tamaño de la fuente para pantallas pequeñas */
+  }
+
+  h4 {
+      font-size: 20px;
+  }
+
+  h5 {
+      font-size: 16px;
+  }
+
+  p {
+      font-size: 16px;
+      padding-top: 10px;
+  }
 }

@@ -204,3 +204,45 @@ p {
   }
 
   
+
+  @media (max-width: 1200px) {
+    #Users, #Volunteer, #Organization {
+        margin-top: 20px;
+        width: 100%;
+    }
+    #img2 {
+      display: none;
+    }
+}
+    
+@media (max-width: 608px) {
+  #imagen-col {
+      display: none;
+  }
+  /* Asegura que #drop se convierta en una nueva columna y ocupe todo el ancho */
+  #drop {
+    flex: 0 0 100%; /* Ocupa el 100% del ancho */
+    max-width: 100%; /* Asegura que no se contraiga más allá del 100% */
+    margin-left: 0; /* Elimina el margen izquierdo */
+    margin-top: 20px; /* Añade un margen superior para separarlo del contenido anterior */
+  }
+}
+
+@media (max-width: 410px) {
+  .tittle h1{
+    font-size:30px;
+  }
+}
+
+
+
+
+/*
+@media (max-width: 608px) {
+  #header .col img {
+    display: none;
+}
+}
+*/
+
+
