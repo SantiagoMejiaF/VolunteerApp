@@ -11,4 +11,7 @@ public class TokenModel {
 
     @NotNull
     private String value;
+
+    public TokenModel(String jwt) {
+    }
 }
