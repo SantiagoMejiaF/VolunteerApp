@@ -1,9 +1,32 @@
 <div class="container ">
+  <div class="row">
+    <div class="col text-center">
+      <div class="tittle">
+        <h1>Gestión Usuarios</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-4" id="header">
+    <div class="col">
+        <div class="cards">
+          
+            <div class="row align-items-center">
+              <div class="col-3 p-2 ml-3">
+                <img src="assets/img/management.png" style="width: 200px; height:auto" alt="">
+            </div>
+                <div class="col ml-4 mr-4" id="texto">
+                  <h2>Autoriza a los usuarios</h2>
+                  <p>Verifica que los datos proporcionados por los usuarios sean reales y coincidan antes de aprobar su preregistro.
+                    Este paso es esencial para garantizar la autenticidad de la información y la seguridad de la plataforma.</p>
+                </div>
+                
+            </div>
 
+        </div>
+    </div>
+    
+</div>
   <div class="table-container">
-    <h2>Autoriza a los usuarios</h2>
-    <p>Verifica que los datos proporcionados por los usuarios sean reales y coincidan antes de aprobar su preregistro.
-      Este paso es esencial para garantizar la autenticidad de la información y la seguridad de la plataforma.</p>
     <table class="table table-striped table-bordered table-sm row-border hover" id="datatableexample">
       <thead>
         <tr>
@@ -26,11 +49,12 @@
             <button style="border: none; background: none;" data-bs-toggle="modal" data-bs-target="#VolunteerModal"
               (click)="openModal(user.id)" *ngIf="user.rol === 'voluntario'">
               <i class="fa fa-search" style="font-size: 1rem; color: #80777c;" onmouseover="this.style.color='#186dde';"
-              onmouseout="this.style.color='#80777c';"></i>
+                onmouseout="this.style.color='#80777c';"></i>
             </button>
             <button style="border: none; background: none;" data-bs-toggle="modal" data-bs-target="#organizationModal"
               (click)="openModal(user.id)" *ngIf="user.rol === 'organización'">
-              <i class="fa fa-search" style="font-size: 1rem; color: #80777c;" onmouseover="this.style.color='#186dde';" onmouseout="this.style.color='#80777c';"></i>
+              <i class="fa fa-search" style="font-size: 1rem; color: #80777c;" onmouseover="this.style.color='#186dde';"
+                onmouseout="this.style.color='#80777c';"></i>
             </button>
           </td>
         </tr>

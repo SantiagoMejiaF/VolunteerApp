@@ -14,7 +14,23 @@ input,
 textarea {
   font-family: "Quicksand", sans-serif;
 }
+h1{
+  font-weight: bold;
+  color: #ED4B4B;
+}
+.tittle{
+  background-color: white; /* Fondo blanco */
+border-radius: 10px; /* Bordes redondeados */
+padding: 20px; /* Espaciado interno */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+margin-bottom:20px;
 
+}
+#header .cards {
+  background-color: white; /* Fondo blanco */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+}
 .table-container {
   background-color: white; /* Fondo blanco */
   border-radius: 10px; /* Bordes redondeados */
@@ -25,12 +41,13 @@ textarea {
 h2 {
   font-weight: 600;
   font-size: 20px;
-  color: #ED4B4B;
+  margin:20px;
 }
 p {
   font-weight: 600;
   font-size: 14px;
   color: #b3abb4;
+  margin:20px;
 }
 th {
   font-size: 14px;
