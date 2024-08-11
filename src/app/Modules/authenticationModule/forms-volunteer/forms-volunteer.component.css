@@ -70,7 +70,7 @@ p{
     color: #ffffff;
 }
 
-input {
+#nor {
     padding: 10px;
     width: 100%;
     font-size: 17px;
@@ -173,4 +173,49 @@ button:focus{
 .thanks-message {
     display: none;
     
+}
+
+.btn-secondary {
+    font-family: "Quicksand", sans-serif;
+    background-color: transparent;
+    border: 2px solid #FFD700; 
+    color: white; 
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 30px;
+    transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #FFD700; 
+    color: #1E1E1E; 
+  }
+  
+  .btn-secondary:focus {
+    outline: none;
+  }
+
+  #termsBody {
+    max-height: 400px; /* Limita la altura máxima del contenido del modal */
+    overflow-y: auto;  /* Activa el scroll vertical cuando el contenido excede la altura máxima */
+    overflow-x: hidden; /* Oculta el scroll horizontal y evita desbordamiento en esa dirección */
+    white-space: pre-wrap; /* Ajusta el texto para que se envuelva y no cause scroll horizontal */
+    word-wrap: break-word; /* Fuerza a que las palabras largas se ajusten al ancho del contenedor */
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-top: 15px; /* Espaciado superior opcional */
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.5); /* Ajusta el tamaño del checkbox si es necesario */
+}
+
+.checkbox-container label {
+    font-family: "Quicksand", sans-serif;
+    color: #ffffff;
+    font-size: 18px;
 }

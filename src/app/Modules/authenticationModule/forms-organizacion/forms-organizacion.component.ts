@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { OrganizationService } from '../../../services/organization.service';
 import { Organization } from '../../../models/organization.model';
-
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-forms-organizacion',
   templateUrl: './forms-organizacion.component.html',
@@ -12,15 +12,17 @@ export class FormsOrganizacionComponent implements OnInit {
   currentTab = 0;
   myForm: FormGroup;
   organizationData: Organization;
+  termsContent: string | undefined;
 
-  constructor(private fb: FormBuilder, private organizationService: OrganizationService) {
+  constructor(private fb: FormBuilder, private organizationService: OrganizationService, private http: HttpClient) {
     this.myForm = this.fb.group({
       foundationName: [''],
       nit: [''],
       website: [''],
       phoneNumber: [''],
       email: [''],
-      address: ['']
+      address: [''],
+      acceptTerms: [false]
     });
 
     this.organizationData = {
@@ -40,8 +42,12 @@ export class FormsOrganizacionComponent implements OnInit {
 
   ngOnInit() {
     this.showTab(this.currentTab);
+    this.loadTerms();
   }
-
+  loadTerms() {
+    this.http.get('assets/textos/terminos-y-condiciones.txt', { responseType: 'text' })
+      .subscribe(data => this.termsContent = data);
+  }
   showTab(n: number) {
     const tabs = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;
     tabs[n].style.display = 'block';
@@ -90,7 +96,10 @@ export class FormsOrganizacionComponent implements OnInit {
 
     let valid = true;
     for (let i = 0; i < inputs.length; i++) {
-      if (inputs[i].value === '') {
+      if (inputs[i].type === 'checkbox' && !inputs[i].checked) {
+        inputs[i].className += ' invalid';
+        valid = false;
+      } else if (inputs[i].value === '') {
         inputs[i].className += ' invalid';
         valid = false;
       }
