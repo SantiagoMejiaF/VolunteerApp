@@ -93,4 +93,12 @@ public interface VolunteerAPI {
     })
     @GetMapping("/relationships")
     ResponseEntity<List<RelationshipEnum>> getAllRelationships();
+
+
+    @Operation(summary = "Obtener la cantidad de voluntarios activos")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+    })
+    @GetMapping("/active-count")
+    ResponseEntity<Long> getActiveVolunteerCount();
 }
