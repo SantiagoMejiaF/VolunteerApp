@@ -32,4 +32,12 @@ export class AdminService {
   public getPendingUsers(): Observable<any[]> {
     return this.httpClient.get<any[]>(`${this.apiUrl}/users/status/PENDIENTE`, cabecera);
   }
+
+  public sendApprovalEmail(userId: number, approved: boolean): Observable<any> {
+    return this.httpClient.post<any>(
+      `${this.apiUrl}/users/${userId}/send-approval-or-rejection-email?userId=${userId}&approved=${approved}`,
+      {},
+      cabecera
+    );
+  }
 }

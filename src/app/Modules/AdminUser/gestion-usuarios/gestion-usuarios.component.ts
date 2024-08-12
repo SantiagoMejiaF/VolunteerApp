@@ -55,4 +55,32 @@ export class GestionUsuariosComponent implements OnInit {
   openModal(user: any) {
     this.selectedUser = user; // Cargar los datos del usuario seleccionado en el modal
   }
+
+  acceptUser(): void {
+    this.adminService.sendApprovalEmail(this.selectedUser.id, true).subscribe(
+      (response) => {
+        console.log('Usuario aceptado:', response);
+        this.removeUserFromList(this.selectedUser.id);
+      },
+      (error) => {
+        console.error('Error al aceptar el usuario:', error);
+      }
+    );
+  }
+
+  rejectUser(): void {
+    this.adminService.sendApprovalEmail(this.selectedUser.id, false).subscribe(
+      (response) => {
+        console.log('Usuario rechazado:', response);
+        this.removeUserFromList(this.selectedUser.id);
+      },
+      (error) => {
+        console.error('Error al rechazar el usuario:', error);
+      }
+    );
+  }
+
+  removeUserFromList(userId: number): void {
+    this.data = this.data.filter(user => user.id !== userId);
+  }
 }
