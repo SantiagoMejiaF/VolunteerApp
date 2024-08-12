@@ -82,6 +82,7 @@ export class FormsVolunteerComponent implements OnInit {
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: 3,
       allowSearchFilter: this.ShowFilter,
+      defaultOpen: false,
     };
 
     this.dropdownSettings2 = { ...this.dropdownSettings };
