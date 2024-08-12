@@ -1,4 +1,4 @@
-package com.constructiveactivists.authenticationmodule.controllers.configuration;
+package com.constructiveactivists.authenticationmodule.controllers.seguridad;
 
 import com.constructiveactivists.usermanagementmodule.entities.RoleEntity;
 import com.constructiveactivists.usermanagementmodule.entities.UserEntity;

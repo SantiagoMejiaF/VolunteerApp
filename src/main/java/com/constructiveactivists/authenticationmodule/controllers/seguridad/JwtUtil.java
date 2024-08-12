@@ -1,4 +1,4 @@
-package com.constructiveactivists.authenticationmodule.controllers.configuration;
+package com.constructiveactivists.authenticationmodule.controllers.seguridad;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

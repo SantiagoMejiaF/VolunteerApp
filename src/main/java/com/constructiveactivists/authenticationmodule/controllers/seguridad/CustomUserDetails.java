@@ -1,4 +1,4 @@
-package com.constructiveactivists.authenticationmodule.controllers.configuration;
+package com.constructiveactivists.authenticationmodule.controllers.seguridad;
 import com.constructiveactivists.usermanagementmodule.entities.RoleEntity;
 import com.constructiveactivists.usermanagementmodule.entities.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,7 +24,6 @@ public class CustomUserDetails implements UserDetails {
                 .map(role -> new SimpleGrantedAuthority(role.getRoleType().name()))
                 .toList();
     }
-
     @Override
     public String getUsername() {
         return userEntity.getEmail();

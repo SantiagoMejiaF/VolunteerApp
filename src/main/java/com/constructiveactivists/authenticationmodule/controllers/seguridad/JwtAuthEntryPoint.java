@@ -1,4 +1,4 @@
-package com.constructiveactivists.authenticationmodule.controllers.configuration;
+package com.constructiveactivists.authenticationmodule.controllers.seguridad;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

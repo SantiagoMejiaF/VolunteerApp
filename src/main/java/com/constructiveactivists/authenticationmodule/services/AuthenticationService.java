@@ -1,7 +1,7 @@
 package com.constructiveactivists.authenticationmodule.services;
 
-import com.constructiveactivists.authenticationmodule.controllers.configuration.CustomUserDetailsService;
-import com.constructiveactivists.authenticationmodule.controllers.configuration.JwtUtil;
+import com.constructiveactivists.authenticationmodule.controllers.seguridad.CustomUserDetailsService;
+import com.constructiveactivists.authenticationmodule.controllers.seguridad.JwtUtil;
 import com.constructiveactivists.authenticationmodule.controllers.response.AuthenticationResponse;
 import com.constructiveactivists.authenticationmodule.models.TokenModel;
 import com.constructiveactivists.usermanagementmodule.entities.RoleEntity;
