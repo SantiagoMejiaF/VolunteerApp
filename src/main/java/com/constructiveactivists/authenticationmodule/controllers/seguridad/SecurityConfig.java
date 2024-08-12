@@ -36,7 +36,7 @@ public class SecurityConfig {
                         .requestMatchers("/volunteers").hasAnyAuthority("VOLUNTARIO, SUPER_ADMIN, SIN_ASIGNAR")
                         .requestMatchers("/organizations").hasAnyAuthority("ORGANIZACION, SUPER_ADMIN, SIN_ASIGNAR")
                         .requestMatchers("/users/*").hasAnyAuthority("SUPER_ADMIN")
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint(jwtAuthEntryPoint)
