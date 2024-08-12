@@ -51,4 +51,16 @@ public class UserController implements UserAPI {
         String message = approved ? "Usuario aprobado correctamente." : "Usuario rechazado correctamente.";
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<Long> countOrganizationsByAuthorizationStatus(@RequestParam AuthorizationStatus authorizationStatus) {
+        long count = userService.countOrganizationsByAuthorizationStatus(authorizationStatus);
+        return ResponseEntity.ok(count);
+    }
+
+    @Override
+    public ResponseEntity<List<UserEntity>> getUsersByAuthorizationStatus(@PathVariable AuthorizationStatus authorizationStatus) {
+        List<UserEntity> users = userService.findUsersByAuthorizationStatus(authorizationStatus);
+        return ResponseEntity.ok(users);
+    }
 }

@@ -60,4 +60,14 @@ public class UserService {
 
         userRepository.delete(user);
     }
+
+    public long countOrganizationsByAuthorizationStatus(AuthorizationStatus authorizationStatus) {
+        return userRepository.countOrganizationsByStatus(authorizationStatus.name());
+    }
+
+    public List<UserEntity> findUsersByAuthorizationStatus(AuthorizationStatus authorizationStatus) {
+        return userRepository.findByAuthorizationStatus(authorizationStatus);
+    }
+
+
 }
