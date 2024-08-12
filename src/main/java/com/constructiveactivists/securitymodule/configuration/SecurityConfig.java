@@ -29,25 +29,26 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .requiresChannel(channel ->
+                        channel.anyRequest().requiresSecure()
+                )
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/authentications/google").permitAll()
                         .requestMatchers("/volunteers").permitAll()
                         .requestMatchers("/organizations").permitAll()
                         .requestMatchers("/users/*").permitAll()
                         .anyRequest().permitAll()
-
                 )
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint(jwtAuthEntryPoint)
                         .accessDeniedHandler((request, response, accessDeniedException) ->
-                            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied")
+                                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied")
                         )
                 );
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
 
     @Bean
     public AuthenticationManager authenticationManager(
