@@ -26,12 +26,8 @@ h3 {
     font-size: 20px;
     padding-top: 2%;
   }
-.misionestarjeta{
-    border-radius:20px;
-    background-color:#F9F7F6;
-}
-/* styles.css */
-.misionestarjeta {
+
+  .misionestarjeta {
     margin: 15px;
     text-align: center;
     border-radius: 10px;
@@ -39,32 +35,18 @@ h3 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.misionestarjeta .row {
-    margin: 0;
-    padding: 0;
-}
-
 .misionestarjeta img {
-    width: 800px!;
+    width: 100%;
     height: auto;
-    border-radius: 10px; 
     object-fit: cover;
-    display: block;
 }
 
 .misionestarjeta h4, .misionestarjeta p {
     margin: 10px 0;
 }
 
-.misionestarjeta .details {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.misionestarjeta .details svg {
-    margin-right: 5px;
+.details svg {
+    margin-right: 10px;
 }
 
 .btn-secondary {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { VolunteerService } from '../../../services/volunteer.service';
 import { Volunteer } from '../../../models/volunteer.model';
+import { HttpClient } from '@angular/common/http';
 
 interface Elements {
   item_id: number;
@@ -28,8 +29,9 @@ export class FormsVolunteerComponent implements OnInit {
   dropdownSettings2: any = {};
   relationships: Elements[] = [];
   dropdownSettings4: any = {};
+  termsContent: string | undefined;
 
-  constructor(private fb: FormBuilder, private volunteerService: VolunteerService) {
+  constructor(private fb: FormBuilder, private volunteerService: VolunteerService, private http: HttpClient) {
     this.myForm = this.fb.group({
       dni: [''],
       cell: [''],
@@ -42,7 +44,8 @@ export class FormsVolunteerComponent implements OnInit {
       emergencyContact1Surname: [''],
       emergencyContact1Relation: [''],
       emergencyContact1Phone: [''],
-      emergencyContact1Email: ['']
+      emergencyContact1Email: [''],
+      acceptTerms: [false]
     });
 
     this.volunteerData = {
@@ -91,8 +94,12 @@ export class FormsVolunteerComponent implements OnInit {
     };
 
     this.loadDropdownData();
+    this.loadTerms();
   }
-
+  loadTerms() {
+    this.http.get('assets/textos/terminos-y-condiciones.txt', { responseType: 'text' })
+      .subscribe(data => this.termsContent = data);
+  }
   loadDropdownData() {
     this.volunteerService.getSkills().subscribe(data => {
       this.skills = data.map((item, index) => ({ item_id: index + 1, item_text: item }));
@@ -159,7 +166,10 @@ export class FormsVolunteerComponent implements OnInit {
 
     let valid = true;
     for (let i = 0; i < inputs.length; i++) {
-      if (inputs[i].value === '') {
+      if (inputs[i].type === 'checkbox' && !inputs[i].checked) {
+        inputs[i].className += ' invalid';
+        valid = false;
+      } else if (inputs[i].value === '') {
         inputs[i].className += ' invalid';
         valid = false;
       }

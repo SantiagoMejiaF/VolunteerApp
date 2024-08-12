@@ -13,26 +13,34 @@
                 <!-- Tab 1: Información de la Fundación -->
                 <div class="tab">
                     <h6>Digita el nombre de tu fundación</h6>
-                    <p><input placeholder="Fundación Manitas..." formControlName="foundationName"
+                    <p><input id="nor" placeholder="Fundación Manitas..." formControlName="foundationName"
                             oninput="this.className = ''"></p>
                     <h6>Digita el NIT de tu fundación</h6>
-                    <p><input placeholder="87654321..." formControlName="nit" oninput="this.className = ''"></p>
+                    <p><input id="nor" placeholder="87654321..." formControlName="nit" oninput="this.className = ''">
+                    </p>
                     <h6>Digita la página web de tu fundación</h6>
-                    <p><input placeholder="www.fundacion.com..." formControlName="website"
+                    <p><input id="nor" placeholder="www.fundacion.com..." formControlName="website"
                             oninput="this.className = ''"></p>
+                    <p class="checkbox-container">
+                        <input type="checkbox" id="acceptTerms" formControlName="acceptTerms">
+                        <label for="acceptTerms">
+                            Acepto los <a href="#" data-bs-toggle="modal" data-bs-target="#Terms">Términos y
+                                Condiciones</a>
+                        </label>
+                    </p>
                 </div>
 
                 <!-- Tab 2: Información de Contacto -->
                 <div class="tab">
                     <h3 id="tittle">Información de contacto</h3>
                     <h6>Digita el celular de tu fundación</h6>
-                    <p><input placeholder="312456789..." formControlName="phoneNumber" oninput="this.className = ''">
+                    <p><input id="nor" placeholder="312456789..." formControlName="phoneNumber" oninput="this.className = ''">
                     </p>
                     <h6>Digita el correo electrónico</h6>
-                    <p><input placeholder="fundacion@gmail.com..." formControlName="email"
+                    <p><input id="nor" placeholder="fundacion@gmail.com..." formControlName="email"
                             oninput="this.className = ''"></p>
                     <h6>Digita la dirección de tu fundación</h6>
-                    <p><input placeholder="Cra 57c #86-76..." formControlName="address" oninput="this.className = ''">
+                    <p><input id="nor" placeholder="Cra 57c #86-76..." formControlName="address" oninput="this.className = ''">
                     </p>
                 </div>
 
@@ -59,7 +67,8 @@
                     <p>Queremos agradecerte sinceramente por registrar tu organización en nuestra plataforma. Estamos
                         encantados de colaborar contigo para conectar tus proyectos con voluntarios apasionados que
                         están listos para hacer una diferencia. <br>
-                        Tu registro ha sido exitoso y pronto recibirás más detalles sobre cómo comenzar a publicar
+                        Tu registro ha sido exitoso y pronto recibirás más detalles a tu email sobre cómo comenzar a
+                        publicar
                         oportunidades de voluntariado y gestionar tu perfil en nuestra plataforma. Estamos aquí para
                         apoyarte en cada paso del proceso y asegurarnos de que tu experiencia con nosotros sea lo más
                         enriquecedora posible. <br>
@@ -68,12 +77,12 @@
                         Con aprecio, <br>
                         El Equipo de Volunteer App
                     </p>
-                    <button type="submit">Continuar</button>
+                    <button type="submit" class="btn-secondary">Continuar</button>
                 </div>
 
                 <!-- Botones de Navegación -->
                 <div style="overflow:auto;" id="nextprevious">
-                    <div style="float:right;">
+                    <div class="mt-4" style="float:right;">
                         <button type="button" id="prevBtn" (click)="nextPrev(-1)"><i
                                 class="fa fa-angle-double-left"></i></button>
                         <button type="button" id="nextBtn" (click)="nextPrev(1)"><i
@@ -81,6 +90,21 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Términos y Condiciones -->
+<div class="modal fade" id="Terms" tabindex="-1" aria-labelledby="TermsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="TermsLabel">Términos y Condiciones</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="termsBody">
+                <pre>{{ termsContent }}</pre>
+            </div>
         </div>
     </div>
 </div>

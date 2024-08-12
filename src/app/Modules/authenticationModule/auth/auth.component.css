@@ -1,8 +1,9 @@
 
-body {
+*{
     margin: 0;
     overflow-x: hidden;
-  }
+    overflow-y: hidden;
+}
 h3 {
     font-family: "Quicksand", sans-serif;
     font-weight: regular;
@@ -16,6 +17,7 @@ h3 {
   h4 {
     font-family: "Quicksand", sans-serif;
     font-weight: bold;
+    padding-top:150px;
   }
   h5 {
     font-family: "Quicksand", sans-serif;
@@ -34,14 +36,38 @@ h3 {
     font-size: 20px;
     padding-top: 2%;
   }
-#Forms{
-    padding:300px 20px 320px 150px;
+  #Forms {
+    
+    padding: 50px 20px; /* Padding general */
 }
+
+@media (max-width: 1200px) {
+    #Forms {
+        padding: 40px 15px; /* Reduce el padding en pantallas medianas */
+    }
+}
+
+@media (max-width: 768px) {
+    #Forms {
+        padding: 30px 10px; /* Reduce aún más el padding en pantallas pequeñas */
+    }
+    #text2{
+      display:none;
+    }
+}
+
+@media (max-width: 480px) {
+    #Forms {
+        padding: 20px 5px; /* Padding mínimo en pantallas muy pequeñas */
+    }
+}
+
   #text2 {
     background-image: url("/assets/img/authFondo.png");
     background-size: cover; 
     background-repeat: no-repeat; 
     background-position: right top; 
+    height: 100vh;
   }
  
   button {

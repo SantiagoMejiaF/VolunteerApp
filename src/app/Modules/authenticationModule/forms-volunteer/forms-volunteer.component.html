@@ -14,13 +14,13 @@
                 <div class="tab" [formGroup]="myForm">
                     <h3 id="tittle">Datos Personales</h3>
                     <h6>Digita tu cédula</h6>
-                    <p><input placeholder="1016517485" formControlName="dni" oninput="this.className = ''"></p>
+                    <p><input id="nor" placeholder="1016517485" formControlName="dni" oninput="this.className = ''"></p>
                     <h6>Digita tu número celular</h6>
-                    <p><input placeholder="3124687956" formControlName="cell" oninput="this.className = ''"></p>
+                    <p><input id="nor" placeholder="3124687956" formControlName="cell" oninput="this.className = ''"></p>
                     <h6>Digita tu dirección</h6>
-                    <p><input placeholder="Cra 100 #87-56" formControlName="address" oninput="this.className = ''"></p>
+                    <p><input id="nor" placeholder="Cra 100 #87-56" formControlName="address" oninput="this.className = ''"></p>
                     <h6>Digita tu edad</h6>
-                    <p><input type="number" placeholder="25" formControlName="age" oninput="this.className = ''"></p>
+                    <p><input id="nor" type="number" placeholder="25" formControlName="age" oninput="this.className = ''"></p>
                     <h6>Selecciona tus días disponibles</h6>
                     <ng-multiselect-dropdown [settings]="dropdownSettings3" [data]="days" formControlName="days"
                         [disabled]="disabled" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
@@ -34,16 +34,23 @@
                         formControlName="intereses" [disabled]="disabled" (onSelect)="onItemSelect($event)"
                         (onSelectAll)="onSelectAll($event)">
                     </ng-multiselect-dropdown>
+                    <p class="checkbox-container">
+                        <input type="checkbox" id="acceptTerms" formControlName="acceptTerms">
+                        <label for="acceptTerms">
+                            Acepto los <a href="#" data-bs-toggle="modal" data-bs-target="#Terms">Términos y
+                                Condiciones</a>
+                        </label>
+                    </p>
                 </div>
 
                 <!-- Contacto de Emergencia -->
                 <div class="tab" [formGroup]="myForm">
                     <h3 id="tittle">Contacto de Emergencia</h3>
                     <h6>Nombre del contacto</h6>
-                    <p><input placeholder="Adriana" formControlName="emergencyContact1Name"
+                    <p><input id="nor" placeholder="Adriana" formControlName="emergencyContact1Name"
                             oninput="this.className = ''"></p>
                     <h6>Apellido del contacto</h6>
-                    <p><input placeholder="Marcela" formControlName="emergencyContact1Surname"
+                    <p><input id="nor" placeholder="Marcela" formControlName="emergencyContact1Surname"
                             oninput="this.className = ''"></p>
                     <h6>Relación con el contacto</h6>
                     <ng-multiselect-dropdown [settings]="dropdownSettings4" [data]="relationships"
@@ -51,10 +58,10 @@
                         (onItemSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
                     </ng-multiselect-dropdown>
                     <h6>Número de teléfono del contacto</h6>
-                    <p><input placeholder="3112494942" formControlName="emergencyContact1Phone"
+                    <p><input id="nor" placeholder="3112494942" formControlName="emergencyContact1Phone"
                             oninput="this.className = ''"></p>
                     <h6>Correo electrónico del contacto</h6>
-                    <p><input placeholder="adriana@example.com" formControlName="emergencyContact1Email"
+                    <p><input  id="nor" placeholder="adriana@example.com" formControlName="emergencyContact1Email"
                             oninput="this.className = ''"></p>
                 </div>
 
@@ -113,16 +120,16 @@
                         App, estamos comprometidos a conectar a personas apasionadas como tú con oportunidades de
                         impacto positivo en la comunidad. <br>
                         Tu registro ha sido exitoso y estamos emocionados de tenerte a bordo. Pronto recibirás
-                        información sobre las próximas oportunidades de voluntariado y cómo puedes empezar a hacer la
+                        información a tu email sobre las próximas oportunidades de voluntariado y cómo puedes empezar a hacer la
                         diferencia. <br>
                         Una vez más, gracias por tu compromiso y por elegir hacer la diferencia. <br>
                         Con aprecio, <br>
                         El Equipo de Volunteer App</p>
-                    <button type="button" (click)="onSubmit()">Continuar</button>
+                    <button type="button" class="btn-secondary" (click)="onSubmit()">Continuar</button>
                 </div>
 
                 <div style="overflow:auto;" id="nextprevious">
-                    <div style="float:right;">
+                    <div class="mt-4" style="float:right;">
                         <button type="button" id="prevBtn" (click)="nextPrev(-1)"><i
                                 class="fa fa-angle-double-left"></i></button>
                         <button type="button" id="nextBtn" (click)="nextPrev(1)"><i
@@ -130,6 +137,21 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Términos y Condiciones -->
+<div class="modal fade" id="Terms" tabindex="-1" aria-labelledby="TermsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="TermsLabel">Términos y Condiciones</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="termsBody">
+                <pre>{{ termsContent }}</pre>
+            </div>
         </div>
     </div>
 </div>
