@@ -31,8 +31,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/authentications/google").permitAll()
-                        .requestMatchers("/volunteers").hasAnyAuthority("VOLUNTARIO, SUPER_ADMIN, SIN_ASIGNAR")
-                        .requestMatchers("/organizations").hasAnyAuthority("ORGANIZACION, SUPER_ADMIN, SIN_ASIGNAR")
+                        .requestMatchers("/volunteers").permitAll()
+                        .requestMatchers("/organizations").permitAll()
                         .requestMatchers("/users/*").permitAll()
                         .anyRequest().permitAll()
                 )
