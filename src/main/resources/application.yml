@@ -38,6 +38,11 @@ springdoc:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
+  servers:
+    - url: https://volunteer-app.online/api/v1/back-volunteer-app
+      description: Servidor de producción
+    - url: http://localhost:8085/api/v1/back-volunteer-app
+      description: Servidor local para desarrollo
 
 request-mapping:
   controller:

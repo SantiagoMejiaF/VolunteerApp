@@ -35,6 +35,7 @@ public class SecurityConfig {
                         .requestMatchers("/organizations").permitAll()
                         .requestMatchers("/users/*").permitAll()
                         .anyRequest().permitAll()
+
                 )
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint(jwtAuthEntryPoint)
