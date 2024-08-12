@@ -29,9 +29,6 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .requiresChannel(channel ->
-                        channel.anyRequest().requiresSecure()
-                )
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/authentications/google").permitAll()
                         .requestMatchers("/volunteers").permitAll()
