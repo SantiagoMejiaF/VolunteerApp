@@ -53,6 +53,12 @@ public class UserController implements UserAPI {
     }
 
     @Override
+    public ResponseEntity<Long> getTotalUserCount() {
+        long count = userService.getTotalUserCount();
+        return ResponseEntity.ok(count);
+    }
+
+    @Override
     public ResponseEntity<Long> countOrganizationsByAuthorizationStatus(@RequestParam AuthorizationStatus authorizationStatus) {
         long count = userService.countOrganizationsByAuthorizationStatus(authorizationStatus);
         return ResponseEntity.ok(count);

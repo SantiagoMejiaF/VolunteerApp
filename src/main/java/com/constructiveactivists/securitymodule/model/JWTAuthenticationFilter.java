@@ -1,10 +1,11 @@
-package com.constructiveactivists.authenticationmodule.controllers.seguridad;
+package com.constructiveactivists.securitymodule.model;
 
-
+import com.constructiveactivists.securitymodule.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,17 +14,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-
-
+@AllArgsConstructor
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtGenerator;
     private final CustomUserDetailsService customUserDetailsService;
-
-    public JWTAuthenticationFilter(JwtUtil jwtGenerator, CustomUserDetailsService customUserDetailsService) {
-        this.jwtGenerator = jwtGenerator;
-        this.customUserDetailsService = customUserDetailsService;
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -42,7 +37,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
-
 
     private String getJWT(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");

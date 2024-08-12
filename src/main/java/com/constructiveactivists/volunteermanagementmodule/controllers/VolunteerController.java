@@ -73,4 +73,10 @@ public class VolunteerController implements VolunteerAPI {
         List<RelationshipEnum> relationships = volunteerService.getAllRelationships();
         return ResponseEntity.ok(relationships);
     }
+
+    @Override
+    public ResponseEntity<Long> getActiveVolunteerCount() {
+        long count = volunteerService.getActiveVolunteerCount();
+        return ResponseEntity.ok(count);
+    }
 }
