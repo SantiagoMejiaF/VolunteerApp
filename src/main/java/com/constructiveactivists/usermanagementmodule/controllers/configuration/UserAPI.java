@@ -62,4 +62,11 @@ public interface UserAPI {
     })
     @PostMapping("/{userId}/send-approval-or-rejection-email")
     ResponseEntity<String> sendApprovalOrRejectionEmail(@PathVariable Integer userId, @RequestParam boolean approved);
+
+    @Operation(summary = "Obtener la cantidad total de usuarios registrados en la aplicación")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+    })
+    @GetMapping("/count")
+    ResponseEntity<Long> getTotalUserCount();
 }

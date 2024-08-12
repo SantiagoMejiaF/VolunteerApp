@@ -51,4 +51,10 @@ public class UserController implements UserAPI {
         String message = approved ? "Usuario aprobado correctamente." : "Usuario rechazado correctamente.";
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<Long> getTotalUserCount() {
+        long count = userService.getTotalUserCount();
+        return ResponseEntity.ok(count);
+    }
 }

@@ -1,5 +1,6 @@
-package com.constructiveactivists.authenticationmodule.controllers.seguridad;
+package com.constructiveactivists.securitymodule.service;
 
+import com.constructiveactivists.securitymodule.model.CustomUserDetails;
 import com.constructiveactivists.usermanagementmodule.entities.RoleEntity;
 import com.constructiveactivists.usermanagementmodule.entities.UserEntity;
 import com.constructiveactivists.usermanagementmodule.services.RoleService;
@@ -14,7 +15,6 @@ import java.util.List;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-
 
     private final UserService userService;
     private final RoleService roleService;
@@ -35,5 +35,4 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Rol no encontrado con el ID: " + userEntity.getRoleId()));
         return new CustomUserDetails(userEntity, roles);
     }
-
 }

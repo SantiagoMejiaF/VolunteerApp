@@ -1,7 +1,11 @@
-package com.constructiveactivists.authenticationmodule.controllers.seguridad;
+package com.constructiveactivists.securitymodule.configuration;
 
-
+import com.constructiveactivists.securitymodule.service.CustomUserDetailsService;
+import com.constructiveactivists.securitymodule.model.JWTAuthenticationFilter;
+import com.constructiveactivists.securitymodule.model.JwtAuthEntryPoint;
+import com.constructiveactivists.securitymodule.model.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,19 +17,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
 @EnableWebSecurity
+@AllArgsConstructor
 @Configuration
 public class SecurityConfig {
 
     private final JwtUtil jwtGenerator;
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtAuthEntryPoint jwtAuthEntryPoint;
-
-
-    public SecurityConfig(JwtUtil jwtGenerator, CustomUserDetailsService customUserDetailsService, JwtAuthEntryPoint jwtAuthEntryPoint) {
-        this.jwtGenerator = jwtGenerator;
-        this.customUserDetailsService = customUserDetailsService;
-        this.jwtAuthEntryPoint = jwtAuthEntryPoint;
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -60,5 +58,4 @@ public class SecurityConfig {
     public JWTAuthenticationFilter jwtAuthenticationFilter() {
         return new JWTAuthenticationFilter(jwtGenerator, customUserDetailsService);
     }
-
 }

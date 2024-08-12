@@ -1,6 +1,7 @@
 package com.constructiveactivists.volunteermanagementmodule.services;
 
 import com.constructiveactivists.usermanagementmodule.entities.UserEntity;
+import com.constructiveactivists.usermanagementmodule.entities.enums.AuthorizationStatus;
 import com.constructiveactivists.usermanagementmodule.entities.enums.RoleType;
 import com.constructiveactivists.usermanagementmodule.services.UserService;
 import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerEntity;
@@ -32,22 +33,29 @@ public class VolunteerService {
     public VolunteerEntity saveVolunteer(VolunteerEntity volunteerEntity) {
 
         Optional<UserEntity> user = userService.getUserById(volunteerEntity.getUserId());
-
         if (user.isEmpty()) {
-            throw new EntityNotFoundException("Usuario con ID " + volunteerEntity.getUserId() + " no existe.");
+            throw new EntityNotFoundException("El usuario con ID " + volunteerEntity.getUserId() + " no existe en la base de datos.");
         }
 
-        userService.updateUserRoleType(volunteerEntity.getUserId(), RoleType.ORGANIZACION);
-        volunteerEntity.setStatus(StatusEnum.valueOf("ACTIVO"));
+        userService.updateUserRoleType(volunteerEntity.getUserId(), RoleType.VOLUNTARIO);
         volunteerEntity.getVolunteeringInformation().setVolunteerType(VolunteerType.valueOf("VOLUNTARIO"));
         volunteerEntity.getVolunteeringInformation().setVolunteeredHours(0);
 
         return volunteerRepository.save(volunteerEntity);
     }
 
+    public long getActiveVolunteerCount() {
+        return volunteerRepository.findAll().stream()
+                .filter(volunteer -> {
+                    Optional<UserEntity> user = userService.getUserById(volunteer.getUserId());
+                    return user.isPresent() && user.get().getAuthorizationType() == AuthorizationStatus.AUTORIZADO;
+                })
+                .count();
+    }
+
     public void deleteVolunteer(Integer id) {
         VolunteerEntity volunteer = volunteerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Voluntario no encontrado con id " + id));
+                .orElseThrow(() -> new RuntimeException("El voluntario con ID " + id + " no existe en la base de datos."));
 
         userService.deleteUser(volunteer.getUserId());
 

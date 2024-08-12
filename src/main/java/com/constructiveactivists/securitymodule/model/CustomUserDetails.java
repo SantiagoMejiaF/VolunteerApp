@@ -1,29 +1,42 @@
-package com.constructiveactivists.authenticationmodule.controllers.seguridad;
+package com.constructiveactivists.securitymodule.model;
+
 import com.constructiveactivists.usermanagementmodule.entities.RoleEntity;
 import com.constructiveactivists.usermanagementmodule.entities.UserEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
-public class CustomUserDetails implements UserDetails {
-    private transient  UserEntity userEntity;
-    private transient  List<RoleEntity> roles;
+@Getter
+@AllArgsConstructor
+public final class CustomUserDetails implements UserDetails, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private final transient UserEntity userEntity;
+    private final transient List<RoleEntity> roles;
+    private final Collection<? extends GrantedAuthority> authorities;
 
     public CustomUserDetails(UserEntity userEntity, List<RoleEntity> roles) {
         this.userEntity = userEntity;
-        this.roles = roles;
+        this.roles = List.copyOf(roles);
+        this.authorities = roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getRoleType().name()))
+                .toList();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRoleType().name()))
-                .toList();
+        return authorities;
     }
+
     @Override
     public String getUsername() {
         return userEntity.getEmail();
@@ -31,8 +44,8 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        // Devuelve null ya que no usas contraseñas
-        return null;
+        // Devuelve una cadena vacía ya que no se usan contraseñas
+        return "";
     }
 
     @Override
@@ -54,9 +67,4 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    public UserEntity getUserEntity() {
-        return userEntity;
-    }
-
 }
