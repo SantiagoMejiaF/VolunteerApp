@@ -16,7 +16,11 @@ export class GestionUsuariosComponent implements OnInit {
   ngOnInit(): void {
     // Obtener los usuarios pendientes
     this.adminService.getPendingUsers().subscribe((users) => {
-      this.data = users;
+      this.data = users.map(user => ({
+        ...user,
+        name: `${user.firstName} ${user.lastName}`,  // Combinar firstName y lastName
+        Cedula: '1001091719' // Temporalmente quemar la cédula
+      }));
       this.populateUserRoles();
       this.initializeDataTable();
     });

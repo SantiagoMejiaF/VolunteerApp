@@ -129,7 +129,12 @@ export class DashboardAdminComponent implements OnInit {
 
     // Obtener los datos de los usuarios autorizados
     this.adminService.getAuthorizedUsers().subscribe((users) => {
-      this.data = users;
+      this.data = users.map(user => ({
+        ...user,
+        name: `${user.firstName} ${user.lastName}`,  // Combinar firstName y lastName
+        Cedula: '1001091719', // Temporalmente quemar la cédula
+        imageUrl: user.image  // Obtener la URL de la imagen
+      }));
       this.populateUserRoles();
     });
 
