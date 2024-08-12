@@ -57,4 +57,16 @@ public class UserController implements UserAPI {
         long count = userService.getTotalUserCount();
         return ResponseEntity.ok(count);
     }
+
+    @Override
+    public ResponseEntity<Long> countOrganizationsByAuthorizationStatus(@RequestParam AuthorizationStatus authorizationStatus) {
+        long count = userService.countOrganizationsByAuthorizationStatus(authorizationStatus);
+        return ResponseEntity.ok(count);
+    }
+
+    @Override
+    public ResponseEntity<List<UserEntity>> getUsersByAuthorizationStatus(@PathVariable AuthorizationStatus authorizationStatus) {
+        List<UserEntity> users = userService.findUsersByAuthorizationStatus(authorizationStatus);
+        return ResponseEntity.ok(users);
+    }
 }

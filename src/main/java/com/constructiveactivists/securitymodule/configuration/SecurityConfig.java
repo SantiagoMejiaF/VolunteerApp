@@ -33,7 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/authentications/google").permitAll()
                         .requestMatchers("/volunteers").hasAnyAuthority("VOLUNTARIO, SUPER_ADMIN, SIN_ASIGNAR")
                         .requestMatchers("/organizations").hasAnyAuthority("ORGANIZACION, SUPER_ADMIN, SIN_ASIGNAR")
-                        .requestMatchers("/users/*").hasAnyAuthority("SUPER_ADMIN")
+                        .requestMatchers("/users/*").permitAll()
                         .anyRequest().permitAll()
                 )
                 .exceptionHandling(e -> e
