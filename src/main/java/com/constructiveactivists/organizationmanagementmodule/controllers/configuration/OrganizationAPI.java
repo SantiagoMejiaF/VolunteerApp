@@ -2,6 +2,9 @@ package com.constructiveactivists.organizationmanagementmodule.controllers.confi
 
 import com.constructiveactivists.organizationmanagementmodule.controllers.request.OrganizationRequest;
 import com.constructiveactivists.organizationmanagementmodule.entities.OrganizationEntity;
+import com.constructiveactivists.organizationmanagementmodule.entities.enums.OrganizationTypeEnum;
+import com.constructiveactivists.organizationmanagementmodule.entities.enums.SectorTypeEnum;
+import com.constructiveactivists.organizationmanagementmodule.entities.enums.VolunteeringTypeEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -65,4 +68,28 @@ public interface OrganizationAPI {
     })
     @GetMapping
     ResponseEntity<List<OrganizationEntity>> getAllOrganizations();
+
+    @Operation(summary = "Obtener una lista con todos los sectores organizacionales disponibles")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "404", description = "No se encontraron sectores")
+    })
+    @GetMapping("/sectors-types")
+    ResponseEntity<List<SectorTypeEnum>> getAllSectors();
+
+    @Operation(summary = "Obtener una lista con todos los tipos de organización disponibles")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "404", description = "No se encontraron tipos de organización")
+    })
+    @GetMapping("/organization-types")
+    ResponseEntity<List<OrganizationTypeEnum>> getAllOrganizationTypes();
+
+    @Operation(summary = "Obtener una lista con todos los tipos de voluntariado disponibles")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "404", description = "No se encontraron tipos de voluntariado")
+    })
+    @GetMapping("/volunteering-types")
+    ResponseEntity<List<VolunteeringTypeEnum>> getAllVolunteeringTypes();
 }

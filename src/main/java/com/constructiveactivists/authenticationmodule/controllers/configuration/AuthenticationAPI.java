@@ -13,7 +13,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @Tag(name = "Autenticación", description = "Operaciones relacionadas con la autenticación en la aplicación.")
 public interface AuthenticationAPI {
 
-    @Operation(summary = "Verificar token de Google")
+    @Operation(summary = "Registrarse o iniciar sesión con Google",
+            description = "Permite a los usuarios registrarse o iniciar sesión en la aplicación utilizando su cuenta de Google.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Token de Google válido"),
             @ApiResponse(responseCode = "400", description = "Token de Google inválido"),
