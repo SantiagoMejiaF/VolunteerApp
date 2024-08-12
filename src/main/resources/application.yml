@@ -1,12 +1,6 @@
 spring:
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: activistas.constructivos08@gmail.com
-    password: cdzanoeomcarrqze
-    properties:
-      mail.smtp.auth: true
-      mail.smtp.starttls.enable: true
+  profiles:
+    active: prod
 
   application:
     name: volunteer-app-backend
@@ -25,6 +19,15 @@ spring:
       ddl-auto: update
     show-sql: true
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: activistas.constructivos08@gmail.com
+    password: cdzanoeomcarrqze
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
 social:
   googleClientId: "142245667829-afpupoofnh363onmduragfrhduii4jj5.apps.googleusercontent.com"
 
@@ -32,12 +35,6 @@ server:
   port: 8085
   servlet:
     context-path: /api/v1/back-volunteer-app
-
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui.html
 
 request-mapping:
   controller:
