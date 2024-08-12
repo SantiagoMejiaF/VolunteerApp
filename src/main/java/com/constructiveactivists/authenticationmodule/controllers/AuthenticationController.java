@@ -3,8 +3,8 @@ package com.constructiveactivists.authenticationmodule.controllers;
 import com.constructiveactivists.authenticationmodule.controllers.configuration.AuthenticationAPI;
 import com.constructiveactivists.authenticationmodule.controllers.mappers.AuthenticationMapper;
 import com.constructiveactivists.authenticationmodule.controllers.request.AuthenticationRequest;
+import com.constructiveactivists.authenticationmodule.controllers.response.AuthenticationResponse;
 import com.constructiveactivists.authenticationmodule.services.AuthenticationService;
-import com.constructiveactivists.usermanagementmodule.entities.UserEntity;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -25,8 +25,10 @@ public class AuthenticationController implements AuthenticationAPI {
 
     @SneakyThrows
     @Override
-    public ResponseEntity<UserEntity> authenticationByGoogle(@Valid AuthenticationRequest authenticationRequest){
-        UserEntity createdUserEntity = authenticationService.authenticateByGoogle(authenticationMapper.toDomain(authenticationRequest));
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUserEntity);
+
+    public ResponseEntity<AuthenticationResponse> authenticationByGoogle(@Valid AuthenticationRequest authenticationRequest){
+        AuthenticationResponse response = authenticationService.authenticationByGoogle(authenticationMapper.toDomain(authenticationRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
     }
 }

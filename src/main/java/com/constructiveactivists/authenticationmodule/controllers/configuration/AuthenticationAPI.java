@@ -1,7 +1,7 @@
 package com.constructiveactivists.authenticationmodule.controllers.configuration;
 
 import com.constructiveactivists.authenticationmodule.controllers.request.AuthenticationRequest;
-import com.constructiveactivists.usermanagementmodule.entities.UserEntity;
+import com.constructiveactivists.authenticationmodule.controllers.response.AuthenticationResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -21,5 +21,5 @@ public interface AuthenticationAPI {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @PostMapping("/google")
-    ResponseEntity<UserEntity> authenticationByGoogle(@RequestBody AuthenticationRequest tokenDto);
+    ResponseEntity<AuthenticationResponse> authenticationByGoogle(@RequestBody AuthenticationRequest tokenDto);
 }
