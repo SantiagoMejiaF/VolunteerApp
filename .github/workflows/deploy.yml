@@ -46,12 +46,7 @@ jobs:
           script: |
             docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} -p ${{ secrets.GHCR_TOKEN }}
             fuser -k 8085/tcp || true
+            docker pull ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:develop
             docker stop back-volunteerapp-develop || true
             docker rm back-volunteerapp-develop || true
-
-            # Limpiar imágenes antiguas
-            docker system prune -af
-
-            # Ejecutar la nueva imagen
-            docker pull ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:develop
             docker run -d --name back-volunteerapp-develop -p 8085:8085 ghcr.io/${{ secrets.GHCR_USERNAME }}/back-volunteerapp:develop
