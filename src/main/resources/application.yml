@@ -1,7 +1,4 @@
 spring:
-  profiles:
-    active: prod
-
   application:
     name: volunteer-app-backend
 
@@ -27,6 +24,16 @@ spring:
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /swagger.v1+json
+  api:
+    title: VOLUNTEER APP BACKEND API
+    description: Servicios REST para la aplicación de voluntariado
+    version: 1.0
 
 social:
   googleClientId: "142245667829-afpupoofnh363onmduragfrhduii4jj5.apps.googleusercontent.com"

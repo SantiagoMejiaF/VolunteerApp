@@ -1,4 +1,4 @@
-package com.constructiveactivists.authenticationmodule.controllers.mappers;
+package com.constructiveactivists.authenticationmodule.mappers;
 
 import com.constructiveactivists.authenticationmodule.controllers.request.AuthenticationRequest;
 import com.constructiveactivists.authenticationmodule.models.TokenModel;

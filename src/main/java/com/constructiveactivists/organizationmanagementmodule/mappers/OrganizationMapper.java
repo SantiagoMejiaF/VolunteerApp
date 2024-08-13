@@ -1,4 +1,4 @@
-package com.constructiveactivists.organizationmanagementmodule.controllers.mappers;
+package com.constructiveactivists.organizationmanagementmodule.mappers;
 
 import com.constructiveactivists.organizationmanagementmodule.controllers.request.OrganizationRequest;
 import com.constructiveactivists.organizationmanagementmodule.entities.OrganizationEntity;

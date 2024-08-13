@@ -1,7 +1,7 @@
 package com.constructiveactivists.authenticationmodule.controllers;
 
 import com.constructiveactivists.authenticationmodule.controllers.configuration.AuthenticationAPI;
-import com.constructiveactivists.authenticationmodule.controllers.mappers.AuthenticationMapper;
+import com.constructiveactivists.authenticationmodule.mappers.AuthenticationMapper;
 import com.constructiveactivists.authenticationmodule.controllers.request.AuthenticationRequest;
 import com.constructiveactivists.authenticationmodule.controllers.response.AuthenticationResponse;
 import com.constructiveactivists.authenticationmodule.services.AuthenticationService;

@@ -1,8 +1,0 @@
-springdoc:
-  swagger-ui:
-    url: http://localhost:8085/api/v1/back-volunteer-app/v3/api-docs
-
-server:
-  port: 8085
-  servlet:
-    context-path: /api/v1/back-volunteer-app

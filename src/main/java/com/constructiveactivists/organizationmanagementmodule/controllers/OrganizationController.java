@@ -1,7 +1,7 @@
 package com.constructiveactivists.organizationmanagementmodule.controllers;
 
 import com.constructiveactivists.organizationmanagementmodule.controllers.configuration.OrganizationAPI;
-import com.constructiveactivists.organizationmanagementmodule.controllers.mappers.OrganizationMapper;
+import com.constructiveactivists.organizationmanagementmodule.mappers.OrganizationMapper;
 import com.constructiveactivists.organizationmanagementmodule.controllers.request.OrganizationRequest;
 import com.constructiveactivists.organizationmanagementmodule.entities.OrganizationEntity;
 import com.constructiveactivists.organizationmanagementmodule.entities.enums.OrganizationTypeEnum;
