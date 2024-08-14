@@ -11,9 +11,10 @@
             <div class="cards">
                 <div class="row">
                     <div class="col" id="texto">
-                        <h2>¡Bienvenida/o, Nombre User!</h2>
-                        <p>Este es tu espacio para gestionar el dashboard de usuarios. Aquí podrás ver quiénes están
-                            activos e inactivos. ¡Estamos seguros de que harás un gran trabajo!</p>
+                        <h2>¡Bienvenida/o, {{ userName }}!</h2>
+                        <p>Este es tu espacio para gestionar el dashboard de usuarios. Aquí podrás ver estadísticas
+                            relevantes sobre los usuarios, voluntarios y organizaciones activas. ¡Estamos seguros de que
+                            harás un gran trabajo!</p>
                     </div>
                     <div class="col" id="imagen-col">
                         <img src="assets/img/office.png" alt="">
@@ -24,21 +25,21 @@
         <div class="col-12 col-lg-2 h-100" id="Users">
             <div class="card-container">
                 <i class="bi bi-people-fill" style="font-size: 2rem; color: #ffffff;"></i>
-                <h3 class="mt-4">25000</h3>
+                <h3 class="mt-4">{{ totalUsers }}</h3>
                 <p>Usuarios <br>totales</p>
             </div>
         </div>
         <div class="col-12 col-lg-2 h-100" id="Volunteer">
             <div class="card-container">
                 <i class="bi bi-person-heart" style="font-size: 2rem; color: #ffffff;"></i>
-                <h3 class="mt-4">25000</h3>
+                <h3 class="mt-4">{{ activeVolunteers }}</h3>
                 <p>Voluntarios Activos</p>
             </div>
         </div>
         <div class="col-12 col-lg-2 h-100" id="Organization">
             <div class="card-container">
                 <i class="bi bi-building-fill-check" style="font-size: 2rem; color: #ffffff;"></i>
-                <h3 class="mt-4">25000</h3>
+                <h3 class="mt-4">{{ activeOrganizations }}</h3>
                 <p>Organizaciones Activas</p>
             </div>
         </div>
@@ -63,31 +64,23 @@
                             </ul>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="row align-items-center">
                     <div class="col ml-4">
                         <div id="chart">
-                            <apx-chart
-                              [series]="chartOptions.series"
-                              [chart]="chartOptions.chart"
-                              [dataLabels]="chartOptions.dataLabels"
-                              [plotOptions]="chartOptions.plotOptions"
-                              [xaxis]="chartOptions.xaxis"
-                              [stroke]="chartOptions.stroke"
-                              [fill]="chartOptions.fill"
-                              [yaxis]="chartOptions.yaxis"
-                              [title]="chartOptions.title"
-                              [tooltip]="chartOptions.tooltip"
-                              [legend]="chartOptions.legend"
-                            ></apx-chart>
-                          </div>
+                            <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                                [dataLabels]="chartOptions.dataLabels" [plotOptions]="chartOptions.plotOptions"
+                                [xaxis]="chartOptions.xaxis" [stroke]="chartOptions.stroke" [fill]="chartOptions.fill"
+                                [yaxis]="chartOptions.yaxis" [title]="chartOptions.title"
+                                [tooltip]="chartOptions.tooltip" [legend]="chartOptions.legend"></apx-chart>
+                        </div>
                     </div>
                     <div class="col-4 ml-5" id="img2">
                         <img src="assets/img/corazon.png" alt="">
                     </div>
 
-                   
+
                 </div>
 
 
@@ -106,36 +99,36 @@
                         </div>
                         <table class="table  table-sm" id="datatableexample">
                             <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Perfil</th>
-                                <th>Nombre</th>
-                                <th>Email</th>
-                                <th>Cedula</th>
-                              </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Perfil</th>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Cedula</th>
+                                </tr>
                             </thead>
                             <tbody>
-                              <tr *ngFor="let user of data; let i = index">
-                                <td>{{ i + 1 }}</td>
-                                <td width="60px">
-                                    <div class="imgBx"><img src="assets/img/user2.png" alt=""></div>
-                                </td>
-                                <td>
-                                    <h4>{{user.nombre}} <br> <span>{{user.rol}}</span></h4>
-                                </td>
-                                <td>{{ user.email }}</td>
-                                <td>{{ user.Cedula }}</td>
-                              </tr>
+                                <tr *ngFor="let user of data; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td width="60px">
+                                        <div class="imgBx"><img src="assets/img/user2.png" alt=""></div>
+                                    </td>
+                                    <td>
+                                        <h4>{{user.nombre}} <br> <span>{{user.rol}}</span></h4>
+                                    </td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.Cedula }}</td>
+                                </tr>
                             </tbody>
-                          </table>
-                        
+                        </table>
+
                     </div>
-                    
+
                 </div>
-                
+
             </div>
         </div>
 
     </div>
-    
+
 </div>

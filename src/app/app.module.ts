@@ -17,7 +17,6 @@ import { FooterComponent } from './Modules/landingModule/footer/footer.component
 import { LoginComponent } from './Modules/login/login.component';
 import { TokenService } from './services/token.service';
 import { OauthService } from './services/oauth.service';
-import { HomeComponent } from './Modules/homeModule/home/home.component';
 import { AuthComponent } from './Modules/authenticationModule/auth/auth.component'; // Importa el OauthService
 import { FormsModule } from '@angular/forms';
 import { FormsVolunteerComponent } from './Modules/authenticationModule/forms-volunteer/forms-volunteer.component';
@@ -26,8 +25,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from './Modules/dashboardModule/sidebar/sidebar.component';
 import { GestionUsuariosComponent } from './Modules/AdminUser/gestion-usuarios/gestion-usuarios.component';
-import {DataTablesModule } from 'angular-datatables';
-import {NgApexchartsModule} from "ng-apexcharts";
+import { DataTablesModule } from 'angular-datatables';
+import { NgApexchartsModule } from "ng-apexcharts";
 import { DashboardAdminComponent } from './Modules/AdminUser/dashboardAdmin/dashboardAdmin.component';
 
 @NgModule({
@@ -41,7 +40,6 @@ import { DashboardAdminComponent } from './Modules/AdminUser/dashboardAdmin/dash
     MisionesComponent,
     FooterComponent,
     LoginComponent,
-    HomeComponent,
     AuthComponent,
     FormsVolunteerComponent,
     FormsOrganizacionComponent,

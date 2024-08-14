@@ -1,28 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AdminService } from '../../../services/admin.service';
+import { OauthService } from '../../../services/oauth.service';
 
 @Component({
   selector: 'app-gestion-usuarios',
   templateUrl: './gestion-usuarios.component.html',
   styleUrls: ['./gestion-usuarios.component.css'],
 })
-export class GestionUsuariosComponent {
-  selectedUser: any = {}; 
-  data = [
-    { id: 1, name: 'Juan Pérez', rol: 'voluntario', email: 'juan@example.com', Cedula: '123456789' },
-    { id: 2, name: 'María García', rol: 'organización', email: 'maria@example.com', Cedula: '987654321' },
-    { id: 3, name: 'Carlos Ruiz', rol: 'voluntario', email: 'carlos@example.com', Cedula: '456789123' },
-    { id: 4, name: 'Ana López', rol: 'organización', email: 'ana@example.com', Cedula: '654321987' }
-  ];
+export class GestionUsuariosComponent implements OnInit {
+  selectedUser: any = {};
+  data: any[] = [];
 
-  constructor() {
+  constructor(private adminService: AdminService, private oauthService: OauthService) { }
+
+  ngOnInit(): void {
+    // Obtener los usuarios pendientes
+    this.adminService.getPendingUsers().subscribe((users) => {
+      this.data = users;
+      this.populateUserRoles();
+      this.initializeDataTable();
+    });
+  }
+
+  // Obtener los roles de los usuarios
+  populateUserRoles(): void {
+    this.data.forEach((user) => {
+      this.oauthService.getUserRole(user.roleId).subscribe((role) => {
+        user.rol = role.roleType;
+      });
+    });
+  }
+
+  // Inicializar DataTable
+  initializeDataTable(): void {
     setTimeout(() => {
       $('#datatableexample').DataTable({
         pagingType: 'full_numbers',
         pageLength: 5,
         processing: true,
         lengthMenu: [5, 10, 25],
-        //dom: 'ftip',
-        scrollX:true,
+        scrollX: true,
         language: {
           info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
           search: '<span style="font-size: 0.875rem;">Buscar</span>',
@@ -36,6 +53,34 @@ export class GestionUsuariosComponent {
   }
 
   openModal(user: any) {
-    this.selectedUser = user; // coloca los datos del user que se selecciona aquí Martin
+    this.selectedUser = user; // Cargar los datos del usuario seleccionado en el modal
+  }
+
+  acceptUser(): void {
+    this.adminService.sendApprovalEmail(this.selectedUser.id, true).subscribe(
+      (response) => {
+        console.log('Usuario aceptado:', response);
+        this.removeUserFromList(this.selectedUser.id);
+      },
+      (error) => {
+        console.error('Error al aceptar el usuario:', error);
+      }
+    );
+  }
+
+  rejectUser(): void {
+    this.adminService.sendApprovalEmail(this.selectedUser.id, false).subscribe(
+      (response) => {
+        console.log('Usuario rechazado:', response);
+        this.removeUserFromList(this.selectedUser.id);
+      },
+      (error) => {
+        console.error('Error al rechazar el usuario:', error);
+      }
+    );
+  }
+
+  removeUserFromList(userId: number): void {
+    this.data = this.data.filter(user => user.id !== userId);
   }
 }

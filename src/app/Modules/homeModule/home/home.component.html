@@ -1,8 +1,0 @@
-<div *ngIf="userInfo">
-    <h1>Bienvenido, {{ userInfo.name }}</h1>
-    <p>Email: {{ userInfo.email }}</p>
-    <p>Email Verificado: {{ userInfo.emailVerified }}</p>
-    <p>ID: {{ userInfo.id }}</p>
-    <img [src]="userInfo.picture" alt="User Photo" style="width: 96px; height: 96px;">
-    <button (click)="logOut()">Cerrar sesión</button>
-</div>

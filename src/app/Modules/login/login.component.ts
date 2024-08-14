@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { OauthService } from '../../services/oauth.service';
 import { TokenService } from '../../services/token.service';
 import { TokenDto } from '../../models/token-dto';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private oauthService: OauthService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private http: HttpClient // Añadimos HttpClient para hacer las solicitudes HTTP
   ) { }
 
   ngOnInit(): void {
@@ -56,14 +58,14 @@ export class LoginComponent implements OnInit {
               console.log('Google Access Token:', response.access_token);
               this.oauthService.google(tokenGoogle).subscribe(
                 (res) => {
-                  console.log('Response from backend (Google):', res); // Imprimir respuesta del backend
+                  console.log('Response from backend (Google):', res);
                   this.tokenService.setToken(res.value);
                   localStorage.setItem('userInfo', JSON.stringify(res));
                   this.islogged = true;
-                  this.router.navigate(['/forms'], { state: { userInfo: res } }); // Navega y pasa la información del usuario
+                  this.getRoleAndRedirect(res.user.roleId, res.user.authorizationType);
                 },
                 (err) => {
-                  console.log('Error fetching Google user info:', err); // Imprimir error
+                  console.log('Error fetching Google user info:', err);
                   this.logOut();
                 }
               );
@@ -82,19 +84,52 @@ export class LoginComponent implements OnInit {
       const tokenFace = new TokenDto(this.socialUser.authToken);
       this.oauthService.facebook(tokenFace).subscribe(
         (res) => {
-          console.log('Response from backend (Facebook):', res); // Imprimir respuesta del backend
+          console.log('Response from backend (Facebook):', res);
           this.tokenService.setToken(res.value);
           localStorage.setItem('userInfo', JSON.stringify(res));
           this.islogged = true;
-          this.router.navigate(['/forms']); // Navega y pasa la información del usuario
+          this.getRoleAndRedirect(res.user.roleId, res.user.authorizationType);
         },
         (err) => {
-          console.log('Error fetching Facebook user info:', err); // Imprimir error
+          console.log('Error fetching Facebook user info:', err);
           this.logOut();
         }
       );
     }).catch((err) => {
-      console.log('Error during Facebook login:', err); // Imprimir error
+      console.log('Error during Facebook login:', err);
+    });
+  }
+
+  getRoleAndRedirect(roleId: number, authorizationType: string): void {
+    this.oauthService.getUserRole(roleId).subscribe((role: any) => {
+      const roleType = role.roleType;
+
+      switch (roleType) {
+        case 'SUPER_ADMIN':
+          this.router.navigate(['/dashAdmin']);
+          break;
+        case 'SIN_ASIGNAR':
+          this.router.navigate(['/forms']);
+          break;
+        case 'VOLUNTARIO':
+          if (authorizationType === 'PENDIENTE') {
+            this.router.navigate(['/formsV']);
+          } else if (authorizationType === 'AUTORIZADO') {
+            this.router.navigate(['/dashVolunteer']);
+          }
+          break;
+        case 'ORGANIZACION':
+          if (authorizationType === 'PENDIENTE') {
+            this.router.navigate(['/formsO']);
+          } else if (authorizationType === 'AUTORIZADO') {
+            this.router.navigate(['/dashOrganization']);
+          }
+          break;
+        default:
+          console.error('Unknown role type:', roleType);
+      }
+    }, (error) => {
+      console.error('Error fetching role info:', error);
     });
   }
 
