@@ -3,6 +3,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { OrganizationService } from '../../../services/organization.service';
 import { Organization } from '../../../models/organization.model';
 import { HttpClient } from '@angular/common/http';
+
+interface Elements {
+  item_id: number;
+  item_text: string;
+}
+
 @Component({
   selector: 'app-forms-organizacion',
   templateUrl: './forms-organizacion.component.html',
@@ -13,12 +19,23 @@ export class FormsOrganizacionComponent implements OnInit {
   myForm: FormGroup;
   organizationData: Organization;
   termsContent: string | undefined;
+  ShowFilter = false;
+  disabled = false;
+  typeOrganization: Elements[] = [];
+  dropdownSettings: any = {};
+  volunteeringType: Elements[] = [];
+  dropdownSettings2: any = {};
+  sectorOrganization: Elements[] = [];
+  dropdownSettings3: any = {};
 
   constructor(private fb: FormBuilder, private organizationService: OrganizationService, private http: HttpClient) {
     this.myForm = this.fb.group({
+      dni: [''],
       foundationName: [''],
       nit: [''],
-      website: [''],
+      typeOrganization: [''],
+      volunteeringType: [''],
+      sectorOrganization: [''],
       phoneNumber: [''],
       email: [''],
       address: [''],
@@ -43,10 +60,26 @@ export class FormsOrganizacionComponent implements OnInit {
   ngOnInit() {
     this.showTab(this.currentTab);
     this.loadTerms();
+    this.dropdownSettings = {
+      singleSelection: true,
+      idField: 'item_id',
+      textField: 'item_text',
+      allowSearchFilter: this.ShowFilter,
+    };
+
+    this.dropdownSettings2 = { ...this.dropdownSettings };
+    this.dropdownSettings3 = { ...this.dropdownSettings };
+    this.loadDropdownData();
   }
   loadTerms() {
     this.http.get('assets/textos/terminos-y-condiciones.txt', { responseType: 'text' })
       .subscribe(data => this.termsContent = data);
+  }
+  loadDropdownData() {
+    //Llena la función Martincho
+  }
+  onItemSelect(item: any) {
+    console.log('onItemSelect', item);
   }
   showTab(n: number) {
     const tabs = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;
