@@ -70,15 +70,6 @@ public interface UserAPI {
     @GetMapping("/count")
     ResponseEntity<Long> getTotalUserCount();
 
-    @Operation(summary = "Contar organizaciones por estado de autorización")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
-            @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
-            @ApiResponse(responseCode = "404", description = "No encontrado")
-    })
-    @GetMapping("/count-organizations-status")
-    ResponseEntity<Long> countOrganizationsByAuthorizationStatus(@RequestParam AuthorizationStatus authorizationStatus);
-
     @Operation(summary = "Obtener usuarios por estado de autorización")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),

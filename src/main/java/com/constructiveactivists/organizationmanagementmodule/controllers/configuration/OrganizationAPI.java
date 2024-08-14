@@ -92,4 +92,12 @@ public interface OrganizationAPI {
     })
     @GetMapping("/volunteering-types")
     ResponseEntity<List<VolunteeringTypeEnum>> getAllVolunteeringTypes();
+
+
+    @Operation(summary = "Obtener el número de organizaciones activas")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+    })
+    @GetMapping("/active-count")
+    ResponseEntity<Long> getActiveOrganizationsCount();
 }
