@@ -81,4 +81,10 @@ public class OrganizationController implements OrganizationAPI {
         }
         return ResponseEntity.ok(volunteeringTypes);
     }
+
+    @Override
+    public ResponseEntity<Long> getActiveOrganizationsCount() {
+        long count = organizationService.getActiveOrganizationCount();
+        return ResponseEntity.ok(count);
+    }
 }

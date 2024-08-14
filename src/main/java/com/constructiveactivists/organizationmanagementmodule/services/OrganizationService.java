@@ -6,6 +6,7 @@ import com.constructiveactivists.organizationmanagementmodule.entities.enums.Sec
 import com.constructiveactivists.organizationmanagementmodule.entities.enums.VolunteeringTypeEnum;
 import com.constructiveactivists.usermanagementmodule.entities.UserEntity;
 import com.constructiveactivists.organizationmanagementmodule.repositories.OrganizationRepository;
+import com.constructiveactivists.usermanagementmodule.entities.enums.AuthorizationStatus;
 import com.constructiveactivists.usermanagementmodule.entities.enums.RoleType;
 import com.constructiveactivists.usermanagementmodule.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -64,5 +65,14 @@ public class OrganizationService {
 
     public List<VolunteeringTypeEnum> getAllVolunteeringTypes() {
         return Arrays.asList(VolunteeringTypeEnum.values());
+    }
+
+    public long getActiveOrganizationCount() {
+        return organizationRepository.findAll().stream()
+                .filter(organization -> {
+                    Optional<UserEntity> user = userService.getUserById(organization.getUserId());
+                    return user.isPresent() && user.get().getAuthorizationType() == AuthorizationStatus.AUTORIZADO;
+                })
+                .count();
     }
 }
