@@ -11,6 +11,8 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -27,21 +29,32 @@ public class VolunteerService {
     }
 
     public Optional<VolunteerEntity> getVolunteerById(Integer id) {
-        return volunteerRepository.findById(id);
+        Optional<VolunteerEntity> volunteerOpt = volunteerRepository.findById(id);
+        if (volunteerOpt.isPresent()) {
+            VolunteerEntity volunteer = volunteerOpt.get();
+            LocalDate birthDate = volunteer.getPersonalInformation().getBirthDate();
+            volunteer.getPersonalInformation().setAge(calculateAge(birthDate));
+            volunteerRepository.save(volunteer);
+        }
+        return volunteerOpt;
     }
 
-    public VolunteerEntity saveVolunteer(VolunteerEntity volunteerEntity) {
 
+    public VolunteerEntity saveVolunteer(VolunteerEntity volunteerEntity) {
         Optional<UserEntity> user = userService.getUserById(volunteerEntity.getUserId());
         if (user.isEmpty()) {
             throw new EntityNotFoundException("El usuario con ID " + volunteerEntity.getUserId() + " no existe en la base de datos.");
         }
-
+        LocalDate birthDate = volunteerEntity.getPersonalInformation().getBirthDate();
+        volunteerEntity.getPersonalInformation().setAge(calculateAge(birthDate));
         userService.updateUserRoleType(volunteerEntity.getUserId(), RoleType.VOLUNTARIO);
         volunteerEntity.getVolunteeringInformation().setVolunteerType(VolunteerType.valueOf("VOLUNTARIO"));
         volunteerEntity.getVolunteeringInformation().setVolunteeredHours(0);
-
         return volunteerRepository.save(volunteerEntity);
+    }
+
+    public int calculateAge(LocalDate birthDate) {
+        return Period.between(birthDate, LocalDate.now()).getYears();
     }
 
     public long getActiveVolunteerCount() {

@@ -63,4 +63,10 @@ public class UserController implements UserAPI {
         List<UserEntity> users = userService.findUsersByAuthorizationStatus(authorizationStatus);
         return ResponseEntity.ok(users);
     }
+
+    @Override
+    public ResponseEntity<List<UserEntity>> getPendingVolunteersAndOrganizations() {
+        List<UserEntity> users = userService.findPendingVolunteersAndOrganizations();
+        return ResponseEntity.ok(users);
+    }
 }

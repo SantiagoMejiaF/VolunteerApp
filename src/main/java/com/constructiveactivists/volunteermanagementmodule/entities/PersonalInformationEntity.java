@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -23,9 +25,13 @@ public class PersonalInformationEntity {
     @Column(name = "DIRECCION", length = 50, nullable = false)
     private String address;
 
-    @Column(name = "AGE", length = 150, nullable = false)
+    @Column(name = "AGE", nullable = false)
     private Integer age;
+
+    @Column(name="birth_date", columnDefinition = "DATE", nullable = false)
+    private LocalDate birthDate;
 
     @Column(name = "TELEFONO", length = 10, nullable = false)
     private String phoneNumber;
+
 }
