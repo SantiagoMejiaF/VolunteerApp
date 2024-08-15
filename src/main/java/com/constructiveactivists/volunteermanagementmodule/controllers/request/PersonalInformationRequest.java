@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -31,9 +33,7 @@ public class PersonalInformationRequest {
     private String address;
 
     @NotNull
-    @Max(110)
-    @Min(8)
-    @Schema(description = "Edad del voluntario", example = "25")
-    private Integer age;
+    @Schema(description = "Fecha de nacimiento del voluntario", example = "1999-12-31")
+    private LocalDate birthDate;
 
 }

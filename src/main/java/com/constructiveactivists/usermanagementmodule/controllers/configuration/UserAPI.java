@@ -78,4 +78,12 @@ public interface UserAPI {
     })
     @GetMapping("/status/{authorizationStatus}")
     ResponseEntity<List<UserEntity>> getUsersByAuthorizationStatus(@PathVariable AuthorizationStatus authorizationStatus);
+
+    @Operation(summary = "Obtener voluntarios y organizaciones pendientes de aprobación")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "404", description = "No encontrado")
+    })
+    @GetMapping("/pending")
+    ResponseEntity<List<UserEntity>> getPendingVolunteersAndOrganizations();
 }

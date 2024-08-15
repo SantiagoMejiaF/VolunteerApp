@@ -77,5 +77,16 @@ public class UserService {
         return userRepository.findByAuthorizationStatus(authorizationStatus);
     }
 
+    public List<UserEntity> findPendingVolunteersAndOrganizations() {
+        List<UserEntity> pendingUsers = userRepository.findByAuthorizationStatus(AuthorizationStatus.PENDIENTE);
+        return pendingUsers.stream()
+                .filter(user -> {
+                    RoleEntity role = roleService.getRoleById(user.getRoleId())
+                            .orElse(null);
+                    return role != null && (role.getRoleType() == RoleType.VOLUNTARIO || role.getRoleType() == RoleType.ORGANIZACION);
+                })
+                .toList();
+    }
+
 
 }
