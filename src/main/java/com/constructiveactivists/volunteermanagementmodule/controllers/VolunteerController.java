@@ -2,7 +2,9 @@ package com.constructiveactivists.volunteermanagementmodule.controllers;
 
 import com.constructiveactivists.volunteermanagementmodule.controllers.configuration.VolunteerAPI;
 import com.constructiveactivists.volunteermanagementmodule.controllers.mappers.VolunteerMapper;
+import com.constructiveactivists.volunteermanagementmodule.controllers.mappers.VolunteerUpdateMapper;
 import com.constructiveactivists.volunteermanagementmodule.controllers.request.VolunteerRequest;
+import com.constructiveactivists.volunteermanagementmodule.controllers.request.VolunteerUpdateRequest;
 import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerEntity;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.InterestEnum;
@@ -26,6 +28,8 @@ public class VolunteerController implements VolunteerAPI {
     private final VolunteerService volunteerService;
 
     private final VolunteerMapper volunteerMapper;
+
+    private final VolunteerUpdateMapper volunteerUpdateMapper;
 
     @Override
     public List<VolunteerEntity> getAllVolunteers() {
@@ -78,5 +82,13 @@ public class VolunteerController implements VolunteerAPI {
     public ResponseEntity<Long> getActiveVolunteerCount() {
         long count = volunteerService.getActiveVolunteerCount();
         return ResponseEntity.ok(count);
+    }
+
+    @Override
+    public ResponseEntity<VolunteerEntity> updateVolunteer(@PathVariable Integer id, @Valid @RequestBody VolunteerUpdateRequest volunteerUpdateRequest) {
+        System.out.println("VolunteerController.updateVolunteer" + id + " " + volunteerUpdateRequest.getPersonalUpdateInformationRequest().getBirthDate());
+        System.out.println("VolunteerController.updateVolunteer" + id + " " + volunteerUpdateRequest.getPersonalUpdateInformationRequest().getPhoneNumber());
+        VolunteerEntity updatedVolunteerEntity = volunteerService.updateVolunteer(id, volunteerUpdateMapper.toEntity(volunteerUpdateRequest));
+        return ResponseEntity.ok(updatedVolunteerEntity);
     }
 }

@@ -1,12 +1,14 @@
 package com.constructiveactivists.organizationmanagementmodule.controllers;
 
 import com.constructiveactivists.organizationmanagementmodule.controllers.configuration.OrganizationAPI;
+import com.constructiveactivists.organizationmanagementmodule.controllers.request.OrganizationUpdateRequest;
 import com.constructiveactivists.organizationmanagementmodule.mappers.OrganizationMapper;
 import com.constructiveactivists.organizationmanagementmodule.controllers.request.OrganizationRequest;
 import com.constructiveactivists.organizationmanagementmodule.entities.OrganizationEntity;
 import com.constructiveactivists.organizationmanagementmodule.entities.enums.OrganizationTypeEnum;
 import com.constructiveactivists.organizationmanagementmodule.entities.enums.SectorTypeEnum;
 import com.constructiveactivists.organizationmanagementmodule.entities.enums.VolunteeringTypeEnum;
+import com.constructiveactivists.organizationmanagementmodule.mappers.OrganizationUpdateMapper;
 import com.constructiveactivists.organizationmanagementmodule.services.OrganizationService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -26,6 +28,8 @@ public class OrganizationController implements OrganizationAPI {
 
     private final OrganizationMapper organizationMapper;
 
+    private final OrganizationUpdateMapper organizationUpdateMapper;
+
     @Override
     public ResponseEntity<List<OrganizationEntity>> getAllOrganizations() {
         List<OrganizationEntity> organizations = organizationService.getAllOrganizations();
@@ -36,11 +40,6 @@ public class OrganizationController implements OrganizationAPI {
     public ResponseEntity<OrganizationEntity> getOrganizationById(@PathVariable Integer id) {
         Optional<OrganizationEntity> organization = organizationService.getOrganizationById(id);
         return organization.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-    }
-
-    @Override
-    public ResponseEntity<OrganizationEntity> updateOrganization(Integer id, OrganizationRequest organizationRequest) {
-        return null;
     }
 
     @Override
@@ -86,5 +85,11 @@ public class OrganizationController implements OrganizationAPI {
     public ResponseEntity<Long> getActiveOrganizationsCount() {
         long count = organizationService.getActiveOrganizationCount();
         return ResponseEntity.ok(count);
+    }
+
+    @Override
+    public ResponseEntity<OrganizationEntity> updateOrganization(@PathVariable Integer id, @Valid @RequestBody OrganizationUpdateRequest updateRequest) {
+        OrganizationEntity updatedOrganization = organizationService.updateOrganization(id, organizationUpdateMapper.toDomain(updateRequest));
+        return ResponseEntity.ok(updatedOrganization);
     }
 }

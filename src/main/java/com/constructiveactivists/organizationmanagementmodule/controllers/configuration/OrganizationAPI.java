@@ -1,6 +1,7 @@
 package com.constructiveactivists.organizationmanagementmodule.controllers.configuration;
 
 import com.constructiveactivists.organizationmanagementmodule.controllers.request.OrganizationRequest;
+import com.constructiveactivists.organizationmanagementmodule.controllers.request.OrganizationUpdateRequest;
 import com.constructiveactivists.organizationmanagementmodule.entities.OrganizationEntity;
 import com.constructiveactivists.organizationmanagementmodule.entities.enums.OrganizationTypeEnum;
 import com.constructiveactivists.organizationmanagementmodule.entities.enums.SectorTypeEnum;
@@ -38,17 +39,6 @@ public interface OrganizationAPI {
     })
     @GetMapping("/{id}")
     ResponseEntity<OrganizationEntity> getOrganizationById(@PathVariable Integer id);
-
-    @Operation(summary = "Actualizar una organización existente")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
-            @ApiResponse(responseCode = "400", description = "Solicitud inválida"),
-            @ApiResponse(responseCode = "401", description = "No autorizado"),
-            @ApiResponse(responseCode = "403", description = "Prohibido"),
-            @ApiResponse(responseCode = "404", description = "No encontrado")
-    })
-    @PutMapping("/{id}")
-    ResponseEntity<OrganizationEntity> updateOrganization(@PathVariable Integer id, @Valid @RequestBody OrganizationRequest organizationRequest);
 
     @Operation(summary = "Eliminar una organización")
     @ApiResponses(value = {
@@ -100,4 +90,13 @@ public interface OrganizationAPI {
     })
     @GetMapping("/active-count")
     ResponseEntity<Long> getActiveOrganizationsCount();
+
+
+    @Operation(summary = "Actualizar una organización existente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "400", description = "Solicitud inválida"),
+    })
+    @PutMapping("/{id}")
+    ResponseEntity<OrganizationEntity> updateOrganization(@PathVariable Integer id, @Valid @RequestBody OrganizationUpdateRequest updateRequest);
 }
