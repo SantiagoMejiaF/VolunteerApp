@@ -19,8 +19,8 @@
                     <p><input id="nor" placeholder="3124687956" formControlName="cell" oninput="this.className = ''"></p>
                     <h6>Digita tu dirección</h6>
                     <p><input id="nor" placeholder="Cra 100 #87-56" formControlName="address" oninput="this.className = ''"></p>
-                    <h6>Digita tu edad</h6>
-                    <p><input id="nor" type="number" placeholder="25" formControlName="age" oninput="this.className = ''"></p>
+                    <h6>Digita tu fecha de nacimiento</h6>
+                    <p><input id="nor" type="date" placeholder="25" formControlName="age" oninput="this.className = ''"></p>
                     <h6>Selecciona tus días disponibles</h6>
                     <ng-multiselect-dropdown [settings]="dropdownSettings3" [data]="days" formControlName="days"
                         [disabled]="disabled" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
