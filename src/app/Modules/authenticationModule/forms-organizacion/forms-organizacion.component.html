@@ -13,13 +13,12 @@
                 <!-- Tab 1: Información de la Fundación -->
                 <div class="tab">
                     <h3 id="tittle">Información de contacto</h3>
-                    <h6>Digita la identificación del responsable</h6>
-                    <p><input id="nor" placeholder="1016875485..." formControlName="dni" oninput="this.className = ''">
-                    </p>
-                    <h6>Digita el número celular del responsable</h6>
-                    <p><input id="nor" placeholder="312456789..." formControlName="phoneNumber"
-                            oninput="this.className = ''">
-                    </p>
+                    <h6>Identificación del Responsable</h6>
+                    <p><input id="nor" placeholder="1016875485..." formControlName="responsiblePersonId"
+                            oninput="this.className = ''"></p>
+                    <h6>Número Celular del Responsable</h6>
+                    <p><input id="nor" placeholder="312456789..." formControlName="responsiblePersonPhoneNumber"
+                            oninput="this.className = ''"></p>
                     <p class="checkbox-container">
                         <input type="checkbox" id="acceptTerms" formControlName="acceptTerms">
                         <label for="acceptTerms">
@@ -29,29 +28,29 @@
                     </p>
                 </div>
 
-                <!-- Tab 2: Información de Contacto -->
+                <!-- Tab 2: Información de la Fundación -->
                 <div class="tab">
                     <h3 id="tittle">Información de tu Fundación</h3>
-                    <h6>Digita el nombre de tu fundación</h6>
-                    <p><input id="nor" placeholder="Fundación Manitas..." formControlName="foundationName"
+                    <h6>Nombre de la Fundación</h6>
+                    <p><input id="nor" placeholder="Fundación Manitas..." formControlName="organizationName"
                             oninput="this.className = ''"></p>
-                    <h6>Digita el NIT de tu fundación</h6>
+                    <h6>NIT de la Fundación</h6>
                     <p><input id="nor" placeholder="87654321..." formControlName="nit" oninput="this.className = ''">
                     </p>
-                    <h6>Digita la dirección de tu fundación</h6>
+                    <h6>Dirección de la Fundación</h6>
                     <p><input id="nor" placeholder="Cra 15 #87-95.." formControlName="address"
                             oninput="this.className = ''"></p>
                     <h6>Tipo de Organización</h6>
-                    <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="typeOrganization" formControlName="typeOrganization"
-                        [disabled]="disabled" (onSelect)="onItemSelect($event)">
+                    <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="typeOrganization"
+                        formControlName="organizationTypeEnum" (onSelect)="onItemSelect($event)">
                     </ng-multiselect-dropdown>
                     <h6>Sector al que pertenece la Organización</h6>
-                    <ng-multiselect-dropdown [settings]="dropdownSettings3" [data]="sectorOrganization" formControlName="sectorOrganization"
-                        [disabled]="disabled" (onSelect)="onItemSelect($event)">
+                    <ng-multiselect-dropdown [settings]="dropdownSettings3" [data]="sectorOrganization"
+                        formControlName="sectorTypeEnum" (onSelect)="onItemSelect($event)">
                     </ng-multiselect-dropdown>
                     <h6>Tipo de Voluntariado</h6>
-                    <ng-multiselect-dropdown [settings]="dropdownSettings2" [data]="volunteeringType" formControlName="volunteeringType"
-                        [disabled]="disabled" (onSelect)="onItemSelect($event)" >
+                    <ng-multiselect-dropdown [settings]="dropdownSettings2" [data]="volunteeringType"
+                        formControlName="volunteeringTypeEnum" (onSelect)="onItemSelect($event)">
                     </ng-multiselect-dropdown>
                 </div>
 
@@ -59,17 +58,33 @@
                 <div class="tab">
                     <h3 id="tittle">Confirmación</h3>
                     <h6>Nombre de la Fundación:</h6>
-                    <p>{{ organizationData.institutionalInformation.foundationName }}</p>
+                    <p>{{ organizationData.organizationName }}</p>
                     <h6>NIT:</h6>
-                    <p>{{ organizationData.institutionalInformation.nit }}</p>
-                    <h6>Página Web:</h6>
-                    <p>{{ organizationData.institutionalInformation.website }}</p>
-                    <h6>Celular:</h6>
-                    <p>{{ organizationData.contactInformation.phoneNumber }}</p>
-                    <h6>Correo Electrónico:</h6>
-                    <p>{{ organizationData.contactInformation.email }}</p>
+                    <p>{{ organizationData.nit }}</p>
                     <h6>Dirección:</h6>
-                    <p>{{ organizationData.contactInformation.address }}</p>
+                    <p>{{ organizationData.address }}</p>
+                    <h6>Tipo de Organización:</h6>
+                    <p>
+                        <span *ngFor="let type of organizationData.organizationTypeEnum.split(', '); let i = index">
+                            {{ type }}<span *ngIf="i < organizationData.organizationTypeEnum.split(', ').length - 1">,
+                            </span>
+                        </span>
+                    </p>
+                    <h6>Sector:</h6>
+                    <p>
+                        <span *ngFor="let sector of organizationData.sectorTypeEnum.split(', '); let i = index">
+                            {{ sector }}<span *ngIf="i < organizationData.sectorTypeEnum.split(', ').length - 1">,
+                            </span>
+                        </span>
+                    </p>
+                    <h6>Tipo de Voluntariado:</h6>
+                    <p>
+                        <span
+                            *ngFor="let volunteer of organizationData.volunteeringTypeEnum.split(', '); let i = index">
+                            {{ volunteer }}<span
+                                *ngIf="i < organizationData.volunteeringTypeEnum.split(', ').length - 1">, </span>
+                        </span>
+                    </p>
                 </div>
 
                 <!-- Mensaje de Agradecimiento -->
@@ -79,10 +94,9 @@
                         encantados de colaborar contigo para conectar tus proyectos con voluntarios apasionados que
                         están listos para hacer una diferencia. <br>
                         Tu registro ha sido exitoso y pronto recibirás más detalles a tu email sobre cómo comenzar a
-                        publicar
-                        oportunidades de voluntariado y gestionar tu perfil en nuestra plataforma. Estamos aquí para
-                        apoyarte en cada paso del proceso y asegurarnos de que tu experiencia con nosotros sea lo más
-                        enriquecedora posible. <br>
+                        publicar oportunidades de voluntariado y gestionar tu perfil en nuestra plataforma. Estamos aquí
+                        para apoyarte en cada paso del proceso y asegurarnos de que tu experiencia con nosotros sea lo
+                        más enriquecedora posible. <br>
                         Gracias nuevamente por tu compromiso con el cambio positivo y por elegir a Volunteer App como tu
                         aliado en esta misión. <br>
                         Con aprecio, <br>

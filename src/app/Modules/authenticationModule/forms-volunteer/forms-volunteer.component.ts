@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { VolunteerService } from '../../../services/volunteer.service';
 import { Volunteer } from '../../../models/volunteer.model';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 interface Elements {
   item_id: number;
@@ -31,7 +32,7 @@ export class FormsVolunteerComponent implements OnInit {
   dropdownSettings4: any = {};
   termsContent: string | undefined;
 
-  constructor(private fb: FormBuilder, private volunteerService: VolunteerService, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private volunteerService: VolunteerService, private http: HttpClient, private router: Router) {
     this.myForm = this.fb.group({
       dni: [''],
       cell: [''],
@@ -212,6 +213,7 @@ export class FormsVolunteerComponent implements OnInit {
     this.volunteerService.createVolunteer(this.volunteerData).subscribe(
       (response) => {
         console.log('Volunteer created successfully:', response);
+        this.router.navigate(['/login']);
       },
       (error) => {
         console.error('Error creating volunteer:', error);
