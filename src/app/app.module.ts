@@ -28,6 +28,8 @@ import { GestionUsuariosComponent } from './Modules/AdminUser/gestion-usuarios/g
 import { DataTablesModule } from 'angular-datatables';
 import { NgApexchartsModule } from "ng-apexcharts";
 import { DashboardAdminComponent } from './Modules/AdminUser/dashboardAdmin/dashboardAdmin.component';
+import { DashboardVolunteerComponent } from './Modules/Volunteer/dashboard-volunteer/dashboard-volunteer.component';
+import { DashboardOrganizationComponent } from './Modules/Organization/dashboard-organization/dashboard-organization.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { DashboardAdminComponent } from './Modules/AdminUser/dashboardAdmin/dash
     FormsOrganizacionComponent,
     SidebarComponent,
     GestionUsuariosComponent,
-    DashboardAdminComponent
+    DashboardAdminComponent,
+    DashboardVolunteerComponent,
+    DashboardOrganizationComponent
   ],
   imports: [
     BrowserModule,

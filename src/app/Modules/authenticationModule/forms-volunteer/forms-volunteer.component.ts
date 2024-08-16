@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { VolunteerService } from '../../../services/volunteer.service';
 import { Volunteer } from '../../../models/volunteer.model';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 interface Elements {
   item_id: number;
@@ -31,12 +32,12 @@ export class FormsVolunteerComponent implements OnInit {
   dropdownSettings4: any = {};
   termsContent: string | undefined;
 
-  constructor(private fb: FormBuilder, private volunteerService: VolunteerService, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private volunteerService: VolunteerService, private http: HttpClient, private router: Router) {
     this.myForm = this.fb.group({
       dni: [''],
       cell: [''],
       address: [''],
-      age: [''],
+      birthDate: [''],
       skills: [''],
       intereses: [''],
       days: [''],
@@ -54,7 +55,7 @@ export class FormsVolunteerComponent implements OnInit {
         identificationCard: '',
         phoneNumber: '',
         address: '',
-        age: 0
+        birthDate: ''
       },
       volunteeringInformation: {
         availabilityDaysList: [],
@@ -88,7 +89,7 @@ export class FormsVolunteerComponent implements OnInit {
     this.dropdownSettings2 = { ...this.dropdownSettings };
     this.dropdownSettings3 = { ...this.dropdownSettings };
     this.dropdownSettings4 = {
-      singleSelection: true,  // Permitir solo una selección
+      singleSelection: true,
       idField: 'item_id',
       textField: 'item_text',
       allowSearchFilter: this.ShowFilter,
@@ -97,10 +98,12 @@ export class FormsVolunteerComponent implements OnInit {
     this.loadDropdownData();
     this.loadTerms();
   }
+
   loadTerms() {
     this.http.get('assets/textos/terminos-y-condiciones.txt', { responseType: 'text' })
       .subscribe(data => this.termsContent = data);
   }
+
   loadDropdownData() {
     this.volunteerService.getSkills().subscribe(data => {
       this.skills = data.map((item, index) => ({ item_id: index + 1, item_text: item }));
@@ -140,7 +143,12 @@ export class FormsVolunteerComponent implements OnInit {
 
   nextPrev(n: number) {
     const tabs = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;
-    if (n === 1 && !this.validateForm()) return;
+
+    // Validar solo la aceptación de términos y condiciones antes de avanzar
+    if (n === 1 && !this.myForm.get('acceptTerms')?.value) {
+      alert('Debe aceptar los términos y condiciones antes de continuar.');
+      return;
+    }
 
     tabs[this.currentTab].style.display = 'none';
     this.currentTab += n;
@@ -159,28 +167,6 @@ export class FormsVolunteerComponent implements OnInit {
     }
 
     this.showTab(this.currentTab);
-  }
-
-  validateForm(): boolean {
-    const tabs = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;
-    const inputs = tabs[this.currentTab].getElementsByTagName('input');
-
-    let valid = true;
-    for (let i = 0; i < inputs.length; i++) {
-      if (inputs[i].type === 'checkbox' && !inputs[i].checked) {
-        inputs[i].className += ' invalid';
-        valid = false;
-      } else if (inputs[i].value === '') {
-        inputs[i].className += ' invalid';
-        valid = false;
-      }
-    }
-
-    if (valid) {
-      document.getElementsByClassName('step')[this.currentTab].className += ' finish';
-    }
-
-    return valid;
   }
 
   fixStepIndicator(n: number) {
@@ -206,7 +192,7 @@ export class FormsVolunteerComponent implements OnInit {
         identificationCard: this.myForm.get('dni')?.value,
         phoneNumber: this.myForm.get('cell')?.value,
         address: this.myForm.get('address')?.value,
-        age: this.myForm.get('age')?.value
+        birthDate: this.myForm.get('birthDate')?.value
       },
       volunteeringInformation: {
         availabilityDaysList: this.myForm.get('days')?.value.map((item: Elements) => item.item_text),
@@ -228,11 +214,10 @@ export class FormsVolunteerComponent implements OnInit {
     this.volunteerService.createVolunteer(this.volunteerData).subscribe(
       (response) => {
         console.log('Volunteer created successfully:', response);
-        // Mostrar mensaje de éxito
+        this.router.navigate(['/login']);
       },
       (error) => {
         console.error('Error creating volunteer:', error);
-        // Mostrar mensaje de error
       }
     );
   }

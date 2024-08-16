@@ -12,7 +12,7 @@ export class AuthComponent {
 
   constructor(private router: Router) {
     const userInfo = JSON.parse(localStorage.getItem('userInfo')!);
-    if (userInfo) {
+    if (userInfo && userInfo.firstName) {
       this.userName = userInfo.firstName;
     }
   }

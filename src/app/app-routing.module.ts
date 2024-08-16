@@ -8,6 +8,8 @@ import { FormsOrganizacionComponent } from './Modules/authenticationModule/forms
 import { SidebarComponent } from './Modules/dashboardModule/sidebar/sidebar.component';
 import { GestionUsuariosComponent } from './Modules/AdminUser/gestion-usuarios/gestion-usuarios.component';
 import { DashboardAdminComponent } from './Modules/AdminUser/dashboardAdmin/dashboardAdmin.component';
+import { DashboardVolunteerComponent } from './Modules/Volunteer/dashboard-volunteer/dashboard-volunteer.component';
+import { DashboardOrganizationComponent } from './Modules/Organization/dashboard-organization/dashboard-organization.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -28,7 +30,14 @@ const routes: Routes = [
         path: 'dashAdmin',
         component: DashboardAdminComponent,
       },
-
+      {
+        path: 'dashVolunteer',
+        component: DashboardVolunteerComponent,
+      },
+      {
+        path: 'dashOrganization',
+        component: DashboardOrganizationComponent,
+      },
       // Ruta hija
       // Puedes añadir más rutas hijas que requieran Navbar aquí
     ],

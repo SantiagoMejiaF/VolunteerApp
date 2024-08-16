@@ -13,6 +13,18 @@ export class OrganizationService {
   constructor(private http: HttpClient) { }
 
   createOrganization(organizationData: Organization): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/organizations`, organizationData);
+    return this.http.post<any>(`${this.apiUrl}/organizations`, organizationData);
+  }
+
+  getVolunteeringTypes(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/organizations/volunteering-types`);
+  }
+
+  getSectorTypes(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/organizations/sectors-types`);
+  }
+
+  getOrganizationTypes(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/organizations/organization-types`);
   }
 }

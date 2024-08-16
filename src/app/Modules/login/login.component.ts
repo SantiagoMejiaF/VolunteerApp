@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   socialUser!: SocialUser;
   userlogged!: SocialUser;
   islogged: boolean = false;
+  pendingMessage: string = ''; // Variable para almacenar el mensaje cargado desde el archivo
 
   constructor(
     private authService: SocialAuthService,
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private oauthService: OauthService,
     private tokenService: TokenService,
-    private http: HttpClient // Añadimos HttpClient para hacer las solicitudes HTTP
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +43,6 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/forms']);
       }
     });
-
   }
 
   signInWithGoogle(): void {
@@ -59,18 +59,15 @@ export class LoginComponent implements OnInit {
               this.oauthService.google(tokenGoogle).subscribe(
                 (res) => {
                   console.log('Response from backend (Google):', res);
-                  this.tokenService.setToken(res.value);
-                  localStorage.setItem('userInfo', JSON.stringify(res));
+                  this.tokenService.setToken(res.token);
+                  localStorage.setItem('userInfo', JSON.stringify(res.user));
                   this.islogged = true;
                   this.getRoleAndRedirect(res.user.roleId, res.user.authorizationType);
                 },
                 (err) => {
-                  console.log('Error fetching Google user info:', err);
                   this.logOut();
                 }
               );
-            } else {
-              console.error('No access token received');
             }
           }
         }).requestAccessToken();
@@ -84,14 +81,12 @@ export class LoginComponent implements OnInit {
       const tokenFace = new TokenDto(this.socialUser.authToken);
       this.oauthService.facebook(tokenFace).subscribe(
         (res) => {
-          console.log('Response from backend (Facebook):', res);
-          this.tokenService.setToken(res.value);
-          localStorage.setItem('userInfo', JSON.stringify(res));
+          this.tokenService.setToken(res.token); // Guardar el token por separado
+          localStorage.setItem('userInfo', JSON.stringify(res.user)); // Guardar solo el objeto `user`
           this.islogged = true;
           this.getRoleAndRedirect(res.user.roleId, res.user.authorizationType);
         },
         (err) => {
-          console.log('Error fetching Facebook user info:', err);
           this.logOut();
         }
       );
@@ -112,17 +107,11 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/forms']);
           break;
         case 'VOLUNTARIO':
-          if (authorizationType === 'PENDIENTE') {
-            this.router.navigate(['/formsV']);
-          } else if (authorizationType === 'AUTORIZADO') {
-            this.router.navigate(['/dashVolunteer']);
-          }
-          break;
         case 'ORGANIZACION':
           if (authorizationType === 'PENDIENTE') {
-            this.router.navigate(['/formsO']);
+            this.loadPendingMessage();
           } else if (authorizationType === 'AUTORIZADO') {
-            this.router.navigate(['/dashOrganization']);
+            this.router.navigate([roleType === 'VOLUNTARIO' ? '/dashVolunteer' : '/dashOrganization']);
           }
           break;
         default:
@@ -131,6 +120,22 @@ export class LoginComponent implements OnInit {
     }, (error) => {
       console.error('Error fetching role info:', error);
     });
+  }
+
+  loadPendingMessage(): void {
+    this.http.get('assets/textos/pendiente.txt', { responseType: 'text' }).subscribe(
+      (data) => {
+        this.pendingMessage = data;
+        this.showPendingAlert();
+      },
+      (error) => {
+        console.error('Error loading pending message:', error);
+      }
+    );
+  }
+
+  showPendingAlert(): void {
+    alert(this.pendingMessage);
   }
 
   signInWithApple(): void {

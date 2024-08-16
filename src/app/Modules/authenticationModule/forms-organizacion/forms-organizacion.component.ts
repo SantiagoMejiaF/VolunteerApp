@@ -3,6 +3,13 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { OrganizationService } from '../../../services/organization.service';
 import { Organization } from '../../../models/organization.model';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+
+interface Elements {
+  item_id: string;
+  item_text: string;
+}
+
 @Component({
   selector: 'app-forms-organizacion',
   templateUrl: './forms-organizacion.component.html',
@@ -13,41 +20,78 @@ export class FormsOrganizacionComponent implements OnInit {
   myForm: FormGroup;
   organizationData: Organization;
   termsContent: string | undefined;
+  ShowFilter = false;
+  typeOrganization: Elements[] = [];
+  dropdownSettings: any = {};
+  volunteeringType: Elements[] = [];
+  dropdownSettings2: any = {};
+  sectorOrganization: Elements[] = [];
+  dropdownSettings3: any = {};
 
-  constructor(private fb: FormBuilder, private organizationService: OrganizationService, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private organizationService: OrganizationService, private http: HttpClient, private router: Router) {
     this.myForm = this.fb.group({
-      foundationName: [''],
+      responsiblePersonId: [''],
+      responsiblePersonPhoneNumber: [''],
+      organizationName: [''],
       nit: [''],
-      website: [''],
-      phoneNumber: [''],
-      email: [''],
+      organizationTypeEnum: [''],
+      volunteeringTypeEnum: [''],
+      sectorTypeEnum: [''],
       address: [''],
       acceptTerms: [false]
     });
 
     this.organizationData = {
       userId: 0,
-      institutionalInformation: {
-        nit: '',
-        foundationName: '',
-        website: ''
-      },
-      contactInformation: {
-        phoneNumber: '',
-        email: '',
-        address: ''
-      }
+      responsiblePersonId: '',
+      responsiblePersonPhoneNumber: '',
+      organizationName: '',
+      organizationTypeEnum: '',
+      sectorTypeEnum: '',
+      volunteeringTypeEnum: '',
+      nit: '',
+      address: ''
     };
   }
 
   ngOnInit() {
     this.showTab(this.currentTab);
     this.loadTerms();
+    this.dropdownSettings = {
+      singleSelection: true,
+      idField: 'item_id',
+      textField: 'item_text',
+      allowSearchFilter: this.ShowFilter,
+    };
+
+    this.dropdownSettings2 = { ...this.dropdownSettings };
+    this.dropdownSettings3 = { ...this.dropdownSettings };
+    this.loadDropdownData();
   }
+
   loadTerms() {
     this.http.get('assets/textos/terminos-y-condiciones.txt', { responseType: 'text' })
       .subscribe(data => this.termsContent = data);
   }
+
+  loadDropdownData() {
+    this.organizationService.getOrganizationTypes().subscribe(data => {
+      this.typeOrganization = data.map((item: any) => ({ item_id: item, item_text: item }));
+    });
+
+    this.organizationService.getVolunteeringTypes().subscribe(data => {
+      this.volunteeringType = data.map((item: any) => ({ item_id: item, item_text: item }));
+    });
+
+    this.organizationService.getSectorTypes().subscribe(data => {
+      this.sectorOrganization = data.map((item: any) => ({ item_id: item, item_text: item }));
+    });
+  }
+
+  onItemSelect(item: any) {
+    console.log('onItemSelect', item);
+  }
+
   showTab(n: number) {
     const tabs = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;
     tabs[n].style.display = 'block';
@@ -69,7 +113,11 @@ export class FormsOrganizacionComponent implements OnInit {
 
   nextPrev(n: number) {
     const tabs = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;
-    if (n === 1 && !this.validateForm()) return;
+
+    if (n === 1 && !this.myForm.get('acceptTerms')?.value) {
+      alert('Debe aceptar los términos y condiciones antes de continuar.');
+      return;
+    }
 
     tabs[this.currentTab].style.display = 'none';
     this.currentTab += n;
@@ -90,28 +138,6 @@ export class FormsOrganizacionComponent implements OnInit {
     this.showTab(this.currentTab);
   }
 
-  validateForm(): boolean {
-    const tabs = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;
-    const inputs = tabs[this.currentTab].getElementsByTagName('input');
-
-    let valid = true;
-    for (let i = 0; i < inputs.length; i++) {
-      if (inputs[i].type === 'checkbox' && !inputs[i].checked) {
-        inputs[i].className += ' invalid';
-        valid = false;
-      } else if (inputs[i].value === '') {
-        inputs[i].className += ' invalid';
-        valid = false;
-      }
-    }
-
-    if (valid) {
-      document.getElementsByClassName('step')[this.currentTab].className += ' finish';
-    }
-
-    return valid;
-  }
-
   fixStepIndicator(n: number) {
     const steps = document.getElementsByClassName('step');
     for (let i = 0; i < steps.length; i++) {
@@ -123,16 +149,14 @@ export class FormsOrganizacionComponent implements OnInit {
   setOrganizationData() {
     this.organizationData = {
       userId: JSON.parse(localStorage.getItem('userInfo')!).id,
-      institutionalInformation: {
-        nit: this.myForm.get('nit')?.value,
-        foundationName: this.myForm.get('foundationName')?.value,
-        website: this.myForm.get('website')?.value,
-      },
-      contactInformation: {
-        phoneNumber: this.myForm.get('phoneNumber')?.value,
-        email: this.myForm.get('email')?.value,
-        address: this.myForm.get('address')?.value,
-      }
+      responsiblePersonId: this.myForm.get('responsiblePersonId')?.value,
+      responsiblePersonPhoneNumber: this.myForm.get('responsiblePersonPhoneNumber')?.value,
+      organizationName: this.myForm.get('organizationName')?.value,
+      organizationTypeEnum: this.myForm.get('organizationTypeEnum')?.value.map((item: Elements) => item.item_text).join(', '),
+      sectorTypeEnum: this.myForm.get('sectorTypeEnum')?.value.map((item: Elements) => item.item_text).join(', '),
+      volunteeringTypeEnum: this.myForm.get('volunteeringTypeEnum')?.value.map((item: Elements) => item.item_text).join(', '),
+      nit: this.myForm.get('nit')?.value,
+      address: this.myForm.get('address')?.value,
     };
     console.log('Datos que se enviarán:', JSON.stringify(this.organizationData, null, 2));
   }
@@ -141,11 +165,10 @@ export class FormsOrganizacionComponent implements OnInit {
     this.organizationService.createOrganization(this.organizationData).subscribe(
       (response) => {
         console.log('Organization created successfully:', response);
-        // Mostrar mensaje de éxito
+        this.router.navigate(['/login']);
       },
       (error) => {
         console.error('Error creating organization:', error);
-        // Mostrar mensaje de error
       }
     );
   }
