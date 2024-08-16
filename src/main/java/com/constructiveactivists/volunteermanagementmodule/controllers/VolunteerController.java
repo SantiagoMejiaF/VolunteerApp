@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -86,9 +87,37 @@ public class VolunteerController implements VolunteerAPI {
 
     @Override
     public ResponseEntity<VolunteerEntity> updateVolunteer(@PathVariable Integer id, @Valid @RequestBody VolunteerUpdateRequest volunteerUpdateRequest) {
-        System.out.println("VolunteerController.updateVolunteer" + id + " " + volunteerUpdateRequest.getPersonalUpdateInformationRequest().getBirthDate());
-        System.out.println("VolunteerController.updateVolunteer" + id + " " + volunteerUpdateRequest.getPersonalUpdateInformationRequest().getPhoneNumber());
         VolunteerEntity updatedVolunteerEntity = volunteerService.updateVolunteer(id, volunteerUpdateMapper.toEntity(volunteerUpdateRequest));
         return ResponseEntity.ok(updatedVolunteerEntity);
+    }
+
+    @Override
+    public ResponseEntity<Map<SkillEnum, Integer>> getSkillCounts() {
+        Map<SkillEnum, Integer> skillCounts = volunteerService.getSkillCounts();
+        return ResponseEntity.ok(skillCounts);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Long>> getAgeRanges() {
+        Map<String, Long> ageRanges = volunteerService.getAgeRanges();
+        return ResponseEntity.ok(ageRanges);
+    }
+
+    @Override
+    public ResponseEntity<Double> getAverageAge() {
+        double averageAge = volunteerService.getAverageAge();
+        return ResponseEntity.ok(averageAge);
+    }
+
+    @Override
+    public ResponseEntity<Map<AvailabilityEnum, Long>> getVolunteerAvailabilityCount() {
+        Map<AvailabilityEnum, Long> availabilityCount = volunteerService.getVolunteerAvailabilityCount();
+        return ResponseEntity.ok(availabilityCount);
+    }
+
+    @Override
+    public ResponseEntity<Map<InterestEnum, Long>> getInterestCount() {
+        Map<InterestEnum, Long> interestCount = volunteerService.getInterestCount();
+        return ResponseEntity.ok(interestCount);
     }
 }
