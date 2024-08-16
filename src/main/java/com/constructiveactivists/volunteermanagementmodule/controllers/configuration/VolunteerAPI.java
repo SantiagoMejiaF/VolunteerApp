@@ -1,6 +1,7 @@
 package com.constructiveactivists.volunteermanagementmodule.controllers.configuration;
 
 import com.constructiveactivists.volunteermanagementmodule.controllers.request.VolunteerRequest;
+import com.constructiveactivists.volunteermanagementmodule.controllers.request.VolunteerUpdateRequest;
 import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerEntity;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.InterestEnum;
@@ -101,4 +102,12 @@ public interface VolunteerAPI {
     })
     @GetMapping("/active-count")
     ResponseEntity<Long> getActiveVolunteerCount();
+
+    @Operation(summary = "Actualizar la información de un voluntario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
+    })
+    @PutMapping("/{id}")
+    ResponseEntity<VolunteerEntity> updateVolunteer(@PathVariable("id") Integer id, @RequestBody VolunteerUpdateRequest volunteerUpdateRequest);
 }

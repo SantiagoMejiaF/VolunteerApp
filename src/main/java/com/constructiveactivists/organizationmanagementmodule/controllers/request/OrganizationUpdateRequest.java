@@ -16,16 +16,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrganizationRequest {
-
-    @NotNull
-    @Schema(description = "Identificador del usuario", example = "1")
-    private Integer userId;
-
-    @NotBlank
-    @Size(max = 10)
-    @Schema(description = "Número de identificación de la persona responsable", example = "1000286185")
-    private String responsiblePersonId;
+public class OrganizationUpdateRequest {
 
     @NotBlank
     @Size(max = 10)
@@ -49,11 +40,6 @@ public class OrganizationRequest {
     @NotNull
     @Schema(description = "Tipo de voluntariado", example = "ADJUNTA")
     private VolunteeringTypeEnum volunteeringTypeEnum;
-
-    @NotBlank
-    @Size(max = 10)
-    @Schema(description = "Número de identificación tributaria", example = "1006945125")
-    private String nit;
 
     @NotBlank
     @Size(max = 50)

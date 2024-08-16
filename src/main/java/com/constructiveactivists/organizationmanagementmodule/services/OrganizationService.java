@@ -75,4 +75,16 @@ public class OrganizationService {
                 })
                 .count();
     }
+
+    public OrganizationEntity updateOrganization(Integer id,  OrganizationEntity updateRequest) {
+        OrganizationEntity existingOrganization = organizationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Organización no encontrada con id " + id));
+        existingOrganization.setResponsiblePersonPhoneNumber(updateRequest.getResponsiblePersonPhoneNumber());
+        existingOrganization.setOrganizationName(updateRequest.getOrganizationName());
+        existingOrganization.setOrganizationTypeEnum(updateRequest.getOrganizationTypeEnum());
+        existingOrganization.setSectorTypeEnum(updateRequest.getSectorTypeEnum());
+        existingOrganization.setVolunteeringTypeEnum(updateRequest.getVolunteeringTypeEnum());
+        existingOrganization.setAddress(updateRequest.getAddress());
+        return organizationRepository.save(existingOrganization);
+    }
 }
