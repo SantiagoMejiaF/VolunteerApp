@@ -194,9 +194,4 @@ public class VolunteerService {
                 .forEach(interest -> interestCountMap.put(interest, 0L));
         return interestCountMap;
     }
-
-
-
-
-
 }
