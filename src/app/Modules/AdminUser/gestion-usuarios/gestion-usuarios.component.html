@@ -47,12 +47,12 @@
           <td>{{ user.Cedula }}</td>
           <td>
             <button style="border: none; background: none;" data-bs-toggle="modal" data-bs-target="#VolunteerModal"
-              (click)="openModal(user.id)" *ngIf="user.rol === 'VOLUNTARIO'">
+              (click)="openModal(user)" *ngIf="user.rol === 'VOLUNTARIO'">
               <i class="fa fa-search" style="font-size: 1rem; color: #80777c;" onmouseover="this.style.color='#186dde';"
                 onmouseout="this.style.color='#80777c';"></i>
             </button>
             <button style="border: none; background: none;" data-bs-toggle="modal" data-bs-target="#organizationModal"
-              (click)="openModal(user.id)" *ngIf="user.rol === 'ORGANIZACION'">
+              (click)="openModal(user)" *ngIf="user.rol === 'ORGANIZACION'">
               <i class="fa fa-search" style="font-size: 1rem; color: #80777c;" onmouseover="this.style.color='#186dde';"
                 onmouseout="this.style.color='#80777c';"></i>
             </button>
@@ -69,12 +69,12 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="VolunteerModalLabel">Usuario</h1>
+        <h1 class="modal-title fs-5" id="VolunteerModalLabel">Voluntario</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <h6>Nombre: {{ selectedUser.name }}</h6>
-        <h6>Apellido: {{ selectedUser.lastname }}</h6>
+        <h6>Nombre: {{ selectedUser.firstName }}</h6>
+        <h6>Apellido: {{ selectedUser.lastName }}</h6>
         <h6>Cédula: {{ selectedUser.cardidentification }}</h6>
         <h6>Correo: {{ selectedUser.email }}</h6>
         <h6>Celular:{{ selectedUser.phone }} </h6>
@@ -94,12 +94,12 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="organizationModalLabel">Usuario</h1>
+        <h1 class="modal-title fs-5" id="organizationModalLabel">Organización</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <h6>Nombre: <span>{{ selectedUser.name }}</span></h6>
-        <h6>Apellido: <span>{{ selectedUser.lastname }}</span></h6>
+        <h6>Nombre: <span>{{ selectedUser.firstName }}</span></h6>
+        <h6>Apellido: <span>{{ selectedUser.lastName }}</span></h6>
         <h6>Cédula: <span>{{ selectedUser.cardidentification }}</span></h6>
         <h6>Correo: <span>{{ selectedUser.email }}</span></h6>
         <h6>Celular:<span>{{ selectedUser.phone }}</span> </h6>

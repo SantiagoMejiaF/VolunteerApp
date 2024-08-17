@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Organization } from '../models/organization.model';
+
+const cabecera = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +32,9 @@ export class OrganizationService {
 
   getOrganizationTypes(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/organizations/organization-types`);
+  }
+
+  public getActiveOrganizations(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/users/count-organizations-status?authorizationStatus=AUTORIZADO`, cabecera);
   }
 }
