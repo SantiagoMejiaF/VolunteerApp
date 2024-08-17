@@ -16,6 +16,10 @@ export class VolunteerService {
     return this.http.post<any>(`${environment.apiUrl}/volunteers`, volunteerData);
   }
 
+  getVolunteerDetails(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/volunteers/${userId}`);
+  }
+
   getInterests(): Observable<string[]> {
     return this.http.get<string[]>(`${environment.apiUrl}/volunteers/interests`);
   }

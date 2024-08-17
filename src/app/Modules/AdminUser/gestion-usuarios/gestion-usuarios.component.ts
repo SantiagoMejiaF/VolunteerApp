@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
 import { OauthService } from '../../../services/oauth.service';
+import { VolunteerService } from '../../../services/volunteer.service';
+import { OrganizationService } from '../../../services/organization.service';
 
 @Component({
   selector: 'app-gestion-usuarios',
@@ -11,22 +13,39 @@ export class GestionUsuariosComponent implements OnInit {
   selectedUser: any = {};
   data: any[] = [];
 
-  constructor(private adminService: AdminService, private oauthService: OauthService) { }
+  constructor(
+    private adminService: AdminService,
+    private oauthService: OauthService,
+    private volunteerService: VolunteerService,
+    private organizationService: OrganizationService
+  ) { }
 
   ngOnInit(): void {
     // Obtener los usuarios pendientes
     this.adminService.getPendingUsers().subscribe((users) => {
+      this.data = users;
+      console.log('Usuarios pendientes obtenidos:', this.data);
       this.data = users;
       this.populateUserRoles();
       this.initializeDataTable();
     });
   }
 
-  // Obtener los roles de los usuarios
+  // Obtener los roles de los usuarios y cargar detalles adicionales
   populateUserRoles(): void {
     this.data.forEach((user) => {
       this.oauthService.getUserRole(user.roleId).subscribe((role) => {
         user.rol = role.roleType;
+
+        if (user.rol === 'VOLUNTARIO') {
+          this.volunteerService.getVolunteerDetails(user.id).subscribe((volunteerDetails) => {
+            user.Cedula = volunteerDetails.personalInformation.identificationCard;
+          });
+        } else if (user.rol === 'ORGANIZACION') {
+          this.organizationService.getOrganizationDetails(user.id).subscribe((organizationDetails) => {
+            user.Cedula = organizationDetails.responsiblePersonId;
+          });
+        }
       });
     });
   }

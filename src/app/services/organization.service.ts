@@ -16,6 +16,10 @@ export class OrganizationService {
     return this.http.post<any>(`${this.apiUrl}/organizations`, organizationData);
   }
 
+  getOrganizationDetails(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/organizations/${userId}`);
+  }
+
   getVolunteeringTypes(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/organizations/volunteering-types`);
   }

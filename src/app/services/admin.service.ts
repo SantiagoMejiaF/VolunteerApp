@@ -30,7 +30,7 @@ export class AdminService {
   }
 
   public getPendingUsers(): Observable<any[]> {
-    return this.httpClient.get<any[]>(`${this.apiUrl}/users/status/PENDIENTE`, cabecera);
+    return this.httpClient.get<any[]>(`${this.apiUrl}/users/pending`, cabecera);
   }
 
   public sendApprovalEmail(userId: number, approved: boolean): Observable<any> {

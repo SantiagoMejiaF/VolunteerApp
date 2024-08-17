@@ -32,11 +32,9 @@ body {
 
 #nextprevious {
     margin-top: -20px;
-    /* Reduce esta distancia para subir los botones */
     text-align: right;
     position: relative;
     bottom: 0;
-    /* Ajusta según sea necesario */
 }
 
 #text-message h1 {

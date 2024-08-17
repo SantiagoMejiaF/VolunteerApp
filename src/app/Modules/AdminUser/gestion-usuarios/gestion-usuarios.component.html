@@ -41,18 +41,18 @@
       <tbody>
         <tr *ngFor="let user of data">
           <td>{{ user.id }}</td>
-          <td>{{ user.name }}</td>
+          <td>{{ user.firstName + ' ' + user.lastName }}</td>
           <td>{{ user.rol }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.Cedula }}</td>
           <td>
             <button style="border: none; background: none;" data-bs-toggle="modal" data-bs-target="#VolunteerModal"
-              (click)="openModal(user.id)" *ngIf="user.rol === 'voluntario'">
+              (click)="openModal(user.id)" *ngIf="user.rol === 'VOLUNTARIO'">
               <i class="fa fa-search" style="font-size: 1rem; color: #80777c;" onmouseover="this.style.color='#186dde';"
                 onmouseout="this.style.color='#80777c';"></i>
             </button>
             <button style="border: none; background: none;" data-bs-toggle="modal" data-bs-target="#organizationModal"
-              (click)="openModal(user.id)" *ngIf="user.rol === 'organización'">
+              (click)="openModal(user.id)" *ngIf="user.rol === 'ORGANIZACION'">
               <i class="fa fa-search" style="font-size: 1rem; color: #80777c;" onmouseover="this.style.color='#186dde';"
                 onmouseout="this.style.color='#80777c';"></i>
             </button>
