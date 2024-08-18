@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from '../../../services/admin.service';
-import { OauthService } from '../../../services/oauth.service';
-import { VolunteerService } from '../../../services/volunteer.service';
-import { OrganizationService } from '../../../services/organization.service';
+import { AdminService } from '../model/services/admin.service';
+import { OauthService } from '../../authenticationModule/model/services/oauth.service';
+import { VolunteerService } from '../../Volunteer/model/services/volunteer.service';
+import { OrganizationService } from '../../Organization/model/services/organization.service';
 
 @Component({
   selector: 'app-gestion-usuarios',
