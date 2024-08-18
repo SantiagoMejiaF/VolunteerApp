@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminService } from '../model/services/admin.service';
 import { OauthService } from '../../authenticationModule/model/services/oauth.service';
+import { VolunteerService } from '../../../services/volunteer.service';
+import { OrganizationService } from '../../../services/organization.service';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -44,7 +46,8 @@ export class DashboardAdminComponent implements OnInit {
   public activeOrganizations: number = 0;
   public data: any[] = [];
 
-  constructor(private adminService: AdminService, private oauthService: OauthService) {
+  constructor(private adminService: AdminService, private oauthService: OauthService, private volunteerService: VolunteerService,
+    private organizationService: OrganizationService) {
     this.chartOptions = {
       series: [
         {
@@ -119,11 +122,11 @@ export class DashboardAdminComponent implements OnInit {
       this.totalUsers = data;
     });
 
-    this.adminService.getActiveVolunteers().subscribe((data) => {
+    this.volunteerService.getActiveVolunteers().subscribe((data) => {
       this.activeVolunteers = data;
     });
 
-    this.adminService.getActiveOrganizations().subscribe((data) => {
+    this.organizationService.getActiveOrganizations().subscribe((data) => {
       this.activeOrganizations = data;
     });
 

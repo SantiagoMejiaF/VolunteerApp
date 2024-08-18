@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from '../model/services/admin.service';
-import { OauthService } from '../../authenticationModule/model/services/oauth.service';
+import { AdminService } from '../../../services/admin.service';
+import { OauthService } from '../../../services/oauth.service';
+import { VolunteerService } from '../../../services/volunteer.service';
+import { OrganizationService } from '../../../services/organization.service';
 
 @Component({
   selector: 'app-gestion-usuarios',
@@ -11,22 +13,39 @@ export class GestionUsuariosComponent implements OnInit {
   selectedUser: any = {};
   data: any[] = [];
 
-  constructor(private adminService: AdminService, private oauthService: OauthService) { }
+  constructor(
+    private adminService: AdminService,
+    private oauthService: OauthService,
+    private volunteerService: VolunteerService,
+    private organizationService: OrganizationService
+  ) { }
 
   ngOnInit(): void {
     // Obtener los usuarios pendientes
     this.adminService.getPendingUsers().subscribe((users) => {
+      this.data = users;
+      console.log('Usuarios pendientes obtenidos:', this.data);
       this.data = users;
       this.populateUserRoles();
       this.initializeDataTable();
     });
   }
 
-  // Obtener los roles de los usuarios
+  // Obtener los roles de los usuarios y cargar detalles adicionales
   populateUserRoles(): void {
     this.data.forEach((user) => {
       this.oauthService.getUserRole(user.roleId).subscribe((role) => {
         user.rol = role.roleType;
+
+        if (user.rol === 'VOLUNTARIO') {
+          this.volunteerService.getVolunteerDetails(user.id).subscribe((volunteerDetails) => {
+            user.Cedula = volunteerDetails.personalInformation.identificationCard;
+          });
+        } else if (user.rol === 'ORGANIZACION') {
+          this.organizationService.getOrganizationDetails(user.id).subscribe((organizationDetails) => {
+            user.Cedula = organizationDetails.responsiblePersonId;
+          });
+        }
       });
     });
   }
@@ -54,31 +73,45 @@ export class GestionUsuariosComponent implements OnInit {
 
   openModal(user: any) {
     this.selectedUser = user; // Cargar los datos del usuario seleccionado en el modal
+    console.log('Usuario seleccionado:', this.selectedUser);
   }
+
 
   acceptUser(): void {
-    this.adminService.sendApprovalEmail(this.selectedUser.id, true).subscribe(
-      (response) => {
-        console.log('Usuario aceptado:', response);
-        this.removeUserFromList(this.selectedUser.id);
-      },
-      (error) => {
-        console.error('Error al aceptar el usuario:', error);
-      }
-    );
+    if (this.selectedUser && this.selectedUser.id) {
+      this.adminService.sendApprovalEmail(this.selectedUser.id, true).subscribe(
+        (response) => {
+          console.log('Usuario aceptado:', response);
+          this.removeUserFromList(this.selectedUser.id);
+        },
+        (error) => {
+          console.error('Error al aceptar el usuario:', error);
+        }
+      );
+    } else {
+      console.error('No se ha seleccionado un usuario válido.');
+    }
   }
 
+
   rejectUser(): void {
-    this.adminService.sendApprovalEmail(this.selectedUser.id, false).subscribe(
-      (response) => {
-        console.log('Usuario rechazado:', response);
-        this.removeUserFromList(this.selectedUser.id);
-      },
-      (error) => {
-        console.error('Error al rechazar el usuario:', error);
-      }
-    );
+    if (this.selectedUser && this.selectedUser.id) {
+      this.adminService.sendApprovalEmail(this.selectedUser.id, false).subscribe(
+        (response) => {
+          console.log('Usuario rechazado:', response);
+          this.removeUserFromList(this.selectedUser.id);
+        },
+        (error) => {
+          console.error('Error al rechazar el usuario:', error);
+        }
+      );
+    } else {
+      console.error('No se ha seleccionado un usuario válido.');
+    }
   }
+
+
+
 
   removeUserFromList(userId: number): void {
     this.data = this.data.filter(user => user.id !== userId);

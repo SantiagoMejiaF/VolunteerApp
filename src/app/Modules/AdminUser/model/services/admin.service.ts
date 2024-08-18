@@ -17,27 +17,20 @@ export class AdminService {
     return this.httpClient.get<number>(`${this.apiUrl}/users/count`, cabecera);
   }
 
-  public getActiveVolunteers(): Observable<number> {
-    return this.httpClient.get<number>(`${this.apiUrl}/volunteers/active-count`, cabecera);
-  }
-
-  public getActiveOrganizations(): Observable<number> {
-    return this.httpClient.get<number>(`${this.apiUrl}/users/count-organizations-status?authorizationStatus=AUTORIZADO`, cabecera);
-  }
-
   public getAuthorizedUsers(): Observable<any[]> {
     return this.httpClient.get<any[]>(`${this.apiUrl}/users/status/AUTORIZADO`, cabecera);
   }
 
   public getPendingUsers(): Observable<any[]> {
-    return this.httpClient.get<any[]>(`${this.apiUrl}/users/status/PENDIENTE`, cabecera);
+    return this.httpClient.get<any[]>(`${this.apiUrl}/users/pending`, cabecera);
   }
 
   public sendApprovalEmail(userId: number, approved: boolean): Observable<any> {
-    return this.httpClient.post<any>(
+    return this.httpClient.post(
       `${this.apiUrl}/users/${userId}/send-approval-or-rejection-email?userId=${userId}&approved=${approved}`,
       {},
-      cabecera
+      { responseType: 'text' }
     );
   }
+
 }

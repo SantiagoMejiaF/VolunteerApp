@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { Volunteer } from '../volunteer.model';
+
+const cabecera = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,10 @@ export class VolunteerService {
 
   createVolunteer(volunteerData: Volunteer): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/volunteers`, volunteerData);
+  }
+
+  getVolunteerDetails(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/volunteers/${userId}`);
   }
 
   getInterests(): Observable<string[]> {
@@ -30,5 +36,9 @@ export class VolunteerService {
 
   getRelationships(): Observable<string[]> {
     return this.http.get<string[]>(`${environment.apiUrl}/volunteers/relationships`);
+  }
+
+  public getActiveVolunteers(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/volunteers/active-count`, cabecera);
   }
 }
