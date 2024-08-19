@@ -4,9 +4,10 @@ import com.constructiveactivists.organizationmanagementmodule.entities.Organizat
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 
 @Repository
 public interface OrganizationRepository extends JpaRepository<OrganizationEntity, Integer> {
 
-
+    Optional<OrganizationEntity> findByUserId(Integer userId);
 }

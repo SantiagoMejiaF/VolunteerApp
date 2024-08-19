@@ -35,5 +35,4 @@ public class GoogleService {
         HttpResponse response = request.execute();
         return objectMapper.readValue(response.getContent(), new TypeReference<>() {});
     }
-
 }

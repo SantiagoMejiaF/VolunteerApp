@@ -194,4 +194,8 @@ public class VolunteerService {
                 .forEach(interest -> interestCountMap.put(interest, 0L));
         return interestCountMap;
     }
+
+    public Optional<VolunteerEntity> getVolunteerByUserId(Integer userId) {
+        return volunteerRepository.findByUserId(userId);
+    }
 }

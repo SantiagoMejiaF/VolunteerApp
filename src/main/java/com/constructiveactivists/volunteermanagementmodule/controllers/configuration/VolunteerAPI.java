@@ -42,6 +42,15 @@ public interface VolunteerAPI {
     ResponseEntity<VolunteerEntity> getVolunteerById(@PathVariable("id") Integer id);
 
 
+    @Operation(summary = "Obtener un voluntario por el ID de usuario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "404", description = "No encontrado")
+    })
+    @GetMapping("/user/{userId}")
+    ResponseEntity<VolunteerEntity> getVolunteerByUserId(@PathVariable("userId") Integer userId);
+
+
     @Operation(summary = "Agregar un voluntario a la base de datos")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Voluntario creado"),

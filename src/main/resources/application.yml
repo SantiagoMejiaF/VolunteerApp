@@ -51,3 +51,7 @@ request-mapping:
     user: users
     volunteer: volunteers
     organization: organizations
+    activity: activities
+    mission: missions
+    volunteer-group: volunteer-groups
+
