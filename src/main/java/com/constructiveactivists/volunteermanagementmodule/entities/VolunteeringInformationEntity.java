@@ -33,21 +33,21 @@ public class VolunteeringInformationEntity {
     @ElementCollection(targetClass = AvailabilityEnum.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "DIAS_DISPONIBLES_VOLUNTARIO", joinColumns = @JoinColumn(name = "INFORMACION_VOLUNTARIADO_ID"),
-            schema = "USER_MANAGEMENT_MODULE")
+            schema = "VOLUNTEER_MANAGEMENT_MODULE")
     @Column(name = "DIA")
     private List<AvailabilityEnum> availabilityDaysList;
 
     @ElementCollection(targetClass = InterestEnum.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "INTERESES_VOLUNTARIO", joinColumns = @JoinColumn(name = "INFORMACION_VOLUNTARIADO_ID"),
-            schema = "USER_MANAGEMENT_MODULE")
+            schema = "VOLUNTEER_MANAGEMENT_MODULE")
     @Column(name = "INTERESES")
     private List<InterestEnum> interestsList;
 
     @ElementCollection(targetClass = SkillEnum.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "HABILIDADES_VOLUNTARIO", joinColumns = @JoinColumn(name = "INFORMACION_VOLUNTARIADO_ID"),
-            schema = "USER_MANAGEMENT_MODULE")
+            schema = "VOLUNTEER_MANAGEMENT_MODULE")
     @Column(name = "HABILIDADES")
     private List<SkillEnum> skillsList;
 }

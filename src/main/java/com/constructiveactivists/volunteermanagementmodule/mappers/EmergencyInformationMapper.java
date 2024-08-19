@@ -1,4 +1,4 @@
-package com.constructiveactivists.volunteermanagementmodule.controllers.mappers;
+package com.constructiveactivists.volunteermanagementmodule.mappers;
 
 import com.constructiveactivists.volunteermanagementmodule.controllers.request.EmergencyInformationRequest;
 import com.constructiveactivists.volunteermanagementmodule.entities.EmergencyInformationEntity;

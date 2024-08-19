@@ -1,8 +1,6 @@
 package com.constructiveactivists.volunteermanagementmodule.controllers;
 
 import com.constructiveactivists.volunteermanagementmodule.controllers.configuration.VolunteerAPI;
-import com.constructiveactivists.volunteermanagementmodule.controllers.mappers.VolunteerMapper;
-import com.constructiveactivists.volunteermanagementmodule.controllers.mappers.VolunteerUpdateMapper;
 import com.constructiveactivists.volunteermanagementmodule.controllers.request.VolunteerRequest;
 import com.constructiveactivists.volunteermanagementmodule.controllers.request.VolunteerUpdateRequest;
 import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerEntity;
@@ -10,6 +8,8 @@ import com.constructiveactivists.volunteermanagementmodule.entities.enums.Availa
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.InterestEnum;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.RelationshipEnum;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.SkillEnum;
+import com.constructiveactivists.volunteermanagementmodule.mappers.VolunteerMapper;
+import com.constructiveactivists.volunteermanagementmodule.mappers.VolunteerUpdateMapper;
 import com.constructiveactivists.volunteermanagementmodule.services.VolunteerService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -27,10 +27,8 @@ import java.util.Optional;
 public class VolunteerController implements VolunteerAPI {
 
     private final VolunteerService volunteerService;
-
-    private final VolunteerMapper volunteerMapper;
-
     private final VolunteerUpdateMapper volunteerUpdateMapper;
+    private final VolunteerMapper volunteerMapper;
 
     @Override
     public List<VolunteerEntity> getAllVolunteers() {
@@ -40,6 +38,12 @@ public class VolunteerController implements VolunteerAPI {
     @Override
     public ResponseEntity<VolunteerEntity> getVolunteerById(@PathVariable Integer id) {
         Optional<VolunteerEntity> volunteer = volunteerService.getVolunteerById(id);
+        return volunteer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @Override
+    public ResponseEntity<VolunteerEntity> getVolunteerByUserId(@PathVariable Integer userId) {
+        Optional<VolunteerEntity> volunteer = volunteerService.getVolunteerByUserId(userId);
         return volunteer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 

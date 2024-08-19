@@ -48,11 +48,15 @@ public class OrganizationService {
 
     public void deleteOrganization(Integer id) {
         OrganizationEntity organization = organizationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Organización no encontrada con id " + id));
+                .orElseThrow(() -> new RuntimeException("La organización con ID " + id + " no existe en la base de datos."));
 
         userService.deleteUser(organization.getUserId());
 
         organizationRepository.delete(organization);
+    }
+
+    public Optional<OrganizationEntity> getOrganizationByUserId(Integer userId) {
+        return organizationRepository.findByUserId(userId);
     }
 
     public List<SectorTypeEnum> getAllSectors() {

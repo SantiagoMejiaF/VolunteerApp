@@ -1,6 +1,6 @@
-package com.constructiveactivists.volunteermanagementmodule.entities.enums;
+package com.constructiveactivists.missionandactivitymanagementmodule.entities.enums;
 
-public enum InterestEnum {
+public enum MissionTypeEnum {
 
     EDUCACION,
     SALUD,

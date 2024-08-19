@@ -43,6 +43,12 @@ public class OrganizationController implements OrganizationAPI {
     }
 
     @Override
+    public ResponseEntity<OrganizationEntity> getOrganizationByUserId(@PathVariable Integer userId) {
+        Optional<OrganizationEntity> organization = organizationService.getOrganizationByUserId(userId);
+        return organization.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @Override
     public ResponseEntity<OrganizationEntity> createOrganization(@Valid @RequestBody OrganizationRequest organizationRequest) {
         OrganizationEntity createdOrganizationEntity = organizationService.saveOrganization(organizationMapper.toDomain(organizationRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrganizationEntity);

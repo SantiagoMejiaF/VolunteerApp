@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @SequenceGenerator(name = "ROLE_SEQ", sequenceName = "user_management_module.SEQ_ROLE", allocationSize = 1)
-@Table(name = "ROLE", schema = "USER_MANAGEMENT_MODULE")
+@Table(name = "ROL", schema = "USER_MANAGEMENT_MODULE")
 public class RoleEntity {
 
     @Id

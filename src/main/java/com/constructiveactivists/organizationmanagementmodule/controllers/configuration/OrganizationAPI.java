@@ -30,6 +30,7 @@ public interface OrganizationAPI {
     @PostMapping
     ResponseEntity<OrganizationEntity> createOrganization(@Valid @RequestBody OrganizationRequest organizationRequest);
 
+
     @Operation(summary = "Obtener una organización por su ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
@@ -39,6 +40,16 @@ public interface OrganizationAPI {
     })
     @GetMapping("/{id}")
     ResponseEntity<OrganizationEntity> getOrganizationById(@PathVariable Integer id);
+
+
+    @Operation(summary = "Obtener una organización por el ID de usuario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "404", description = "No encontrado")
+    })
+    @GetMapping("/user/{userId}")
+    ResponseEntity<OrganizationEntity> getOrganizationByUserId(@PathVariable("userId") Integer userId);
+
 
     @Operation(summary = "Eliminar una organización")
     @ApiResponses(value = {
@@ -50,6 +61,7 @@ public interface OrganizationAPI {
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteOrganization(@PathVariable Integer id);
 
+
     @Operation(summary = "Obtener todas las organizaciones")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
@@ -59,6 +71,7 @@ public interface OrganizationAPI {
     @GetMapping
     ResponseEntity<List<OrganizationEntity>> getAllOrganizations();
 
+
     @Operation(summary = "Obtener una lista con todos los sectores organizacionales disponibles")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
@@ -67,6 +80,7 @@ public interface OrganizationAPI {
     @GetMapping("/sectors-types")
     ResponseEntity<List<SectorTypeEnum>> getAllSectors();
 
+
     @Operation(summary = "Obtener una lista con todos los tipos de organización disponibles")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
@@ -74,6 +88,7 @@ public interface OrganizationAPI {
     })
     @GetMapping("/organization-types")
     ResponseEntity<List<OrganizationTypeEnum>> getAllOrganizationTypes();
+
 
     @Operation(summary = "Obtener una lista con todos los tipos de voluntariado disponibles")
     @ApiResponses(value = {
