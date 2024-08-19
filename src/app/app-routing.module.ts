@@ -11,6 +11,7 @@ import { DashboardAdminComponent } from './Modules/AdminUser/viewModel/dashboard
 import { DashboardVolunteerComponent } from './Modules/Volunteer/viewModel/dashboard-volunteer.component';
 import { DashboardOrganizationComponent } from './Modules/Organization/viewModel/dashboard-organization.component';
 import { PerfilComponent } from './Modules/Volunteer/viewModel/perfil.component';
+import { PerfilOComponent } from './Modules/Organization/viewModel/perfil-o.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -42,6 +43,10 @@ const routes: Routes = [
       {
         path: 'perfil',
         component: PerfilComponent,
+      },
+      {
+        path: 'perfilO',
+        component: PerfilOComponent,
       },
       // Ruta hija
       // Puedes añadir más rutas hijas que requieran Navbar aquí

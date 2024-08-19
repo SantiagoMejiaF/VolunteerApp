@@ -78,7 +78,6 @@ export class PerfilComponent implements OnInit {
     }
   
     ngOnInit() {
-      this.showTab(this.currentTab);
   
       this.dropdownSettings = {
         singleSelection: false,
@@ -126,53 +125,9 @@ export class PerfilComponent implements OnInit {
       });
     }
   
-    showTab(n: number) {
-      const tabs = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;
-      tabs[n].style.display = 'block';
+    
   
-      if (n === 0) {
-        document.getElementById('prevBtn')!.style.display = 'none';
-      } else {
-        document.getElementById('prevBtn')!.style.display = 'inline';
-      }
-  
-      if (n === tabs.length - 1) {
-        document.getElementById('nextBtn')!.innerHTML = 'Confirmar';
-      } else {
-        document.getElementById('nextBtn')!.innerHTML = '<i class="fa fa-angle-double-right"></i>';
-      }
-  
-      this.fixStepIndicator(n);
-    }
-  
-    nextPrev(n: number) {
-      const tabs = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;
-  
-      // Validar solo la aceptación de términos y condiciones antes de avanzar
-      if (n === 1 && !this.myForm.get('acceptTerms')?.value) {
-        alert('Debe aceptar los términos y condiciones antes de continuar.');
-        return;
-      }
-  
-      tabs[this.currentTab].style.display = 'none';
-      this.currentTab += n;
-  
-      if (this.currentTab >= tabs.length) {
-        document.getElementById('nextprevious')!.style.display = 'none';
-        document.getElementById('all-steps')!.style.display = 'none';
-        document.getElementById('register')!.style.display = 'none';
-        document.getElementById('text-message')!.style.display = 'block';
-        document.getElementById('thanksBackground')!.style.display = 'block';
-        return;
-      }
-  
-      if (this.currentTab === tabs.length - 1) {
-        this.setVolunteerData();
-      }
-  
-      this.showTab(this.currentTab);
-    }
-  
+    
     fixStepIndicator(n: number) {
       const steps = document.getElementsByClassName('step');
       for (let i = 0; i < steps.length; i++) {

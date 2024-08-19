@@ -31,6 +31,7 @@ import { DashboardAdminComponent } from './Modules/AdminUser/viewModel/dashboard
 import { DashboardVolunteerComponent } from './Modules/Volunteer/viewModel/dashboard-volunteer.component';
 import { DashboardOrganizationComponent } from './Modules/Organization/viewModel/dashboard-organization.component';
 import { PerfilComponent } from './Modules/Volunteer/viewModel/perfil.component';
+import { PerfilOComponent } from './Modules/Organization/viewModel/perfil-o.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { PerfilComponent } from './Modules/Volunteer/viewModel/perfil.component'
     DashboardAdminComponent,
     DashboardVolunteerComponent,
     DashboardOrganizationComponent,
-    PerfilComponent
+    PerfilComponent,
+    PerfilOComponent
   ],
   imports: [
     BrowserModule,
