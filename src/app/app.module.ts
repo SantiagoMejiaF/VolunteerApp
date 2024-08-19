@@ -30,6 +30,7 @@ import { NgApexchartsModule } from "ng-apexcharts";
 import { DashboardAdminComponent } from './Modules/AdminUser/viewModel/dashboardAdmin.component';
 import { DashboardVolunteerComponent } from './Modules/Volunteer/viewModel/dashboard-volunteer.component';
 import { DashboardOrganizationComponent } from './Modules/Organization/viewModel/dashboard-organization.component';
+import { PerfilComponent } from './Modules/Volunteer/viewModel/perfil.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { DashboardOrganizationComponent } from './Modules/Organization/viewModel
     GestionUsuariosComponent,
     DashboardAdminComponent,
     DashboardVolunteerComponent,
-    DashboardOrganizationComponent
+    DashboardOrganizationComponent,
+    PerfilComponent
   ],
   imports: [
     BrowserModule,
