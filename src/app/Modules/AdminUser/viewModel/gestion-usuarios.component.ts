@@ -39,10 +39,21 @@ export class GestionUsuariosComponent implements OnInit {
 
         if (user.rol === 'VOLUNTARIO') {
           this.volunteerService.getVolunteerDetails(user.id).subscribe((volunteerDetails) => {
+            user.personalInformation = volunteerDetails.personalInformation;
+            user.emergencyInformation = volunteerDetails.emergencyInformation;
+            user.volunteeringInformation = volunteerDetails.volunteeringInformation;
             user.Cedula = volunteerDetails.personalInformation.identificationCard;
           });
         } else if (user.rol === 'ORGANIZACION') {
           this.organizationService.getOrganizationDetails(user.id).subscribe((organizationDetails) => {
+            user.responsiblePersonId = organizationDetails.responsiblePersonId;
+            user.responsiblePersonPhoneNumber = organizationDetails.responsiblePersonPhoneNumber;
+            user.organizationName = organizationDetails.organizationName;
+            user.organizationTypeEnum = organizationDetails.organizationTypeEnum;
+            user.sectorTypeEnum = organizationDetails.sectorTypeEnum;
+            user.volunteeringTypeEnum = organizationDetails.volunteeringTypeEnum;
+            user.address = organizationDetails.address;
+            user.nit = organizationDetails.nit;
             user.Cedula = organizationDetails.responsiblePersonId;
           });
         }

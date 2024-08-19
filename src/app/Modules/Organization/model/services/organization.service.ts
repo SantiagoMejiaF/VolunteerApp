@@ -19,7 +19,7 @@ export class OrganizationService {
   }
 
   getOrganizationDetails(userId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/organizations/${userId}`);
+    return this.http.get<any>(`${this.apiUrl}/organizations/user/${userId}`);
   }
 
   getVolunteeringTypes(): Observable<any> {
@@ -35,6 +35,6 @@ export class OrganizationService {
   }
 
   public getActiveOrganizations(): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/users/count-organizations-status?authorizationStatus=AUTORIZADO`, cabecera);
+    return this.http.get<number>(`${this.apiUrl}/organizations/active-count`);
   }
 }

@@ -19,7 +19,7 @@ export class VolunteerService {
   }
 
   getVolunteerDetails(userId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/volunteers/${userId}`);
+    return this.http.get<any>(`${this.apiUrl}/volunteers/user/${userId}`);
   }
 
   getInterests(): Observable<string[]> {

@@ -73,11 +73,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <h6>Nombre: {{ selectedUser.firstName }}</h6>
-        <h6>Apellido: {{ selectedUser.lastName }}</h6>
-        <h6>Cédula: {{ selectedUser.cardidentification }}</h6>
-        <h6>Correo: {{ selectedUser.email }}</h6>
-        <h6>Celular:{{ selectedUser.phone }} </h6>
+        <h6>Nombre: {{ selectedUser?.firstName }}</h6>
+        <h6>Apellido: {{ selectedUser?.lastName }}</h6>
+        <h6>Cédula: {{ selectedUser?.personalInformation?.identificationCard }}</h6>
+        <h6>Correo: {{ selectedUser?.email }}</h6>
+        <h6>Celular: {{ selectedUser?.personalInformation?.phoneNumber }}</h6>
       </div>
       <div class="modal-footer">
         <button type="button" class="aceptar" data-bs-dismiss="modal">Aceptar</button>
@@ -98,11 +98,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <h6>Nombre: <span>{{ selectedUser.firstName }}</span></h6>
-        <h6>Apellido: <span>{{ selectedUser.lastName }}</span></h6>
-        <h6>Cédula: <span>{{ selectedUser.cardidentification }}</span></h6>
-        <h6>Correo: <span>{{ selectedUser.email }}</span></h6>
-        <h6>Celular:<span>{{ selectedUser.phone }}</span> </h6>
+        <h6>Nombre: {{ selectedUser?.firstName }}</h6>
+        <h6>Apellido: {{ selectedUser?.lastName }}</h6>
+        <h6>Cédula: {{ selectedUser?.responsiblePersonId }}</h6>
+        <h6>Correo: {{ selectedUser?.email }}</h6>
+        <h6>Celular: {{ selectedUser?.responsiblePersonPhoneNumber }}</h6>
         <div class="accordion accordion-flush" id="accordionFlushExample">
           <div class="accordion-item">
             <h2 class="accordion-header">
@@ -113,15 +113,15 @@
             </h2>
             <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <h6>Nombre:</h6>
-                <h6>Nit:</h6>
-                <h6>Web:</h6>
-                <h6>Email corporativo:</h6>
-                <h6>Celular corporativo:</h6>
+                <h6>Nombre: {{ selectedUser?.organizationName }}</h6>
+                <h6>NIT: {{ selectedUser?.nit }}</h6>
+                <h6>Tipo de Organización: {{ selectedUser?.organizationTypeEnum }}</h6>
+                <h6>Sector: {{ selectedUser?.sectorTypeEnum }}</h6>
+                <h6>Tipo de Voluntariado: {{ selectedUser?.volunteeringTypeEnum }}</h6>
+                <h6>Dirección: {{ selectedUser?.address }}</h6>
               </div>
             </div>
           </div>
-
         </div>
       </div>
       <div class="modal-footer">

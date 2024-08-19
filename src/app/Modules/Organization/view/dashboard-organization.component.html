@@ -89,66 +89,58 @@
         </div>
     </div>
 
-    
 
-    
- <!--SKILLS MÁS VISTOS-->
- <div class="row">
-    <div class="col-12 col-md h-100">
-        <div class="contChart">
-            <h2>Skills más vistos</h2>
-            <div id="chart">
-                <apx-chart
-                  [series]="chartOptions2.series"
-                  [chart]="chartOptions2.chart"
-                  [dataLabels]="chartOptions2.dataLabels"
-                  [plotOptions]="chartOptions2.plotOptions"
-                  [title]="chartOptions2.title"
-                  [legend]="chartOptions2.legend"
-                ></apx-chart>
+
+
+    <!--SKILLS MÁS VISTOS-->
+    <div class="row">
+        <div class="col-12 col-md h-100">
+            <div class="contChart">
+                <h2>Skills más vistos</h2>
+                <div id="chart">
+                    <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"
+                        [dataLabels]="chartOptions2.dataLabels" [plotOptions]="chartOptions2.plotOptions"
+                        [title]="chartOptions2.title" [legend]="chartOptions2.legend"></apx-chart>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md h-100">
+            <div class="contChart">
+                <h2 class="mb-4">Días con mayor concurrencia</h2>
+                <div id="chart">
+                    <apx-chart [series]="chartOptions3.series" [chart]="chartOptions3.chart"
+                        [plotOptions]="chartOptions3.plotOptions" [labels]="chartOptions3.labels"
+                        [legend]="chartOptions3.legend" [colors]="chartOptions3.colors"
+                        [responsive]="chartOptions3.responsive"></apx-chart>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-12 col-md h-100">
-        <div class="contChart">
-            <h2 class="mb-4">Días con mayor concurrencia</h2>
-            <div id="chart">
-                <apx-chart
-                  [series]="chartOptions3.series"
-                  [chart]="chartOptions3.chart"
-                  [plotOptions]="chartOptions3.plotOptions"
-                  [labels]="chartOptions3.labels"
-                  [legend]="chartOptions3.legend"
-                  [colors]="chartOptions3.colors"
-                  [responsive]="chartOptions3.responsive"
-                ></apx-chart>
-            </div>
-        </div> 
-    </div>
-</div>
 
- <!--DÍAS DE MÁS DISPONIBILIDAD-->
-    
+    <!--DÍAS DE MÁS DISPONIBILIDAD-->
+
 
     <!--RECENT ACTIVITY-->
     <div class="row mb-4" id="header">
         <div class="col">
             <div class="cards">
                 <div class="row">
-                    
+
                     <div class="col-3 ml-2" id="imagen-col">
                         <img src="assets/img/office.png" alt="">
                     </div>
                     <div class="col" id="texto">
                         <h2>¡DESCUBRE TU PRÓXIMA ACTIVIDAD PROGRAMADA!</h2>
                         <p>15/09/2024</p>
-                        <p>DESCRIPCIÓN: Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere tempora autem voluptas odio aut praesentium reprehenderit ducimus quas pariatur quos dolores consequuntur, inventore, aperiam veniam nemo libero perferendis voluptate! Recusandae.</p>
+                        <p>DESCRIPCIÓN: Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere tempora autem
+                            voluptas odio aut praesentium reprehenderit ducimus quas pariatur quos dolores consequuntur,
+                            inventore, aperiam veniam nemo libero perferendis voluptate! Recusandae.</p>
                         <a href="#" class="btn butt">Ver más</a>
                     </div>
                 </div>
             </div>
         </div>
-        
+
     </div>
 
     <!--REEVIEWS-->
@@ -186,7 +178,7 @@
                     </div>
                     <div class="card1">
                         <div class="profile">
-                            <img src="assets/img/use3.png" alt="">
+                            <img src="assets/img/user3.png" alt="">
                             <div>
                                 <h3>Ryle</h3>
                                 <h4>Voluntario</h4>
@@ -206,5 +198,5 @@
         </div>
 
     </div>
-    
+
 </div>

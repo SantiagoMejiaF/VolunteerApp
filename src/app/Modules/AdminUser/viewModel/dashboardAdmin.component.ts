@@ -46,8 +46,12 @@ export class DashboardAdminComponent implements OnInit {
   public activeOrganizations: number = 0;
   public data: any[] = [];
 
-  constructor(private adminService: AdminService, private oauthService: OauthService, private volunteerService: VolunteerService,
-    private organizationService: OrganizationService) {
+  constructor(
+    private adminService: AdminService,
+    private oauthService: OauthService,
+    private volunteerService: VolunteerService,
+    private organizationService: OrganizationService
+  ) {
     this.chartOptions = {
       series: [
         {
@@ -133,10 +137,28 @@ export class DashboardAdminComponent implements OnInit {
     // Obtener los datos de los usuarios autorizados
     this.adminService.getAuthorizedUsers().subscribe((users) => {
       this.data = users;
+      console.log('Usuarios autorizados obtenidos:', this.data);
       this.populateUserRoles();
     });
+  }
 
-    // Inicializar DataTable
+  populateUserRoles(): void {
+    this.data.forEach((user) => {
+      this.oauthService.getUserRole(user.roleId).subscribe((role) => {
+        user.rol = role.roleType;
+
+        if (user.rol === 'VOLUNTARIO') {
+          this.volunteerService.getVolunteerDetails(user.id).subscribe((volunteerDetails) => {
+            user.cedula = volunteerDetails.personalInformation.identificationCard;
+          });
+        } else if (user.rol === 'ORGANIZACION') {
+          this.organizationService.getOrganizationDetails(user.id).subscribe((organizationDetails) => {
+            user.cedula = organizationDetails.responsiblePersonId;
+          });
+        }
+      });
+    });
+
     setTimeout(() => {
       $('#datatableexample').DataTable({
         pagingType: 'full_numbers',
@@ -153,14 +175,6 @@ export class DashboardAdminComponent implements OnInit {
           zeroRecords: '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
         },
       });
-    }, 1);
-  }
-
-  populateUserRoles(): void {
-    this.data.forEach((user) => {
-      this.oauthService.getUserRole(user.roleId).subscribe((role) => {
-        user.rol = role.roleType;
-      });
-    });
+    }, 1000);
   }
 }

@@ -64,7 +64,6 @@
                             </ul>
                         </div>
                     </div>
-
                 </div>
                 <div class="row align-items-center">
                     <div class="col ml-4">
@@ -79,11 +78,7 @@
                     <div class="col-4 ml-5" id="img2">
                         <img src="assets/img/corazon.png" alt="">
                     </div>
-
-
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -91,13 +86,11 @@
         <div class="col">
             <div class="userApp">
                 <div class="row">
-
                     <div class="col m-5" id="recentCustomers">
-
                         <div class="cardHeader">
                             <h2>Usuarios</h2>
                         </div>
-                        <table class="table  table-sm" id="datatableexample">
+                        <table class="table table-sm" id="datatableexample">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -111,24 +104,23 @@
                                 <tr *ngFor="let user of data; let i = index">
                                     <td>{{ i + 1 }}</td>
                                     <td width="60px">
-                                        <div class="imgBx"><img src="assets/img/user2.png" alt=""></div>
+                                        <div class="imgBx">
+                                            <img [src]="user.image || 'assets/img/user2.png'" alt="Perfil"
+                                                (error)="user.image='assets/img/user3.png'"
+                                                style="width:50px; height:50px; border-radius:50%;">
+                                        </div>
                                     </td>
                                     <td>
-                                        <h4>{{user.nombre}} <br> <span>{{user.rol}}</span></h4>
+                                        <h4>{{user.firstName}} {{user.lastName}} <br> <span>{{user.rol}}</span></h4>
                                     </td>
                                     <td>{{ user.email }}</td>
-                                    <td>{{ user.Cedula }}</td>
+                                    <td>{{ user.cedula }}</td>
                                 </tr>
                             </tbody>
                         </table>
-
                     </div>
-
                 </div>
-
             </div>
         </div>
-
     </div>
-
 </div>
