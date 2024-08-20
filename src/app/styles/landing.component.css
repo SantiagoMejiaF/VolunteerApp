@@ -47,7 +47,7 @@ header {
   font-weight: bold;
   color: white !important;
   font-size: 70px;
-  margin-top: 250px;
+  
   line-height: 1.2;
 }
 
@@ -55,6 +55,7 @@ header {
   font-family: "Qwitcher Grypen", cursive;
   font-weight: bold;
   color: #efc940;
+  margin-top: 250px;
   font-size: 150px;
   line-height: 1.2;
 }
@@ -75,10 +76,10 @@ header {
 @media (max-width: 1155px) {
   #header h1 {
     font-size: 50px; /* Reduces the font size of h1 */
-    margin-top: 150px; /* Adjust the margin top of h1 */
   }
   #header h2 {
     font-size: 100px; /* Reduces the font size of h2 */
+    margin-top: 150px;
   }
   p {
     font-size: 16px; /* Reduces the font size of paragraphs */
@@ -99,10 +100,11 @@ header {
   }
   #header h1 {
     font-size: 50px; /* Reduces the font size of h1 */
-    margin-top: 150px; /* Adjust the margin top of h1 */
+     /* Adjust the margin top of h1 */
   }
   #header h2 {
-    font-size: 100px; /* Reduces the font size of h2 */
+    font-size: 100px;
+    margin-top: 150px; /* Reduces the font size of h2 */
   }
   #header p {
     font-size: 16px; /* Reduces the font size of paragraphs */

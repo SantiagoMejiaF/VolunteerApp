@@ -45,6 +45,7 @@ h3 span {
     header {
         padding-right: 40px;
         padding-left: 40px;
+        height: auto; 
     }
 
     .uno {
