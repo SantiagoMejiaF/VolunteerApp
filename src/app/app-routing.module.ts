@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LandingComponent } from './Modules/landingModule/landing/landing.component';
-import { LoginComponent } from './Modules/login/login.component';
-import { AuthComponent } from './Modules/authenticationModule/auth/auth.component';
-import { FormsVolunteerComponent } from './Modules/authenticationModule/forms-volunteer/forms-volunteer.component';
-import { FormsOrganizacionComponent } from './Modules/authenticationModule/forms-organizacion/forms-organizacion.component';
-import { SidebarComponent } from './Modules/dashboardModule/sidebar/sidebar.component';
-import { GestionUsuariosComponent } from './Modules/AdminUser/gestion-usuarios/gestion-usuarios.component';
-import { DashboardAdminComponent } from './Modules/AdminUser/dashboardAdmin/dashboardAdmin.component';
-import { DashboardVolunteerComponent } from './Modules/Volunteer/dashboard-volunteer/dashboard-volunteer.component';
-import { DashboardOrganizationComponent } from './Modules/Organization/dashboard-organization/dashboard-organization.component';
+import { LandingComponent } from './Modules/landingModule/viewModel/landing.component';
+import { LoginComponent } from './Modules/authenticationModule/viewModel/login.component';
+import { AuthComponent } from './Modules/authenticationModule/viewModel/auth.component';
+import { FormsVolunteerComponent } from './Modules/authenticationModule/viewModel/forms-volunteer.component';
+import { FormsOrganizacionComponent } from './Modules/authenticationModule/viewModel/forms-organizacion.component';
+import { SidebarComponent } from './shared/components/viewModel/sidebar.component';
+import { GestionUsuariosComponent } from './Modules/AdminUser/viewModel/gestion-usuarios.component';
+import { DashboardAdminComponent } from './Modules/AdminUser/viewModel/dashboardAdmin.component';
+import { DashboardVolunteerComponent } from './Modules/Volunteer/viewModel/dashboard-volunteer.component';
+import { DashboardOrganizationComponent } from './Modules/Organization/viewModel/dashboard-organization.component';
+import { PerfilComponent } from './Modules/Volunteer/viewModel/perfil.component';
+import { PerfilOComponent } from './Modules/Organization/viewModel/perfil-o.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -37,6 +39,14 @@ const routes: Routes = [
       {
         path: 'dashOrganization',
         component: DashboardOrganizationComponent,
+      },
+      {
+        path: 'perfil',
+        component: PerfilComponent,
+      },
+      {
+        path: 'perfilO',
+        component: PerfilOComponent,
       },
       // Ruta hija
       // Puedes añadir más rutas hijas que requieran Navbar aquí

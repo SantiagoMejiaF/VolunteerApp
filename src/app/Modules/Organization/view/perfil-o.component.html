@@ -1,0 +1,93 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="column1">
+                <h2>Perfil</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <div class="column1">
+                <div class="text-center">
+                    <img class="mt-3 text-center" src="assets/img/user3.png" alt="">
+                    <div class="text-center">
+                        <h2>{{ organizationData.organizationName }}</h2>
+                        <h4>{{ organizationData.organizationTypeEnum }}</h4>
+                    </div>
+                    <div class="award-container">
+                        <i class="bi bi-award"></i>
+                        <h4>154</h4>
+                    </div>
+                </div>
+
+                <hr style="border-color: #000;">
+                <div class="datos">
+                    <h6>Email</h6>
+                    <p>{{ email }}</p> <!-- Email obtenido del localStorage -->
+                    <h6>Teléfono</h6>
+                    <p>{{ organizationData.responsiblePersonPhoneNumber }}</p>
+                    <h6>Dirección</h6>
+                    <p>{{ organizationData.address }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="column2">
+                <ul class="nav mb-4">
+                    <li class="nav-item">
+                        <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content1'}"
+                            (click)="showContent('content1')">Historial</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content2'}"
+                            (click)="showContent('content2')">Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content3'}"
+                            (click)="showContent('content3')">Datos</a>
+                    </li>
+                </ul>
+
+                <div *ngIf="currentContent === 'content1'" class="content">
+                    <p>Este es el contenido 1.</p>
+                </div>
+
+                <div *ngIf="currentContent === 'content2'" class="content"></div>
+
+                <div *ngIf="currentContent === 'content3'" class="content">
+                    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+                        <div class="tab ml-3">
+                            <h6>Nombre de la Fundación</h6>
+                            <p><input id="nor" placeholder="Fundación Manitas..." formControlName="organizationName"
+                                    oninput="this.className = ''"></p>
+                            <h6>Número Celular del Responsable</h6>
+                            <p><input id="nor" placeholder="312456789..." formControlName="responsiblePersonPhoneNumber"
+                                    oninput="this.className = ''"></p>
+                            <h6>Dirección de la Fundación</h6>
+                            <p><input id="nor" placeholder="Cra 15 #87-95.." formControlName="address"
+                                    oninput="this.className = ''"></p>
+
+                            <h6>Tipo de Organización</h6>
+                            <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="typeOrganization"
+                                formControlName="organizationTypeEnum" (onSelect)="onItemSelect($event)">
+                            </ng-multiselect-dropdown>
+
+                            <h6 class="mt-3">Sector al que pertenece la Organización</h6>
+                            <ng-multiselect-dropdown [settings]="dropdownSettings3" [data]="sectorOrganization"
+                                formControlName="sectorTypeEnum" (onSelect)="onItemSelect($event)">
+                            </ng-multiselect-dropdown>
+
+                            <h6 class="mt-3">Tipo de Voluntariado</h6>
+                            <ng-multiselect-dropdown [settings]="dropdownSettings2" [data]="volunteeringType"
+                                formControlName="volunteeringTypeEnum" (onSelect)="onItemSelect($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+
+                        <button class="btn-secondary" type="submit">Actualizar datos</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

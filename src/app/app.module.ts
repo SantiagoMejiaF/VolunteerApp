@@ -7,29 +7,31 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LandingComponent } from './Modules/landingModule/landing/landing.component';
-import { NavbarComponent } from './Modules/landingModule/navbar/navbar.component';
-import { AboutComponent } from './Modules/landingModule/about/about.component';
-import { BenefitsComponent } from './Modules/landingModule/benefits/benefits.component';
-import { TestimonialsComponent } from './Modules/landingModule/testimonials/testimonials.component';
-import { MisionesComponent } from './Modules/landingModule/misiones/misiones.component';
-import { FooterComponent } from './Modules/landingModule/footer/footer.component';
-import { LoginComponent } from './Modules/login/login.component';
-import { TokenService } from './services/token.service';
-import { OauthService } from './services/oauth.service';
-import { AuthComponent } from './Modules/authenticationModule/auth/auth.component'; // Importa el OauthService
+import { LandingComponent } from './Modules/landingModule/viewModel/landing.component';
+import { NavbarComponent } from './shared/components/viewModel/navbar.component';
+import { AboutComponent } from './Modules/landingModule/viewModel/about.component';
+import { BenefitsComponent } from './Modules/landingModule/viewModel/benefits.component';
+import { TestimonialsComponent } from './Modules/landingModule/viewModel/testimonials.component';
+import { MisionesComponent } from './Modules/landingModule/viewModel/misiones.component';
+import { FooterComponent } from './shared/components/viewModel/footer.component';
+import { LoginComponent } from './Modules/authenticationModule/viewModel/login.component';
+import { TokenService } from './Modules/authenticationModule/model/services/token.service';
+import { OauthService } from './Modules/authenticationModule/model/services/oauth.service';
+import { AuthComponent } from './Modules/authenticationModule/viewModel/auth.component'; // Importa el OauthService
 import { FormsModule } from '@angular/forms';
-import { FormsVolunteerComponent } from './Modules/authenticationModule/forms-volunteer/forms-volunteer.component';
-import { FormsOrganizacionComponent } from './Modules/authenticationModule/forms-organizacion/forms-organizacion.component';
+import { FormsVolunteerComponent } from './Modules/authenticationModule/viewModel/forms-volunteer.component';
+import { FormsOrganizacionComponent } from './Modules/authenticationModule/viewModel/forms-organizacion.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SidebarComponent } from './Modules/dashboardModule/sidebar/sidebar.component';
-import { GestionUsuariosComponent } from './Modules/AdminUser/gestion-usuarios/gestion-usuarios.component';
+import { SidebarComponent } from './shared/components/viewModel/sidebar.component';
+import { GestionUsuariosComponent } from './Modules/AdminUser/viewModel/gestion-usuarios.component';
 import { DataTablesModule } from 'angular-datatables';
 import { NgApexchartsModule } from "ng-apexcharts";
-import { DashboardAdminComponent } from './Modules/AdminUser/dashboardAdmin/dashboardAdmin.component';
-import { DashboardVolunteerComponent } from './Modules/Volunteer/dashboard-volunteer/dashboard-volunteer.component';
-import { DashboardOrganizationComponent } from './Modules/Organization/dashboard-organization/dashboard-organization.component';
+import { DashboardAdminComponent } from './Modules/AdminUser/viewModel/dashboardAdmin.component';
+import { DashboardVolunteerComponent } from './Modules/Volunteer/viewModel/dashboard-volunteer.component';
+import { DashboardOrganizationComponent } from './Modules/Organization/viewModel/dashboard-organization.component';
+import { PerfilComponent } from './Modules/Volunteer/viewModel/perfil.component';
+import { PerfilOComponent } from './Modules/Organization/viewModel/perfil-o.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { DashboardOrganizationComponent } from './Modules/Organization/dashboard
     GestionUsuariosComponent,
     DashboardAdminComponent,
     DashboardVolunteerComponent,
-    DashboardOrganizationComponent
+    DashboardOrganizationComponent,
+    PerfilComponent,
+    PerfilOComponent
   ],
   imports: [
     BrowserModule,

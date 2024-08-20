@@ -1,0 +1,245 @@
+body {
+    background: #eee
+}
+
+
+
+#regForm {
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 0px auto;
+    font-family: "Quicksand", sans-serif;
+    padding: 40px;
+    border-radius: 10px
+}
+
+#register {
+
+    color: #ED4B4B;
+}
+
+#thanksBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/assets/img/Gracias.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+}
+
+#nextprevious {
+    margin-top: -20px;
+    text-align: right;
+    position: relative;
+    bottom: 0;
+}
+
+#text-message h1 {
+    font-family: "Qwitcher Grypen", cursive;
+    font-weight: bold;
+    color: #efc940;
+    font-size: 80px;
+    line-height: 1.2;
+}
+
+::ng-deep .ng-multiselect-dropdown .ng-select .ng-select-placeholder {
+    color: #ffffff;
+    /* Color blanco para el texto del placeholder */
+}
+
+h1 {
+    font-family: "Quicksand", sans-serif;
+    font-weight: regular;
+    font-size: 40px;
+    text-align: center
+}
+
+h6 {
+    color: #ffffff;
+}
+
+h3 {
+    font-family: "Quicksand", sans-serif;
+    font-weight: regular;
+    font-size: 24px;
+    color: #ED4B4B;
+}
+
+h4 {
+    font-family: "Quicksand", sans-serif;
+    font-weight: regular;
+    font-size: 24px;
+    color: #1E1450;
+}
+
+p {
+    font-family: "Quicksand", sans-serif;
+    font-weight: regular;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+#nor {
+    padding: 10px;
+    width: 100%;
+    font-size: 17px;
+    font-family: "Quicksand", sans-serif;
+    border: 1px solid #aaaaaa;
+    border-radius: 10px;
+    -webkit-appearance: none;
+}
+
+
+
+.tab input:focus {
+
+    border: 1px solid #ED4B4B !important;
+    outline: none;
+}
+
+input.invalid {
+
+    border: 1px solid #e03a0666;
+}
+
+.tab {
+    display: none
+}
+
+button {
+    background-color: #EFC940;
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    padding: 10px 20px;
+    font-size: 17px;
+    font-family: Raleway;
+    cursor: pointer
+}
+
+#Completo {
+    display: flex;
+    justify-content: center;
+    /* Centra horizontalmente */
+    align-items: center;
+    /* Centra verticalmente */
+    height: 100vh;
+    /* Ocupa el 100% de la altura de la ventana */
+}
+
+button:hover {
+    opacity: 0.8
+}
+
+button:focus {
+
+    outline: none !important;
+}
+
+#prevBtn {
+    background-color: #bbbbbb
+}
+
+
+.all-steps {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.step {
+    height: 40px;
+    width: 40px;
+    margin: 0 2px;
+    background-color: #bbbbbb;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    color: #ED4B4B;
+    opacity: 0.5;
+}
+
+.step.active {
+    opacity: 1
+}
+
+
+.step.finish {
+    color: #fff;
+    background: #EFC940;
+    opacity: 1;
+
+}
+
+
+.all-steps {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px
+}
+
+.thanks-message {
+    display: none;
+
+}
+
+.btn-secondary {
+    font-family: "Quicksand", sans-serif;
+    background-color: transparent;
+    border: 2px solid #FFD700;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 30px;
+    transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #FFD700;
+    color: #1E1E1E;
+}
+
+.btn-secondary:focus {
+    outline: none;
+}
+
+#termsBody {
+    max-height: 400px;
+    /* Limita la altura máxima del contenido del modal */
+    overflow-y: auto;
+    /* Activa el scroll vertical cuando el contenido excede la altura máxima */
+    overflow-x: hidden;
+    /* Oculta el scroll horizontal y evita desbordamiento en esa dirección */
+    white-space: pre-wrap;
+    /* Ajusta el texto para que se envuelva y no cause scroll horizontal */
+    word-wrap: break-word;
+    /* Fuerza a que las palabras largas se ajusten al ancho del contenedor */
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    /* Espaciado superior opcional */
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.5);
+    /* Ajusta el tamaño del checkbox si es necesario */
+}
+
+.checkbox-container label {
+    font-family: "Quicksand", sans-serif;
+    color: #ffffff;
+    font-size: 18px;
+}

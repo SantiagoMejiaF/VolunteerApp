@@ -1,0 +1,59 @@
+<div class="wrapper">
+    <aside id="sidebar">
+        <div class="d-flex">
+            <button class="toggle-btn" type="button">
+                <i class="bi bi-list" style="font-size: 2rem; color: #292C32;"></i>
+            </button>
+        </div>
+        <ul class="sidebar-nav">
+            <!-- Para SUPER_ADMIN -->
+            <li class="sidebar-item" *ngIf="role === 'SUPER_ADMIN'">
+                <a [routerLink]="'/dashAdmin'" class="sidebar-link">
+                    <i class="bi bi-columns-gap" style="font-size: 1.5rem; color: #292C32;"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="sidebar-item" *ngIf="role === 'SUPER_ADMIN'">
+                <a [routerLink]="'/gestion-users'" class="sidebar-link">
+                    <i class="bi bi-clipboard2-heart" style="font-size: 1.5rem; color: #292C32;"></i>
+                    <span>Gestión Usuarios</span>
+                </a>
+            </li>
+
+            <!-- Para VOLUNTARIO -->
+            <li class="sidebar-item" *ngIf="role === 'VOLUNTARIO'">
+                <a [routerLink]="'/dashVolunteer'" class="sidebar-link">
+                    <i class="bi bi-columns-gap" style="font-size: 1.5rem; color: #292C32;"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <!-- Para ORGANIZACION -->
+            <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
+                <a [routerLink]="'/dashOrganization'" class="sidebar-link">
+                    <i class="bi bi-columns-gap" style="font-size: 1.5rem; color: #292C32;"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a [routerLink]="role === 'SUPER_ADMIN' ? '/editar-perfil' : role === 'VOLUNTARIO' ? '/perfil' : '/perfilO'"
+                class="sidebar-link">
+                <i class="bi bi-person" style="font-size: 1.5rem; color: #292C32;"></i>
+                <span>Perfil</span>
+            </a>
+            <a href="#" (click)="logout()" class="sidebar-link">
+                <i class="bi bi-box-arrow-left" style="font-size: 1.5rem; color: #292C32;"></i>
+                <span>Cerrar sesión</span>
+            </a>
+        </div>
+    </aside>
+    <div class="main">
+        <div class="navbar" id="nav">
+            <img src="assets/img/logoColor.png" alt="Logo" class="logo-img">
+        </div>
+        <div class="contenido mt-3">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,122 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="column1">
+                <h2>Perfil</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <div class="column1">
+                <div class="text-center">
+                    <img class="mt-3 text-center" src="assets/img/user3.png" alt="">
+                    <div class="text-center">
+                        <h2>{{ firstName }} {{ lastName }}</h2>
+                        <h4>Voluntario</h4>
+                    </div>
+                    <div class="award-container">
+                        <i class="bi bi-award"></i>
+                        <h4>154</h4>
+                    </div>
+                </div>
+
+                <hr style="border-color: #000;">
+                <div class="datos">
+                    <h6>Email</h6>
+                    <p>{{ email }}</p>
+                    <h6>Teléfono</h6>
+                    <p>{{ volunteerData.personalInformation.phoneNumber }}</p>
+                    <h6>Dirección</h6>
+                    <p>{{ volunteerData.personalInformation.address }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="column2">
+                <ul class="nav mb-4">
+                    <li class="nav-item">
+                        <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content1'}"
+                            (click)="showContent('content1')">Historial</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content2'}"
+                            (click)="showContent('content2')">Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content3'}"
+                            (click)="showContent('content3')">Datos Personales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content4'}"
+                            (click)="showContent('content4')">Datos de emergencia</a>
+                    </li>
+                </ul>
+
+                <div *ngIf="currentContent === 'content1'" class="content">
+                    <p>Este es el contenido 1.</p>
+                </div>
+
+                <div *ngIf="currentContent === 'content2'" class="content"></div>
+
+                <div *ngIf="currentContent === 'content3'" class="content">
+                    <form [formGroup]="myForm">
+                        <!-- Datos Personales -->
+                        <div class="tab ml-3" [formGroup]="myForm">
+                            <h6>Digita tu número celular</h6>
+                            <p><input id="nor" placeholder="3124687956" formControlName="cell"
+                                    oninput="this.className = ''"></p>
+                            <h6>Digita tu dirección</h6>
+                            <p><input id="nor" placeholder="Cra 100 #87-56" formControlName="address"
+                                    oninput="this.className = ''"></p>
+                            <h6>Digita tu fecha de nacimiento</h6>
+                            <p><input id="nor" type="date" formControlName="birthDate" oninput="this.className = ''">
+                            </p>
+                            <h6>Selecciona tus días disponibles</h6>
+                            <ng-multiselect-dropdown [settings]="dropdownSettings3" [data]="days" formControlName="days"
+                                (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                            </ng-multiselect-dropdown>
+                            <h6 class="mt-3">Selecciona tus habilidades</h6>
+                            <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="skills"
+                                formControlName="skills" (onSelect)="onItemSelect($event)"
+                                (onSelectAll)="onSelectAll($event)">
+                            </ng-multiselect-dropdown>
+                            <h6 class="mt-3">Selecciona tus intereses</h6>
+                            <ng-multiselect-dropdown [settings]="dropdownSettings2" [data]="intereses"
+                                formControlName="intereses" (onItemSelect)="onItemSelect($event)"
+                                (onSelectAll)="onSelectAll($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                    </form>
+                    <button class="btn-secondary" (click)="onSubmit()">Actualizar datos</button>
+                </div>
+
+                <div *ngIf="currentContent === 'content4'" class="content">
+                    <form [formGroup]="myForm">
+                        <!-- Contacto de Emergencia -->
+                        <div class="tab ml-3" [formGroup]="myForm">
+                            <h6>Nombre del contacto</h6>
+                            <p><input id="nor" placeholder="Adriana" formControlName="emergencyContact1Name"
+                                    oninput="this.className = ''"></p>
+                            <h6>Apellido del contacto</h6>
+                            <p><input id="nor" placeholder="Marcela" formControlName="emergencyContact1Surname"
+                                    oninput="this.className = ''"></p>
+                            <h6>Número de teléfono del contacto</h6>
+                            <p><input id="nor" placeholder="3112494942" formControlName="emergencyContact1Phone"
+                                    oninput="this.className = ''"></p>
+                            <h6>Correo electrónico del contacto</h6>
+                            <p><input id="nor" placeholder="adriana@example.com"
+                                    formControlName="emergencyContact1Email" oninput="this.className = ''"></p>
+                            <h6>Relación con el contacto</h6>
+                            <ng-multiselect-dropdown [settings]="dropdownSettings4" [data]="relationships"
+                                formControlName="emergencyContact1Relation" (onItemSelect)="onItemSelect($event)"
+                                (onSelectAll)="onSelectAll($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                    </form>
+                    <button class="btn-secondary" (click)="onSubmit()">Actualizar contacto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

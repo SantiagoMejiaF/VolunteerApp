@@ -1,0 +1,202 @@
+<div class="container">
+    <!--ROW 0-->
+    <div class="row ">
+        <div class="col text-center">
+            <div class="tittle">
+                <h1>TABLERO DE CONTROL</h1>
+            </div>
+        </div>
+    </div>
+    <!--ROW 1-->
+    <div class="row mb-4" id="header">
+        <div class="col">
+            <div class="cards">
+                <div class="row">
+                    <div class="col" id="texto">
+                        <h2>¡Bienvenido!</h2>
+                        <p>Este es tu espacio para gestionar tus actividades y logros. Aquí podrás ver un resumen de tus
+                            horas dedicadas, los logros alcanzados y las próximas actividades. ¡Gracias por ser parte de
+                            nuestra comunidad!</p>
+                    </div>
+                    <div class="col" id="imagen-col">
+                        <img src="assets/img/manLaptop.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-2 h-100" id="Users">
+            <div class="card-container">
+                <i class="bi bi-people-fill" style="font-size: 2rem; color: #ffffff;"></i>
+                <h3 class="mt-4">1000</h3>
+                <p>Misiones Completadas</p>
+            </div>
+        </div>
+        <div class="col-12 col-lg-2 h-100" id="Volunteer">
+            <div class="card-container">
+                <i class="bi bi-person-heart" style="font-size: 2rem; color: #ffffff;"></i>
+                <h3 class="mt-4">1000</h3>
+                <p>Voluntarios integrados</p>
+            </div>
+        </div>
+        <div class="col-12 col-lg-2 h-100" id="Organization">
+            <div class="card-container">
+                <i class="bi bi-building-fill-check" style="font-size: 2rem; color: #ffffff;"></i>
+                <h3 class="mt-4">1000</h3>
+                <p>Impacto <br> total</p>
+            </div>
+        </div>
+    </div>
+    <!--ROW 2-->
+    <div class="row mb-4">
+        <div class="col h-100">
+            <div class="table-container">
+                <div class="row align-items-center">
+                    <div class="col-3 mt-4 ml-5 ">
+                        <h2>Actividades x Mes</h2>
+                    </div>
+                    <div class="col-3 mt-4 ml-4" id="drop">
+                        <div class="dropdown">
+                            <button class="btn  dropdown-toggle border" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Selecciona el año
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">2024</a></li>
+                                <li><a class="dropdown-item" href="#">2025</a></li>
+                                <li><a class="dropdown-item" href="#">2026</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row align-items-center">
+                    <div class="col ml-4">
+                        <div id="chart">
+                            <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                                [xaxis]="chartOptions.xaxis" [stroke]="chartOptions.stroke"
+                                [dataLabels]="chartOptions.dataLabels"></apx-chart>
+                        </div>
+                    </div>
+                    <div class="col-4 ml-5" id="img2">
+                        <img src="assets/img/corazon.png" alt="">
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--SKILLS MÁS VISTOS-->
+    <div class="row">
+        <div class="col-12 col-md h-100">
+            <div class="contChart">
+                <h2>Skills más vistos</h2>
+                <div id="chart">
+                    <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"
+                        [dataLabels]="chartOptions2.dataLabels" [plotOptions]="chartOptions2.plotOptions"
+                        [title]="chartOptions2.title" [legend]="chartOptions2.legend"></apx-chart>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md h-100">
+            <div class="contChart">
+                <h2 class="mb-4">Días con mayor concurrencia</h2>
+                <div id="chart">
+                    <apx-chart [series]="chartOptions3.series" [chart]="chartOptions3.chart"
+                        [plotOptions]="chartOptions3.plotOptions" [labels]="chartOptions3.labels"
+                        [legend]="chartOptions3.legend" [colors]="chartOptions3.colors"
+                        [responsive]="chartOptions3.responsive"></apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--DÍAS DE MÁS DISPONIBILIDAD-->
+
+
+    <!--RECENT ACTIVITY-->
+    <div class="row mb-4" id="header">
+        <div class="col">
+            <div class="cards">
+                <div class="row">
+
+                    <div class="col-3 ml-2" id="imagen-col">
+                        <img src="assets/img/office.png" alt="">
+                    </div>
+                    <div class="col" id="texto">
+                        <h2>¡DESCUBRE TU PRÓXIMA ACTIVIDAD PROGRAMADA!</h2>
+                        <p>15/09/2024</p>
+                        <p>DESCRIPCIÓN: Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere tempora autem
+                            voluptas odio aut praesentium reprehenderit ducimus quas pariatur quos dolores consequuntur,
+                            inventore, aperiam veniam nemo libero perferendis voluptate! Recusandae.</p>
+                        <a href="#" class="btn butt">Ver más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--REEVIEWS-->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="review-box">
+                <div id="slide">
+                    <div class="card1 active">
+                        <h2 id="row5">LO QUE DICEN SOBRE MÍ</h2>
+                        <div class="profile">
+
+                            <img src="assets/img/user2.png" alt="">
+                            <div>
+                                <h3>Ryle</h3>
+                                <h4>Voluntario</h4>
+                            </div>
+                        </div>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores amet
+                            eum labore placeat harum, culpa ipsum praesentium similique quidem,
+                            minima aspernatur architecto facilis modi fugiat aliquam iusto officia
+                            quasi adipisci?</p>
+                    </div>
+                    <div class="card1">
+                        <div class="profile">
+                            <img src="assets/img/user2.png" alt="">
+                            <div>
+                                <h3>Sara</h3>
+                                <h4>Voluntario</h4>
+                            </div>
+                        </div>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores amet
+                            eum labore placeat harum, culpa ipsum praesentium similique quidem,
+                            minima aspernatur architecto facilis modi fugiat aliquam iusto officia
+                            quasi adipisci?</p>
+                    </div>
+                    <div class="card1">
+                        <div class="profile">
+                            <img src="assets/img/user3.png" alt="">
+                            <div>
+                                <h3>Ryle</h3>
+                                <h4>Voluntario</h4>
+                            </div>
+                        </div>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores amet
+                            eum labore placeat harum, culpa ipsum praesentium similique quidem,
+                            minima aspernatur architecto facilis modi fugiat aliquam iusto officia
+                            quasi adipisci?</p>
+                    </div>
+                </div>
+                <div class="sidebar">
+                    <i id="upArrow" class="bi bi-caret-up"></i>
+                    <i id="downArrow" class="bi bi-caret-down"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
