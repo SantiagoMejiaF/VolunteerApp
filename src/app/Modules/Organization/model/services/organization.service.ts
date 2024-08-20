@@ -34,7 +34,11 @@ export class OrganizationService {
     return this.http.get<any>(`${this.apiUrl}/organizations/organization-types`);
   }
 
-  public getActiveOrganizations(): Observable<number> {
+  getActiveOrganizations(): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/organizations/active-count`);
+  }
+
+  updateOrganization(id: number, organizationData: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/organizations/${id}`, organizationData, cabecera);
   }
 }

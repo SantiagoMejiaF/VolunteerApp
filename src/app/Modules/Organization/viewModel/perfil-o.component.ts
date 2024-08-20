@@ -9,19 +9,23 @@ interface Elements {
   item_id: string;
   item_text: string;
 }
+
 @Component({
   selector: 'app-perfil-o',
   templateUrl: '../view/perfil-o.component.html',
-  styleUrl: '../../../styles/perfil-o.component.css'
+  styleUrls: ['../../../styles/perfil-o.component.css']
 })
-export class PerfilOComponent implements OnInit{
-  currentContent: string = 'content1'; 
+export class PerfilOComponent implements OnInit {
+  currentContent: string = 'content1';
   showContent(contentId: string) {
     this.currentContent = contentId;
   }
+
   currentTab = 0;
   myForm: FormGroup;
-  organizationData: Organization;
+  organizationData: any;
+  organizationId: number = 0;
+  email: string = ''; // Para almacenar el email del usuario
   termsContent: string | undefined;
   ShowFilter = false;
   typeOrganization: Elements[] = [];
@@ -58,8 +62,13 @@ export class PerfilOComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.showTab(this.currentTab);
+    const userInfo = JSON.parse(localStorage.getItem('userInfo')!);
+    this.email = userInfo.email; // Extraer el email del localStorage
+
     this.loadTerms();
+    this.loadDropdownData();
+    this.loadOrganizationData();
+
     this.dropdownSettings = {
       singleSelection: true,
       idField: 'item_id',
@@ -69,7 +78,6 @@ export class PerfilOComponent implements OnInit{
 
     this.dropdownSettings2 = { ...this.dropdownSettings };
     this.dropdownSettings3 = { ...this.dropdownSettings };
-    this.loadDropdownData();
   }
 
   loadTerms() {
@@ -91,89 +99,56 @@ export class PerfilOComponent implements OnInit{
     });
   }
 
+  loadOrganizationData() {
+    const userId = JSON.parse(localStorage.getItem('userInfo')!).id;
+    this.organizationService.getOrganizationDetails(userId).subscribe(
+      (organizationDetails) => {
+        this.organizationData = organizationDetails; // Asumiendo que es un array y tomando el primer elemento
+        this.organizationId = organizationDetails.id; // Asigna el ID de la organización
+        this.setFormValues();
+      },
+      (error) => {
+        console.error('Error loading organization details:', error);
+      }
+    );
+  }
+
+  setFormValues() {
+    this.myForm.patchValue({
+      responsiblePersonId: this.organizationData.responsiblePersonId,
+      responsiblePersonPhoneNumber: this.organizationData.responsiblePersonPhoneNumber,
+      organizationName: this.organizationData.organizationName,
+      nit: this.organizationData.nit,
+      organizationTypeEnum: this.typeOrganization.filter(type => type.item_text === this.organizationData.organizationTypeEnum),
+      sectorTypeEnum: this.sectorOrganization.filter(sector => sector.item_text === this.organizationData.sectorTypeEnum),
+      volunteeringTypeEnum: this.volunteeringType.filter(type => type.item_text === this.organizationData.volunteeringTypeEnum),
+      address: this.organizationData.address
+    });
+  }
+
   onItemSelect(item: any) {
     console.log('onItemSelect', item);
   }
 
-  showTab(n: number) {
-    const tabs = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;
-    tabs[n].style.display = 'block';
-
-    if (n === 0) {
-      document.getElementById('prevBtn')!.style.display = 'none';
-    } else {
-      document.getElementById('prevBtn')!.style.display = 'inline';
-    }
-
-    if (n === tabs.length - 1) {
-      document.getElementById('nextBtn')!.innerHTML = 'Confirmar';
-    } else {
-      document.getElementById('nextBtn')!.innerHTML = '<i class="fa fa-angle-double-right"></i>';
-    }
-
-    this.fixStepIndicator(n);
-  }
-
-  nextPrev(n: number) {
-    const tabs = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;
-
-    if (n === 1 && !this.myForm.get('acceptTerms')?.value) {
-      alert('Debe aceptar los términos y condiciones antes de continuar.');
-      return;
-    }
-
-    tabs[this.currentTab].style.display = 'none';
-    this.currentTab += n;
-
-    if (this.currentTab >= tabs.length) {
-      document.getElementById('nextprevious')!.style.display = 'none';
-      document.getElementById('all-steps')!.style.display = 'none';
-      document.getElementById('register')!.style.display = 'none';
-      document.getElementById('text-message')!.style.display = 'block';
-      document.getElementById('thanksBackground')!.style.display = 'block';
-      return;
-    }
-
-    if (this.currentTab === tabs.length - 1) {
-      this.setOrganizationData();
-    }
-
-    this.showTab(this.currentTab);
-  }
-
-  fixStepIndicator(n: number) {
-    const steps = document.getElementsByClassName('step');
-    for (let i = 0; i < steps.length; i++) {
-      steps[i].className = steps[i].className.replace(' active', '');
-    }
-    steps[n].className += ' active';
-  }
-
-  setOrganizationData() {
+  onSubmit() {
     this.organizationData = {
-      userId: JSON.parse(localStorage.getItem('userInfo')!).id,
-      responsiblePersonId: this.myForm.get('responsiblePersonId')?.value,
       responsiblePersonPhoneNumber: this.myForm.get('responsiblePersonPhoneNumber')?.value,
       organizationName: this.myForm.get('organizationName')?.value,
-      organizationTypeEnum: this.myForm.get('organizationTypeEnum')?.value.map((item: Elements) => item.item_text).join(', '),
-      sectorTypeEnum: this.myForm.get('sectorTypeEnum')?.value.map((item: Elements) => item.item_text).join(', '),
-      volunteeringTypeEnum: this.myForm.get('volunteeringTypeEnum')?.value.map((item: Elements) => item.item_text).join(', '),
-      nit: this.myForm.get('nit')?.value,
+      organizationTypeEnum: this.myForm.get('organizationTypeEnum')?.value[0].item_text,
+      sectorTypeEnum: this.myForm.get('sectorTypeEnum')?.value[0].item_text,
+      volunteeringTypeEnum: this.myForm.get('volunteeringTypeEnum')?.value[0].item_text,
       address: this.myForm.get('address')?.value,
     };
-    console.log('Datos que se enviarán:', JSON.stringify(this.organizationData, null, 2));
-  }
 
-  onSubmit() {
-    this.organizationService.createOrganization(this.organizationData).subscribe(
+    console.log('Updated Data:', this.organizationData);
+
+    this.organizationService.updateOrganization(this.organizationId, this.organizationData).subscribe(
       (response) => {
-        console.log('Organization created successfully:', response);
-        this.router.navigate(['/login']);
+        console.log('Organization data updated successfully:', response);
       },
       (error) => {
-        console.error('Error creating organization:', error);
+        console.error('Error updating organization data:', error);
       }
     );
   }
 }
-

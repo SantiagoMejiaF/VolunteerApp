@@ -98,6 +98,7 @@ export class LoginComponent implements OnInit {
   getRoleAndRedirect(roleId: number, authorizationType: string): void {
     this.oauthService.getUserRole(roleId).subscribe((role: any) => {
       const roleType = role.roleType;
+      localStorage.setItem('role', roleType);
 
       switch (roleType) {
         case 'SUPER_ADMIN':
