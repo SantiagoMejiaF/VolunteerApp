@@ -42,8 +42,8 @@ public class UserService {
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, userId)));
 
-        RoleEntity role = roleService.getRoleById(user.getRoleId())
-                .orElseThrow(() -> new EntityNotFoundException(String.format(ROLE_NOT_FOUND_MESSAGE, user.getRoleId())));
+        RoleEntity role = roleService.getRoleById(user.getRole().getId())
+                .orElseThrow(() -> new EntityNotFoundException(String.format(ROLE_NOT_FOUND_MESSAGE, user.getRole().getId())));
 
         role.setRoleType(roleType);
         roleService.saveRole(role);
@@ -68,8 +68,6 @@ public class UserService {
     public void deleteUser(Integer userId) {
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, userId)));
-
-        roleService.deleteRole(user.getRoleId());
         userRepository.delete(user);
     }
 
@@ -81,7 +79,7 @@ public class UserService {
         List<UserEntity> pendingUsers = userRepository.findByAuthorizationStatus(AuthorizationStatus.PENDIENTE);
         return pendingUsers.stream()
                 .filter(user -> {
-                    RoleEntity role = roleService.getRoleById(user.getRoleId())
+                    RoleEntity role = roleService.getRoleById(user.getRole().getId())
                             .orElse(null);
                     return role != null && (role.getRoleType() == RoleType.VOLUNTARIO || role.getRoleType() == RoleType.ORGANIZACION);
                 })

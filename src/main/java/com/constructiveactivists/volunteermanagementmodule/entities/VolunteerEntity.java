@@ -7,8 +7,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "VOLUNTARIO_SEQ", sequenceName = "volunteer_management_module.SEQ_VOLUNTARIO", allocationSize = 1)
-@Table(name = "VOLUNTARIO", schema = "VOLUNTEER_MANAGEMENT_MODULE")
+@SequenceGenerator(name = "VOLUNTARIO_SEQ", sequenceName = "modulo_gestion_voluntarios.SEQ_VOLUNTARIO", allocationSize = 1)
+@Table(name = "VOLUNTARIO", schema = "MODULO_GESTION_VOLUNTARIOS")
 public class VolunteerEntity {
 
     @Id

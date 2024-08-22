@@ -9,9 +9,8 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name =  "INFORMACION_PERSONAL_SEQ", sequenceName = "volunteer_management_module.SEQ_INFORMACION_PERSONAL",
-        allocationSize = 1)
-@Table(name = "INFORMACION_PERSONAL" , schema = "VOLUNTEER_MANAGEMENT_MODULE")
+@SequenceGenerator(name = "INFORMACION_PERSONAL_SEQ", sequenceName = "modulo_gestion_voluntarios.SEQ_INFORMACION_PERSONAL", allocationSize = 1)
+@Table(name = "INFORMACION_PERSONAL", schema = "MODULO_GESTION_VOLUNTARIOS")
 public class PersonalInformationEntity {
 
     @Id
@@ -28,8 +27,8 @@ public class PersonalInformationEntity {
     @Column(name = "AGE", nullable = false)
     private Integer age;
 
-    @Column(name="birth_date", columnDefinition = "DATE", nullable = false)
-    private LocalDate birthDate;
+    @Column(name="BORN_DATE", columnDefinition = "DATE", nullable = false)
+    private LocalDate bornDate;
 
     @Column(name = "TELEFONO", length = 10, nullable = false)
     private String phoneNumber;

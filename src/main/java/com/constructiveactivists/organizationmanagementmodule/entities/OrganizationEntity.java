@@ -10,9 +10,9 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "ORGANIZACION_SEQ", sequenceName = "organization_management_module.SEQ_ORGANIZACION",
-        allocationSize = 1)
-@Table(name = "ORGANIZACION", schema = "ORGANIZATION_MANAGEMENT_MODULE")
+@SequenceGenerator(name = "ORGANIZACION_SEQ", sequenceName = "modulo_gestion_organizaciones.SEQ_ORGANIZACION", allocationSize = 1)
+@Table(name = "ORGANIZACION", schema = "MODULO_GESTION_ORGANIZACIONES")
+
 public class OrganizationEntity {
 
     @Id

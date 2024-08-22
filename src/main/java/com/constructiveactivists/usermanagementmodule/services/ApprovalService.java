@@ -44,9 +44,9 @@ public class ApprovalService {
     }
 
     private StringBuilder buildUserInfo(UserEntity user) {
-        RoleType roleType = roleService.getRoleById(user.getRoleId())
+        RoleType roleType = roleService.getRoleById(user.getRole().getId())
                 .map(RoleEntity::getRoleType)
-                .orElseThrow(() -> new EntityNotFoundException("El rol con ID " + user.getRoleId() + " no existe."));
+                .orElseThrow(() -> new EntityNotFoundException("El rol con ID " + user.getRole().getId() + " no existe."));
 
         return new StringBuilder()
                 .append("<div style='color: #000000;'>")

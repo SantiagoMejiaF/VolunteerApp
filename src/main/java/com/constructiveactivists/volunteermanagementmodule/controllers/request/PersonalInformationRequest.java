@@ -34,6 +34,6 @@ public class PersonalInformationRequest {
 
     @NotNull
     @Schema(description = "Fecha de nacimiento del voluntario", example = "1999-12-31")
-    private LocalDate birthDate;
+    private LocalDate bornDate;
 
 }

@@ -12,8 +12,8 @@ import java.time.LocalTime;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "ACTIVITY_SEQ", sequenceName = "mission_and_activity_management_module.SEQ_ACTIVITY", allocationSize = 1)
-@Table(name = "ACTIVIDAD", schema = "MISSION_AND_ACTIVITY_MANAGEMENT_MODULE")
+@SequenceGenerator(name = "ACTIVITY_SEQ", sequenceName = "modulo_gestion_misiones_y_actividades.SEQ_ACTIVIDAD", allocationSize = 1)
+@Table(name = "ACTIVIDAD", schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
 public class ActivityEntity {
 
     @Id
