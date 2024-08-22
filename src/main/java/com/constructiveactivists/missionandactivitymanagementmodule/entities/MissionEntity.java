@@ -15,8 +15,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "MISSION_SEQ", sequenceName = "mission_and_activity_management_module.SEQ_MISSION", allocationSize = 1)
-@Table(name = "MISION", schema = "MISSION_AND_ACTIVITY_MANAGEMENT_MODULE")
+@SequenceGenerator(name = "MISSION_SEQ", sequenceName = "modulo_gestion_misiones_y_actividades.SEQ_MISION", allocationSize = 1)
+@Table(name = "MISION", schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
 public class MissionEntity {
 
     @Id
@@ -59,14 +59,14 @@ public class MissionEntity {
     @ElementCollection(targetClass = VolunteerMissionRequirements.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "REQUISITOS_REQUERIDOS", joinColumns = @JoinColumn(name = "MISSION_ID"),
-            schema = "MISSION_AND_ACTIVITY_MANAGEMENT_MODULE")
+            schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
     @Column(name = "REQUISITOS")
     private List<VolunteerMissionRequirements> volunteerMissionRequirementsList;
 
     @ElementCollection(targetClass = SkillEnum.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "HABILIDADES_REQUERIDAS", joinColumns = @JoinColumn(name = "MISSION_ID"),
-            schema = "MISSION_AND_ACTIVITY_MANAGEMENT_MODULE")
+            schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
     @Column(name = "HABILIDADES")
     private List<SkillEnum> requiredSkillsList;
 

@@ -13,9 +13,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "VOLUNTEERING_INFO_SEQ", sequenceName = "volunteer_management_module.VOLUNTEERING_INFO_SEQ",
-        allocationSize = 1)
-@Table(name = "INFORMACION_VOLUNTARIADO", schema = "VOLUNTEER_MANAGEMENT_MODULE")
+@SequenceGenerator(name = "VOLUNTEERING_INFO_SEQ", sequenceName = "modulo_gestion_voluntarios.SEQ_INFORMACION_VOLUNTARIADO", allocationSize = 1)
+@Table(name = "INFORMACION_VOLUNTARIADO", schema = "MODULO_GESTION_VOLUNTARIOS")
 public class VolunteeringInformationEntity {
 
     @Id
@@ -33,21 +32,21 @@ public class VolunteeringInformationEntity {
     @ElementCollection(targetClass = AvailabilityEnum.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "DIAS_DISPONIBLES_VOLUNTARIO", joinColumns = @JoinColumn(name = "INFORMACION_VOLUNTARIADO_ID"),
-            schema = "VOLUNTEER_MANAGEMENT_MODULE")
+            schema = "MODULO_GESTION_VOLUNTARIOS")
     @Column(name = "DIA")
     private List<AvailabilityEnum> availabilityDaysList;
 
     @ElementCollection(targetClass = InterestEnum.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "INTERESES_VOLUNTARIO", joinColumns = @JoinColumn(name = "INFORMACION_VOLUNTARIADO_ID"),
-            schema = "VOLUNTEER_MANAGEMENT_MODULE")
+            schema = "MODULO_GESTION_VOLUNTARIOS")
     @Column(name = "INTERESES")
     private List<InterestEnum> interestsList;
 
     @ElementCollection(targetClass = SkillEnum.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "HABILIDADES_VOLUNTARIO", joinColumns = @JoinColumn(name = "INFORMACION_VOLUNTARIADO_ID"),
-            schema = "VOLUNTEER_MANAGEMENT_MODULE")
+            schema = "MODULO_GESTION_VOLUNTARIOS")
     @Column(name = "HABILIDADES")
     private List<SkillEnum> skillsList;
 }

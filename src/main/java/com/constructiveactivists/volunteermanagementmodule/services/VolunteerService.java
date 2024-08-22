@@ -36,7 +36,7 @@ public class VolunteerService {
         Optional<VolunteerEntity> volunteerOpt = volunteerRepository.findById(id);
         if (volunteerOpt.isPresent()) {
             VolunteerEntity volunteer = volunteerOpt.get();
-            LocalDate birthDate = volunteer.getPersonalInformation().getBirthDate();
+            LocalDate birthDate = volunteer.getPersonalInformation().getBornDate();
             volunteer.getPersonalInformation().setAge(calculateAge(birthDate));
             volunteerRepository.save(volunteer);
         }
@@ -46,8 +46,8 @@ public class VolunteerService {
 
     public VolunteerEntity saveVolunteer(VolunteerEntity volunteerEntity) {
         validateUserExists(volunteerEntity.getUserId());
-        validateAge(volunteerEntity.getPersonalInformation().getBirthDate());
-        int age = calculateAge(volunteerEntity.getPersonalInformation().getBirthDate());
+        validateAge(volunteerEntity.getPersonalInformation().getBornDate());
+        int age = calculateAge(volunteerEntity.getPersonalInformation().getBornDate());
         volunteerEntity.getPersonalInformation().setAge(age);
 
         userService.updateUserRoleType(volunteerEntity.getUserId(), RoleType.VOLUNTARIO);
@@ -119,10 +119,10 @@ public class VolunteerService {
         PersonalInformationEntity newPersonalInfo = entity.getPersonalInformation();
         personalInfo.setPhoneNumber(newPersonalInfo.getPhoneNumber());
         personalInfo.setAddress(newPersonalInfo.getAddress());
-        personalInfo.setBirthDate(newPersonalInfo.getBirthDate());
+        personalInfo.setBornDate(newPersonalInfo.getBornDate());
 
-        validateAge(personalInfo.getBirthDate());
-        personalInfo.setAge(calculateAge(personalInfo.getBirthDate()));
+        validateAge(personalInfo.getBornDate());
+        personalInfo.setAge(calculateAge(personalInfo.getBornDate()));
 
         VolunteeringInformationEntity volunteeringInfo = volunteer.getVolunteeringInformation();
         VolunteeringInformationEntity newVolunteeringInfo = entity.getVolunteeringInformation();
@@ -150,7 +150,7 @@ public class VolunteerService {
 
     public Map<String, Long> getAgeRanges() {
         return volunteerRepository.findAll().stream()
-                .map(volunteer -> calculateAge(volunteer.getPersonalInformation().getBirthDate()))
+                .map(volunteer -> calculateAge(volunteer.getPersonalInformation().getBornDate()))
                 .collect(Collectors.groupingBy(age -> {
                     if (age > 100) {
                         return "100+";

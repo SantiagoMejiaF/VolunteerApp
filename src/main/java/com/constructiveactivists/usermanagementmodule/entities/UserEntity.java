@@ -11,8 +11,8 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name =  "USUARIO_SEQ", sequenceName = "user_management_module.SEQ_USUARIO", allocationSize = 1)
-@Table(name = "USUARIO", schema = "USER_MANAGEMENT_MODULE")
+@SequenceGenerator(name = "USUARIO_SEQ", sequenceName = "modulo_gestion_usuarios.SEQ_USUARIO", allocationSize = 1)
+@Table(name = "USUARIO", schema = "MODULO_GESTION_USUARIOS")
 public class UserEntity {
 
     @Id
@@ -21,9 +21,9 @@ public class UserEntity {
     @Comment("Llave primaria de la tabla usuario autoincrementada por secuencia")
     private Integer id;
 
-    @Column(name = "ROL_ID", nullable = false)
-    @Comment("Rol del usuario")
-    private Integer roleId;
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "ROL_ID", referencedColumnName = "ID", nullable = false)
+    private RoleEntity role;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ESTADO_AUTORIZACION", nullable = false)

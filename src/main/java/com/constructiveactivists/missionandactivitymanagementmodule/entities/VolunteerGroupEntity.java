@@ -12,8 +12,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "VOLUNTEER_GROUP_SEQ", sequenceName = "mission_and_activity_management_module.SEQ_VOLUNTEER_GROUP", allocationSize = 1)
-@Table(name = "GRUPO_VOLUNTARIO", schema = "MISSION_AND_ACTIVITY_MANAGEMENT_MODULE")
+@SequenceGenerator(name = "VOLUNTEER_GROUP_SEQ", sequenceName = "modulo_gestion_misiones_y_actividades.SEQ_GRUPO_VOLUNTARIO", allocationSize = 1)
+@Table(name = "GRUPO_VOLUNTARIO", schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
 public class VolunteerGroupEntity {
 
     @Id
@@ -38,8 +38,8 @@ public class VolunteerGroupEntity {
     @ManyToMany
     @JoinTable(
             name = "MIEMBROS_GRUPO_VOLUNTARIO",
-            schema = "MISSION_AND_ACTIVITY_MANAGEMENT_MODULE",
-            joinColumns = @JoinColumn(name = "GROUPO_ID"),
+            schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES",
+            joinColumns = @JoinColumn(name = "GRUPO_ID"),
             inverseJoinColumns = @JoinColumn(name = "VOLUNTARIO_ID")
     )
     private List<VolunteerEntity> volunteers;

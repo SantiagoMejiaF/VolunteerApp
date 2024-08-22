@@ -58,7 +58,9 @@ public class AuthenticationService {
 
     private UserEntity buildUserEntity(Map<String, Object> userInfo, Integer roleId) {
         UserEntity user = new UserEntity();
-        user.setRoleId(roleId);
+        RoleEntity role = new RoleEntity();
+        role.setId(roleId);
+        user.setRole(role);
         user.setAuthorizationType(AuthorizationStatus.PENDIENTE);
         user.setFirstName((String) userInfo.get("given_name"));
         user.setLastName((String) userInfo.get("family_name"));

@@ -30,9 +30,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         UserEntity userEntity = userService.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con el email: " + username));
 
-        List<RoleEntity> roles = roleService.getRoleById(userEntity.getRoleId())
+        List<RoleEntity> roles = roleService.getRoleById(userEntity.getRole().getId())
                 .map(List::of)
-                .orElseThrow(() -> new UsernameNotFoundException("Rol no encontrado con el ID: " + userEntity.getRoleId()));
+                .orElseThrow(() -> new UsernameNotFoundException("Rol no encontrado con el ID: " + userEntity.getRole().getId()));
         return new CustomUserDetails(userEntity, roles);
     }
 }
