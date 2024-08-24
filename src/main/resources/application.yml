@@ -54,4 +54,6 @@ request-mapping:
     activity: activities
     mission: missions
     volunteer-group: volunteer-groups
+    dashboardvolunteer: dashboardsvolunteer
+    dashboardorganization: dashboardsorganization
 

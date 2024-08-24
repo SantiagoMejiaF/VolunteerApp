@@ -71,15 +71,6 @@ public class OrganizationService {
         return Arrays.asList(VolunteeringTypeEnum.values());
     }
 
-    public long getActiveOrganizationCount() {
-        return organizationRepository.findAll().stream()
-                .filter(organization -> {
-                    Optional<UserEntity> user = userService.getUserById(organization.getUserId());
-                    return user.isPresent() && user.get().getAuthorizationType() == AuthorizationStatus.AUTORIZADO;
-                })
-                .count();
-    }
-
     public OrganizationEntity updateOrganization(Integer id,  OrganizationEntity updateRequest) {
         OrganizationEntity existingOrganization = organizationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Organización no encontrada con id " + id));
