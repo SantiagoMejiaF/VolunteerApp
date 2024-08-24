@@ -84,44 +84,9 @@ public class VolunteerController implements VolunteerAPI {
     }
 
     @Override
-    public ResponseEntity<Long> getActiveVolunteerCount() {
-        long count = volunteerService.getActiveVolunteerCount();
-        return ResponseEntity.ok(count);
-    }
-
-    @Override
     public ResponseEntity<VolunteerEntity> updateVolunteer(@PathVariable Integer id, @Valid @RequestBody VolunteerUpdateRequest volunteerUpdateRequest) {
         VolunteerEntity updatedVolunteerEntity = volunteerService.updateVolunteer(id, volunteerUpdateMapper.toEntity(volunteerUpdateRequest));
         return ResponseEntity.ok(updatedVolunteerEntity);
     }
 
-    @Override
-    public ResponseEntity<Map<SkillEnum, Integer>> getSkillCounts() {
-        Map<SkillEnum, Integer> skillCounts = volunteerService.getSkillCounts();
-        return ResponseEntity.ok(skillCounts);
-    }
-
-    @Override
-    public ResponseEntity<Map<String, Long>> getAgeRanges() {
-        Map<String, Long> ageRanges = volunteerService.getAgeRanges();
-        return ResponseEntity.ok(ageRanges);
-    }
-
-    @Override
-    public ResponseEntity<Double> getAverageAge() {
-        double averageAge = volunteerService.getAverageAge();
-        return ResponseEntity.ok(averageAge);
-    }
-
-    @Override
-    public ResponseEntity<Map<AvailabilityEnum, Long>> getVolunteerAvailabilityCount() {
-        Map<AvailabilityEnum, Long> availabilityCount = volunteerService.getVolunteerAvailabilityCount();
-        return ResponseEntity.ok(availabilityCount);
-    }
-
-    @Override
-    public ResponseEntity<Map<InterestEnum, Long>> getInterestCount() {
-        Map<InterestEnum, Long> interestCount = volunteerService.getInterestCount();
-        return ResponseEntity.ok(interestCount);
-    }
 }

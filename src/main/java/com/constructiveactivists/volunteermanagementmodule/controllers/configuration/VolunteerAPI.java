@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @Tag(name = "Gestión de Voluntarios", description = "Operaciones relacionadas con la gestión de voluntarios en la aplicación.")
 public interface VolunteerAPI {
@@ -106,13 +105,6 @@ public interface VolunteerAPI {
     ResponseEntity<List<RelationshipEnum>> getAllRelationships();
 
 
-    @Operation(summary = "Obtener la cantidad de voluntarios activos")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
-    })
-    @GetMapping("/active-count")
-    ResponseEntity<Long> getActiveVolunteerCount();
-
     @Operation(summary = "Actualizar la información de un voluntario")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
@@ -120,39 +112,4 @@ public interface VolunteerAPI {
     })
     @PutMapping("/{id}")
     ResponseEntity<VolunteerEntity> updateVolunteer(@PathVariable("id") Integer id, @RequestBody VolunteerUpdateRequest volunteerUpdateRequest);
-
-    @Operation(summary = "Contador de habilidades de todos los voluntarios")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
-    })
-    @GetMapping("/skill-counts")
-    ResponseEntity<Map<SkillEnum, Integer>> getSkillCounts();
-
-    @Operation(summary = "Obtener la cantidad de voluntarios en cada rango de edad")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
-    })
-    @GetMapping("/age-ranges")
-    ResponseEntity<Map<String, Long>> getAgeRanges();
-
-    @Operation(summary = "Obtener la edad promedio de los voluntarios")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
-    })
-    @GetMapping("/average-age")
-    ResponseEntity<Double> getAverageAge();
-
-    @Operation(summary = "Obtener la cantidad de voluntarios disponibles en cada día de la semana")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
-    })
-    @GetMapping("/availability-count")
-    ResponseEntity<Map<AvailabilityEnum, Long>> getVolunteerAvailabilityCount();
-
-    @Operation(summary = "Obtener la cantidad de voluntarios que tienen cada interés")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
-    })
-    @GetMapping("/interest-count")
-    ResponseEntity<Map<InterestEnum, Long>> getInterestCount();
 }

@@ -25,6 +25,9 @@ public class VolunteeringInformationEntity {
     @Column(name = "HORAS_VOLUNTARIADAS", nullable = false)
     private int volunteeredHours;
 
+    @Column(name = "ACTIVIDADES_COMPLETADAS", nullable = false)
+    private int activitiesCompleted;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "TIPO_VOLUNTARIO", length = 10, nullable = false)
     private VolunteerType volunteerType;

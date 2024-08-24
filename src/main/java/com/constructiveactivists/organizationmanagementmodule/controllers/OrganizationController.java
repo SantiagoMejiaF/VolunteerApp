@@ -88,12 +88,6 @@ public class OrganizationController implements OrganizationAPI {
     }
 
     @Override
-    public ResponseEntity<Long> getActiveOrganizationsCount() {
-        long count = organizationService.getActiveOrganizationCount();
-        return ResponseEntity.ok(count);
-    }
-
-    @Override
     public ResponseEntity<OrganizationEntity> updateOrganization(@PathVariable Integer id, @Valid @RequestBody OrganizationUpdateRequest updateRequest) {
         OrganizationEntity updatedOrganization = organizationService.updateOrganization(id, organizationUpdateMapper.toDomain(updateRequest));
         return ResponseEntity.ok(updatedOrganization);

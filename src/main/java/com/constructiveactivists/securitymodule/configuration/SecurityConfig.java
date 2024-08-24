@@ -34,6 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/volunteers").permitAll()
                         .requestMatchers("/organizations").permitAll()
                         .requestMatchers("/users/*").permitAll()
+                        .requestMatchers("/dashboards").permitAll()
                         .anyRequest().permitAll()
                 )
                 .exceptionHandling(e -> e
