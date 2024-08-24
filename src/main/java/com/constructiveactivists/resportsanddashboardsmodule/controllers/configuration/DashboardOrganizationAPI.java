@@ -1,0 +1,2 @@
+package com.constructiveactivists.resportsanddashboardsmodule.controllers.configuration;public interface DashboardOrganizationAPI {
+}
