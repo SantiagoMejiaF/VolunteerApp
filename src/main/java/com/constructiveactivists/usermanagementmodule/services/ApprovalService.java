@@ -103,8 +103,8 @@ public class ApprovalService {
             helper.setSubject(subject);
             helper.setText(htmlContent, true);
 
-            ClassPathResource imageResource = new ClassPathResource(imageName);
-            ClassPathResource logoResource = new ClassPathResource("logo.png");
+            ClassPathResource imageResource = new ClassPathResource("utils/"+ imageName);
+            ClassPathResource logoResource = new ClassPathResource("utils/logo.png");
 
             helper.addInline("image", imageResource, "image/png");
             helper.addInline("logo", logoResource, "image/png");
