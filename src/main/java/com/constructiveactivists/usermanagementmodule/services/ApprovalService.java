@@ -10,12 +10,10 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
-import java.io.File;
 
 @Service
 @RequiredArgsConstructor
@@ -105,11 +103,12 @@ public class ApprovalService {
             helper.setSubject(subject);
             helper.setText(htmlContent, true);
 
-            FileSystemResource imageResource = new FileSystemResource(new File("src/main/java/com/constructiveactivists/usermanagementmodule/services/utils/" + imageName));
-            FileSystemResource logoResource = new FileSystemResource(new File("src/main/java/com/constructiveactivists/usermanagementmodule/services/utils/logo.png"));
+            ClassPathResource imageResource = new ClassPathResource(imageName);
+            ClassPathResource logoResource = new ClassPathResource("logo.png");
 
-            helper.addInline("image", imageResource);
-            helper.addInline("logo", logoResource);
+            helper.addInline("image", imageResource, "image/png");
+            helper.addInline("logo", logoResource, "image/png");
+
 
             mailSender.send(message);
         } catch (MessagingException e) {
