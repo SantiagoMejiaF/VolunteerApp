@@ -11,12 +11,11 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "USUARIO_SEQ", sequenceName = "modulo_gestion_usuarios.SEQ_USUARIO", allocationSize = 1)
 @Table(name = "USUARIO", schema = "MODULO_GESTION_USUARIOS")
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USUARIO_SEQ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     @Comment("Llave primaria de la tabla usuario autoincrementada por secuencia")
     private Integer id;

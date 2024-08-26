@@ -13,12 +13,11 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "VOLUNTEERING_INFO_SEQ", sequenceName = "modulo_gestion_voluntarios.SEQ_INFORMACION_VOLUNTARIADO", allocationSize = 1)
 @Table(name = "INFORMACION_VOLUNTARIADO", schema = "MODULO_GESTION_VOLUNTARIOS")
 public class VolunteeringInformationEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VOLUNTEERING_INFO_SEQ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 

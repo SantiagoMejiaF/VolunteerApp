@@ -10,13 +10,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "ORGANIZACION_SEQ", sequenceName = "modulo_gestion_organizaciones.SEQ_ORGANIZACION", allocationSize = 1)
 @Table(name = "ORGANIZACION", schema = "MODULO_GESTION_ORGANIZACIONES")
-
 public class OrganizationEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORGANIZACION_SEQ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 

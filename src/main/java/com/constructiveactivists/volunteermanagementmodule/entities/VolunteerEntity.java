@@ -8,12 +8,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "VOLUNTARIO_SEQ", sequenceName = "modulo_gestion_voluntarios.SEQ_VOLUNTARIO", allocationSize = 1)
 @Table(name = "VOLUNTARIO", schema = "MODULO_GESTION_VOLUNTARIOS")
 public class VolunteerEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VOLUNTARIO_SEQ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 

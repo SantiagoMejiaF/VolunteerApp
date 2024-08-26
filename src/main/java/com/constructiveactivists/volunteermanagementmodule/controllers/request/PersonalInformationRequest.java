@@ -36,4 +36,8 @@ public class PersonalInformationRequest {
     @Schema(description = "Fecha de nacimiento del voluntario", example = "1999-12-31")
     private LocalDate bornDate;
 
+    @NotBlank
+    @Size(min = 1, max = 1000)
+    @Schema(description = "Descripción personal del voluntario", example = "Me gusta ayudar a los demás")
+    private String personalDescription;
 }

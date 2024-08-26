@@ -16,12 +16,11 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "MISSION_SEQ", sequenceName = "modulo_gestion_misiones_y_actividades.SEQ_MISION", allocationSize = 1)
 @Table(name = "MISION", schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
 public class MissionEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MISSION_SEQ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 

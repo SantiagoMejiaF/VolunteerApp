@@ -12,12 +12,11 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "POSTULATION_SEQ", sequenceName = "modulo_gestion_misiones_y_actividades.SEQ_POSTULACION", allocationSize = 1)
 @Table(name = "POSTULACION", schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
 public class PostulationEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "POSTULATION_SEQ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 

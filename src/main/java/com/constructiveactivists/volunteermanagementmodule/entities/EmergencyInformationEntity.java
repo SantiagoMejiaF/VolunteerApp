@@ -8,7 +8,6 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "INFORMACION_EMERGENCIA_SEQ", sequenceName = "modulo_gestion_voluntarios.SEQ_INFORMACION_EMERGENCIA", allocationSize = 1)
 @Table(name = "INFORMACION_EMERGENCIA", schema = "MODULO_GESTION_VOLUNTARIOS")
 public class EmergencyInformationEntity {
 
