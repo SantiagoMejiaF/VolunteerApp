@@ -7,12 +7,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "LIDER_COMUNIDAD_SEQ", sequenceName = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES.LIDER_COMUNIDAD_SEQ",
-        allocationSize = 1)
 @Table(name = "LIDER_COMUNIDAD", schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
 public class PersonalDataCommunityLeaderEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 

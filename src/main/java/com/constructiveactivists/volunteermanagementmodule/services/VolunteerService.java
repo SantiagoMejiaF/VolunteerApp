@@ -43,11 +43,9 @@ public class VolunteerService {
     }
 
     public VolunteerEntity saveVolunteer(VolunteerEntity volunteerEntity) {
-
         validateUserExists(volunteerEntity.getUserId());
         validateAge(volunteerEntity.getPersonalInformation().getBornDate());
         int age = calculateAge(volunteerEntity.getPersonalInformation().getBornDate());
-
         volunteerEntity.getPersonalInformation().setAge(age);
         volunteerEntity.getVolunteeringInformation().setVolunteeredHours(0);
         userService.updateUserRoleType(volunteerEntity.getUserId(), RoleType.VOLUNTARIO);
@@ -80,7 +78,7 @@ public class VolunteerService {
 
     public void deleteVolunteer(Integer id) {
         VolunteerEntity volunteer = volunteerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("El voluntario con ID " + id + " no existe en la base de datos."));
+                .orElseThrow(() -> new EntityNotFoundException("El voluntario con ID: " + id + " no existe en la base de datos"));
 
         userService.deleteUser(volunteer.getUserId());
 

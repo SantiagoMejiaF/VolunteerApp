@@ -7,13 +7,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "COORDINADOR_ACTIVIDAD_SEQ", sequenceName = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES.COORDINADOR_ACTIVIDAD_SEQ",
-        allocationSize = 1)
 @Table(name = "COORDINADOR_ACTIVIDAD", schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
 public class ActivityCoordinatorEntity {
 
         @Id
-        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COORDINADOR_ACTIVIDAD_SEQ")
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
         private Integer id;
 

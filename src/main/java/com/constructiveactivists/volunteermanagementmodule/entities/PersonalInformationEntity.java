@@ -9,12 +9,11 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "INFORMACION_PERSONAL_SEQ", sequenceName = "modulo_gestion_voluntarios.SEQ_INFORMACION_PERSONAL", allocationSize = 1)
 @Table(name = "INFORMACION_PERSONAL", schema = "MODULO_GESTION_VOLUNTARIOS")
 public class PersonalInformationEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USUARIO_SEQ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 
@@ -33,6 +32,6 @@ public class PersonalInformationEntity {
     @Column(name = "TELEFONO", length = 10, nullable = false)
     private String phoneNumber;
 
-    @Column(name = "DESCRIPCIÓN_PERSONAL", length = 1000, nullable = false)
+    @Column(name = "DESCRIPCION_PERSONAL", length = 1000, nullable = false)
     private String personalDescription;
 }
