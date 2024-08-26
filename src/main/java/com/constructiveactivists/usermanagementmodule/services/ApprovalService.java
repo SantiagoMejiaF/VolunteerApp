@@ -1,5 +1,6 @@
 package com.constructiveactivists.usermanagementmodule.services;
 
+import com.constructiveactivists.authenticationmodule.controllers.configuration.exceptions.BusinessException;
 import com.constructiveactivists.organizationmanagementmodule.services.OrganizationService;
 import com.constructiveactivists.usermanagementmodule.entities.UserEntity;
 import com.constructiveactivists.usermanagementmodule.entities.enums.AuthorizationStatus;
@@ -112,7 +113,7 @@ public class ApprovalService {
 
             mailSender.send(message);
         } catch (MessagingException e) {
-            throw new RuntimeException("Fallo al enviar el correo electrónico.", e);
+            throw new BusinessException("Fallo al enviar el correo electrónico.", e);
         }
     }
 

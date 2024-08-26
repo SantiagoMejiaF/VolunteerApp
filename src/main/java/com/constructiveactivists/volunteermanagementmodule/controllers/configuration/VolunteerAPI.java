@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,7 +60,7 @@ public interface VolunteerAPI {
             @ApiResponse(responseCode = "409", description = "Conflicto: el voluntario ya existe")
     })
     @PostMapping
-    ResponseEntity<VolunteerEntity> createVolunteer(@RequestBody VolunteerRequest volunteerRequest);
+    ResponseEntity<VolunteerEntity> createVolunteer(@Valid @RequestBody VolunteerRequest volunteerRequest);
 
 
     @Operation(summary = "Eliminar un voluntario de la base de datos")
@@ -112,4 +113,12 @@ public interface VolunteerAPI {
     })
     @PutMapping("/{id}")
     ResponseEntity<VolunteerEntity> updateVolunteer(@PathVariable("id") Integer id, @RequestBody VolunteerUpdateRequest volunteerUpdateRequest);
+
+    @Operation(summary = "Promover un voluntario a líder")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Voluntario promovido a líder"),
+            @ApiResponse(responseCode = "404", description = "No encontrado")
+    })
+    @PutMapping("/{id}/promote")
+    ResponseEntity<VolunteerEntity> promoteVolunteerToLeader(@PathVariable("id") Integer id);
 }

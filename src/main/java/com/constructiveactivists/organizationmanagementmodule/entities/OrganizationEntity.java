@@ -17,6 +17,7 @@ public class OrganizationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORGANIZACION_SEQ")
+    @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 
     @Column(name = "USUARIO_ID", unique = true, nullable = false)

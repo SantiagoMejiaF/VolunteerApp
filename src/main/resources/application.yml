@@ -54,6 +54,7 @@ request-mapping:
     activity: activities
     mission: missions
     volunteer-group: volunteer-groups
-    dashboardvolunteer: dashboardsvolunteer
-    dashboardorganization: dashboardsorganization
-
+    volunteer-dashboard: volunteers-dashboard
+    organization-dashboard: organizations-dashboard
+    activity-coordinator: activity-coordinators
+    postulation: postulations

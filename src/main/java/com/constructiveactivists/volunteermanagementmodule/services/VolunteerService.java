@@ -1,5 +1,6 @@
 package com.constructiveactivists.volunteermanagementmodule.services;
 
+import com.constructiveactivists.authenticationmodule.controllers.configuration.exceptions.BusinessException;
 import com.constructiveactivists.usermanagementmodule.entities.UserEntity;
 import com.constructiveactivists.usermanagementmodule.entities.enums.RoleType;
 import com.constructiveactivists.usermanagementmodule.services.UserService;
@@ -41,16 +42,19 @@ public class VolunteerService {
         return volunteerOpt;
     }
 
-
     public VolunteerEntity saveVolunteer(VolunteerEntity volunteerEntity) {
+
         validateUserExists(volunteerEntity.getUserId());
         validateAge(volunteerEntity.getPersonalInformation().getBornDate());
         int age = calculateAge(volunteerEntity.getPersonalInformation().getBornDate());
+
         volunteerEntity.getPersonalInformation().setAge(age);
         volunteerEntity.getVolunteeringInformation().setVolunteeredHours(0);
         userService.updateUserRoleType(volunteerEntity.getUserId(), RoleType.VOLUNTARIO);
         volunteerEntity.getVolunteeringInformation().setVolunteerType(VolunteerType.valueOf("VOLUNTARIO"));
         volunteerEntity.getVolunteeringInformation().setVolunteeredHours(0);
+        volunteerEntity.setOrganizationId(null);
+
         return volunteerRepository.save(volunteerEntity);
     }
 
@@ -64,12 +68,11 @@ public class VolunteerService {
     private void validateAge(LocalDate birthDate) {
         int age = calculateAge(birthDate);
         if (age < MINIMUM_AGE) {
-            throw new IllegalArgumentException("El voluntario debe tener al menos " + MINIMUM_AGE + " años.");
+            throw new BusinessException("El voluntario debe tener al menos " + MINIMUM_AGE + " años.");
         } else if (age > MAXIMUM_AGE) {
-            throw new IllegalArgumentException("La edad del voluntario no puede exceder los " + MAXIMUM_AGE + " años.");
+            throw new BusinessException("La edad del voluntario no puede exceder los " + MAXIMUM_AGE + " años.");
         }
     }
-
 
     public int calculateAge(LocalDate birthDate) {
         return Period.between(birthDate, LocalDate.now()).getYears();
@@ -121,5 +124,17 @@ public class VolunteerService {
 
     public Optional<VolunteerEntity> getVolunteerByUserId(Integer userId) {
         return volunteerRepository.findByUserId(userId);
+    }
+
+    public VolunteerEntity promoteToLeader(Integer volunteerId) {
+        VolunteerEntity volunteer = volunteerRepository.findById(volunteerId)
+                .orElseThrow(() -> new EntityNotFoundException("El voluntario con ID " + volunteerId + " no existe en la base de datos."));
+
+        if (volunteer.getVolunteeringInformation().getVolunteerType() == VolunteerType.LIDER) {
+            return volunteer;
+        }
+
+        volunteer.getVolunteeringInformation().setVolunteerType(VolunteerType.LIDER);
+        return volunteerRepository.save(volunteer);
     }
 }

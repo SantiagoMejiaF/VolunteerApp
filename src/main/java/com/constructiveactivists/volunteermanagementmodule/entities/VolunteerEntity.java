@@ -1,5 +1,6 @@
 package com.constructiveactivists.volunteermanagementmodule.entities;
 
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.enums.VisibilityEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,12 @@ public class VolunteerEntity {
 
     @Column(name = "USUARIO_ID", unique = true, nullable = false)
     private Integer userId;
+
+    @Column(name = "ORGANIZACION_ID")
+    private Integer organizationId;
+
+    @Column(name = "VISIBILIDAD", length = 7, nullable = false)
+    private VisibilityEnum visibility;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "INFORMACION_PERSONAL_ID", referencedColumnName = "ID")

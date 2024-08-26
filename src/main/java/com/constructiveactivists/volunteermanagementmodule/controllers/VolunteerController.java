@@ -18,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -89,4 +88,9 @@ public class VolunteerController implements VolunteerAPI {
         return ResponseEntity.ok(updatedVolunteerEntity);
     }
 
+    @Override
+    public ResponseEntity<VolunteerEntity> promoteVolunteerToLeader(@PathVariable Integer id) {
+        VolunteerEntity updatedVolunteer = volunteerService.promoteToLeader(id);
+        return ResponseEntity.ok(updatedVolunteer);
+    }
 }

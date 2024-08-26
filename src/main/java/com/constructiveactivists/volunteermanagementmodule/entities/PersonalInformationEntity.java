@@ -33,4 +33,6 @@ public class PersonalInformationEntity {
     @Column(name = "TELEFONO", length = 10, nullable = false)
     private String phoneNumber;
 
+    @Column(name = "DESCRIPCIÓN_PERSONAL", length = 1000, nullable = false)
+    private String personalDescription;
 }

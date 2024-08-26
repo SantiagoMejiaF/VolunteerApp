@@ -1,8 +1,9 @@
-package com.constructiveactivists.missionandactivitymanagementmodule.entities;
+package com.constructiveactivists.missionandactivitymanagementmodule.entities.mission;
 
-import com.constructiveactivists.missionandactivitymanagementmodule.entities.enums.MissionStatusEnum;
-import com.constructiveactivists.missionandactivitymanagementmodule.entities.enums.MissionTypeEnum;
-import com.constructiveactivists.missionandactivitymanagementmodule.entities.enums.VolunteerMissionRequirements;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.enums.MissionStatusEnum;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.enums.MissionTypeEnum;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.enums.VisibilityEnum;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.enums.VolunteerMissionRequirementsEnum;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.SkillEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -24,9 +25,14 @@ public class MissionEntity {
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 
-    @Column(name = "ORGANIZACION_ID", nullable = false)
+    @Column(name = "ORGANIZACION_ID")
     @Comment("ID de la organización que publica la misión")
     private Integer organizationId;
+
+    @Column(name = "TIPO_MISION", length = 15, nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Comment("Tipo de misión")
+    private MissionTypeEnum missionType;
 
     @Column(name = "TITULO", length = 100, nullable = false)
     @Comment("Título de la misión")
@@ -48,20 +54,22 @@ public class MissionEntity {
     @Comment("Ciudad donde se llevará a cabo la misión")
     private String city;
 
-    @Column(name = "NUMERO_VOLUNTARIOS_REQUERIDOS", columnDefinition = "INTEGER", nullable = false)
-    @Comment("Número de voluntarios requeridos para la misión")
-    private Integer numberOfVolunteersRequired;
+    @Column(name = "VISIBILIDAD", length = 10, nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Comment("Visibilidad de la misión")
+    private VisibilityEnum visibility;
 
-    @Column(name = "HORAS_REQUERIDAS", columnDefinition = "INTEGER", nullable = false)
-    @Comment("Horas de voluntariado requeridas para la misión")
-    private Integer requiredHours;
+    @Column(name = "ESTADO", length = 10, nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Comment("Estado actual de la misión")
+    private MissionStatusEnum missionStatus;
 
-    @ElementCollection(targetClass = VolunteerMissionRequirements.class)
+    @ElementCollection(targetClass = VolunteerMissionRequirementsEnum.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "REQUISITOS_REQUERIDOS", joinColumns = @JoinColumn(name = "MISSION_ID"),
             schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
     @Column(name = "REQUISITOS")
-    private List<VolunteerMissionRequirements> volunteerMissionRequirementsList;
+    private List<VolunteerMissionRequirementsEnum> volunteerMissionRequirementsEnumList;
 
     @ElementCollection(targetClass = SkillEnum.class)
     @Enumerated(EnumType.STRING)
@@ -69,17 +77,4 @@ public class MissionEntity {
             schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
     @Column(name = "HABILIDADES")
     private List<SkillEnum> requiredSkillsList;
-
-    @Column(name = "ES_PUBLICA", columnDefinition = "BOOLEAN", nullable = false)
-    private boolean isPublic;
-
-    @Column(name = "TIPO_MISION", length = 15, nullable = false)
-    @Enumerated(EnumType.STRING)
-    @Comment("Tipo de misión")
-    private MissionTypeEnum missionType;
-
-    @Column(name = "ESTADO", length = 10, nullable = false)
-    @Enumerated(EnumType.STRING)
-    @Comment("Estado actual de la misión")
-    private MissionStatusEnum missionStatus;
 }

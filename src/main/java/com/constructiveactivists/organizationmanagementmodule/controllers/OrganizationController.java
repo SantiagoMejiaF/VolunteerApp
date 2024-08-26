@@ -10,6 +10,7 @@ import com.constructiveactivists.organizationmanagementmodule.entities.enums.Sec
 import com.constructiveactivists.organizationmanagementmodule.entities.enums.VolunteeringTypeEnum;
 import com.constructiveactivists.organizationmanagementmodule.mappers.OrganizationUpdateMapper;
 import com.constructiveactivists.organizationmanagementmodule.services.OrganizationService;
+import com.constructiveactivists.organizationmanagementmodule.services.VolunteerApprovalService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,9 +26,8 @@ import java.util.Optional;
 public class OrganizationController implements OrganizationAPI {
 
     private final OrganizationService organizationService;
-
     private final OrganizationMapper organizationMapper;
-
+    private final VolunteerApprovalService volunteerApprovalService;
     private final OrganizationUpdateMapper organizationUpdateMapper;
 
     @Override
@@ -91,5 +91,15 @@ public class OrganizationController implements OrganizationAPI {
     public ResponseEntity<OrganizationEntity> updateOrganization(@PathVariable Integer id, @Valid @RequestBody OrganizationUpdateRequest updateRequest) {
         OrganizationEntity updatedOrganization = organizationService.updateOrganization(id, organizationUpdateMapper.toDomain(updateRequest));
         return ResponseEntity.ok(updatedOrganization);
+    }
+
+    @Override
+    public ResponseEntity<Void> sendVolunteerApprovalResponse(
+            @RequestParam Integer volunteerId,
+            @RequestParam Integer organizationId,
+            @RequestParam boolean approved
+    ) {
+        volunteerApprovalService.sendVolunteerApprovalResponse(volunteerId, organizationId, approved);
+        return ResponseEntity.ok().build();
     }
 }

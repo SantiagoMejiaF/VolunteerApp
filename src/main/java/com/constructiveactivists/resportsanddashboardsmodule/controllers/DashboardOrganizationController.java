@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("${request-mapping.controller.dashboardorganization}")
+@RequestMapping("${request-mapping.controller.organization-dashboard}")
 public class DashboardOrganizationController implements DashboardOrganizationAPI {
 
     private final DashboardOrganizationService dashboardOrganizationService;
@@ -19,5 +19,4 @@ public class DashboardOrganizationController implements DashboardOrganizationAPI
         long count = dashboardOrganizationService.getActiveOrganizationCount();
         return ResponseEntity.ok(count);
     }
-
 }

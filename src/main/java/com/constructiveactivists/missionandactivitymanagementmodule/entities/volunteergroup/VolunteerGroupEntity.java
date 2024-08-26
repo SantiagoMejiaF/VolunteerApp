@@ -1,6 +1,6 @@
-package com.constructiveactivists.missionandactivitymanagementmodule.entities;
+package com.constructiveactivists.missionandactivitymanagementmodule.entities.volunteergroup;
 
-import com.constructiveactivists.organizationmanagementmodule.entities.OrganizationEntity;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -21,10 +21,9 @@ public class VolunteerGroupEntity {
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "ORGANIZACION_ID")
+    @Column(name = "ORGANIZACION_ID", columnDefinition = "INTEGER")
     @Comment("Organización que creó el grupo de voluntarios")
-    private OrganizationEntity organization;
+    private Integer organizationId;
 
     @ManyToOne
     @JoinColumn(name = "ACTIVITY_ID", nullable = false)
