@@ -19,4 +19,10 @@ public class DashboardOrganizationController implements DashboardOrganizationAPI
         long count = dashboardOrganizationService.getActiveOrganizationCount();
         return ResponseEntity.ok(count);
     }
+
+    @Override
+    public ResponseEntity<Long>getCompleteMissionsCount() {
+        long completeMissionsCount = dashboardOrganizationService.countCompleteMissions();
+        return ResponseEntity.ok(completeMissionsCount);
+    }
 }
