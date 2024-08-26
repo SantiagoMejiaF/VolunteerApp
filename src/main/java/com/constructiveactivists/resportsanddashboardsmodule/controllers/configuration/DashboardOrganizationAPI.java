@@ -15,4 +15,11 @@ public interface DashboardOrganizationAPI {
     })
     @GetMapping("/active-count")
     ResponseEntity<Long> getActiveOrganizationsCount();
+
+    @Operation(summary = "Obtener el número de misiones completadas")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+    })
+    @GetMapping("/complete-missions-count")
+    ResponseEntity<Long>getCompleteMissionsCount();
 }

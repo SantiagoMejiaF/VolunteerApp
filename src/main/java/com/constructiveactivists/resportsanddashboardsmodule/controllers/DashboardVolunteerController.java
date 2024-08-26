@@ -54,4 +54,6 @@ public class DashboardVolunteerController implements DashboardVolunteerAPI {
         Map<InterestEnum, Long> interestCount = dashboardService.getInterestCount();
         return ResponseEntity.ok(interestCount);
     }
+
+
 }
