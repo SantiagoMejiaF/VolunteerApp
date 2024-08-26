@@ -4,7 +4,7 @@ export interface Volunteer {
         identificationCard: string;
         phoneNumber: string;
         address: string;
-        birthDate: string;
+        bornDate: string;
     };
     volunteeringInformation: {
         availabilityDaysList: string[];

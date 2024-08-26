@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminService } from '../model/services/admin.service';
-import { OauthService } from '../../authenticationModule/model/services/oauth.service';
 import { VolunteerService } from '../../Volunteer/model/services/volunteer.service';
 import { OrganizationService } from '../../Organization/model/services/organization.service';
 import {
@@ -48,7 +47,6 @@ export class DashboardAdminComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private oauthService: OauthService,
     private volunteerService: VolunteerService,
     private organizationService: OrganizationService
   ) {
@@ -144,19 +142,17 @@ export class DashboardAdminComponent implements OnInit {
 
   populateUserRoles(): void {
     this.data.forEach((user) => {
-      this.oauthService.getUserRole(user.roleId).subscribe((role) => {
-        user.rol = role.roleType;
+      user.rol = user.role.roleType; // Utilizar directamente el rol desde el objeto usuario
 
-        if (user.rol === 'VOLUNTARIO') {
-          this.volunteerService.getVolunteerDetails(user.id).subscribe((volunteerDetails) => {
-            user.cedula = volunteerDetails.personalInformation.identificationCard;
-          });
-        } else if (user.rol === 'ORGANIZACION') {
-          this.organizationService.getOrganizationDetails(user.id).subscribe((organizationDetails) => {
-            user.cedula = organizationDetails.responsiblePersonId;
-          });
-        }
-      });
+      if (user.rol === 'VOLUNTARIO') {
+        this.volunteerService.getVolunteerDetails(user.id).subscribe((volunteerDetails) => {
+          user.cedula = volunteerDetails.personalInformation.identificationCard;
+        });
+      } else if (user.rol === 'ORGANIZACION') {
+        this.organizationService.getOrganizationDetails(user.id).subscribe((organizationDetails) => {
+          user.cedula = organizationDetails.responsiblePersonId;
+        });
+      }
     });
 
     setTimeout(() => {

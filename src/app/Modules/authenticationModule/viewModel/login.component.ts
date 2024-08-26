@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
                   this.tokenService.setToken(res.token);
                   localStorage.setItem('userInfo', JSON.stringify(res.user));
                   this.islogged = true;
-                  this.getRoleAndRedirect(res.user.roleId, res.user.authorizationType);
+                  this.getRoleAndRedirect(res.user.role.roleType, res.user.authorizationType);
                 },
                 (err) => {
                   this.logOut();
@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
           this.tokenService.setToken(res.token); // Guardar el token por separado
           localStorage.setItem('userInfo', JSON.stringify(res.user)); // Guardar solo el objeto `user`
           this.islogged = true;
-          this.getRoleAndRedirect(res.user.roleId, res.user.authorizationType);
+          this.getRoleAndRedirect(res.user.role.roleType, res.user.authorizationType);
         },
         (err) => {
           this.logOut();
@@ -95,33 +95,35 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  getRoleAndRedirect(roleId: number, authorizationType: string): void {
-    this.oauthService.getUserRole(roleId).subscribe((role: any) => {
-      const roleType = role.roleType;
-      localStorage.setItem('role', roleType);
+  getRoleAndRedirect(roleType: string | null, authorizationType: string): void {
+    if (!roleType) {
+      alert('Ha ocurrido un error, por favor vuélvalo a intentar');
+      this.logOut();
+      return;
+    }
 
-      switch (roleType) {
-        case 'SUPER_ADMIN':
-          this.router.navigate(['/dashAdmin']);
-          break;
-        case 'SIN_ASIGNAR':
-          this.router.navigate(['/forms']);
-          break;
-        case 'VOLUNTARIO':
-        case 'ORGANIZACION':
-          if (authorizationType === 'PENDIENTE') {
-            this.loadPendingMessage();
-          } else if (authorizationType === 'AUTORIZADO') {
-            this.router.navigate([roleType === 'VOLUNTARIO' ? '/dashVolunteer' : '/dashOrganization']);
-          }
-          break;
-        default:
-          console.error('Unknown role type:', roleType);
-      }
-    }, (error) => {
-      console.error('Error fetching role info:', error);
-    });
+    localStorage.setItem('role', roleType);
+
+    switch (roleType) {
+      case 'SUPER_ADMIN':
+        this.router.navigate(['/dashAdmin']);
+        break;
+      case 'SIN_ASIGNAR':
+        this.router.navigate(['/forms']);
+        break;
+      case 'VOLUNTARIO':
+      case 'ORGANIZACION':
+        if (authorizationType === 'PENDIENTE') {
+          this.loadPendingMessage();
+        } else if (authorizationType === 'AUTORIZADO') {
+          this.router.navigate([roleType === 'VOLUNTARIO' ? '/dashVolunteer' : '/dashOrganization']);
+        }
+        break;
+      default:
+        console.error('Unknown role type:', roleType);
+    }
   }
+
 
   loadPendingMessage(): void {
     this.http.get('assets/textos/pendiente.txt', { responseType: 'text' }).subscribe(

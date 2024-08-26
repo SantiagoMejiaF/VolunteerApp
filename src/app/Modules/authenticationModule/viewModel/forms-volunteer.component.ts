@@ -37,7 +37,7 @@ export class FormsVolunteerComponent implements OnInit {
       dni: [''],
       cell: [''],
       address: [''],
-      birthDate: [''],
+      bornDate: [''],
       skills: [''],
       intereses: [''],
       days: [''],
@@ -55,7 +55,7 @@ export class FormsVolunteerComponent implements OnInit {
         identificationCard: '',
         phoneNumber: '',
         address: '',
-        birthDate: ''
+        bornDate: ''
       },
       volunteeringInformation: {
         availabilityDaysList: [],
@@ -192,7 +192,7 @@ export class FormsVolunteerComponent implements OnInit {
         identificationCard: this.myForm.get('dni')?.value,
         phoneNumber: this.myForm.get('cell')?.value,
         address: this.myForm.get('address')?.value,
-        birthDate: this.myForm.get('birthDate')?.value
+        bornDate: this.myForm.get('bornDate')?.value
       },
       volunteeringInformation: {
         availabilityDaysList: this.myForm.get('days')?.value.map((item: Elements) => item.item_text),
