@@ -12,12 +12,11 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "VOLUNTEER_GROUP_SEQ", sequenceName = "modulo_gestion_misiones_y_actividades.SEQ_GRUPO_VOLUNTARIO", allocationSize = 1)
 @Table(name = "GRUPO_VOLUNTARIO", schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
 public class VolunteerGroupEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VOLUNTEER_GROUP_SEQ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 

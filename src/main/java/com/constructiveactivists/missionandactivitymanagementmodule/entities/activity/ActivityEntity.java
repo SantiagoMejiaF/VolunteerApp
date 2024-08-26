@@ -14,12 +14,11 @@ import java.time.LocalTime;
 @Entity
 @Getter
 @Setter
-@SequenceGenerator(name = "ACTIVITY_SEQ", sequenceName = "modulo_gestion_misiones_y_actividades.SEQ_ACTIVIDAD", allocationSize = 1)
 @Table(name = "ACTIVIDAD", schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
 public class ActivityEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACTIVITY_SEQ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 
