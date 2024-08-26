@@ -1,6 +1,8 @@
-package com.constructiveactivists.missionandactivitymanagementmodule.entities;
+package com.constructiveactivists.missionandactivitymanagementmodule.entities.activity;
 
-import com.constructiveactivists.missionandactivitymanagementmodule.entities.enums.ActivityStatusEnum;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.activity.enums.ActivityStatusEnum;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.MissionEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +27,14 @@ public class ActivityEntity {
     @JoinColumn(name = "MISSION_ID", nullable = false)
     @Comment("Misión a la que pertenece esta actividad")
     private MissionEntity mission;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "LIDER_COMUNIDAD_ID", referencedColumnName = "ID")
+    private PersonalDataCommunityLeaderEntity personalDataCommunityLeaderEntity;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "COORDINADOR_ACTIVIDAD_ID", referencedColumnName = "ID")
+    private ActivityCoordinatorEntity activityCoordinator;
 
     @Column(name = "TITULO", length = 100, nullable = false)
     @Comment("Título de la actividad")

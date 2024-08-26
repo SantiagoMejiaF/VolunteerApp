@@ -1,7 +1,7 @@
 package com.constructiveactivists.missionandactivitymanagementmodule.services;
 
-import com.constructiveactivists.missionandactivitymanagementmodule.entities.ActivityEntity;
-import com.constructiveactivists.missionandactivitymanagementmodule.entities.enums.ActivityStatusEnum;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.activity.ActivityEntity;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.activity.enums.ActivityStatusEnum;
 import com.constructiveactivists.missionandactivitymanagementmodule.repositories.ActivityRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

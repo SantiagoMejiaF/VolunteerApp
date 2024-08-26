@@ -1,5 +1,6 @@
 package com.constructiveactivists.volunteermanagementmodule.controllers.request;
 
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.enums.VisibilityEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -18,6 +19,11 @@ public class VolunteerRequest {
     @Valid
     @Schema(description = "Identificador del usuario al que pertenece el voluntario")
     private Integer userId;
+
+    @NotNull
+    @Valid
+    @Schema(description = "Visibilidad del perfil del voluntario")
+    private VisibilityEnum visibility;
 
     @NotNull
     @Valid

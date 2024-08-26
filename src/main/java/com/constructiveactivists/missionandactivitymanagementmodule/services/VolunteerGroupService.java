@@ -1,6 +1,6 @@
 package com.constructiveactivists.missionandactivitymanagementmodule.services;
 
-import com.constructiveactivists.missionandactivitymanagementmodule.entities.VolunteerGroupEntity;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.volunteergroup.VolunteerGroupEntity;
 import com.constructiveactivists.missionandactivitymanagementmodule.repositories.VolunteerGroupRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

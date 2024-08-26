@@ -1,8 +1,8 @@
 package com.constructiveactivists.missionandactivitymanagementmodule.controllers;
 
 import com.constructiveactivists.missionandactivitymanagementmodule.controllers.configuration.MissionAPI;
-import com.constructiveactivists.missionandactivitymanagementmodule.controllers.request.MissionRequest;
-import com.constructiveactivists.missionandactivitymanagementmodule.entities.MissionEntity;
+import com.constructiveactivists.missionandactivitymanagementmodule.controllers.request.mission.MissionRequest;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymanagementmodule.mappers.MissionMapper;
 import com.constructiveactivists.missionandactivitymanagementmodule.services.MissionService;
 import jakarta.validation.Valid;

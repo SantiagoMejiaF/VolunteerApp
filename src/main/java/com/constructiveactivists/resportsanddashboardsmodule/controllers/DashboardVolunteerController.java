@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("${request-mapping.controller.dashboardvolunteer}")
+@RequestMapping("${request-mapping.controller.volunteer-dashboard}")
 public class DashboardVolunteerController implements DashboardVolunteerAPI {
 
     private final DashboardVolunteerService dashboardService;

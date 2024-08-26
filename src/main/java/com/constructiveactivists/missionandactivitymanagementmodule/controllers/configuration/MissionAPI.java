@@ -1,7 +1,7 @@
 package com.constructiveactivists.missionandactivitymanagementmodule.controllers.configuration;
 
-import com.constructiveactivists.missionandactivitymanagementmodule.controllers.request.MissionRequest;
-import com.constructiveactivists.missionandactivitymanagementmodule.entities.MissionEntity;
+import com.constructiveactivists.missionandactivitymanagementmodule.controllers.request.mission.MissionRequest;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.MissionEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

@@ -1,4 +1,4 @@
-package com.constructiveactivists.missionandactivitymanagementmodule.entities.enums;
+package com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.enums;
 
 public enum MissionTypeEnum {
 
