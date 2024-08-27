@@ -58,8 +58,8 @@ public class AuthenticationService {
 
     private UserEntity buildUserEntity(Map<String, Object> userInfo, Integer roleId) {
         UserEntity user = new UserEntity();
-        RoleEntity role = new RoleEntity();
-        role.setId(roleId);
+        RoleEntity role = roleService.getRoleById(roleId)
+                .orElseThrow(() -> new IllegalArgumentException("Rol no encontrado para el roleId proporcionado: " + roleId));
         user.setRole(role);
         user.setAuthorizationType(AuthorizationStatus.PENDIENTE);
         user.setFirstName((String) userInfo.get("given_name"));
