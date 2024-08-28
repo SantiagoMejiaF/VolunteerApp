@@ -1,9 +1,11 @@
 package com.constructiveactivists.usermanagementmodule.controllers;
 
 import com.constructiveactivists.usermanagementmodule.controllers.configuration.UserAPI;
+import com.constructiveactivists.usermanagementmodule.controllers.request.UserRequest;
 import com.constructiveactivists.usermanagementmodule.entities.UserEntity;
 import com.constructiveactivists.usermanagementmodule.entities.enums.AuthorizationStatus;
 import com.constructiveactivists.usermanagementmodule.entities.enums.RoleType;
+import com.constructiveactivists.usermanagementmodule.mapper.UserUpdateMapper;
 import com.constructiveactivists.usermanagementmodule.services.ApprovalService;
 import com.constructiveactivists.usermanagementmodule.services.UserService;
 import lombok.AllArgsConstructor;
@@ -21,6 +23,7 @@ public class UserController implements UserAPI {
 
     private final UserService userService;
     private final ApprovalService approvalService;
+    private final UserUpdateMapper userUpdateMapper;
 
     @Override
     public List<UserEntity> getAllUsers() {
@@ -42,6 +45,12 @@ public class UserController implements UserAPI {
     @Override
     public ResponseEntity<Void> updateAuthorizationStatus(Integer userId, AuthorizationStatus authorizationStatus) {
         userService.updateAuthorizationStatus(userId, authorizationStatus);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> updateUser(@PathVariable Integer userId, @RequestBody UserRequest user) {
+        userService.updateUser(userId, userUpdateMapper.toDomain(user));
         return ResponseEntity.ok().build();
     }
 

@@ -57,6 +57,15 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void updateUser(Integer userId, UserEntity user) {
+        UserEntity userToUpdate = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, userId)));
+        userToUpdate.setFirstName(user.getFirstName());
+        userToUpdate.setLastName(user.getLastName());
+        userToUpdate.setImage(user.getImage());
+        userRepository.save(userToUpdate);
+    }
+
     public Optional<UserEntity> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }

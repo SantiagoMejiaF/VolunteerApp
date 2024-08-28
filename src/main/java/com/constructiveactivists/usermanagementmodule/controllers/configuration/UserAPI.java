@@ -1,5 +1,6 @@
 package com.constructiveactivists.usermanagementmodule.controllers.configuration;
 
+import com.constructiveactivists.usermanagementmodule.controllers.request.UserRequest;
 import com.constructiveactivists.usermanagementmodule.entities.UserEntity;
 import com.constructiveactivists.usermanagementmodule.entities.enums.AuthorizationStatus;
 import com.constructiveactivists.usermanagementmodule.entities.enums.RoleType;
@@ -62,6 +63,16 @@ public interface UserAPI {
     })
     @PostMapping("/{userId}/send-approval-or-rejection-email")
     ResponseEntity<String> sendApprovalOrRejectionEmail(@PathVariable Integer userId, @RequestParam boolean approved);
+
+    @Operation(summary = "Actualizar la información de un usuario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "400", description = "Solicitud incorrecta"),
+            @ApiResponse(responseCode = "404", description = "No encontrado")
+    })
+    @PutMapping("userUpdate/{userId}")
+    ResponseEntity<Void> updateUser(@PathVariable Integer userId, @RequestBody UserRequest user);
+
 
     @Operation(summary = "Obtener la cantidad total de usuarios registrados en la aplicación")
     @ApiResponses(value = {
