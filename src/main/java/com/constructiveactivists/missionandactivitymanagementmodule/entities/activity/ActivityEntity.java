@@ -67,7 +67,7 @@ public class ActivityEntity {
     @Comment("Horas de voluntariado requeridas para la actividad")
     private Integer requiredHours;
 
-    @Column(name = "ESTADO", length = 10, nullable = false)
+    @Column(name = "ESTADO", length = 30, nullable = false)
     @Enumerated(EnumType.STRING)
     @Comment("Estado actual de la actividad")
     private ActivityStatusEnum activityStatus;

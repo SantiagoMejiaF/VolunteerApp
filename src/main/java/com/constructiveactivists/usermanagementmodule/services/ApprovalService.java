@@ -28,8 +28,10 @@ public class ApprovalService {
 
     public void sendApprovalResponse(Integer userId, boolean approved) {
         UserEntity user = getUser(userId);
+        if (user.getAuthorizationType() != AuthorizationStatus.PENDIENTE) {
+            throw new BusinessException("El estado de autorización del usuario no es PENDIENTE. No se puede enviar el correo.");
+        }
         StringBuilder userInfo = buildUserInfo(user);
-
         if (approved) {
             approveUser(user, userInfo);
         } else {
