@@ -14,6 +14,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import static com.constructiveactivists.authenticationmodule.controllers.configuration.constants.AppConstants.NOT_FOUND_MESSAGE;
+import static com.constructiveactivists.authenticationmodule.controllers.configuration.constants.AppConstants.POSTULATION_SUBJECT;
+
 @Service
 @AllArgsConstructor
 public class PostulationService {
@@ -33,7 +36,7 @@ public class PostulationService {
 
     public PostulationEntity updatePostulation(Integer id, PostulationEntity updatedPostulation) {
         PostulationEntity postulation = postulationRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("La postulación con ID " + id + " no existe."));
+                .orElseThrow(() -> new EntityNotFoundException(POSTULATION_SUBJECT + id + NOT_FOUND_MESSAGE));
 
         postulation.setStatus(updatedPostulation.getStatus());
         postulation.setComments(updatedPostulation.getComments());
@@ -45,13 +48,13 @@ public class PostulationService {
 
     public void deletePostulation(Integer id) {
         PostulationEntity postulation = postulationRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("La postulación con ID " + id + " no existe."));
+                .orElseThrow(() -> new EntityNotFoundException(POSTULATION_SUBJECT + id + NOT_FOUND_MESSAGE));
         postulationRepository.delete(postulation);
     }
 
     public PostulationEntity approvePostulation(Integer postulationId) {
         PostulationEntity postulation = postulationRepository.findById(postulationId)
-                .orElseThrow(() -> new EntityNotFoundException("La postulación con ID " + postulationId + " no existe."));
+                .orElseThrow(() -> new EntityNotFoundException(POSTULATION_SUBJECT + postulationId + NOT_FOUND_MESSAGE));
 
         postulation.setStatus(PostulationStatusEnum.APROBADA);
         postulation.setApprovalDate(LocalDate.now());

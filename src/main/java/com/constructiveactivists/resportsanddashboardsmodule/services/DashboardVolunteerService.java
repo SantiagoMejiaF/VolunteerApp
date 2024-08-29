@@ -1,8 +1,14 @@
 package com.constructiveactivists.resportsanddashboardsmodule.services;
 
+import com.constructiveactivists.authenticationmodule.controllers.configuration.exceptions.BusinessException;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.activity.ActivityEntity;
+import com.constructiveactivists.volunteermanagementmodule.entities.volunteergroup.VolunteerGroupEntity;
+import com.constructiveactivists.missionandactivitymanagementmodule.services.ActivityService;
+import com.constructiveactivists.volunteermanagementmodule.services.VolunteerGroupService;
 import com.constructiveactivists.usermanagementmodule.entities.UserEntity;
 import com.constructiveactivists.usermanagementmodule.entities.enums.AuthorizationStatus;
 import com.constructiveactivists.usermanagementmodule.services.UserService;
+import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerEntity;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.InterestEnum;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.SkillEnum;
@@ -10,6 +16,7 @@ import com.constructiveactivists.volunteermanagementmodule.services.VolunteerSer
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,6 +27,10 @@ public class DashboardVolunteerService {
     private final VolunteerService volunteerService;
 
     private final UserService userService;
+
+    private final VolunteerGroupService volunteerGroupService;
+
+    private final ActivityService activityService;
 
     public Map<String, Long> getAgeRanges() {
 
@@ -89,5 +100,27 @@ public class DashboardVolunteerService {
                 .filter(interest -> !interestCountMap.containsKey(interest))
                 .forEach(interest -> interestCountMap.put(interest, 0L));
         return interestCountMap;
+    }
+
+    public ActivityEntity getNextActivityForVolunteer(Integer volunteerId) {
+        VolunteerEntity volunteer = volunteerService.getVolunteerById(volunteerId)
+                .orElseThrow(() -> new BusinessException("Voluntario no encontrado"));
+        Integer organizationId = volunteer.getOrganizationId();
+        List<VolunteerGroupEntity> volunteerGroups = volunteerGroupService.findByOrganizationId(organizationId);
+        if (volunteerGroups.isEmpty()) {
+            return null;
+        }
+        LocalDateTime now = LocalDateTime.now();
+        return volunteerGroups.stream()
+                .map(VolunteerGroupEntity::getActivity)
+                .map(activityService::getById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .filter(activity -> {
+                    LocalDateTime activityDateTime = LocalDateTime.of(activity.getDate(), activity.getStartTime());
+                    return activityDateTime.isAfter(now);
+                })
+                .min(Comparator.comparing(activity -> LocalDateTime.of(activity.getDate(), activity.getStartTime())))
+                .orElse(null);
     }
 }

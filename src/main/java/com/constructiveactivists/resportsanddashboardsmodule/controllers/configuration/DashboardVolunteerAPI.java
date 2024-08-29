@@ -1,5 +1,6 @@
 package com.constructiveactivists.resportsanddashboardsmodule.controllers.configuration;
 
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.InterestEnum;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.SkillEnum;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Map;
 
@@ -56,4 +58,13 @@ public interface DashboardVolunteerAPI {
     })
     @GetMapping("/interest-count")
     ResponseEntity<Map<InterestEnum, Long>> getInterestCount();
+
+    @Operation(summary = "Obtener la siguiente actividad para un voluntario, sino encuentra ninguna actividad proxima retorna un error")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "204", description = "No hay próximas actividades disponibles"),
+            @ApiResponse(responseCode = "404", description = "Voluntario no encontrado")
+    })
+    @GetMapping("/next-activity/{volunteerId}")
+    ResponseEntity<ActivityEntity> getNextActivityForVolunteer(@PathVariable Integer volunteerId);
 }
