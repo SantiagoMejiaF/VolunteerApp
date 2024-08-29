@@ -1,7 +1,7 @@
-package com.constructiveactivists.missionandactivitymanagementmodule.controllers.configuration;
+package com.constructiveactivists.volunteermanagementmodule.controllers.configuration;
 
-import com.constructiveactivists.missionandactivitymanagementmodule.controllers.request.volunteergroup.VolunteerGroupRequest;
-import com.constructiveactivists.missionandactivitymanagementmodule.entities.volunteergroup.VolunteerGroupEntity;
+import com.constructiveactivists.volunteermanagementmodule.controllers.request.volunteergroup.VolunteerGroupRequest;
+import com.constructiveactivists.volunteermanagementmodule.entities.volunteergroup.VolunteerGroupEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

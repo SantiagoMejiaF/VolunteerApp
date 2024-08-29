@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static com.constructiveactivists.authenticationmodule.controllers.configuration.constants.AppConstants.NOT_FOUND_MESSAGE;
+
 @Service
 @AllArgsConstructor
 public class OrganizationService {
@@ -57,7 +59,7 @@ public class OrganizationService {
 
         if (user.isEmpty()) {
             throw new EntityNotFoundException("El usuario con ID " + organizationEntity.getUserId() +
-                    " no existe en la base de datos.");
+                    NOT_FOUND_MESSAGE);
         }
 
         userService.updateUserRoleType(organizationEntity.getUserId(), RoleType.ORGANIZACION);
@@ -80,7 +82,7 @@ public class OrganizationService {
     public void approveVolunteer(Integer volunteerId, Integer organizationId) {
 
         VolunteerEntity volunteer = volunteerRepository.findById(volunteerId)
-                .orElseThrow(() -> new EntityNotFoundException("El voluntario con ID " + volunteerId + " no existe en la base de datos."));
+                .orElseThrow(() -> new EntityNotFoundException("El voluntario con ID " + volunteerId + NOT_FOUND_MESSAGE));
 
         if (volunteer.getOrganizationId() != null) {
             throw new BusinessException("El voluntario ya está asociado con una organización.");
@@ -92,7 +94,7 @@ public class OrganizationService {
 
     public void deleteOrganization(Integer id) {
         OrganizationEntity organization = organizationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("La organización con ID " + id + " no existe en la base de datos."));
+                .orElseThrow(() -> new RuntimeException("La organización con ID " + id + NOT_FOUND_MESSAGE));
 
         userService.deleteUser(organization.getUserId());
 

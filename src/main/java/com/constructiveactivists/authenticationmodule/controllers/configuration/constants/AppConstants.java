@@ -3,6 +3,7 @@ package com.constructiveactivists.authenticationmodule.controllers.configuration
 public final class AppConstants {
 
     public static final String NOT_FOUND_MESSAGE = "no existe en la base de datos.";
+    public static final String POSTULATION_SUBJECT = "La postulación con ID";
     public static final String APPROVAL_SUBJECT = "Aprobación de Vinculación a la Organización %s";
     public static final String REJECTION_SUBJECT = "Rechazo de Vinculación a la Organización %s";
     public static final String APPROVAL_MESSAGE = "Nos complace informarle que su solicitud de vinculación a nuestra organización ha sido aprobada.";

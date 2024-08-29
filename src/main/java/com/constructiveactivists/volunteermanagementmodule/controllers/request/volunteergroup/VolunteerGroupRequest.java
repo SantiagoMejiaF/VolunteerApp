@@ -1,4 +1,4 @@
-package com.constructiveactivists.missionandactivitymanagementmodule.controllers.request.volunteergroup;
+package com.constructiveactivists.volunteermanagementmodule.controllers.request.volunteergroup;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -16,20 +16,19 @@ import java.util.List;
 @NoArgsConstructor
 public class VolunteerGroupRequest {
 
-    @NotNull
     @Schema(description = "Identificador de la organización", example = "1")
     private Integer organizationId;
 
     @NotNull
     @Schema(description = "Identificador de la actividad", example = "1")
-    private Integer activityId;
+    private Integer activity;
 
     @NotBlank
     @Schema(description = "Nombre del grupo de voluntarios", example = "Grupo A de Plantación")
     private String name;
 
     @Schema(description = "Lista de identificadores de voluntarios en el grupo", example = "[1, 2, 3]")
-    private List<Integer> volunteerIds;
+    private List<VolunteerGroupMembershipRequest> volunteerIds;
 
     @NotNull
     @Schema(description = "Número de voluntarios requeridos para el grupo", example = "3")

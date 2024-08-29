@@ -1,12 +1,16 @@
 package com.constructiveactivists.resportsanddashboardsmodule.controllers;
 
+import com.constructiveactivists.authenticationmodule.controllers.configuration.exceptions.BusinessException;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.resportsanddashboardsmodule.controllers.configuration.DashboardVolunteerAPI;
 import com.constructiveactivists.resportsanddashboardsmodule.services.DashboardVolunteerService;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.InterestEnum;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.SkillEnum;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,5 +59,13 @@ public class DashboardVolunteerController implements DashboardVolunteerAPI {
         return ResponseEntity.ok(interestCount);
     }
 
-
+    @Override
+    public ResponseEntity<ActivityEntity> getNextActivityForVolunteer(@PathVariable Integer volunteerId) {
+        try {
+            ActivityEntity nextActivity = dashboardService.getNextActivityForVolunteer(volunteerId);
+            return nextActivity != null ? ResponseEntity.ok(nextActivity) : ResponseEntity.noContent().build();
+        } catch (BusinessException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 }
