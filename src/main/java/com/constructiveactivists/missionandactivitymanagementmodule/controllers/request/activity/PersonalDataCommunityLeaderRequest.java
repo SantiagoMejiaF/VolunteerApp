@@ -19,11 +19,6 @@ public class PersonalDataCommunityLeaderRequest {
     @Schema(description = "Nombre completo del líder de comunidad", example = "Juan Pérez")
     private String nameCommunityLeader;
 
-    @NotBlank(message = "La cédula es obligatoria.")
-    @Pattern(regexp = "^\\d{10}$", message = "La cédula debe tener exactamente 10 dígitos.")
-    @Schema(description = "Cédula del líder de comunidad", example = "1234567890")
-    private String identificationCard;
-
     @NotBlank(message = "El correo electrónico es obligatorio.")
     @Email(message = "El formato del correo electrónico es inválido.")
     @Schema(description = "Correo electrónico del líder de comunidad", example = "juan.perez@example.com")

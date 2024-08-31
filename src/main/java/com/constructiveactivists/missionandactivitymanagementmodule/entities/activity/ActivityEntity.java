@@ -3,6 +3,7 @@ package com.constructiveactivists.missionandactivitymanagementmodule.entities.ac
 import com.constructiveactivists.missionandactivitymanagementmodule.entities.activity.enums.ActivityStatusEnum;
 import com.constructiveactivists.missionandactivitymanagementmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.MissionEntity;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.enums.VisibilityEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
@@ -64,6 +65,14 @@ public class ActivityEntity {
     @Comment("Hora de finalización de la actividad")
     private LocalTime endTime;
 
+    @Column(name = "CIUDAD", length = 50, nullable = false)
+    @Comment("Ciudad donde se llevará a cabo la actividad")
+    private String city;
+
+    @Column(name = "LOCALIDAD", length = 50, nullable = false)
+    @Comment("Localidad donde se llevará a cabo la actividad")
+    private String locality;
+
     @Column(name = "DIRECCION", length = 200, nullable = false)
     @Comment("Dirección donde se llevará a cabo la actividad")
     private String address;
@@ -72,7 +81,7 @@ public class ActivityEntity {
     @Comment("Número de voluntarios requeridos para la actividad")
     private Integer numberOfVolunteersRequired;
 
-    @Column(name = "HORAS_REQUERIDAS", columnDefinition = "INTEGER")
+    @Column(name = "HORAS_REQUERIDAS", columnDefinition = "INTEGER" , nullable = false)
     @Comment("Horas de voluntariado requeridas para la actividad")
     private Integer requiredHours;
 
@@ -80,6 +89,15 @@ public class ActivityEntity {
     @Enumerated(EnumType.STRING)
     @Comment("Estado actual de la actividad")
     private ActivityStatusEnum activityStatus;
+
+    @Column(name="Visibilidad de la actividad", length = 8 , nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Comment("Visibilidad de la actividad")
+    private VisibilityEnum visibility;
+
+    @Column(name = "NUMERO_PERSONAS_BENEFICIADAS", columnDefinition = "INTEGER" , nullable = false)
+    @Comment("Número de personas beneficiadas por la actividad")
+    private Integer numberOfBeneficiaries;
 
     @Column(name = "OBSERVACIONES", length = 1000)
     @Comment("Observaciones adicionales sobre la actividad")

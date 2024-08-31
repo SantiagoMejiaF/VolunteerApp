@@ -1,6 +1,7 @@
 package com.constructiveactivists.missionandactivitymanagementmodule.controllers.request.mission;
 
 import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.enums.MissionTypeEnum;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.enums.VisibilityEnum;
 import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.enums.VolunteerMissionRequirementsEnum;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.SkillEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -44,8 +45,12 @@ public class MissionRequest {
     private LocalDate endDate;
 
     @NotBlank
-    @Schema(description = "Ciudad donde se llevará a cabo la misión", example = "Bogotá")
-    private String city;
+    @Schema(description = "Departamento donde se llevará a cabo la misión", example = "Cudinamarca")
+    private String department;
+
+    @NotNull
+    @Schema(description = "Visibilidad de la misión", example = "PUBLICA")
+    private VisibilityEnum visibility;
 
     @NotNull
     @Schema(description = "Lista de requisitos de la misión", example = "[\"EXPERIENCIA_PREVIA\", \"ACCESO_TRANSPORTE\"]")

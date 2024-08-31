@@ -18,9 +18,6 @@ public class PersonalDataCommunityLeaderEntity {
     @Column(name = "NOMBRE", length = 200, nullable = false)
     private String nameCommunityLeader;
 
-    @Column(name = "CEDULA", length = 200, nullable = false)
-    private String identificationCard;
-
     @Column(name = "CORREO", length = 200, nullable = false)
     private String emailCommunityLeader;
 

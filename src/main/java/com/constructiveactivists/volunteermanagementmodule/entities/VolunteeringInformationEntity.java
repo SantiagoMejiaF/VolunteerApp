@@ -21,8 +21,8 @@ public class VolunteeringInformationEntity {
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 
-    @Column(name = "HORAS_VOLUNTARIADAS", nullable = false)
-    private int volunteeredHours;
+    @Column(name = "HORAS_VOLUNTARIADAS_TOTALES", nullable = false)
+    private int volunteeredTotalHours;
 
     @Column(name = "ACTIVIDADES_COMPLETADAS", nullable = false)
     private int activitiesCompleted;

@@ -2,10 +2,13 @@ package com.constructiveactivists.resportsanddashboardsmodule.controllers;
 
 import com.constructiveactivists.resportsanddashboardsmodule.controllers.configuration.DashboardOrganizationAPI;
 import com.constructiveactivists.resportsanddashboardsmodule.services.DashboardOrganizationService;
+import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerOrganizationEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -24,5 +27,23 @@ public class DashboardOrganizationController implements DashboardOrganizationAPI
     public ResponseEntity<Long>getCompleteMissionsCount() {
         long completeMissionsCount = dashboardOrganizationService.countCompleteMissions();
         return ResponseEntity.ok(completeMissionsCount);
+    }
+
+    @Override
+    public ResponseEntity<Double> getAverageHoursForOrganization(Integer organizationId) {
+        Double averageHours = dashboardOrganizationService.getAverageHoursForOrganization(organizationId);
+        return ResponseEntity.ok(averageHours);
+    }
+
+    @Override
+    public ResponseEntity<Double> getAverageMonthlyHoursByOrganization(Integer organizationId) {
+        Double averageMonthlyHours = dashboardOrganizationService.getAverageMonthlyHoursByOrganization(organizationId);
+        return ResponseEntity.ok(averageMonthlyHours);
+    }
+
+    @Override
+    public ResponseEntity<List<VolunteerOrganizationEntity>> getVolunteersByOrganizationAndMonth(Integer organizationId, Integer month, Integer year) {
+        List<VolunteerOrganizationEntity> volunteerOrganizations = dashboardOrganizationService.getVolunteersByOrganizationAndMonth(organizationId, month, year);
+        return ResponseEntity.ok(volunteerOrganizations);
     }
 }

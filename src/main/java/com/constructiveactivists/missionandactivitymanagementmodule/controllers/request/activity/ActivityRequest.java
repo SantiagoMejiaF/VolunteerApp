@@ -1,5 +1,7 @@
 package com.constructiveactivists.missionandactivitymanagementmodule.controllers.request.activity;
 
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.MissionEntity;
+import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.enums.VisibilityEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +21,15 @@ public class ActivityRequest {
 
     @NotNull
     @Schema(description = "Identificador de la misión", example = "1")
-    private Integer missionId;
+    private MissionEntity mission;
+
+    @NotNull
+    @Schema(description = "Informacion del lider de comunidad")
+    private PersonalDataCommunityLeaderRequest personalDataCommunityLeaderEntity;
+
+    @NotNull
+    @Schema(description = "Informacion del coordinador de actividad")
+    private ActivityCoordinatorRequest activityCoordinator;
 
     @NotBlank
     @Schema(description = "Título de la actividad", example = "Plantación de árboles")
@@ -49,6 +59,14 @@ public class ActivityRequest {
     private String endTime;
 
     @NotBlank
+    @Schema(description = "Ciudad donde se llevará a cabo la actividad", example = "Bogotá")
+    private String city;
+
+    @NotBlank
+    @Schema(description = "Localidad donde se llevará a cabo la actividad", example = "Usaquén")
+    private String locality;
+
+    @NotBlank
     @Schema(description = "Dirección donde se llevará a cabo la actividad", example = "Parque Central, Calle 123")
     private String address;
 
@@ -59,6 +77,14 @@ public class ActivityRequest {
     @NotNull
     @Schema(description = "Horas de voluntariado requeridas", example = "4")
     private Integer requiredHours;
+
+    @NotNull
+    @Schema(description = "Visibilidad de la actividad", example = "PUBLICA")
+    private VisibilityEnum visibility;
+
+    @NotNull
+    @Schema(description = "Número de personas beneficiadas por la actividad", example = "100")
+    private Integer numberOfBeneficiaries;
 
     @Schema(description = "Observaciones adicionales sobre la actividad", example = "Llevar agua y protector solar.")
     private String observations;
