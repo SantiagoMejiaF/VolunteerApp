@@ -1,7 +1,7 @@
 package com.constructiveactivists.resportsanddashboardsmodule.services;
 
-import com.constructiveactivists.authenticationmodule.controllers.configuration.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymanagementmodule.entities.activity.ActivityEntity;
+import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermanagementmodule.entities.volunteergroup.VolunteerGroupEntity;
 import com.constructiveactivists.missionandactivitymanagementmodule.services.ActivityService;
 import com.constructiveactivists.volunteermanagementmodule.services.VolunteerGroupService;
@@ -12,13 +12,18 @@ import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerEnt
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.InterestEnum;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.SkillEnum;
+import com.constructiveactivists.volunteermanagementmodule.services.VolunteerOrganizationService;
 import com.constructiveactivists.volunteermanagementmodule.services.VolunteerService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.constructiveactivists.authenticationmodule.controllers.configuration.constants.AppConstants.NOT_FOUND_MESSAGE;
+import static com.constructiveactivists.authenticationmodule.controllers.configuration.constants.AppConstants.VOLUNTEER_MESSAGE_ID;
 
 @Service
 @AllArgsConstructor
@@ -31,6 +36,8 @@ public class DashboardVolunteerService {
     private final VolunteerGroupService volunteerGroupService;
 
     private final ActivityService activityService;
+
+    private final VolunteerOrganizationService volunteerOrganizationService;
 
     public Map<String, Long> getAgeRanges() {
 
@@ -103,10 +110,21 @@ public class DashboardVolunteerService {
     }
 
     public ActivityEntity getNextActivityForVolunteer(Integer volunteerId) {
-        VolunteerEntity volunteer = volunteerService.getVolunteerById(volunteerId)
-                .orElseThrow(() -> new BusinessException("Voluntario no encontrado"));
-        Integer organizationId = volunteer.getOrganizationId();
-        List<VolunteerGroupEntity> volunteerGroups = volunteerGroupService.findByOrganizationId(organizationId);
+        Optional <VolunteerEntity> volunteer = volunteerService.getVolunteerById(volunteerId);
+        if (volunteer.isPresent()) {
+            throw new EntityNotFoundException(VOLUNTEER_MESSAGE_ID + volunteerId + NOT_FOUND_MESSAGE);
+        }
+
+        List<VolunteerOrganizationEntity> volunteerOrganizationEntities = volunteerOrganizationService.getOrganizationsByVolunteerId(volunteerId);
+        if (volunteerOrganizationEntities == null || volunteerOrganizationEntities.isEmpty()) {
+            return null;
+        }
+        Set<Integer> organizationIds = volunteerOrganizationEntities.stream()
+                .map(vo -> vo.getOrganizationId())
+                .collect(Collectors.toSet());
+        List<VolunteerGroupEntity> volunteerGroups = organizationIds.stream()
+                .flatMap(orgId -> volunteerGroupService.findByOrganizationId(orgId).stream())
+                .toList();
         if (volunteerGroups.isEmpty()) {
             return null;
         }
@@ -123,4 +141,5 @@ public class DashboardVolunteerService {
                 .min(Comparator.comparing(activity -> LocalDateTime.of(activity.getDate(), activity.getStartTime())))
                 .orElse(null);
     }
+
 }

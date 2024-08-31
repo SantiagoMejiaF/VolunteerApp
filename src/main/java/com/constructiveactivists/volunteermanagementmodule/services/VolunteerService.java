@@ -47,12 +47,9 @@ public class VolunteerService {
         validateAge(volunteerEntity.getPersonalInformation().getBornDate());
         int age = calculateAge(volunteerEntity.getPersonalInformation().getBornDate());
         volunteerEntity.getPersonalInformation().setAge(age);
-        volunteerEntity.getVolunteeringInformation().setVolunteeredHours(0);
+        volunteerEntity.getVolunteeringInformation().setVolunteeredTotalHours(0);
         userService.updateUserRoleType(volunteerEntity.getUserId(), RoleType.VOLUNTARIO);
         volunteerEntity.getVolunteeringInformation().setVolunteerType(VolunteerType.valueOf("VOLUNTARIO"));
-        volunteerEntity.getVolunteeringInformation().setVolunteeredHours(0);
-        volunteerEntity.setOrganizationId(null);
-
         return volunteerRepository.save(volunteerEntity);
     }
 

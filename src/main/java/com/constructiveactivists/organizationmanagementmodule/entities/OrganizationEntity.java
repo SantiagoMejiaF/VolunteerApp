@@ -47,4 +47,7 @@ public class OrganizationEntity {
 
     @Column(name = "DIRECCION_ORGANIZACION", length = 50, nullable = false)
     private String address;
+
+    @Column(name = "HORAS_REQUERIDAS_CERTIFICACION", columnDefinition = "INTEGER", nullable = false)
+    private Integer requiredCertificationHours;
 }

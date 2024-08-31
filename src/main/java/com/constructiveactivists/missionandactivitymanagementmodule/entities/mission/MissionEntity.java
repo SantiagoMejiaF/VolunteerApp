@@ -49,9 +49,9 @@ public class MissionEntity {
     @Comment("Fecha de finalización de la misión")
     private LocalDate endDate;
 
-    @Column(name = "CIUDAD", length = 200, nullable = false)
-    @Comment("Ciudad donde se llevará a cabo la misión")
-    private String city;
+    @Column(name = "DEPARTAMENTO", length = 200, nullable = false)
+    @Comment("Departamento donde se llevará a cabo la misión")
+    private String department;
 
     @Column(name = "VISIBILIDAD", length = 10, nullable = false)
     @Enumerated(EnumType.STRING)

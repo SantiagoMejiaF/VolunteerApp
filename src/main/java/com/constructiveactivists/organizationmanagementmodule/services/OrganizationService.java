@@ -1,6 +1,5 @@
 package com.constructiveactivists.organizationmanagementmodule.services;
 
-import com.constructiveactivists.authenticationmodule.controllers.configuration.exceptions.BusinessException;
 import com.constructiveactivists.organizationmanagementmodule.entities.OrganizationEntity;
 import com.constructiveactivists.organizationmanagementmodule.entities.enums.OrganizationTypeEnum;
 import com.constructiveactivists.organizationmanagementmodule.entities.enums.SectorTypeEnum;
@@ -9,8 +8,7 @@ import com.constructiveactivists.usermanagementmodule.entities.UserEntity;
 import com.constructiveactivists.organizationmanagementmodule.repositories.OrganizationRepository;
 import com.constructiveactivists.usermanagementmodule.entities.enums.RoleType;
 import com.constructiveactivists.usermanagementmodule.services.UserService;
-import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerEntity;
-import com.constructiveactivists.volunteermanagementmodule.repositories.VolunteerRepository;
+import com.constructiveactivists.volunteermanagementmodule.services.VolunteerOrganizationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,14 +18,15 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.constructiveactivists.authenticationmodule.controllers.configuration.constants.AppConstants.NOT_FOUND_MESSAGE;
+import static com.constructiveactivists.authenticationmodule.controllers.configuration.constants.AppConstants.ORGANIZATION_MESSAGE_ID;
 
 @Service
 @AllArgsConstructor
 public class OrganizationService {
 
     private final OrganizationRepository organizationRepository;
-    private final VolunteerRepository volunteerRepository;
     private final UserService userService;
+    private final VolunteerOrganizationService volunteerOrganizationService;
 
     public List<OrganizationEntity> getAllOrganizations() {
         return organizationRepository.findAll();
@@ -54,16 +53,12 @@ public class OrganizationService {
     }
 
     public OrganizationEntity saveOrganization(OrganizationEntity organizationEntity) {
-
         Optional<UserEntity> user = userService.getUserById(organizationEntity.getUserId());
-
         if (user.isEmpty()) {
             throw new EntityNotFoundException("El usuario con ID " + organizationEntity.getUserId() +
                     NOT_FOUND_MESSAGE);
         }
-
         userService.updateUserRoleType(organizationEntity.getUserId(), RoleType.ORGANIZACION);
-
         return organizationRepository.save(organizationEntity);
     }
 
@@ -76,28 +71,18 @@ public class OrganizationService {
         existingOrganization.setSectorTypeEnum(updateRequest.getSectorTypeEnum());
         existingOrganization.setVolunteeringTypeEnum(updateRequest.getVolunteeringTypeEnum());
         existingOrganization.setAddress(updateRequest.getAddress());
+        existingOrganization.setRequiredCertificationHours(updateRequest.getRequiredCertificationHours());
         return organizationRepository.save(existingOrganization);
     }
 
     public void approveVolunteer(Integer volunteerId, Integer organizationId) {
-
-        VolunteerEntity volunteer = volunteerRepository.findById(volunteerId)
-                .orElseThrow(() -> new EntityNotFoundException("El voluntario con ID " + volunteerId + NOT_FOUND_MESSAGE));
-
-        if (volunteer.getOrganizationId() != null) {
-            throw new BusinessException("El voluntario ya está asociado con una organización.");
-        }
-
-        volunteer.setOrganizationId(organizationId);
-        volunteerRepository.save(volunteer);
+        volunteerOrganizationService.updateStatusAccept(volunteerId, organizationId);
     }
 
     public void deleteOrganization(Integer id) {
         OrganizationEntity organization = organizationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("La organización con ID " + id + NOT_FOUND_MESSAGE));
-
+                .orElseThrow(() -> new RuntimeException( ORGANIZATION_MESSAGE_ID + id + NOT_FOUND_MESSAGE));
         userService.deleteUser(organization.getUserId());
-
         organizationRepository.delete(organization);
     }
 }

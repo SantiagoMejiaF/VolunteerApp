@@ -59,4 +59,8 @@ public class OrganizationRequest {
     @Size(max = 50)
     @Schema(description = "Dirección principal de la organización", example = "Carrera 7 N° 40-62")
     private String address;
+
+    @NotNull
+    @Schema(description = "Horas requeridas para la certificación", example = "100")
+    private Integer requiredCertificationHours;
 }

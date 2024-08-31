@@ -20,6 +20,7 @@ public class ActivityCoordinatorRequest {
     @Schema(description = "ID del usuario asociado al coordinador de actividad", example = "123")
     private Long userId;
 
+    @NotNull(message = "El ID de la organización es obligatorio.")
     @Schema(description = "ID de la organización asociada al coordinador de actividad", example = "456")
     private Long organizationId;
 
