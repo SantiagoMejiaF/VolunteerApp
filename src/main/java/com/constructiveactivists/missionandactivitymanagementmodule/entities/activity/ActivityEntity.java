@@ -1,11 +1,9 @@
 package com.constructiveactivists.missionandactivitymanagementmodule.entities.activity;
 
 import com.constructiveactivists.missionandactivitymanagementmodule.entities.activity.enums.ActivityStatusEnum;
-import com.constructiveactivists.missionandactivitymanagementmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymanagementmodule.entities.mission.enums.VisibilityEnum;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Comment;
@@ -33,9 +31,9 @@ public class ActivityEntity {
     @JoinColumn(name = "LIDER_COMUNIDAD_ID", referencedColumnName = "ID")
     private PersonalDataCommunityLeaderEntity personalDataCommunityLeaderEntity;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "COORDINADOR_ACTIVIDAD_ID", referencedColumnName = "ID")
-    private ActivityCoordinatorEntity activityCoordinator;
+    @Column(name = "COORDINADOR_ACTIVIDAD_ID", columnDefinition = "INTEGER", nullable = false)
+    @Comment("Identificador del coordinador de la actividad")
+    private Integer activityCoordinator;
 
     @Column(name = "TITULO", length = 100, nullable = false)
     @Comment("Título de la actividad")
@@ -50,18 +48,10 @@ public class ActivityEntity {
     private LocalDate date;
 
     @Column(name = "HORA_INICIO", columnDefinition = "TIME", nullable = false)
-    @Pattern(
-            regexp = "^([01]\\d|2[0-3]):(00|30)$",
-            message = "La hora debe estar entre 00:00 y 23:30 y ser un múltiplo de 30 minutos (por ejemplo, 08:00, 08:30)"
-    )
     @Comment("Hora de inicio de la actividad")
     private LocalTime startTime;
 
     @Column(name = "HORA_FIN", columnDefinition = "TIME", nullable = false)
-    @Pattern(
-            regexp = "^([01]\\d|2[0-3]):(00|30)$",
-            message = "La hora debe estar entre 00:00 y 23:30 y ser un múltiplo de 30 minutos (por ejemplo, 08:00, 08:30)"
-    )
     @Comment("Hora de finalización de la actividad")
     private LocalTime endTime;
 

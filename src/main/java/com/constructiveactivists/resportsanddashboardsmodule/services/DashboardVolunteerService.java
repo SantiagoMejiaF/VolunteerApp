@@ -1,7 +1,7 @@
 package com.constructiveactivists.resportsanddashboardsmodule.services;
 
 import com.constructiveactivists.missionandactivitymanagementmodule.entities.activity.ActivityEntity;
-import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerOrganizationEntity;
+import com.constructiveactivists.postulationmanagementmodule.entities.VolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermanagementmodule.entities.volunteergroup.VolunteerGroupEntity;
 import com.constructiveactivists.missionandactivitymanagementmodule.services.ActivityService;
 import com.constructiveactivists.volunteermanagementmodule.services.VolunteerGroupService;
@@ -12,7 +12,7 @@ import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerEnt
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.InterestEnum;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.SkillEnum;
-import com.constructiveactivists.volunteermanagementmodule.services.VolunteerOrganizationService;
+import com.constructiveactivists.postulationmanagementmodule.services.VolunteerOrganizationService;
 import com.constructiveactivists.volunteermanagementmodule.services.VolunteerService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;

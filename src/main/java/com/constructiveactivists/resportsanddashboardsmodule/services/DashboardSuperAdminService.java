@@ -2,8 +2,12 @@ package com.constructiveactivists.resportsanddashboardsmodule.services;
 
 import com.constructiveactivists.missionandactivitymanagementmodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymanagementmodule.services.ActivityService;
-import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerOrganizationEntity;
-import com.constructiveactivists.volunteermanagementmodule.services.VolunteerOrganizationService;
+import com.constructiveactivists.postulationmanagementmodule.entities.DataShareVolunteerOrganizationEntity;
+import com.constructiveactivists.postulationmanagementmodule.entities.PostulationEntity;
+import com.constructiveactivists.postulationmanagementmodule.entities.VolunteerOrganizationEntity;
+import com.constructiveactivists.postulationmanagementmodule.services.DataShareVolunteerOrganizationService;
+import com.constructiveactivists.postulationmanagementmodule.services.PostulationService;
+import com.constructiveactivists.postulationmanagementmodule.services.VolunteerOrganizationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +22,8 @@ import java.util.stream.Collectors;
 public class DashboardSuperAdminService {
 
     private final ActivityService activityService;
-    private final VolunteerOrganizationService volunteerOrganizationService;
+    private final PostulationService postulationService;
+    private final DataShareVolunteerOrganizationService dataShareVolunteerOrganizationService;
 
     public Map<String, Long> getActivityLocalitiesWithFrequency() {
         List<ActivityEntity> activities = activityService.getAll();
@@ -28,29 +33,32 @@ public class DashboardSuperAdminService {
 
 
     public double getAverageHours() {
-        List<VolunteerOrganizationEntity> entities = volunteerOrganizationService.findAll();
-        return entities.stream()
+        List<DataShareVolunteerOrganizationEntity> dataEntities = dataShareVolunteerOrganizationService.findAll();
+        return dataEntities.stream()
                 .mapToDouble(entity -> entity.getHoursDone() - entity.getHoursCertified())
                 .average()
                 .orElse(0.0);
     }
 
+
     public Double getAverageMonthlyHours() {
-        List<VolunteerOrganizationEntity> entities = volunteerOrganizationService.findAll();
-        return entities.stream()
+        List<DataShareVolunteerOrganizationEntity> dataEntities = dataShareVolunteerOrganizationService.findAll();
+        return dataEntities.stream()
                 .filter(entity -> entity.getMonthlyHours() != null && entity.getMonthlyHours() > 0)
-                .collect(Collectors.averagingDouble(VolunteerOrganizationEntity::getMonthlyHours));
+                .collect(Collectors.averagingDouble(DataShareVolunteerOrganizationEntity::getMonthlyHours));
     }
 
-    public List<VolunteerOrganizationEntity> getRecentVolunteersByWeek() {
-        List<VolunteerOrganizationEntity> entities = volunteerOrganizationService.findAll();
 
-        return entities.stream()
+    public List<PostulationEntity> getRecentVolunteersByWeek() {
+        List<PostulationEntity> postulationEntities = postulationService.findAll();
+
+        return postulationEntities.stream()
                 .collect(Collectors.groupingBy(entity -> entity.getRegistrationDate().with(DayOfWeek.MONDAY)))
                 .entrySet().stream()
                 .flatMap(entry -> entry.getValue().stream()
-                        .sorted(Comparator.comparing(VolunteerOrganizationEntity::getRegistrationDate).reversed())
+                        .sorted(Comparator.comparing(PostulationEntity::getRegistrationDate).reversed())
                         .limit(1))
                 .toList();
     }
+
 }

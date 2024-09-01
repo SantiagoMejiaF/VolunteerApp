@@ -16,22 +16,13 @@ public class ActivityCoordinatorEntity {
         private Integer id;
 
         @Column(name = "USUARIO_ID", columnDefinition = "INTEGER", nullable = false)
-        private Long userId;
+        private Integer userId;
 
         @Column(name = "ORGANIZACION_ID", columnDefinition = "INTEGER")
-        private Long organizationId;
-
-        @Column(name = "NOMBRE", length = 200, nullable = false)
-        private String nameActivityCoordinator;
-
-        @Column(name = "APELLIDO", length = 200, nullable = false)
-        private String lastNameActivityCoordinator;
+        private Integer organizationId;
 
         @Column(name = "CEDULA", length = 200, nullable = false)
         private String identificationCard;
-
-        @Column(name = "CORREO", length = 200, nullable = false)
-        private String emailActivityCoordinator;
 
         @Column(name = "CELULAR", length = 200, nullable = false)
         private String phoneActivityCoordinator;

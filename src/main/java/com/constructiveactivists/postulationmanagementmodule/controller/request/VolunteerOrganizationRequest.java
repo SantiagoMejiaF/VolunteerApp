@@ -1,4 +1,4 @@
-package com.constructiveactivists.volunteermanagementmodule.controllers.request;
+package com.constructiveactivists.postulationmanagementmodule.controller.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

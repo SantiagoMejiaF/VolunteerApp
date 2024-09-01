@@ -16,13 +16,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @NoArgsConstructor
 public class ActivityCoordinatorRequest {
 
-    @NotNull(message = "El ID de usuario es obligatorio.")
-    @Schema(description = "ID del usuario asociado al coordinador de actividad", example = "123")
-    private Long userId;
-
     @NotNull(message = "El ID de la organización es obligatorio.")
     @Schema(description = "ID de la organización asociada al coordinador de actividad", example = "456")
-    private Long organizationId;
+    private Integer organizationId;
 
     @NotBlank(message = "El nombre del coordinador de actividad es obligatorio.")
     @Schema(description = "Nombre del coordinador de actividad", example = "María")
@@ -46,5 +42,8 @@ public class ActivityCoordinatorRequest {
     @Pattern(regexp = "^\\d{10}$", message = "El número de celular debe tener exactamente 10 dígitos.")
     @Schema(description = "Número de celular del coordinador de actividad", example = "3109876543")
     private String phoneActivityCoordinator;
+
+    @Schema(description = "Imagen del coordinador de actividad", example = "https://example.com/image.jpg")
+    private String image;
 }
 

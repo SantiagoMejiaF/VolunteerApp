@@ -1,6 +1,6 @@
 package com.constructiveactivists.resportsanddashboardsmodule.controllers.configuration;
 
-import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerOrganizationEntity;
+import com.constructiveactivists.postulationmanagementmodule.entities.PostulationEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -42,5 +42,5 @@ public interface DashboardSuperAdminAPI {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
             @ApiResponse(responseCode = "204", description = "No se encontraron voluntarios")
     })
-    ResponseEntity<List<VolunteerOrganizationEntity>> getRecentVolunteersByWeek();
+    ResponseEntity<List<PostulationEntity>> getRecentVolunteersByWeek();
 }

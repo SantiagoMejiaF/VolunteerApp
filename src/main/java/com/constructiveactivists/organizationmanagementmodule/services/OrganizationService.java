@@ -4,11 +4,12 @@ import com.constructiveactivists.organizationmanagementmodule.entities.Organizat
 import com.constructiveactivists.organizationmanagementmodule.entities.enums.OrganizationTypeEnum;
 import com.constructiveactivists.organizationmanagementmodule.entities.enums.SectorTypeEnum;
 import com.constructiveactivists.organizationmanagementmodule.entities.enums.VolunteeringTypeEnum;
+import com.constructiveactivists.postulationmanagementmodule.services.PostulationService;
 import com.constructiveactivists.usermanagementmodule.entities.UserEntity;
 import com.constructiveactivists.organizationmanagementmodule.repositories.OrganizationRepository;
 import com.constructiveactivists.usermanagementmodule.entities.enums.RoleType;
 import com.constructiveactivists.usermanagementmodule.services.UserService;
-import com.constructiveactivists.volunteermanagementmodule.services.VolunteerOrganizationService;
+import com.constructiveactivists.postulationmanagementmodule.services.VolunteerOrganizationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class OrganizationService {
 
     private final OrganizationRepository organizationRepository;
     private final UserService userService;
-    private final VolunteerOrganizationService volunteerOrganizationService;
+    private final PostulationService postulationService;
 
     public List<OrganizationEntity> getAllOrganizations() {
         return organizationRepository.findAll();
@@ -75,8 +76,8 @@ public class OrganizationService {
         return organizationRepository.save(existingOrganization);
     }
 
-    public void approveVolunteer(Integer volunteerId, Integer organizationId) {
-        volunteerOrganizationService.updateStatusAccept(volunteerId, organizationId);
+    public void approveVolunteer(Integer volunteerOrganizationId) {
+        postulationService.updateStatusAccept(volunteerOrganizationId);
     }
 
     public void deleteOrganization(Integer id) {

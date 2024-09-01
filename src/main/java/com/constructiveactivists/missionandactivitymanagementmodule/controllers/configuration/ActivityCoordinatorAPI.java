@@ -1,14 +1,17 @@
 package com.constructiveactivists.missionandactivitymanagementmodule.controllers.configuration;
 
 import com.constructiveactivists.missionandactivitymanagementmodule.controllers.request.activity.ActivityCoordinatorRequest;
+import com.constructiveactivists.missionandactivitymanagementmodule.controllers.request.activity.CoordinatorAvailabilityRequest;
 import com.constructiveactivists.missionandactivitymanagementmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Tag(name = "Gestión de Coordinadores de Actividad", description = "Operaciones relacionadas con la gestión de coordinadores de actividades en la aplicación.")
@@ -36,5 +39,18 @@ public interface ActivityCoordinatorAPI {
     })
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteActivityCoordinator(@PathVariable Integer id);
+    @Operation(summary = "Buscar coordinadores de actividad disponibles")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/available")
+    ResponseEntity<List<ActivityCoordinatorEntity>> findAvailableCoordinators(
+            @RequestParam("organizationId") Integer organizationId,
+            @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) String startTime,
+            @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) String endTime);
+
+
+
 }
 

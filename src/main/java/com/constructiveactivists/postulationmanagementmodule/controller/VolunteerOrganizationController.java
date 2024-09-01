@@ -1,11 +1,11 @@
-package com.constructiveactivists.volunteermanagementmodule.controllers;
+package com.constructiveactivists.postulationmanagementmodule.controller;
 
-import com.constructiveactivists.volunteermanagementmodule.controllers.configuration.VolunteerOrganizationAPI;
-import com.constructiveactivists.volunteermanagementmodule.controllers.request.VolunteerOrganizationRequest;
-import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerOrganizationEntity;
+import com.constructiveactivists.postulationmanagementmodule.controller.configuration.VolunteerOrganizationAPI;
+import com.constructiveactivists.postulationmanagementmodule.controller.request.VolunteerOrganizationRequest;
+import com.constructiveactivists.postulationmanagementmodule.entities.VolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermanagementmodule.entities.enums.OrganizationStatusEnum;
-import com.constructiveactivists.volunteermanagementmodule.mappers.VolunteerOrganizationMapper;
-import com.constructiveactivists.volunteermanagementmodule.services.VolunteerOrganizationService;
+import com.constructiveactivists.postulationmanagementmodule.mapper.VolunteerOrganizationMapper;
+import com.constructiveactivists.postulationmanagementmodule.services.VolunteerOrganizationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,24 +30,6 @@ public class VolunteerOrganizationController implements VolunteerOrganizationAPI
     public ResponseEntity<List<VolunteerOrganizationEntity>> getVolunteersByOrganizationId(@PathVariable Integer organizationId) {
         List<VolunteerOrganizationEntity> volunteerOrganizationEntities = volunteerOrganizationService.getVolunteersByOrganizationId(organizationId);
         return ResponseEntity.ok(volunteerOrganizationEntities);
-    }
-
-
-    @Override
-    public ResponseEntity<VolunteerOrganizationEntity> updateHours(@PathVariable Integer id,
-                                                                   @RequestParam Integer hoursCompleted,
-                                                                   @RequestParam Integer hoursCertified) {
-        VolunteerOrganizationEntity updatedVolunteerOrganizationEntity = volunteerOrganizationService.updateHours(id, hoursCompleted, hoursCertified);
-        return ResponseEntity.ok(updatedVolunteerOrganizationEntity);
-    }
-
-    @Override
-    public ResponseEntity<List<VolunteerOrganizationEntity>> getVolunteersWithStatus(@PathVariable OrganizationStatusEnum status) {
-        List<VolunteerOrganizationEntity> volunteers = volunteerOrganizationService.getVolunteersWithStatus(status);
-        if (volunteers == null || volunteers.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(volunteers);
     }
 
     @Override

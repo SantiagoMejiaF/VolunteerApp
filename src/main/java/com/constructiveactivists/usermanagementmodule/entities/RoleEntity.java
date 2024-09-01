@@ -17,6 +17,6 @@ public class RoleEntity {
     private Integer id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "TIPO_ROL", length = 12, nullable = false)
+    @Column(name = "TIPO_ROL", length = 22, nullable = false)
     private RoleType roleType;
 }
