@@ -27,13 +27,13 @@ public class MissionController implements MissionAPI {
 
     @Override
     public ResponseEntity<List<MissionEntity>> getAllMissions() {
-        List<MissionEntity> missions = missionService.getAll();
+        List<MissionEntity> missions = missionService.getAllMisions();
         return ResponseEntity.ok(missions);
     }
 
     @Override
     public ResponseEntity<MissionEntity> getMissionById(@PathVariable Integer id) {
-        Optional<MissionEntity> mission = missionService.getById(id);
+        Optional<MissionEntity> mission = missionService.getMissionById(id);
         return mission.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 

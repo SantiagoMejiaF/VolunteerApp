@@ -1,6 +1,5 @@
 package com.constructiveactivists.missionandactivitymodule.controllers.request.activity;
 
-import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VisibilityEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -21,7 +20,7 @@ public class ActivityRequest {
 
     @NotNull
     @Schema(description = "Identificador de la misión", example = "1")
-    private MissionEntity mission;
+    private Long missionId;
 
     @NotNull
     @Schema(description = "Informacion del lider de comunidad")

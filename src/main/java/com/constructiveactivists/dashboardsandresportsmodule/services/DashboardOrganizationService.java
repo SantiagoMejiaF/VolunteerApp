@@ -53,7 +53,7 @@ public class DashboardOrganizationService {
     }
 
     public long countCompleteMissions() {
-        return missionService.getAll().stream()
+        return missionService.getAllMisions().stream()
                 .filter(mission -> mission.getMissionStatus() == MissionStatusEnum.COMPLETADA)
                 .count();
     }

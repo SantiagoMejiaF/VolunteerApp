@@ -121,4 +121,13 @@ public interface VolunteerAPI {
     })
     @PutMapping("/{id}/promote")
     ResponseEntity<VolunteerEntity> promoteVolunteerToLeader(@PathVariable("id") Integer id);
+
+    @Operation(summary = "Inscribir un voluntario en una actividad")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Voluntario inscrito exitosamente"),
+            @ApiResponse(responseCode = "404", description = "No encontrado"),
+            @ApiResponse(responseCode = "409", description = "Conflicto: El voluntario ya está inscrito o el grupo está completo")
+    })
+    @PostMapping("/{volunteerId}/activities/{activityId}/signup")
+    ResponseEntity<Void> signUpForActivity(@PathVariable("volunteerId") Integer volunteerId, @PathVariable("activityId") Integer activityId);
 }

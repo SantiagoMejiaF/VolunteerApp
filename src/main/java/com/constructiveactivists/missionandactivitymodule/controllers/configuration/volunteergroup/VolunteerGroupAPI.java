@@ -1,6 +1,5 @@
 package com.constructiveactivists.missionandactivitymodule.controllers.configuration.volunteergroup;
 
-import com.constructiveactivists.missionandactivitymodule.controllers.request.volunteergroup.VolunteerGroupRequest;
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -9,19 +8,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 @Tag(name = "Módulo de Misiones y Actividades", description = "Servicios relacionados con la gestión de misiones y actividades en la aplicación.")
 public interface VolunteerGroupAPI {
-
-    @Operation(summary = "Crear un nuevo grupo de voluntarios")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Grupo de voluntarios creado exitosamente"),
-            @ApiResponse(responseCode = "400", description = "Solicitud inválida")
-    })
-    @PostMapping
-    ResponseEntity<VolunteerGroupEntity> createVolunteerGroup(@Valid @RequestBody VolunteerGroupRequest volunteerGroupRequest);
 
     @Operation(summary = "Obtener un grupo de voluntarios por su ID")
     @ApiResponses(value = {

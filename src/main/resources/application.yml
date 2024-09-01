@@ -59,5 +59,6 @@ request-mapping:
     organization-dashboard: organizations-dashboard
     super-admin-dashboard: super-admins-dashboard
     activity-coordinator: activity-coordinators
-    postulation: postulations
     location: locations
+    datashare-volunteer-organization: datashare-volunteers-organizations
+    volunteer-organization: volunteers-organizations

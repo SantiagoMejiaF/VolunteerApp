@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/volunteer-organizations")
+@RequestMapping("${request-mapping.controller.volunteer-organization}")
 @AllArgsConstructor
 public class VolunteerOrganizationController implements VolunteerOrganizationAPI {
 

@@ -2,6 +2,9 @@ package com.constructiveactivists.missionandactivitymodule.services.activity;
 
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
+import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
+import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupEntity;
+import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupService;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.organizationmodule.repositories.ActivityCoordinatorRepository;
 import com.constructiveactivists.missionandactivitymodule.repositories.ActivityRepository;
@@ -19,20 +22,38 @@ import static com.constructiveactivists.configurationmodule.constants.AppConstan
 @Service
 public class ActivityService {
 
-    private final ActivityRepository activityRepository;
+    private final VolunteerGroupService volunteerGroupService;
     private final MissionService missionService;
+    private final ActivityRepository activityRepository;
     private final ActivityCoordinatorRepository activityCoordinatorRepository;
 
     public ActivityEntity save(ActivityEntity activity) {
-        if (missionService.getById(activity.getMission().getId()).isEmpty()) {
-            throw new EntityNotFoundException(MISSION_MEESAGE_ID + activity.getMission().getId() + NOT_FOUND_MESSAGE);
-        }
+
+        MissionEntity mission = missionService.getMissionById(activity.getMissionId())
+                .orElseThrow(() -> new EntityNotFoundException(MISSION_MEESAGE_ID + activity.getMissionId().toString() + NOT_FOUND_MESSAGE));
+
         Optional<ActivityCoordinatorEntity> coordinator = activityCoordinatorRepository.findById(activity.getActivityCoordinator());
         if (coordinator.isEmpty()) {
-            throw new EntityNotFoundException(COORDINATOR_MESSAGE_ID + activity.getActivityCoordinator() + NOT_FOUND_MESSAGE);
+            throw new EntityNotFoundException(COORDINATOR_MESSAGE_ID + activity.getActivityCoordinator().toString() + NOT_FOUND_MESSAGE);
         }
+
         activity.setActivityStatus(ActivityStatusEnum.DISPONIBLE);
-        return activityRepository.save(activity);
+
+        VolunteerGroupEntity volunteerGroup = new VolunteerGroupEntity();
+        volunteerGroup.setOrganizationId(mission.getOrganizationId());
+        volunteerGroup.setName("Grupo de voluntarios para " + activity.getTitle());
+        volunteerGroup.setNumberOfVolunteersRequired(activity.getNumberOfVolunteersRequired());
+        volunteerGroup.setCurrentVolunteers(0);
+        VolunteerGroupEntity savedVolunteerGroup = volunteerGroupService.save(volunteerGroup);
+
+        activity.setVolunteerGroup(savedVolunteerGroup.getId());
+
+        ActivityEntity activitySaved = activityRepository.save(activity);
+
+        savedVolunteerGroup.setActivity(activitySaved.getId());
+        volunteerGroupService.save(savedVolunteerGroup);
+
+        return activitySaved;
     }
 
     public Optional<ActivityEntity> getById(Integer id) {

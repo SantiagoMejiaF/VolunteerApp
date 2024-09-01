@@ -35,13 +35,13 @@ public class VolunteerController implements VolunteerAPI {
     }
 
     @Override
-    public ResponseEntity<VolunteerEntity> getVolunteerById(@PathVariable Integer id) {
+    public ResponseEntity<VolunteerEntity> getVolunteerById(Integer id) {
         Optional<VolunteerEntity> volunteer = volunteerService.getVolunteerById(id);
         return volunteer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @Override
-    public ResponseEntity<VolunteerEntity> getVolunteerByUserId(@PathVariable Integer userId) {
+    public ResponseEntity<VolunteerEntity> getVolunteerByUserId(Integer userId) {
         Optional<VolunteerEntity> volunteer = volunteerService.getVolunteerByUserId(userId);
         return volunteer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
@@ -53,7 +53,7 @@ public class VolunteerController implements VolunteerAPI {
     }
 
     @Override
-    public ResponseEntity<Void> deleteVolunteer(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteVolunteer(Integer id) {
         volunteerService.deleteVolunteer(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -83,14 +83,20 @@ public class VolunteerController implements VolunteerAPI {
     }
 
     @Override
-    public ResponseEntity<VolunteerEntity> updateVolunteer(@PathVariable Integer id, @Valid @RequestBody VolunteerUpdateRequest volunteerUpdateRequest) {
+    public ResponseEntity<VolunteerEntity> updateVolunteer(Integer id, @Valid @RequestBody VolunteerUpdateRequest volunteerUpdateRequest) {
         VolunteerEntity updatedVolunteerEntity = volunteerService.updateVolunteer(id, volunteerUpdateMapper.toEntity(volunteerUpdateRequest));
         return ResponseEntity.ok(updatedVolunteerEntity);
     }
 
     @Override
-    public ResponseEntity<VolunteerEntity> promoteVolunteerToLeader(@PathVariable Integer id) {
+    public ResponseEntity<VolunteerEntity> promoteVolunteerToLeader(Integer id) {
         VolunteerEntity updatedVolunteer = volunteerService.promoteToLeader(id);
         return ResponseEntity.ok(updatedVolunteer);
+    }
+
+    @Override
+    public ResponseEntity<Void> signUpForActivity(Integer volunteerId,Integer activityId) {
+        volunteerService.signUpForActivity(volunteerId, activityId);
+        return ResponseEntity.ok().build();
     }
 }

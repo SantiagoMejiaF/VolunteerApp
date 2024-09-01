@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.Map;
 
 @Tag(name = "Módulo de Tableros de Control y Reportes", description = "Servicios relacionados con los tableros de control que tiene" +
-        " el administrador, el voluntario y la organización en la aplicación.")
+        "el administrador, los voluntarios y las organizaciones junto con sus reportes.")
 public interface DashboardVolunteerAPI {
 
     @Operation(summary = "Obtener la cantidad de voluntarios en cada rango de edad")
