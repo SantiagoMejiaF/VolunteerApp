@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.Optional;
 
-@Tag(name = "Gestión de Ubicaciones", description = "Operaciones relacionadas con la gestión de ubicaciones en la aplicación.")
+@Tag(name = "Módulo de Servicios Externos", description = "Servicios de la aplicación que se comunican con API's externas")
 public interface LocationAPI {
 
     @Operation(summary = "Obtener una lista con todos los departamentos registrados en la base de datos")
