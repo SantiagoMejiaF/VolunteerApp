@@ -1,16 +1,13 @@
 package com.constructiveactivists.missionandactivitymodule.controllers;
 
 import com.constructiveactivists.missionandactivitymodule.controllers.configuration.volunteergroup.VolunteerGroupAPI;
-import com.constructiveactivists.missionandactivitymodule.controllers.request.volunteergroup.VolunteerGroupRequest;
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupEntity;
 import com.constructiveactivists.missionandactivitymodule.mappers.volunteergroup.VolunteerGroupMapper;
 import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupService;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,19 +24,13 @@ public class VolunteerGroupController implements VolunteerGroupAPI {
 
     @Override
     public ResponseEntity<List<VolunteerGroupEntity>> getAllVolunteerGroups() {
-        List<VolunteerGroupEntity> volunteerGroups = volunteerGroupService.getAll();
+        List<VolunteerGroupEntity> volunteerGroups = volunteerGroupService.getAllVolunteerGroups();
         return ResponseEntity.ok(volunteerGroups);
     }
 
     @Override
     public ResponseEntity<VolunteerGroupEntity> getVolunteerGroupById(@PathVariable Integer id) {
-        Optional<VolunteerGroupEntity> volunteerGroup = volunteerGroupService.getById(id);
+        Optional<VolunteerGroupEntity> volunteerGroup = volunteerGroupService.getVolunteerGroupById(id);
         return volunteerGroup.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-    }
-
-    @Override
-    public ResponseEntity<VolunteerGroupEntity> createVolunteerGroup(@Valid @RequestBody VolunteerGroupRequest volunteerGroupRequest) {
-        VolunteerGroupEntity createdVolunteerGroup = volunteerGroupService.save(volunteerGroupMapper.toDomain(volunteerGroupRequest));
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdVolunteerGroup);
     }
 }

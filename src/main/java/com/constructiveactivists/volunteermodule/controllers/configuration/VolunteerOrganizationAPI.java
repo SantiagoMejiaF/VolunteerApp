@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "Gestión de Relacion entre Organizaciones y Voluntarios", description = "Servicios relacionadas con la gestión de organizaciones y voluntarios en la aplicación.")
+@Tag(name = "Módulo de Voluntarios", description = "Servicios relacionados con la gestión de voluntarios en la aplicación.")
 public interface VolunteerOrganizationAPI {
 
     @Operation(summary = "Obtener organizaciones de voluntarios por ID de voluntario")

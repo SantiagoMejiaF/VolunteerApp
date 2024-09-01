@@ -17,9 +17,8 @@ public class VolunteerGroupMembershipEntity {
     private Integer id;
 
     @Column(name = "GRUPO_ID")
-    private Integer group;
+    private Integer groupId;
 
     @Column(name = "VOLUNTARIO_ID", nullable = false)
     private Integer volunteerId;
-
 }

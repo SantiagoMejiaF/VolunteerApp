@@ -14,25 +14,23 @@ public class VolunteerGroupService {
 
     private final VolunteerGroupRepository volunteerGroupRepository;
 
-    private final VolunteerGroupMembershipService membershipService;
-
-    public VolunteerGroupEntity save(VolunteerGroupEntity volunteerGroup) {
-        VolunteerGroupEntity savedGroup = volunteerGroupRepository.save(volunteerGroup);
-        savedGroup.getMemberships().forEach(membership -> membership.setGroup(savedGroup.getId()));
-        membershipService.saveAll(savedGroup.getMemberships());
-        return savedGroup;
-    }
-
-    public Optional<VolunteerGroupEntity> getById(Integer id) {
+    public Optional<VolunteerGroupEntity> getVolunteerGroupById(Integer id) {
         return volunteerGroupRepository.findById(id);
     }
 
-    public List<VolunteerGroupEntity> getAll() {
+    public Optional<VolunteerGroupEntity> getVolunteerGroupByActivityId(Integer activityId) {
+        return volunteerGroupRepository.findByActivity(activityId);
+    }
+
+    public List<VolunteerGroupEntity> getAllVolunteerGroups() {
         return volunteerGroupRepository.findAll();
     }
 
-    public  List<VolunteerGroupEntity> findByOrganizationId(Integer organizationId) {
+    public List<VolunteerGroupEntity> getVolunteerGroupByOrganizationId(Integer organizationId) {
         return volunteerGroupRepository.findByOrganizationId(organizationId);
     }
 
+    public VolunteerGroupEntity save(VolunteerGroupEntity volunteerGroup) {
+        return volunteerGroupRepository.save(volunteerGroup);
+    }
 }

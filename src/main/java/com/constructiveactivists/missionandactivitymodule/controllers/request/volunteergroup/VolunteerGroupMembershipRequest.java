@@ -1,6 +1,5 @@
 package com.constructiveactivists.missionandactivitymodule.controllers.request.volunteergroup;
 
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -16,6 +15,5 @@ public class VolunteerGroupMembershipRequest {
 
     @NotNull
     @Schema(description = "Identificador del voluntario", example = "1")
-    private Integer volunteer;
-
+    private Integer volunteerId;
 }

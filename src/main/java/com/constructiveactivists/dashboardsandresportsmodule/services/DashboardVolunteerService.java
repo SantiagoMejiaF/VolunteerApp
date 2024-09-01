@@ -123,7 +123,7 @@ public class DashboardVolunteerService {
                 .map(vo -> vo.getOrganizationId())
                 .collect(Collectors.toSet());
         List<VolunteerGroupEntity> volunteerGroups = organizationIds.stream()
-                .flatMap(orgId -> volunteerGroupService.findByOrganizationId(orgId).stream())
+                .flatMap(orgId -> volunteerGroupService.getVolunteerGroupByOrganizationId(orgId).stream())
                 .toList();
         if (volunteerGroups.isEmpty()) {
             return null;

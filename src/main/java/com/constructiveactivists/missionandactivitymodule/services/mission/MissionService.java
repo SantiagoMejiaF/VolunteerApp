@@ -29,11 +29,11 @@ public class MissionService {
         return missionRepository.save(mission);
     }
 
-    public Optional<MissionEntity> getById(Integer id) {
+    public Optional<MissionEntity> getMissionById(Integer id) {
         return missionRepository.findById(id);
     }
 
-    public List<MissionEntity> getAll() {
+    public List<MissionEntity> getAllMisions() {
         return missionRepository.findAll();
     }
 }

@@ -5,16 +5,20 @@ import com.constructiveactivists.missionandactivitymodule.repositories.Volunteer
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @AllArgsConstructor
 public class VolunteerGroupMembershipService {
 
-    private VolunteerGroupMembershipRepository membershipRepository;
+    private final VolunteerGroupMembershipRepository volunteerGroupMembershipRepository;
 
-    public List<VolunteerGroupMembershipEntity> saveAll(List<VolunteerGroupMembershipEntity> memberships) {
-        return membershipRepository.saveAll(memberships);
+    public boolean isVolunteerInGroup(Integer groupId, Integer volunteerId) {
+        return volunteerGroupMembershipRepository.existsByGroupIdAndVolunteerId(groupId, volunteerId);
     }
 
+    public void addVolunteerToGroup(Integer groupId, Integer volunteerId) {
+        VolunteerGroupMembershipEntity membership = new VolunteerGroupMembershipEntity();
+        membership.setGroupId(groupId);
+        membership.setVolunteerId(volunteerId);
+        volunteerGroupMembershipRepository.save(membership);
+    }
 }

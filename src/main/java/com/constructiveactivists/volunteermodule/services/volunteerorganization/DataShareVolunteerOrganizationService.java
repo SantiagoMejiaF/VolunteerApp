@@ -23,20 +23,19 @@ public class DataShareVolunteerOrganizationService {
         return dataShareVolunteerOrganizationRepository.save(dataShare);
     }
 
-    public  DataShareVolunteerOrganizationEntity addDataShareVolunteerOrganization( Integer volunteerOrganizationId) {
+    public void addDataShareVolunteerOrganization(Integer volunteerOrganizationId) {
         DataShareVolunteerOrganizationEntity dataShareVolunteerOrganizationEntity = new DataShareVolunteerOrganizationEntity();
         dataShareVolunteerOrganizationEntity.setVolunteerOrganizationId(volunteerOrganizationId);
         dataShareVolunteerOrganizationEntity.setHoursDone(0);
         dataShareVolunteerOrganizationEntity.setHoursCertified(0);
         dataShareVolunteerOrganizationEntity.setMonthlyHours(0);
-        return dataShareVolunteerOrganizationRepository.save(dataShareVolunteerOrganizationEntity);
+        dataShareVolunteerOrganizationRepository.save(dataShareVolunteerOrganizationEntity);
     }
 
     public DataShareVolunteerOrganizationEntity findById(Integer volunteerOrganizationId) {
         return dataShareVolunteerOrganizationRepository.findById(volunteerOrganizationId)
                 .orElseThrow(() -> new EntityNotFoundException("Registro no encontrado con ID: " + volunteerOrganizationId));
     }
-
 
     public List<DataShareVolunteerOrganizationEntity> findAll() {
         return dataShareVolunteerOrganizationRepository.findAll();
@@ -45,6 +44,4 @@ public class DataShareVolunteerOrganizationService {
     public List<DataShareVolunteerOrganizationEntity> findAllByVolunteerOrganizationIdIn(List<Integer> ids) {
         return dataShareVolunteerOrganizationRepository.findAllByVolunteerOrganizationIdIn(ids);
     }
-
 }
-

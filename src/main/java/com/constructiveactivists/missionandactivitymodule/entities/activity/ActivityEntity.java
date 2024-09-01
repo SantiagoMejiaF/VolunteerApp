@@ -1,7 +1,6 @@
 package com.constructiveactivists.missionandactivitymodule.entities.activity;
 
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
-import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VisibilityEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -22,10 +21,9 @@ public class ActivityEntity {
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "MISSION_ID", nullable = false)
+    @Column(name = "MISION_ID", columnDefinition = "INTEGER", nullable = false)
     @Comment("Misión a la que pertenece esta actividad")
-    private MissionEntity mission;
+    private Integer missionId;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "LIDER_COMUNIDAD_ID", referencedColumnName = "ID")
@@ -34,6 +32,9 @@ public class ActivityEntity {
     @Column(name = "COORDINADOR_ACTIVIDAD_ID", columnDefinition = "INTEGER", nullable = false)
     @Comment("Identificador del coordinador de la actividad")
     private Integer activityCoordinator;
+
+    @Column(name = "GRUPO_VOLUNTARIO_ID", columnDefinition = "INTEGER", nullable = false)
+    private Integer volunteerGroup;
 
     @Column(name = "TITULO", length = 100, nullable = false)
     @Comment("Título de la actividad")
@@ -80,7 +81,7 @@ public class ActivityEntity {
     @Comment("Estado actual de la actividad")
     private ActivityStatusEnum activityStatus;
 
-    @Column(name="Visibilidad de la actividad", length = 8 , nullable = false)
+    @Column(name="VISIBILIDAD", length = 8 , nullable = false)
     @Enumerated(EnumType.STRING)
     @Comment("Visibilidad de la actividad")
     private VisibilityEnum visibility;

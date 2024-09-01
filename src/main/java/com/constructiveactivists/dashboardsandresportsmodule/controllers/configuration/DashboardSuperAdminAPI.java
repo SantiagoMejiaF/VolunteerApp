@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.Map;
 
 @Tag(name = "Módulo de Tableros de Control y Reportes", description = "Servicios relacionados con los tableros de control que tiene" +
-        " el administrador, el voluntario y la organización en la aplicación.")
+        "el administrador, los voluntarios y las organizaciones junto con sus reportes.")
 public interface DashboardSuperAdminAPI {
 
     @Operation(summary = "Obtener la frecuencia de localidades en las que se realizan actividades")

@@ -3,11 +3,13 @@ package com.constructiveactivists.organizationmodule.services.organization;
 import com.constructiveactivists.configurationmodule.constants.AppConstants;
 import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
-import com.constructiveactivists.volunteermodule.services.volunteerorganization.VolunteerOrganizationService;
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.services.UserService;
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
+import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
+import com.constructiveactivists.volunteermodule.services.volunteerorganization.DataShareVolunteerOrganizationService;
+import com.constructiveactivists.volunteermodule.services.volunteerorganization.VolunteerOrganizationService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,6 +28,7 @@ public class VolunteerApprovalService {
     private final OrganizationService organizationService;
     private final UserService userService;
     private final VolunteerOrganizationService volunteerOrganizationService;
+    private final DataShareVolunteerOrganizationService dataShareVolunteerOrganizationService;
 
     public void sendVolunteerApprovalResponse(Integer volunteerId, Integer organizationId, boolean approved) {
 
@@ -43,6 +46,14 @@ public class VolunteerApprovalService {
 
         if (approved) {
             sendApprovalEmail(volunteerEmail, organizationName, volunteerName);
+
+            VolunteerOrganizationEntity volunteerOrganization = new VolunteerOrganizationEntity();
+            volunteerOrganization.setVolunteerId(volunteerId);
+            volunteerOrganization.setOrganizationId(organizationId);
+            VolunteerOrganizationEntity savedVolunteerOrganization = volunteerOrganizationService.save(volunteerOrganization);
+
+            dataShareVolunteerOrganizationService.addDataShareVolunteerOrganization(savedVolunteerOrganization.getId());
+
         } else {
             sendRejectionEmail(volunteerEmail, organizationName, volunteerName);
         }
@@ -91,3 +102,4 @@ public class VolunteerApprovalService {
         }
     }
 }
+

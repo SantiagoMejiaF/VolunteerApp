@@ -1,6 +1,14 @@
 package com.constructiveactivists.volunteermodule.services.volunteer;
 
 import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
+import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
+import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VisibilityEnum;
+import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupEntity;
+import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
+import com.constructiveactivists.missionandactivitymodule.services.mission.MissionService;
+import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupMembershipService;
+import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupService;
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.entities.enums.RoleType;
 import com.constructiveactivists.usermodule.services.UserService;
@@ -8,7 +16,9 @@ import com.constructiveactivists.volunteermodule.entities.volunteer.PersonalInfo
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteeringInformationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.*;
+import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
+import com.constructiveactivists.volunteermodule.services.volunteerorganization.VolunteerOrganizationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +33,11 @@ public class VolunteerService {
 
     private final VolunteerRepository volunteerRepository;
     private final UserService userService;
+    private final VolunteerGroupService volunteerGroupService;
+    private final VolunteerGroupMembershipService volunteerGroupMembershipService;
+    private final VolunteerOrganizationService volunteerOrganizationService;
+    private final MissionService missionService;
+    private final ActivityService activityService;
 
     private static final int MINIMUM_AGE = 16;
     private static final int MAXIMUM_AGE = 140;
@@ -51,22 +66,6 @@ public class VolunteerService {
         userService.updateUserRoleType(volunteerEntity.getUserId(), RoleType.VOLUNTARIO);
         volunteerEntity.getVolunteeringInformation().setVolunteerType(VolunteerType.valueOf("VOLUNTARIO"));
         return volunteerRepository.save(volunteerEntity);
-    }
-
-    private void validateUserExists(Integer userId) {
-        Optional<UserEntity> user = userService.getUserById(userId);
-        if (user.isEmpty()) {
-            throw new EntityNotFoundException("El usuario con ID " + userId + " no existe en la bd");
-        }
-    }
-
-    private void validateAge(LocalDate birthDate) {
-        int age = calculateAge(birthDate);
-        if (age < MINIMUM_AGE) {
-            throw new BusinessException("El voluntario debe tener al menos " + MINIMUM_AGE + " años.");
-        } else if (age > MAXIMUM_AGE) {
-            throw new BusinessException("La edad del voluntario no puede exceder los " + MAXIMUM_AGE + " años.");
-        }
     }
 
     public int calculateAge(LocalDate birthDate) {
@@ -131,5 +130,61 @@ public class VolunteerService {
 
         volunteer.getVolunteeringInformation().setVolunteerType(VolunteerType.LIDER);
         return volunteerRepository.save(volunteer);
+    }
+
+    public void signUpForActivity(Integer activityId, Integer volunteerId) {
+
+        VolunteerGroupEntity volunteerGroup = volunteerGroupService.getVolunteerGroupByActivityId(activityId)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró un grupo de voluntarios para la actividad con ID: " + activityId));
+
+        if (volunteerGroup.getCurrentVolunteers() >= volunteerGroup.getNumberOfVolunteersRequired()) {
+            throw new BusinessException("El grupo de voluntarios ya ha alcanzado la cantidad máxima de voluntarios requeridos.");
+        }
+
+        ActivityEntity activity = activityService.getById(activityId)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la actividad con ID: " + activityId));
+
+        if (activity.getVisibility() == VisibilityEnum.PRIVADA) {
+
+            MissionEntity mission = missionService.getMissionById(activity.getMissionId())
+                    .orElseThrow(() -> new EntityNotFoundException("No se encontró la misión con ID: " + activity.getMissionId()));
+
+            Integer missionOrganizationId = mission.getOrganizationId();
+
+            List<VolunteerOrganizationEntity> volunteerOrganizations = volunteerOrganizationService.getOrganizationsByVolunteerId(volunteerId);
+
+            boolean isVolunteerInOrganization = volunteerOrganizations.stream()
+                    .anyMatch(org -> org.getOrganizationId().equals(missionOrganizationId));
+
+            if (!isVolunteerInOrganization) {
+                throw new BusinessException("El voluntario no pertenece a la organización requerida para inscribirse en esta actividad privada.");
+            }
+        }
+
+        boolean alreadyMember = volunteerGroupMembershipService.isVolunteerInGroup(volunteerGroup.getId(), volunteerId);
+        if (alreadyMember) {
+            throw new BusinessException("El voluntario ya está registrado en el grupo.");
+        }
+
+        volunteerGroupMembershipService.addVolunteerToGroup(volunteerGroup.getId(), volunteerId);
+
+        volunteerGroup.setCurrentVolunteers(volunteerGroup.getCurrentVolunteers() + 1);
+        volunteerGroupService.save(volunteerGroup);
+    }
+
+    private void validateUserExists(Integer userId) {
+        Optional<UserEntity> user = userService.getUserById(userId);
+        if (user.isEmpty()) {
+            throw new EntityNotFoundException("El usuario con ID " + userId + " no existe en la bd");
+        }
+    }
+
+    private void validateAge(LocalDate birthDate) {
+        int age = calculateAge(birthDate);
+        if (age < MINIMUM_AGE) {
+            throw new BusinessException("El voluntario debe tener al menos " + MINIMUM_AGE + " años.");
+        } else if (age > MAXIMUM_AGE) {
+            throw new BusinessException("La edad del voluntario no puede exceder los " + MAXIMUM_AGE + " años.");
+        }
     }
 }

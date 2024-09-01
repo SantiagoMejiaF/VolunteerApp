@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Comment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,7 +23,7 @@ public class VolunteerGroupEntity {
     @Comment("Organización que creó el grupo de voluntarios")
     private Integer organizationId;
 
-    @Column(name = "ACTIVIDAD_ID", columnDefinition = "INTEGER", nullable = false)
+    @Column(name = "ACTIVIDAD_ID", columnDefinition = "INTEGER")
     @Comment("Actividad a la que está asignado el grupo de voluntarios")
     private Integer activity;
 
@@ -30,14 +31,15 @@ public class VolunteerGroupEntity {
     @Comment("Nombre del grupo de voluntarios")
     private String name;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<VolunteerGroupMembershipEntity> memberships;
-
-    @Column(name = "NUMERO_VOLUNTARIOS_REQUERIDOS", columnDefinition = "INTEGER", nullable = false)
+    @Column(name = "CANTIDAD_VOLUNTARIOS_REQUERIDOS", columnDefinition = "INTEGER", nullable = false)
     @Comment("Número de voluntarios requeridos para el grupo")
     private Integer numberOfVolunteersRequired;
 
-    @Column(name = "OBSERVACIONES", length = 1000)
-    @Comment("Observaciones adicionales sobre el grupo de voluntarios")
-    private String observations;
+    @Column(name= "CANTIDAD_DE_VOLUNTARIOS_ACTUAL", columnDefinition = "INTEGER", nullable = false)
+    @Comment("Cantidad de voluntarios actualmente en el grupo")
+    private Integer currentVolunteers;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "GRUPO_ID")
+    private List<VolunteerGroupMembershipEntity> memberships = new ArrayList<>();
 }
