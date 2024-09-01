@@ -2,7 +2,7 @@ package com.constructiveactivists.resportsanddashboardsmodule.controllers;
 
 import com.constructiveactivists.resportsanddashboardsmodule.controllers.configuration.DashboardOrganizationAPI;
 import com.constructiveactivists.resportsanddashboardsmodule.services.DashboardOrganizationService;
-import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerOrganizationEntity;
+import com.constructiveactivists.postulationmanagementmodule.entities.VolunteerOrganizationEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;

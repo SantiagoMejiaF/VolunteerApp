@@ -1,0 +1,19 @@
+package com.constructiveactivists.missionandactivitymanagementmodule.entities.activitycoordinator;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+@Getter
+@Setter
+public class CoordinatorAvailabilityModel {
+
+
+    private Integer organizationId;
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
+
+}

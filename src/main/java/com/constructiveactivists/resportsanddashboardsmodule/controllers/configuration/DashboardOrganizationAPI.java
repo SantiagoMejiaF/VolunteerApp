@@ -1,6 +1,6 @@
 package com.constructiveactivists.resportsanddashboardsmodule.controllers.configuration;
 
-import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerOrganizationEntity;
+import com.constructiveactivists.postulationmanagementmodule.entities.VolunteerOrganizationEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

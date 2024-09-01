@@ -3,6 +3,8 @@ package com.constructiveactivists.organizationmanagementmodule.services;
 import com.constructiveactivists.authenticationmodule.controllers.configuration.constants.AppConstants;
 import com.constructiveactivists.authenticationmodule.controllers.configuration.exceptions.BusinessException;
 import com.constructiveactivists.organizationmanagementmodule.entities.OrganizationEntity;
+import com.constructiveactivists.postulationmanagementmodule.entities.VolunteerOrganizationEntity;
+import com.constructiveactivists.postulationmanagementmodule.services.VolunteerOrganizationService;
 import com.constructiveactivists.usermanagementmodule.entities.UserEntity;
 import com.constructiveactivists.usermanagementmodule.services.UserService;
 import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerEntity;
@@ -24,6 +26,7 @@ public class VolunteerApprovalService {
     private final VolunteerRepository volunteerRepository;
     private final OrganizationService organizationService;
     private final UserService userService;
+    private final VolunteerOrganizationService volunteerOrganizationService;
 
     public void sendVolunteerApprovalResponse(Integer volunteerId, Integer organizationId, boolean approved) {
 
@@ -40,7 +43,8 @@ public class VolunteerApprovalService {
         String organizationName = organization.getOrganizationName();
 
         if (approved) {
-            organizationService.approveVolunteer(volunteerId, organizationId);
+            VolunteerOrganizationEntity volunteerOrganizationEntity=volunteerOrganizationService.findByVolunteerIdAndOrganizationId(volunteerId, organizationId);
+            organizationService.approveVolunteer(volunteerOrganizationEntity.getId());
             sendApprovalEmail(volunteerEmail, organizationName, volunteerName);
         } else {
             sendRejectionEmail(volunteerEmail, organizationName, volunteerName);

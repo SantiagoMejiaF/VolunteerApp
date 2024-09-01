@@ -1,7 +1,6 @@
-package com.constructiveactivists.volunteermanagementmodule.repositories;
+package com.constructiveactivists.postulationmanagementmodule.repositories;
 
-import com.constructiveactivists.volunteermanagementmodule.entities.VolunteerOrganizationEntity;
-import com.constructiveactivists.volunteermanagementmodule.entities.enums.OrganizationStatusEnum;
+import com.constructiveactivists.postulationmanagementmodule.entities.VolunteerOrganizationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,14 +9,9 @@ import java.util.Optional;
 
 @Repository
 public interface VolunteerOrganizationRepository extends JpaRepository<VolunteerOrganizationEntity, Integer> {
-
     List<VolunteerOrganizationEntity> findByVolunteerId(Integer volunteerId);
-
     List<VolunteerOrganizationEntity> findByOrganizationId(Integer organizationId);
-
     boolean existsByVolunteerIdAndOrganizationId(Integer volunteerId, Integer organizationId);
-
-    List<VolunteerOrganizationEntity> findByStatus(OrganizationStatusEnum status);
     List<VolunteerOrganizationEntity> findAll();
     Optional<VolunteerOrganizationEntity> findByVolunteerIdAndOrganizationId(Integer volunteerId, Integer organizationId);
 }

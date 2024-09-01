@@ -29,7 +29,7 @@ public class ActivityRequest {
 
     @NotNull
     @Schema(description = "Informacion del coordinador de actividad")
-    private ActivityCoordinatorRequest activityCoordinator;
+    private Integer activityCoordinator;
 
     @NotBlank
     @Schema(description = "Título de la actividad", example = "Plantación de árboles")
