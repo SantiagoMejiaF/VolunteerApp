@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../model/services/admin.service';
-import { OauthService } from '../../authenticationModule/model/services/oauth.service';
 import { VolunteerService } from '../../Volunteer/model/services/volunteer.service';
 import { OrganizationService } from '../../Organization/model/services/organization.service';
 
@@ -15,7 +14,6 @@ export class GestionUsuariosComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private oauthService: OauthService,
     private volunteerService: VolunteerService,
     private organizationService: OrganizationService
   ) { }
@@ -25,7 +23,6 @@ export class GestionUsuariosComponent implements OnInit {
     this.adminService.getPendingUsers().subscribe((users) => {
       this.data = users;
       console.log('Usuarios pendientes obtenidos:', this.data);
-      this.data = users;
       this.populateUserRoles();
       this.initializeDataTable();
     });
@@ -34,30 +31,28 @@ export class GestionUsuariosComponent implements OnInit {
   // Obtener los roles de los usuarios y cargar detalles adicionales
   populateUserRoles(): void {
     this.data.forEach((user) => {
-      this.oauthService.getUserRole(user.roleId).subscribe((role) => {
-        user.rol = role.roleType;
+      user.rol = user.role.roleType; // Utilizar directamente el rol desde el objeto usuario
 
-        if (user.rol === 'VOLUNTARIO') {
-          this.volunteerService.getVolunteerDetails(user.id).subscribe((volunteerDetails) => {
-            user.personalInformation = volunteerDetails.personalInformation;
-            user.emergencyInformation = volunteerDetails.emergencyInformation;
-            user.volunteeringInformation = volunteerDetails.volunteeringInformation;
-            user.Cedula = volunteerDetails.personalInformation.identificationCard;
-          });
-        } else if (user.rol === 'ORGANIZACION') {
-          this.organizationService.getOrganizationDetails(user.id).subscribe((organizationDetails) => {
-            user.responsiblePersonId = organizationDetails.responsiblePersonId;
-            user.responsiblePersonPhoneNumber = organizationDetails.responsiblePersonPhoneNumber;
-            user.organizationName = organizationDetails.organizationName;
-            user.organizationTypeEnum = organizationDetails.organizationTypeEnum;
-            user.sectorTypeEnum = organizationDetails.sectorTypeEnum;
-            user.volunteeringTypeEnum = organizationDetails.volunteeringTypeEnum;
-            user.address = organizationDetails.address;
-            user.nit = organizationDetails.nit;
-            user.Cedula = organizationDetails.responsiblePersonId;
-          });
-        }
-      });
+      if (user.rol === 'VOLUNTARIO') {
+        this.volunteerService.getVolunteerDetails(user.id).subscribe((volunteerDetails) => {
+          user.personalInformation = volunteerDetails.personalInformation;
+          user.emergencyInformation = volunteerDetails.emergencyInformation;
+          user.volunteeringInformation = volunteerDetails.volunteeringInformation;
+          user.Cedula = volunteerDetails.personalInformation.identificationCard;
+        });
+      } else if (user.rol === 'ORGANIZACION') {
+        this.organizationService.getOrganizationDetails(user.id).subscribe((organizationDetails) => {
+          user.responsiblePersonId = organizationDetails.responsiblePersonId;
+          user.responsiblePersonPhoneNumber = organizationDetails.responsiblePersonPhoneNumber;
+          user.organizationName = organizationDetails.organizationName;
+          user.organizationTypeEnum = organizationDetails.organizationTypeEnum;
+          user.sectorTypeEnum = organizationDetails.sectorTypeEnum;
+          user.volunteeringTypeEnum = organizationDetails.volunteeringTypeEnum;
+          user.address = organizationDetails.address;
+          user.nit = organizationDetails.nit;
+          user.Cedula = organizationDetails.responsiblePersonId;
+        });
+      }
     });
   }
 
@@ -87,7 +82,6 @@ export class GestionUsuariosComponent implements OnInit {
     console.log('Usuario seleccionado:', this.selectedUser);
   }
 
-
   acceptUser(): void {
     if (this.selectedUser && this.selectedUser.id) {
       this.adminService.sendApprovalEmail(this.selectedUser.id, true).subscribe(
@@ -104,7 +98,6 @@ export class GestionUsuariosComponent implements OnInit {
     }
   }
 
-
   rejectUser(): void {
     if (this.selectedUser && this.selectedUser.id) {
       this.adminService.sendApprovalEmail(this.selectedUser.id, false).subscribe(
@@ -120,9 +113,6 @@ export class GestionUsuariosComponent implements OnInit {
       console.error('No se ha seleccionado un usuario válido.');
     }
   }
-
-
-
 
   removeUserFromList(userId: number): void {
     this.data = this.data.filter(user => user.id !== userId);

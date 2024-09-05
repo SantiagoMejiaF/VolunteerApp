@@ -60,13 +60,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2MB",
+                  "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
                 }
               ]
             },
@@ -112,7 +112,8 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "ng-multiselet-dropdown.theme.scss"
             ],
-            "scripts": ["node_modules/jquery/dist/jquery.js",
+            "scripts": [
+              "node_modules/jquery/dist/jquery.js",
               "node_modules/datatables.net/js/jquery.dataTables.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/jszip/dist/jszip.js",

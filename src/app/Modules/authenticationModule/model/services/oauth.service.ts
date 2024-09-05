@@ -26,7 +26,4 @@ export class OauthService {
     return this.httpClient.post<any>(`${environment.apiUrl}/authentications/apple`, tokenDto, cabecera);
   }
 
-  public getUserRole(roleId: number): Observable<any> {
-    return this.httpClient.get<any>(`${this.oauthUrl}/roles/${roleId}`);
-  }
 }
