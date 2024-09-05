@@ -1,220 +1,196 @@
 <div class="container">
-    <!--ROW 0-->
-    <div class="row ">
-        <div class="col text-center">
-            <div class="tittle">
-                <h1>TABLERO DE CONTROL</h1>
-            </div>
-        </div>
-    </div>
-    <!--ROW 1-->
-    <div class="row mb-4" id="header">
-        <div class="col">
-            <div class="cards">
+    <div class="row  h-100">
+        <div class="col-12 col-lg-8  h-100  " id="Grande1">
+            <div class="container pl-0">
+                <!-- Contenido del primer div -->
                 <div class="row">
-                    <div class="col" id="texto">
-                        <h2>¡Bienvenido!</h2>
-                        <p>Este es tu espacio para gestionar tus actividades y logros. Aquí podrás ver un resumen de tus
-                            horas dedicadas, los logros alcanzados y las próximas actividades. ¡Gracias por ser parte de
-                            nuestra comunidad!</p>
+                    <div class="col tittle1">
+                        <div class="row">
+                            <div class="col" id="texto">
+                                <h2>¡Hola!</h2>
+                                <p>Este es tu espacio para gestionar tus actividades y logros. Aquí podrás ver un resumen de tus horas dedicadas, los logros alcanzados y las actividades programadas ¡Gracias por ser parte
+                                    de
+                                    nuestra comunidad!</p>
+                            </div>
+                            <div class="col" id="imagen-col">
+                                <img src="assets/img/manLaptop.png" alt="">
+                            </div>
+                        </div>
                     </div>
-                    <div class="col" id="imagen-col">
-                        <img src="assets/img/manLaptop.png" alt="">
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-4 h-100 mb-4" id="Users">
+                        <div class="card-container">
+                            <i class="bi bi-people-fill" style="font-size: 2rem; color: #ffffff;"></i>
+                            <h3 class="mt-4">1000</h3>
+                            <p>Actividades Completadas</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 h-100 mb-4" id="Volunteer">
+                        <div class="card-container">
+                            <i class="bi bi-person-heart" style="font-size: 2rem; color: #ffffff;"></i>
+                            <h3 class="mt-4">1000</h3>
+                            <p>Logros <br> Obtenidos</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 h-100 mb-4" id="Organization">
+                        <div class="card-container">
+                            <i class="bi bi-building-fill-check" style="font-size: 2rem; color: #ffffff;"></i>
+                            <h3 class="mt-4">1000</h3>
+                            <p>Beneficiarios <br> impactados</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col tittle" id="table-container">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <h2>Actividades x Mes</h2>
+                            </div>
+                            <div class="col-2" id="drop">
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        Selecciona el año
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">2024</a></li>
+                                        <li><a class="dropdown-item" href="#">2025</a></li>
+                                        <li><a class="dropdown-item" href="#">2026</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <div id="chart">
+                                    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                                        [xaxis]="chartOptions.xaxis" [stroke]="chartOptions.stroke"
+                                        [dataLabels]="chartOptions.dataLabels"></apx-chart>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
-        <div class="col-12 col-lg-2 h-100" id="Users">
-            <div class="card-container">
-                <i class="bi bi-people-fill" style="font-size: 2rem; color: #ffffff;"></i>
-                <h3 class="mt-4">1000</h3>
-                <p>Actividades Completadas</p>
-            </div>
-        </div>
-        <div class="col-12 col-lg-2 h-100" id="Volunteer">
-            <div class="card-container">
-                <i class="bi bi-person-heart" style="font-size: 2rem; color: #ffffff;"></i>
-                <h3 class="mt-4">1000</h3>
-                <p>Logros <br> Obtenidos</p>
-            </div>
-        </div>
-        <div class="col-12 col-lg-2 h-100" id="Organization">
-            <div class="card-container">
-                <i class="bi bi-building-fill-check" style="font-size: 2rem; color: #ffffff;"></i>
-                <h3 class="mt-4">1000</h3>
-                <p>Número de estrellas obtenidas</p>
-            </div>
-        </div>
-    </div>
-    <!--ROW 2-->
-    <div class="row mb-4">
-        <div class="col h-100">
-            <div class="table-container">
-                <div class="row align-items-center">
-                    <div class="col-3 mt-4 ml-5 ">
-                        <h2>Actividades x Mes</h2>
+
+        <!-- Segundo div -->
+        <div class="col-12 col-lg-4  h-100 " id="Grande2">
+
+            <h2 class="mb-4">Actividades programadas</h2>
+            <div class="card1 flex-grow-1" id="card">
+                <!-- Contenido del segundo div -->
+                <div class="card-header text-center">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <button class="btn custom-btn" (click)="prevMonth()">&lt;</button>
+                        <span class="mes">{{ months[currentMonth] }}, {{ currentYear }}</span>
+                        <button class="btn custom-btn" (click)="nextMonth()">&gt;</button>
                     </div>
-                    <div class="col-3 mt-4 ml-4" id="drop">
-                        <div class="dropdown">
-                            <button class="btn  dropdown-toggle border" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Selecciona el año
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">2024</a></li>
-                                <li><a class="dropdown-item" href="#">2025</a></li>
-                                <li><a class="dropdown-item" href="#">2026</a></li>
-                            </ul>
+                </div>
+
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col" id="dia">Do</div>
+                        <div class="col" id="dia">Lu</div>
+                        <div class="col" id="dia">Ma</div>
+                        <div class="col" id="dia">Mi</div>
+                        <div class="col" id="dia">Ju</div>
+                        <div class="col" id="dia">Vi</div>
+                        <div class="col" id="dia">Sa</div>
+                    </div>
+
+                    <div class="row text-center" *ngFor="let week of calendarDays">
+                        <div *ngFor="let day of week" class="col" [class.bg-primary]="isToday(day)"
+                            (click)="selectDay(day)">
+                            <span [class.text-muted]="!day" id="dia">{{ day?.getDate() }}</span>
+                            <span *ngIf="hasActivities(day)" class="activity-dot"></span>
                         </div>
                     </div>
 
-                </div>
-                <div class="row align-items-center">
-                    <div class="col ml-4">
-                        <div id="chart">
-                            <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
-                                [xaxis]="chartOptions.xaxis" [stroke]="chartOptions.stroke"
-                                [dataLabels]="chartOptions.dataLabels"></apx-chart>
-                        </div>
+                    <div class="mt-3">
+                        <p id="texti">Actividades para {{ selectedDate | date:'EEEE, dd MMMM yyyy' }}</p>
+                        <ul class="list-group">
+                            @for (activity of filteredActivities(); track activity.id) {
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div style="display: flex; align-items: center;">
+                                    <div>
+                                        <strong class="text-dark" style="font-size: 16px;">{{ activity.time }}</strong>
+                                    </div>
+                                    <div
+                                        style="width: 2px; border-radius:20px; height: 50px; margin: 0 10px; background: linear-gradient(to bottom, rgb(4, 4, 84), rgba(0, 0, 255, 0));">
+                                    </div>
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold" style="font-size: 16px;">{{ activity.name }}</div>
+                                        <small style="font-size: 16px;">{{ activity.responsible }}</small>
+                                    </div>
+                                </div>
+                            </li>
+                            } @empty {
+                            <li class="list-group-item" style="font-size: 16px;">
+                                <div style="display: flex; align-items: center;">
+                                    <div>
+                                        <i class="bi bi-emoji-frown" style="font-size: 1.5rem;"></i>
+                                    </div>
+                                    <div
+                                        style="width: 2px; border-radius:20px; height: 50px; margin: 0 10px; background: linear-gradient(to bottom, rgb(4, 4, 84), rgba(0, 0, 255, 0));">
+                                    </div>
+                                    <div class="ms-2 me-auto">
+                                        No hay actividades programadas.
+                                    </div>
+                                </div>
+                            </li>
+                            }
+                        </ul>
                     </div>
-                    <div class="col-4 ml-5" id="img2">
-                        <img src="assets/img/corazon.png" alt="">
-                    </div>
-
-
                 </div>
-
-
             </div>
+
+
         </div>
     </div>
 
-
-
-
-    <!--TOP ACTIVITIES-->
+   
     <div class="row">
-        <div class="col text-center">
-            <div class="tittle">
-                <h2>TOP 3 ACTIVIDADES QUE SE ADAPTAN A TI</h2>
+        <div class="col tittle" id="recentCustomers">
+            <div class="cardHeader mb-2 d-flex justify-content-between align-items-center">
+                <h2>Fundaciones a las que estoy inscrito</h2>
+                <button type="button" id="buttonStyle" class="btn btn-outline-warning">Ver todos</button>
             </div>
+            <div class="table-responsive">
+                <table class="table table-sm" id="datatableexample">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Imagen</th>
+                            <th>Nombre fundación</th>
+                            <th>Email</th>
+                            <th>Celular</th>
+                            <th>Dirección</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of data; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td width="60px">
+                                <div class="imgBx">
+                                    <img [src]="user.image || 'assets/img/user2.png'" alt="Perfil"
+                                        (error)="user.image='assets/img/user3.png'"
+                                        style="width:50px; height:50px; border-radius:50%;">
+                                </div>
+                            </td>
+                            <td>
+                                <h4>{{user.firstName}} {{user.lastName}} <br> <span>Voluntario</span></h4>
+                            </td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.cedula }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
-    <div class="row align-items-center justify-content-center" id="header">
-        <div class="col-12 col-lg-4 h-100 d-flex justify-content-center align-items-center mb-3">
-            <div class="card" style="width: 22rem; border-radius: 10px;">
-                <img src="assets/img/card.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Actividad uno</h5>
-                    <p class="card-text">Descripción actividad: Some quick example text to build on the card title and
-                        make up the bulk of the card's content.</p>
-                    <a href="#" class="btn edit">Conoce más</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-lg-4 h-100 d-flex justify-content-center align-items-center mb-3">
-            <div class="card" style="width: 22rem; border-radius: 10px;">
-                <img src="assets/img/card.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Actividad dos</h5>
-                    <p class="card-text">Descripción actividad: Some quick example text to build on the card title and
-                        make up the bulk of the card's content.</p>
-                    <a href="#" class="btn edit">Conoce más</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-lg-4 h-100 d-flex justify-content-center align-items-center mb-3">
-            <div class="card" style="width: 22rem; border-radius: 10px;">
-                <img src="assets/img/card.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Actividad tres</h5>
-                    <p class="card-text">Descripción actividad: Some quick example text to build on the card title and
-                        make up the bulk of the card's content.</p>
-                    <a href="#" class="btn edit">Conoce más</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--RECENT ACTIVITY-->
-    <div class="row mb-4" id="header">
-        <div class="col">
-            <div class="cards">
-                <div class="row">
-
-                    <div class="col-3 ml-2" id="imagen-col">
-                        <img src="assets/img/office.png" alt="">
-                    </div>
-                    <div class="col" id="texto">
-                        <h2>¡DESCUBRE TU PRÓXIMA ACTIVIDAD!</h2>
-                        <p>15/09/2024</p>
-                        <p>DESCRIPCIÓN: Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere tempora autem
-                            voluptas odio aut praesentium reprehenderit ducimus quas pariatur quos dolores consequuntur,
-                            inventore, aperiam veniam nemo libero perferendis voluptate! Recusandae.</p>
-                        <a href="#" class="btn butt">Ver más</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!--REEVIEWS-->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="review-box">
-                <div id="slide">
-                    <div class="card1 active">
-                        <h2 id="row5">LO QUE DICEN SOBRE MÍ</h2>
-                        <div class="profile">
-
-                            <img src="assets/img/user2.png" alt="">
-                            <div>
-                                <h3>Ryle</h3>
-                                <h4>Fundación Manitas</h4>
-                            </div>
-                        </div>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores amet
-                            eum labore placeat harum, culpa ipsum praesentium similique quidem,
-                            minima aspernatur architecto facilis modi fugiat aliquam iusto officia
-                            quasi adipisci?</p>
-                    </div>
-                    <div class="card1">
-                        <div class="profile">
-                            <img src="assets/img/user2.png" alt="">
-                            <div>
-                                <h3>Sara</h3>
-                                <h4>Fundación Manitas</h4>
-                            </div>
-                        </div>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores amet
-                            eum labore placeat harum, culpa ipsum praesentium similique quidem,
-                            minima aspernatur architecto facilis modi fugiat aliquam iusto officia
-                            quasi adipisci?</p>
-                    </div>
-                    <div class="card1">
-                        <div class="profile">
-                            <img src="assets/img/user3.png" alt="">
-                            <div>
-                                <h3>Ryle</h3>
-                                <h4>Fundación Manitas</h4>
-                            </div>
-                        </div>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores amet
-                            eum labore placeat harum, culpa ipsum praesentium similique quidem,
-                            minima aspernatur architecto facilis modi fugiat aliquam iusto officia
-                            quasi adipisci?</p>
-                    </div>
-                </div>
-                <div class="sidebar">
-                    <i id="upArrow" class="bi bi-caret-up"></i>
-                    <i id="downArrow" class="bi bi-caret-down"></i>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
 </div>

@@ -43,6 +43,7 @@ export type ChartOptions3 = {
   plotOptions: ApexPlotOptions;
   responsive: ApexResponsive[] | ApexResponsive[];
 };
+
 @Component({
   selector: 'app-dashboard-organization',
   templateUrl: '../view/dashboard-organization.component.html',
@@ -60,6 +61,11 @@ export class DashboardOrganizationComponent implements AfterViewInit {
   private y = 0;
 
   constructor() {
+    const today = new Date();
+    this.currentYear = today.getFullYear();
+    this.currentMonth = today.getMonth();
+    this.selectedDate = today;
+    this.generateCalendar();
     this.chartOptions = {
       series: [
         {
@@ -284,7 +290,83 @@ export class DashboardOrganizationComponent implements AfterViewInit {
     }
 }
 
+currentYear: number;
+currentMonth: number;
+selectedDate: Date;
+months: string[] = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+calendarDays: any[] = [];  // Array para almacenar las fechas del mes
 
+activities = [
+  { id: 1, time: '09:30', name: 'Actividad de perritos', responsible: 'Henry Madariaga', date: new Date(2024, 6, 6) },
+  { id: 2, time: '12:00', name: 'Enseñanza', responsible: 'Daniela Torres', date: new Date(2024, 6, 6) },
+  { id: 3, time: '01:30', name: 'Actividad...', responsible: 'Nombre Responsable', date: new Date(2024, 6, 6) }
+];
 
+// Método para generar las fechas del mes
+generateCalendar() {
+  this.calendarDays = [];
+  const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
+  const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+
+  let day = 1;
+  for (let i = 0; i < 6; i++) {
+    const week = [];
+    for (let j = 0; j < 7; j++) {
+      if (i === 0 && j < firstDay) {
+        week.push(null);
+      } else if (day > daysInMonth) {
+        week.push(null);
+      } else {
+        week.push(new Date(this.currentYear, this.currentMonth, day));
+        day++;
+      }
+    }
+    this.calendarDays.push(week);
+  }
 }
 
+// Método para verificar si hay actividades en un día específico
+hasActivities(day: Date): boolean {
+  return this.activities.some(activity => 
+    activity.date.toDateString() === day?.toDateString()
+  );
+}
+
+// Otros métodos de navegación y selección de días
+prevMonth() {
+  if (this.currentMonth === 0) {
+    this.currentMonth = 11;
+    this.currentYear--;
+  } else {
+    this.currentMonth--;
+  }
+  this.generateCalendar();
+}
+
+nextMonth() {
+  if (this.currentMonth === 11) {
+    this.currentMonth = 0;
+    this.currentYear++;
+  } else {
+    this.currentMonth++;
+  }
+  this.generateCalendar();
+}
+
+selectDay(day: Date) {
+  if (day) {
+    this.selectedDate = day;
+  }
+}
+
+isToday(day: Date) {
+  const today = new Date();
+  return day && day.getDate() === today.getDate() && day.getMonth() === today.getMonth() && day.getFullYear() === today.getFullYear();
+}
+
+filteredActivities() {
+  return this.activities.filter(activity => {
+    return activity.date.toDateString() === this.selectedDate.toDateString();
+  });
+}
+}

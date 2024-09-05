@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
@@ -32,6 +32,11 @@ import { DashboardVolunteerComponent } from './Modules/Volunteer/viewModel/dashb
 import { DashboardOrganizationComponent } from './Modules/Organization/viewModel/dashboard-organization.component';
 import { PerfilComponent } from './Modules/Volunteer/viewModel/perfil.component';
 import { PerfilOComponent } from './Modules/Organization/viewModel/perfil-o.component';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es'; // IMPORTA EL LOCALE ESPAÑOL
+
+
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   declarations: [
@@ -53,7 +58,7 @@ import { PerfilOComponent } from './Modules/Organization/viewModel/perfil-o.comp
     DashboardVolunteerComponent,
     DashboardOrganizationComponent,
     PerfilComponent,
-    PerfilOComponent
+    PerfilOComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +74,7 @@ import { PerfilOComponent } from './Modules/Organization/viewModel/perfil-o.comp
   providers: [
     TokenService,
     OauthService,
+    { provide: LOCALE_ID, useValue: 'es' } ,
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

@@ -48,8 +48,8 @@ const routes: Routes = [
         path: 'perfilO',
         component: PerfilOComponent,
       },
-      // Ruta hija
-      // Puedes añadir más rutas hijas que requieran Navbar aquí
+      
+      
     ],
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },
