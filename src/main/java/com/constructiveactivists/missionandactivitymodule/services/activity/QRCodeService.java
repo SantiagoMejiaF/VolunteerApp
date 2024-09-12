@@ -29,14 +29,13 @@ public class QRCodeService {
         }
     }
 
-
     public byte[] generateCheckInQrCode(Integer activityId) {
-        String data = BASE_URL + "/attendaces/google/checkin?access_token=<access_token>&activityId=" + activityId;
+        String data = BASE_URL + "/attendances/google/auth/checkin?activityId=" + activityId;
         return generateQrCode(data);
     }
 
     public byte[] generateCheckOutQrCode(Integer activityId) {
-        String data = BASE_URL + "/attendaces/google/checkout?access_token=<access_token>&activityId=" + activityId;
+        String data = BASE_URL + "/attendances/google/auth/checkout?activityId=" + activityId;
         return generateQrCode(data);
     }
 
