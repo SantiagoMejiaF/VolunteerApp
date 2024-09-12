@@ -117,6 +117,11 @@ public class AttendanceService {
         LocalTime checkInStart = startTime.minusMinutes(CHECK_IN_WINDOW_BEFORE);
         LocalTime checkInEnd = startTime.plusMinutes(CHECK_IN_WINDOW_AFTER);
 
+        System.out.println("Check-in start: " + checkInStart);
+        System.out.println("Check-in end: " + checkInEnd);
+        System.out.println("Current time: " + currentTime);
+        System.out.println("Activity start time: " + startTime);
+
         if (currentTime.isBefore(checkInStart) || currentTime.isAfter(checkInEnd)) {
             throw new AttendanceException("Check-in time not within allowed range.");
         }
