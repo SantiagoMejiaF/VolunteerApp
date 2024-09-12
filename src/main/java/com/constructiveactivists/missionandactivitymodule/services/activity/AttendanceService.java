@@ -66,10 +66,14 @@ public class AttendanceService {
         ActivityEntity activityEntity = activityService.getById(activityId)
                 .orElseThrow(() -> new AttendanceException(ACTIVITY_NOT_FOUND));
 
+        ZoneId colombiaZoneId = ZoneId.of("America/Bogota");
+        ZonedDateTime nowInColombia = ZonedDateTime.now(colombiaZoneId);
+        LocalTime checkInTime = nowInColombia.toLocalTime();
+
         AttendanceEntity attendance = new AttendanceEntity();
         attendance.setActivity(activityEntity);
         attendance.setVolunteerId(volunteerEntity.getId());
-        attendance.setCheckInTime(LocalTime.now());
+        attendance.setCheckInTime(checkInTime);
 
         attendanceRepository.save(attendance);
     }
@@ -84,8 +88,15 @@ public class AttendanceService {
         AttendanceEntity attendance = attendanceRepository.findByActivityIdAndVolunteerId(activityId, volunteerEntity.getId())
                 .orElseThrow(() -> new AttendanceException("Attendance record not found"));
 
+        // Validar el tiempo de check-out
         checkOutTimeValidity(activityId);
-        attendance.setCheckOutTime(LocalTime.now());
+
+        // Obtener la hora actual en la zona horaria de Bogotá, Colombia
+        ZoneId colombiaZoneId = ZoneId.of("America/Bogota");
+        ZonedDateTime nowInColombia = ZonedDateTime.now(colombiaZoneId);
+        LocalTime checkOutTime = nowInColombia.toLocalTime();
+
+        attendance.setCheckOutTime(checkOutTime);
 
         attendanceRepository.save(attendance);
     }
