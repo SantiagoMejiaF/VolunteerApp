@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -23,6 +24,7 @@ public class GoogleService {
     private static final String GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
     private static final String REDIRECT_URI_CHECKOUT = "https://volunteer-app.online/api/v1/back-volunteer-app/attendances/google/checkout";
     private static final String REDIRECT_URI_CHECKIN  = "https://volunteer-app.online/api/v1/back-volunteer-app/attendances/google/checkin";
+    private static final String TOKEN_URL = "https://oauth2.googleapis.com/token";
 
     public GoogleService(NetHttpTransport transport, JacksonFactory jacksonFactory, ObjectMapper objectMapper) {
         this.transport = transport;
@@ -41,7 +43,7 @@ public class GoogleService {
         String googleAuthUrl = GOOGLE_AUTH_URL +
                 "?client_id=" + "142245667829-afpupoofnh363onmduragfrhduii4jj5.apps.googleusercontent.com" +
                 "&redirect_uri=" + REDIRECT_URI_CHECKIN +
-                "&response_type=token" +
+                "&response_type=code" +
                 "&scope=email profile" +
                 "&state=" + activityId;
         response.sendRedirect(googleAuthUrl);
@@ -51,12 +53,31 @@ public class GoogleService {
         String googleAuthUrl = GOOGLE_AUTH_URL +
                 "?client_id=" + "142245667829-afpupoofnh363onmduragfrhduii4jj5.apps.googleusercontent.com" +
                 "&redirect_uri=" + REDIRECT_URI_CHECKOUT +
-                "&response_type=token" +
+                "&response_type=code" +
                 "&scope=email profile" +
                 "&state=" + activityId;
         response.sendRedirect(googleAuthUrl);
     }
+    // Método para intercambiar el authorization code por un access token
+    public String exchangeAuthorizationCodeForAccessToken(String authorizationCode, boolean isCheckIn) throws IOException {
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("code", authorizationCode);
+        requestBody.put("client_id", "142245667829-afpupoofnh363onmduragfrhduii4jj5.apps.googleusercontent.com");
+        requestBody.put("client_secret", "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");
 
+        String redirectUri = isCheckIn ? REDIRECT_URI_CHECKIN : REDIRECT_URI_CHECKOUT;
+        requestBody.put("redirect_uri", redirectUri);
+
+        requestBody.put("grant_type", "authorization_code");
+
+        HttpRequestFactory requestFactory = transport.createRequestFactory();
+        HttpRequest request = requestFactory.buildPostRequest(new GenericUrl(TOKEN_URL), new UrlEncodedContent(requestBody));
+        HttpResponse response = request.execute();
+
+        // Procesar la respuesta y obtener el access token
+        Map<String, Object> tokenData = objectMapper.readValue(response.getContent(), new TypeReference<>() {});
+        return (String) tokenData.get("access_token");
+    }
 
 
 
