@@ -16,7 +16,7 @@ public class AttendanceController {
 
 
     // Endpoint para registrar check-in
-    @PostMapping("/{activityId}/checkin")
+    @GetMapping("/{activityId}/checkin")
     public ResponseEntity<String> checkIn(@PathVariable Integer activityId, HttpServletRequest request) {
         try {
             String response = attendanceService.handleCheckIn(activityId, request);
@@ -27,7 +27,7 @@ public class AttendanceController {
     }
 
     // Endpoint para registrar check-out
-    @PostMapping("/{activityId}/checkout")
+    @GetMapping("/{activityId}/checkout")
     public ResponseEntity<String> checkOut(@PathVariable Integer activityId, HttpServletRequest request) {
         try {
             String response = attendanceService.handleCheckOut(activityId, request);
