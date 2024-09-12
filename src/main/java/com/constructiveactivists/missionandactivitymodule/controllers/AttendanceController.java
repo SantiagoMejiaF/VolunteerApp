@@ -43,6 +43,8 @@ public class AttendanceController {
             Map<String, Object> userInfo = googleService.fetchUserInfo(accessToken);
             String email = (String) userInfo.get("email");
 
+            System.out.println("Email: " + email);
+            System.out.println("Activity ID: " + activityId);
             // Registrar el check-in
             attendanceService.handleCheckIn(email, activityId);
             return ResponseEntity.ok("Check-in registrado exitosamente.");
