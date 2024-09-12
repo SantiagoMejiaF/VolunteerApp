@@ -14,6 +14,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 
@@ -113,16 +115,19 @@ public class AttendanceService {
         ActivityEntity activityEntity = activityService.getById(activityId)
                 .orElseThrow(() -> new AttendanceException("Activity not found"));
 
-        LocalTime startTime = activityEntity.getStartTime();
-        LocalTime checkInStart = startTime.minusMinutes(CHECK_IN_WINDOW_BEFORE);
-        LocalTime checkInEnd = startTime.plusMinutes(CHECK_IN_WINDOW_AFTER);
+        // Ajusta la hora de inicio de la actividad a la zona horaria de Colombia
+        ZoneId colombiaZoneId = ZoneId.of("America/Bogota");
+        LocalTime activityStartTime = activityEntity.getStartTime();
+        ZonedDateTime currentTimeInColombia = ZonedDateTime.now(colombiaZoneId);
 
-        System.out.println("Check-in start: " + checkInStart);
-        System.out.println("Check-in end: " + checkInEnd);
-        System.out.println("Current time: " + currentTime);
-        System.out.println("Activity start time: " + startTime);
+        LocalTime checkInStart = activityStartTime.minusMinutes(CHECK_IN_WINDOW_BEFORE);
+        LocalTime checkInEnd = activityStartTime.plusMinutes(CHECK_IN_WINDOW_AFTER);
 
-        if (currentTime.isBefore(checkInStart) || currentTime.isAfter(checkInEnd)) {
+        System.out.println("currentTimeInColombia: " + currentTimeInColombia);
+        System.out.println("checkInStart: " + checkInStart);
+        System.out.println("checkInEnd: " + checkInEnd);
+
+        if (currentTimeInColombia.toLocalTime().isBefore(checkInStart) || currentTimeInColombia.toLocalTime().isAfter(checkInEnd)) {
             throw new AttendanceException("Check-in time not within allowed range.");
         }
     }
