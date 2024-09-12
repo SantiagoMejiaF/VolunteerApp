@@ -9,9 +9,11 @@ import com.constructiveactivists.organizationmodule.entities.activitycoordinator
 import com.constructiveactivists.organizationmodule.repositories.ActivityCoordinatorRepository;
 import com.constructiveactivists.missionandactivitymodule.repositories.ActivityRepository;
 import com.constructiveactivists.missionandactivitymodule.services.mission.MissionService;
+
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +28,7 @@ public class ActivityService {
     private final MissionService missionService;
     private final ActivityRepository activityRepository;
     private final ActivityCoordinatorRepository activityCoordinatorRepository;
+    private final QRCodeService qrCodeService;
 
     public ActivityEntity save(ActivityEntity activity) {
 
@@ -53,6 +56,8 @@ public class ActivityService {
         savedVolunteerGroup.setActivity(activitySaved.getId());
         volunteerGroupService.save(savedVolunteerGroup);
 
+        activityRepository.save(activitySaved);
+
         return activitySaved;
     }
 
@@ -67,4 +72,13 @@ public class ActivityService {
     public List<ActivityEntity> findAllByActivityCoordinator(Integer coordinatorId) {
         return activityRepository.findAllByActivityCoordinator(coordinatorId);
     }
+
+    public byte[] getCheckInQrCode(Integer activityId) {
+        return qrCodeService.generateCheckInQrCode(activityId);
+    }
+
+    public byte[] getCheckOutQrCode(Integer activityId) {
+        return qrCodeService.generateCheckOutQrCode(activityId);
+    }
+
 }

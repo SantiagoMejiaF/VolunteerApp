@@ -9,6 +9,7 @@ import org.hibernate.annotations.Comment;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -93,4 +94,7 @@ public class ActivityEntity {
     @Column(name = "OBSERVACIONES", length = 1000)
     @Comment("Observaciones adicionales sobre la actividad")
     private String observations;
+
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AttendanceEntity> attendances;
 }

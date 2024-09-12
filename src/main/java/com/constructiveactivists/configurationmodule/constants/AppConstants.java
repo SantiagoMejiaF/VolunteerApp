@@ -12,6 +12,16 @@ public final class AppConstants {
     public static final String REJECTION_SUBJECT = "Rechazo de Vinculación a la Organización %s";
     public static final String APPROVAL_MESSAGE = "Nos complace informarle que su solicitud de vinculación a nuestra organización ha sido aprobada.";
     public static final String REJECTION_MESSAGE = "Lamentamos informarle que su solicitud de vinculación a nuestra organización ha sido rechazada.";
+    public static final String BEARER_PREFIX = "Bearer ";
+    public static final String GOOGLE_TOKEN_NOT_PROVIDED = "No se proporcionó un token de Google.";
+    public static final String INVALID_GOOGLE_TOKEN = "Token de Google inválido.";
+    public static final String USER_NOT_AUTHORIZED = "El usuario no está autorizado para esta actividad.";
+    public static final String USER_NOT_FOUND = "Usuario no encontrado";
+    public static final String VOLUNTEER_NOT_FOUND = "Voluntario no encontrado";
+    public static final String ACTIVITY_NOT_FOUND = "Actividad no encontrada";
+    public static final String ATTENDANCE_RECORD_NOT_FOUND = "Registro de asistencia no encontrado";
+    public static final String CHECK_IN_SUCCESS = "Check-in registrado exitosamente.";
+    public static final String CHECK_OUT_SUCCESS = "Check-out registrado exitosamente.";
 
     public static final String EMAIL_TEMPLATE = "<html>" +
             "<body style='font-family: Inter, sans-serif; color: #000000;'>" +

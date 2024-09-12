@@ -1,11 +1,14 @@
 package com.constructiveactivists.dashboardsandresportsmodule.controllers.configuration;
 
+import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 
 @Tag(name = "Módulo de Tableros de Control y Reportes", description = "Servicios relacionados con los tableros de control que tiene" +
@@ -42,4 +45,11 @@ public interface DashboardOrganizationAPI {
     })
     @GetMapping("/average-monthly-hours")
     ResponseEntity<Double> getAverageMonthlyHoursByOrganization(Integer organizationId);
+
+    @Operation(summary = "Obtener los voluntarios de una organización en un mes específico")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+    })
+    @GetMapping("/volunteers")
+    ResponseEntity<List<VolunteerOrganizationEntity>> getVolunteersByOrganizationAndMonth(Integer organizationId, Integer month, Integer year);
 }

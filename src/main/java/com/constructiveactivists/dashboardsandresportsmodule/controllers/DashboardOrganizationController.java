@@ -2,10 +2,13 @@ package com.constructiveactivists.dashboardsandresportsmodule.controllers;
 
 import com.constructiveactivists.dashboardsandresportsmodule.controllers.configuration.DashboardOrganizationAPI;
 import com.constructiveactivists.dashboardsandresportsmodule.services.DashboardOrganizationService;
+import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 
 @RestController
@@ -37,5 +40,11 @@ public class DashboardOrganizationController implements DashboardOrganizationAPI
     public ResponseEntity<Double> getAverageMonthlyHoursByOrganization(Integer organizationId) {
         Double averageMonthlyHours = dashboardOrganizationService.getAverageMonthlyHoursByOrganization(organizationId);
         return ResponseEntity.ok(averageMonthlyHours);
+    }
+
+    @Override
+    public ResponseEntity<List<VolunteerOrganizationEntity>> getVolunteersByOrganizationAndMonth(Integer organizationId, Integer month, Integer year) {
+        List<VolunteerOrganizationEntity> volunteerOrganizations = dashboardOrganizationService.getVolunteersByOrganizationAndMonth(organizationId, month, year);
+        return ResponseEntity.ok(volunteerOrganizations);
     }
 }

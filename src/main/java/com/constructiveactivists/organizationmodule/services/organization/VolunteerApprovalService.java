@@ -6,9 +6,12 @@ import com.constructiveactivists.organizationmodule.entities.organization.Organi
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.services.UserService;
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.OrganizationStatusEnum;
+import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.DataShareVolunteerOrganizationService;
+import com.constructiveactivists.volunteermodule.services.volunteerorganization.PostulationService;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.VolunteerOrganizationService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -29,6 +32,7 @@ public class VolunteerApprovalService {
     private final UserService userService;
     private final VolunteerOrganizationService volunteerOrganizationService;
     private final DataShareVolunteerOrganizationService dataShareVolunteerOrganizationService;
+    private final PostulationService postulationService;
 
     public void sendVolunteerApprovalResponse(Integer volunteerId, Integer organizationId, boolean approved) {
 
@@ -40,20 +44,24 @@ public class VolunteerApprovalService {
         UserEntity volunteerUser = userService.getUserById(volunteer.getUserId())
                 .orElseThrow(() -> new EntityNotFoundException("El usuario con ID " + volunteer.getUserId() + " " + AppConstants.NOT_FOUND_MESSAGE));
 
+        VolunteerOrganizationEntity volunteerOrganizationInstance = volunteerOrganizationService.findByVolunteerIdAndOrganizationId(volunteerId, organizationId);
+
+        if (volunteerOrganizationInstance == null) {
+            throw new BusinessException("El voluntario ya está registrado en la organización");
+        }
+        PostulationEntity postulation = postulationService.findById(volunteerOrganizationInstance.getId());
+
+        if(!postulation.getStatus().equals(OrganizationStatusEnum.PENDIENTE)) {
+            throw new BusinessException("La solicitud ya ha sido procesada");
+        }
+
         String volunteerEmail = volunteerUser.getEmail();
         String volunteerName = volunteerUser.getFirstName();
         String organizationName = organization.getOrganizationName();
 
         if (approved) {
+            organizationService.approveVolunteer(volunteerOrganizationInstance.getId());
             sendApprovalEmail(volunteerEmail, organizationName, volunteerName);
-
-            VolunteerOrganizationEntity volunteerOrganization = new VolunteerOrganizationEntity();
-            volunteerOrganization.setVolunteerId(volunteerId);
-            volunteerOrganization.setOrganizationId(organizationId);
-            VolunteerOrganizationEntity savedVolunteerOrganization = volunteerOrganizationService.save(volunteerOrganization);
-
-            dataShareVolunteerOrganizationService.addDataShareVolunteerOrganization(savedVolunteerOrganization.getId());
-
         } else {
             sendRejectionEmail(volunteerEmail, organizationName, volunteerName);
         }
