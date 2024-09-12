@@ -1,6 +1,7 @@
 package com.constructiveactivists.organizationmodule.services.organization;
 
 
+import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.organizationmodule.entities.organization.enums.OrganizationTypeEnum;
 import com.constructiveactivists.organizationmodule.entities.organization.enums.SectorTypeEnum;
@@ -9,6 +10,7 @@ import com.constructiveactivists.organizationmodule.repositories.OrganizationRep
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.entities.enums.RoleType;
 import com.constructiveactivists.usermodule.services.UserService;
+import com.constructiveactivists.volunteermodule.services.volunteerorganization.PostulationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ public class OrganizationService {
 
     private final OrganizationRepository organizationRepository;
     private final UserService userService;
+    private final PostulationService postulationService;
 
     public List<OrganizationEntity> getAllOrganizations() {
         return organizationRepository.findAll();
@@ -57,6 +60,10 @@ public class OrganizationService {
             throw new EntityNotFoundException("El usuario con ID " + organizationEntity.getUserId() +
                     NOT_FOUND_MESSAGE);
         }
+        if(!user.get().getRole().getRoleType().equals(RoleType.SIN_ASIGNAR)){
+            throw new BusinessException("El usuario con ID " + organizationEntity.getUserId() +
+                    " ya tiene un rol asignado");
+        }
         userService.updateUserRoleType(organizationEntity.getUserId(), RoleType.ORGANIZACION);
         return organizationRepository.save(organizationEntity);
     }
@@ -79,5 +86,9 @@ public class OrganizationService {
                 .orElseThrow(() -> new RuntimeException( ORGANIZATION_MESSAGE_ID + id + NOT_FOUND_MESSAGE));
         userService.deleteUser(organization.getUserId());
         organizationRepository.delete(organization);
+    }
+
+    public void approveVolunteer(Integer volunteerOrganizationId) {
+        postulationService.updateStatusAccept(volunteerOrganizationId);
     }
 }

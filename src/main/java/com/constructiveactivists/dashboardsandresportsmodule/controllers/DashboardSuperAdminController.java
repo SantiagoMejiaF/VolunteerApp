@@ -2,12 +2,14 @@ package com.constructiveactivists.dashboardsandresportsmodule.controllers;
 
 import com.constructiveactivists.dashboardsandresportsmodule.controllers.configuration.DashboardSuperAdminAPI;
 import com.constructiveactivists.dashboardsandresportsmodule.services.DashboardSuperAdminService;
+import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,5 +38,14 @@ public class DashboardSuperAdminController implements DashboardSuperAdminAPI {
     public ResponseEntity<Double> getAverageMonthlyHoursAllVolunteers() {
         Double averageMonthlyHours = dashboardSuperAdminService.getAverageMonthlyHours();
         return ResponseEntity.ok(averageMonthlyHours);
+    }
+
+    @Override
+    public ResponseEntity<List<PostulationEntity>> getRecentVolunteersByWeek() {
+        List<PostulationEntity> recentVolunteersByWeek = dashboardSuperAdminService.getRecentVolunteersByWeek();
+        if (recentVolunteersByWeek.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(recentVolunteersByWeek, HttpStatus.OK);
     }
 }

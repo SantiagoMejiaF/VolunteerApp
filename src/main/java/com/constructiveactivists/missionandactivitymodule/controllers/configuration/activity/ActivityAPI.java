@@ -39,4 +39,18 @@ public interface ActivityAPI {
     })
     @GetMapping
     ResponseEntity<List<ActivityEntity>> getAllActivities();
+
+    @Operation(summary = "Obtener el código QR para realizar check-in en una actividad")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/checkin/{activityId}")
+    ResponseEntity<byte[]> getCheckInQrCode(@PathVariable Integer activityId);
+
+    @Operation(summary = "Obtener el código QR para realizar check-out en una actividad")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/checkout/{activityId}")
+    ResponseEntity<byte[]> getCheckOutQrCode(@PathVariable Integer activityId);
 }

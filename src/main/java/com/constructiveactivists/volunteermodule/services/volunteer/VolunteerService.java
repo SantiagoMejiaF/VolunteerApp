@@ -177,6 +177,9 @@ public class VolunteerService {
         if (user.isEmpty()) {
             throw new EntityNotFoundException("El usuario con ID " + userId + " no existe en la bd");
         }
+        if(!user.get().getRole().getRoleType().equals(RoleType.SIN_ASIGNAR)){
+            throw new BusinessException("El usuario ya tiene un rol asignado");
+        }
     }
 
     private void validateAge(LocalDate birthDate) {

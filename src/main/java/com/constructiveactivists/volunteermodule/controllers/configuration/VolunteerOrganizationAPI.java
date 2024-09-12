@@ -1,5 +1,6 @@
 package com.constructiveactivists.volunteermodule.controllers.configuration;
 
+import com.constructiveactivists.volunteermodule.controllers.request.volunteerorganization.VolunteerOrganizationRequest;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,5 +26,14 @@ public interface VolunteerOrganizationAPI {
             @ApiResponse(responseCode = "200", description = "Operación exitosa")
     })
     @GetMapping("/organization/{organizationId}")
-    ResponseEntity<List<VolunteerOrganizationEntity>> getVolunteersByOrganizationId(@PathVariable Integer organizationId);
+    ResponseEntity<List<VolunteerOrganizationEntity>> getVolunteersByOrganizationId(@PathVariable Integer volunteerOrganizationId);
+
+
+    @Operation(summary = "Agregar la relacion entre una organización y un voluntario en estado pendiente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @PostMapping("/pending")
+    ResponseEntity<VolunteerOrganizationEntity> addVolunteerOrganizationPending(@RequestBody VolunteerOrganizationRequest volunteerOrganizationRequest);
+
 }

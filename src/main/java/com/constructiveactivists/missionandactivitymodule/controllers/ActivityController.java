@@ -7,7 +7,9 @@ import com.constructiveactivists.missionandactivitymodule.mappers.activity.Activ
 import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,5 +43,21 @@ public class ActivityController implements ActivityAPI {
     public ResponseEntity<ActivityEntity> createActivity(@Valid @RequestBody ActivityRequest activityRequest) {
         ActivityEntity createdActivity = activityService.save(activityMapper.toDomain(activityRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdActivity);
+    }
+
+    @Override
+    public ResponseEntity<byte[]> getCheckInQrCode(@PathVariable Integer activityId) {
+        byte[] qrCode = activityService.getCheckInQrCode(activityId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        return new ResponseEntity<>(qrCode, headers, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<byte[]> getCheckOutQrCode(@PathVariable Integer activityId) {
+        byte[] qrCode = activityService.getCheckOutQrCode(activityId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        return new ResponseEntity<>(qrCode, headers, HttpStatus.OK);
     }
 }

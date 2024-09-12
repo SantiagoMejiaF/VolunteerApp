@@ -62,3 +62,5 @@ request-mapping:
     location: locations
     datashare-volunteer-organization: datashare-volunteers-organizations
     volunteer-organization: volunteers-organizations
+    postulation: postulations
+    attendace: attendances
