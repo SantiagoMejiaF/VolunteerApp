@@ -6,7 +6,7 @@ import com.google.api.client.http.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.Value;
+import org.springframework.beans.factory.annotation.Value;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ public class GoogleService {
     private final JacksonFactory jacksonFactory;
     private final ObjectMapper objectMapper;
 
-    @Value("${social.googleClientId}")
+    @Value("${{social.googleClientId}}")
     private String clientId;
 
     @Value("${social.googleClientSecret}")
