@@ -34,7 +34,7 @@ public class AttendanceController {
     @GetMapping("/google/checkin")
     public ResponseEntity<String> googleCheckInCallback(
             @RequestParam("code") String authorizationCode,
-            @RequestParam("activityId") Integer activityId) {
+            @RequestParam("state") Integer activityId) {
         try {
             // Intercambiar el authorization code por un access token para Check-in
             String accessToken = googleService.exchangeAuthorizationCodeForAccessToken(authorizationCode, true);
@@ -54,7 +54,7 @@ public class AttendanceController {
     @GetMapping("/google/checkout")
     public ResponseEntity<String> googleCheckOutCallback(
             @RequestParam("code") String authorizationCode,
-            @RequestParam("activityId") Integer activityId) {
+            @RequestParam("state") Integer activityId) {
         try {
             // Intercambiar el authorization code por un access token para Check-out
             String accessToken = googleService.exchangeAuthorizationCodeForAccessToken(authorizationCode, false);
