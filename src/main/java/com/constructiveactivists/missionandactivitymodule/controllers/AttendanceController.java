@@ -33,9 +33,12 @@ public class AttendanceController {
 
     @GetMapping("/google/checkin")
     public ResponseEntity<String> googleCheckInCallback(
-            @RequestParam("access_token") String accessToken,
+            @RequestParam("code") String authorizationCode,
             @RequestParam("activityId") Integer activityId) {
         try {
+            // Intercambiar el authorization code por un access token para Check-in
+            String accessToken = googleService.exchangeAuthorizationCodeForAccessToken(authorizationCode, true);
+
             // Validar el token y obtener la información del usuario
             Map<String, Object> userInfo = googleService.fetchUserInfo(accessToken);
             String email = (String) userInfo.get("email");
@@ -44,16 +47,18 @@ public class AttendanceController {
             attendanceService.handleCheckIn(email, activityId);
             return ResponseEntity.ok("Check-in registrado exitosamente.");
         } catch (Exception e) {
-            // Manejar excepciones y devolver mensaje de error
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar el check-in.");
         }
     }
 
     @GetMapping("/google/checkout")
     public ResponseEntity<String> googleCheckOutCallback(
-            @RequestParam("access_token") String accessToken,
+            @RequestParam("code") String authorizationCode,
             @RequestParam("activityId") Integer activityId) {
         try {
+            // Intercambiar el authorization code por un access token para Check-out
+            String accessToken = googleService.exchangeAuthorizationCodeForAccessToken(authorizationCode, false);
+
             // Validar el token y obtener la información del usuario
             Map<String, Object> userInfo = googleService.fetchUserInfo(accessToken);
             String email = (String) userInfo.get("email");
@@ -62,7 +67,6 @@ public class AttendanceController {
             attendanceService.handleCheckOut(email, activityId);
             return ResponseEntity.ok("Check-out registrado exitosamente.");
         } catch (Exception e) {
-            // Manejar excepciones y devolver mensaje de error
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar el check-out.");
         }
     }
