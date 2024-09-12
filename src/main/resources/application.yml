@@ -37,6 +37,7 @@ springdoc:
 
 social:
   googleClientId: "142245667829-afpupoofnh363onmduragfrhduii4jj5.apps.googleusercontent.com"
+  googleClientSecret: "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"
 
 server:
   port: 8085

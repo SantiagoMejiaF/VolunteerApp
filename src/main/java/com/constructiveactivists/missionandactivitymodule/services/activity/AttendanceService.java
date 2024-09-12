@@ -1,7 +1,6 @@
 package com.constructiveactivists.missionandactivitymodule.services.activity;
 
 import com.constructiveactivists.configurationmodule.exceptions.AttendanceException;
-import com.constructiveactivists.externalservicesmodule.services.GoogleService;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.AttendanceEntity;
 import com.constructiveactivists.missionandactivitymodule.repositories.AttendanceRepository;
@@ -18,12 +17,13 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.ACTIVITY_NOT_FOUND;
+
 
 @Service
 @AllArgsConstructor
 public class AttendanceService {
 
-    private final GoogleService googleService;
     private final UserService userService;
     private final VolunteerService volunteerService;
     private final VolunteerGroupMembershipService volunteerGroupMembershipService;
@@ -48,12 +48,12 @@ public class AttendanceService {
 
     private void validateCheckIn(String email, Integer activityId) {
         verifyUserAuthorization(email, activityId);
-        checkInTimeValidity(activityId, LocalTime.now());
+        checkInTimeValidity(activityId);
     }
 
     private void validateCheckOut(String email, Integer activityId) {
         verifyUserAuthorization(email, activityId);
-        checkOutTimeValidity(activityId, LocalTime.now());
+        checkOutTimeValidity(activityId);
     }
 
     private void registerCheckIn(String email, Integer activityId) {
@@ -64,7 +64,7 @@ public class AttendanceService {
                 .orElseThrow(() -> new AttendanceException("Volunteer not found"));
 
         ActivityEntity activityEntity = activityService.getById(activityId)
-                .orElseThrow(() -> new AttendanceException("Activity not found"));
+                .orElseThrow(() -> new AttendanceException(ACTIVITY_NOT_FOUND));
 
         AttendanceEntity attendance = new AttendanceEntity();
         attendance.setActivity(activityEntity);
@@ -84,7 +84,7 @@ public class AttendanceService {
         AttendanceEntity attendance = attendanceRepository.findByActivityIdAndVolunteerId(activityId, volunteerEntity.getId())
                 .orElseThrow(() -> new AttendanceException("Attendance record not found"));
 
-        checkOutTimeValidity(activityId, LocalTime.now());
+        checkOutTimeValidity(activityId);
         attendance.setCheckOutTime(LocalTime.now());
 
         attendanceRepository.save(attendance);
@@ -111,11 +111,10 @@ public class AttendanceService {
         return volunteerGroupMembershipService.isVolunteerInGroup(activityId, volunteerId);
     }
 
-    private void checkInTimeValidity(Integer activityId, LocalTime currentTime) {
+    private void checkInTimeValidity(Integer activityId) {
         ActivityEntity activityEntity = activityService.getById(activityId)
-                .orElseThrow(() -> new AttendanceException("Activity not found"));
+                .orElseThrow(() -> new AttendanceException(ACTIVITY_NOT_FOUND));
 
-        // Ajusta la hora de inicio de la actividad a la zona horaria de Colombia
         ZoneId colombiaZoneId = ZoneId.of("America/Bogota");
         LocalTime activityStartTime = activityEntity.getStartTime();
         ZonedDateTime currentTimeInColombia = ZonedDateTime.now(colombiaZoneId);
@@ -123,26 +122,24 @@ public class AttendanceService {
         LocalTime checkInStart = activityStartTime.minusMinutes(CHECK_IN_WINDOW_BEFORE);
         LocalTime checkInEnd = activityStartTime.plusMinutes(CHECK_IN_WINDOW_AFTER);
 
-        System.out.println("currentTimeInColombia: " + currentTimeInColombia);
-        System.out.println("checkInStart: " + checkInStart);
-        System.out.println("checkInEnd: " + checkInEnd);
-
         if (currentTimeInColombia.toLocalTime().isBefore(checkInStart) || currentTimeInColombia.toLocalTime().isAfter(checkInEnd)) {
             throw new AttendanceException("Check-in time not within allowed range.");
         }
     }
 
-    private void checkOutTimeValidity(Integer activityId, LocalTime currentTime) {
+    private void checkOutTimeValidity(Integer activityId) {
         ActivityEntity activityEntity = activityService.getById(activityId)
-                .orElseThrow(() -> new AttendanceException("Activity not found"));
-        LocalTime endTime = activityEntity.getEndTime();
+                .orElseThrow(() -> new AttendanceException(ACTIVITY_NOT_FOUND));
 
+        LocalTime endTime = activityEntity.getEndTime();
+        ZoneId colombiaZoneId = ZoneId.of("America/Bogota");
+        ZonedDateTime currentTimeInColombia = ZonedDateTime.now(colombiaZoneId);
         LocalTime checkOutStart = endTime.minusMinutes(CHECK_OUT_WINDOW_BEFORE);
         LocalTime checkOutEnd = endTime.plusMinutes(CHECK_OUT_WINDOW_AFTER);
-
-        if (currentTime.isBefore(checkOutStart) || currentTime.isAfter(checkOutEnd)) {
+        if (currentTimeInColombia.toLocalTime().isBefore(checkOutStart) || currentTimeInColombia.toLocalTime().isAfter(checkOutEnd)) {
             throw new AttendanceException("Check-out time not within allowed range.");
         }
     }
+
 }
 
