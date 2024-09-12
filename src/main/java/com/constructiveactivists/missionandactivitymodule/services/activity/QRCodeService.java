@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 @Service
 public class QRCodeService {
@@ -31,12 +33,12 @@ public class QRCodeService {
 
 
     public byte[] generateCheckInQrCode(Integer activityId) {
-        String data = BASE_URL + "/attendances/" + activityId + "/checkin";
+        String data = BASE_URL + "/auth/google?state=" + Base64.getEncoder().encodeToString(activityId.toString().getBytes(StandardCharsets.UTF_8));
         return generateQrCode(data);
     }
 
     public byte[] generateCheckOutQrCode(Integer activityId) {
-        String data = BASE_URL + "/attendances/" + activityId + "/checkout";
+        String data = BASE_URL + "/auth/google?state=" + Base64.getEncoder().encodeToString(activityId.toString().getBytes(StandardCharsets.UTF_8));
         return generateQrCode(data);
     }
 
