@@ -6,6 +6,7 @@ import com.google.api.client.http.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.Value;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,12 @@ public class GoogleService {
     private final NetHttpTransport transport;
     private final JacksonFactory jacksonFactory;
     private final ObjectMapper objectMapper;
+
+    @Value("${social.googleClientId}")
+    private String clientId;
+
+    @Value("${social.googleClientSecret}")
+    private String clientSecret;
 
     private static final String USER_INFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo?access_token=";
     private static final String GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
@@ -39,7 +46,7 @@ public class GoogleService {
 
     public void redirectToGoogleForCheckIn(HttpServletResponse response, Integer activityId) throws IOException {
         String googleAuthUrl = GOOGLE_AUTH_URL +
-                "?client_id=" + "142245667829-afpupoofnh363onmduragfrhduii4jj5.apps.googleusercontent.com" +
+                "?client_id=" + clientId +
                 "&redirect_uri=" + REDIRECT_URI_CHECKIN +
                 "&response_type=code" +
                 "&scope=email profile" +
@@ -49,7 +56,7 @@ public class GoogleService {
 
     public void redirectToGoogleForCheckOut(HttpServletResponse response, Integer activityId) throws IOException {
         String googleAuthUrl = GOOGLE_AUTH_URL +
-                "?client_id=" + "142245667829-afpupoofnh363onmduragfrhduii4jj5.apps.googleusercontent.com" +
+                "?client_id=" + clientId +
                 "&redirect_uri=" + REDIRECT_URI_CHECKOUT +
                 "&response_type=code" +
                 "&scope=email profile" +
@@ -66,8 +73,8 @@ public class GoogleService {
                 new GenericUrl(tokenUrl),
                 new UrlEncodedContent(Map.of(
                         "code", authorizationCode,
-                        "client_id", "142245667829-afpupoofnh363onmduragfrhduii4jj5.apps.googleusercontent.com",
-                        "client_secret", "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",
+                        "client_id", clientId,
+                        "client_secret", clientSecret,
                         "redirect_uri", redirectUri,
                         "grant_type", "authorization_code"
                 ))
