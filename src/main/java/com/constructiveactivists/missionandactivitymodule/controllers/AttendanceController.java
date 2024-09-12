@@ -1,5 +1,6 @@
 package com.constructiveactivists.missionandactivitymodule.controllers;
 
+import com.constructiveactivists.configurationmodule.exceptions.AttendanceException;
 import com.constructiveactivists.externalservicesmodule.services.GoogleService;
 import com.constructiveactivists.missionandactivitymodule.services.activity.AttendanceService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,8 +49,13 @@ public class AttendanceController {
             // Registrar el check-in
             attendanceService.handleCheckIn(email, activityId);
             return ResponseEntity.ok("Check-in registrado exitosamente.");
+        } catch (AttendanceException e) {
+            // Mensajes de error específicos para problemas en el registro de asistencia
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en el check-in: " + e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar el check-in.");
+            // Mensaje de error genérico
+            e.printStackTrace(); // Esto es útil para la depuración
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar el check-in: " + e.getMessage());
         }
     }
 
