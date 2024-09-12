@@ -20,7 +20,7 @@ public class GoogleService {
     private final JacksonFactory jacksonFactory;
     private final ObjectMapper objectMapper;
 
-    @Value("${{social.googleClientId}}")
+    @Value("${social.googleClientId}")
     private String clientId;
 
     @Value("${social.googleClientSecret}")
