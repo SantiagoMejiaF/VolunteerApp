@@ -3,11 +3,13 @@ package com.constructiveactivists.missionandactivitymodule.controllers;
 import com.constructiveactivists.externalservicesmodule.services.GoogleService;
 import com.constructiveactivists.missionandactivitymodule.services.activity.AttendanceService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -18,6 +20,16 @@ public class AttendanceController {
     private final AttendanceService attendanceService;
     private final GoogleService googleService;
 
+
+    @GetMapping("/google/auth/checkin")
+    public void redirectToGoogleForCheckIn(@RequestParam("activityId") Integer activityId, HttpServletResponse response) throws IOException {
+        googleService.redirectToGoogleForCheckIn(response, activityId);
+    }
+
+    @GetMapping("/google/auth/checkout")
+    public void redirectToGoogleForCheckOut(@RequestParam("activityId") Integer activityId, HttpServletResponse response) throws IOException {
+        googleService.redirectToGoogleForCheckOut(response, activityId);
+    }
 
     @GetMapping("/google/checkin")
     public ResponseEntity<String> googleCheckInCallback(
