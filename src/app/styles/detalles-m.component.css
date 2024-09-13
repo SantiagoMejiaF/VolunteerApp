@@ -1,0 +1,105 @@
+#tittle, #tittle1{
+    background-color: white; /* Fondo blanco */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  margin-bottom:20px;
+  }
+  h1{
+    font-weight: bold;
+    color: #ED4B4B;
+}
+  h2 {
+    font-weight: 600;
+    font-size: 20px;
+  }
+  h3{
+    font-weight: bold;
+    font-size: 20px;
+  }
+  h4{
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+
+  body {
+    background-color: #f8f9fa;
+}
+
+#misionimg{
+    width: 100px;
+    height:auto;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.list-group-item {
+    text-align: center;
+}
+
+.list-group-item.active {
+    background-color: #186DDE;
+    border-color: #0d6efd;
+    color: white;
+}
+
+.nav-tabs .nav-link.active {
+    font-weight: bold;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+}
+
+.card-body p {
+    font-size: 16px;
+    text-align: left;
+}
+
+/*Se va?*/
+.nav-link {
+    border-radius: 10px;
+    position: relative;
+    padding-bottom: 5px;
+    color: black; /* Color por defecto del texto */
+}
+
+.nav-link.active-link {
+    font-weight: 600; /* Cambia solo el color del texto cuando esté activo */
+}
+
+.nav-link.active-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #186DDE; /* Color de la línea debajo */
+    border-radius: 5px;
+}
+
+.details {
+    border-radius: 5px;
+    box-shadow: 0 0 0 0.2px #A2A1A8; /* Simula un borde de 0.5px */
+}
+
+
+.editar {
+    background-color: #186DDE;
+    box-shadow: 0 0 0 2px #186DDE;
+    border: none;
+}
+.editar i{
+    color:white;
+    font-size: 1.3rem;
+}
+h5{
+    color:#186DDE;
+    font-weight: 600; 
+    font-size: 2rem;
+}

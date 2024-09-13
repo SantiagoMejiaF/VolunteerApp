@@ -12,6 +12,11 @@ import { DashboardVolunteerComponent } from './Modules/Volunteer/viewModel/dashb
 import { DashboardOrganizationComponent } from './Modules/Organization/viewModel/dashboard-organization.component';
 import { PerfilComponent } from './Modules/Volunteer/viewModel/perfil.component';
 import { PerfilOComponent } from './Modules/Organization/viewModel/perfil-o.component';
+import { MisionesComponent } from './Modules/Misiones/viewModel/misiones.component';
+import { DetallesMComponent } from './Modules/Misiones/viewModel/detalles-m.component';
+import { EditMComponent } from './Modules/Misiones/viewModel/edit-m.component';
+import { CalendarAComponent } from './Modules/Misiones/viewModel/calendar-a.component';
+import { DetallesAComponent } from './Modules/Misiones/viewModel/detalles-a.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -48,7 +53,28 @@ const routes: Routes = [
         path: 'perfilO',
         component: PerfilOComponent,
       },
+      {
+        path: 'misiones',
+        component:MisionesComponent,
+      },
+      {
+        path: 'detallesM',
+        component:DetallesMComponent,
+      },
+      {
+        path: 'editM',
+        component:EditMComponent,
+      },
+      {
+        path: 'calendar',
+        component:CalendarAComponent,
+      },
+      {
+        path: 'detallesA',
+        component:DetallesAComponent,
+      },
       
+
       
     ],
   },

@@ -1,0 +1,141 @@
+<div>
+    <form style="text-align: left;">
+
+        
+        <!-- Título -->
+        <!-- Paso 1: Datos de la Misión -->
+        <div *ngIf="currentStep === 1" style="text-align: left;">
+
+            <h5>Datos de la Actividad</h5>
+            <!-- Título -->
+            <div class="mb-3">
+                <label for="title" class="form-label">Título</label>
+                <input type="text" id="title" class="form-control custom-input"
+                    placeholder="Escribe el título de la misión" value="Plantación de árboles">
+            </div>
+
+            <!-- Descripción -->
+            <div class="mb-3">
+                <label for="description" class="form-label">Descripción</label>
+                <textarea id="description" class="form-control custom-input" rows="3"
+                    placeholder="Describe la misión">Plantación de 100 árboles en el parque central.</textarea>
+            </div>
+
+            <!-- Coordinador de la Actividad -->
+            <div class="mb-3">
+                <label for="activityCoordinator" class="form-label">Coordinador de la Actividad</label>
+                <select id="activityCoordinator" class="form-select custom-select" required>
+                    <option value="">Selecciona un Coordinador</option>
+                    <option value="0" selected>Juan Pérez</option>
+                    <option value="1">Ana Gómez</option>
+                    <option value="2">Carlos Martínez</option>
+                </select>
+            </div>
+
+            <!-- Fechas (Inicio y Fin) -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="startDate" class="form-label">Fecha de Inicio</label>
+                    <input type="date" id="startDate" class="form-control custom-input" value="2024-09-03" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="startTime" class="form-label">Hora de Inicio</label>
+                    <input type="time" id="startTime" class="form-control custom-input" value="08:00" required>
+                </div>
+            </div>
+
+            <!-- Hora de Fin -->
+            <div class="mb-3">
+                <label for="endTime" class="form-label">Hora de Fin</label>
+                <input type="time" id="endTime" class="form-control custom-input" value="12:00" required>
+            </div>
+
+            <!-- Ciudad -->
+            <div class="mb-3">
+                <label for="city" class="form-label">Ciudad</label>
+                <input type="text" id="city" class="form-control custom-input" placeholder="Ingresa la ciudad"
+                    value="Bogotá" required>
+            </div>
+
+            <!-- Localidad -->
+            <div class="mb-3">
+                <label for="locality" class="form-label">Localidad</label>
+                <input type="text" id="locality" class="form-control custom-input" placeholder="Ingresa la localidad"
+                    value="Usaquén">
+            </div>
+
+            <!-- Dirección -->
+            <div class="mb-3">
+                <label for="address" class="form-label">Dirección</label>
+                <input type="text" id="address" class="form-control custom-input" placeholder="Ingresa la dirección"
+                    value="Parque Central, Calle 123">
+            </div>
+
+            <!-- Número de Voluntarios Requeridos -->
+            <div class="mb-3">
+                <label for="numberOfVolunteersRequired" class="form-label">Número de Voluntarios
+                    Requeridos</label>
+                <input type="number" id="numberOfVolunteersRequired" class="form-control custom-input" value="20"
+                    required>
+            </div>
+
+            <!-- Horas Requeridas -->
+            <div class="mb-3">
+                <label for="requiredHours" class="form-label">Horas Requeridas</label>
+                <input type="number" id="requiredHours" class="form-control custom-input" value="4" required>
+            </div>
+
+            <!-- Número de Beneficiarios -->
+            <div class="mb-3">
+                <label for="numberOfBeneficiaries" class="form-label">Número de Beneficiarios</label>
+                <input type="number" id="numberOfBeneficiaries" class="form-control custom-input" value="100" required>
+            </div>
+
+
+
+            <!-- Observaciones -->
+            <div class="mb-3">
+                <label for="observations" class="form-label">Observaciones</label>
+                <textarea id="observations" class="form-control custom-input"
+                    rows="2">Llevar agua y protector solar.</textarea>
+            </div>
+            <!-- Visibilidad -->
+            <div class="form-check mb-3 ml-2">
+                <input class="form-check-input" type="checkbox" id="visibility" checked>
+                <label class="form-check-label" for="visibility">Visible al público</label>
+            </div>
+
+
+            <button type="button" class="btn btn-primary mt-3" (click)="nextStep()">Siguiente</button>
+        </div>
+
+        <!-- Paso 2: Datos del Líder de la Actividad -->
+        <div *ngIf="currentStep === 2" style="text-align: left;">
+            <h5>Datos del Líder de la Actividad</h5>
+
+            <div class="mb-3">
+                <label for="nameCommunityLeader" class="form-label">Nombre del Líder</label>
+                <input type="text" id="nameCommunityLeader" class="form-control"
+                    formControlName="nameCommunityLeader">
+            </div>
+
+            <div class="mb-3">
+                <label for="emailCommunityLeader" class="form-label">Email del Líder</label>
+                <input type="email" id="emailCommunityLeader" class="form-control"
+                    formControlName="emailCommunityLeader">
+            </div>
+
+            <div class="mb-3">
+                <label for="phoneCommunityLeader" class="form-label">Teléfono del Líder</label>
+                <input type="tel" id="phoneCommunityLeader" class="form-control"
+                    formControlName="phoneCommunityLeader">
+            </div>
+            <div style="text-align: left;">
+                <button type="button" class="btn btn-secondary mt-3 mr-2" (click)="previousStep()">Anterior</button>
+                <button type="submit" class="btn btn-success mt-3">Actualizar</button>
+            </div>
+            
+        </div>
+
+    </form>
+</div>

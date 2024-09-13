@@ -1,0 +1,128 @@
+<div class="col ">
+    <div style="text-align: left;">
+        <button class="" (click)="onComeBack()" ><i class="bi bi-arrow-left"></i></button>
+    </div>
+    
+    <div class="column2">
+        <ul class="nav mb-4">
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content1'}"
+                    (click)="showContent('content1')">Descripción</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content2'}"
+                    (click)="showContent('content2')">Encargado</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content3'}"
+                    (click)="showContent('content3')">Informes</a>
+            </li>
+            
+        </ul>
+
+        <div *ngIf="currentContent === 'content1'" class="content">
+            <div class="col-9  ml-3">
+
+
+                <div *ngIf="!isEditing">
+                    <div class="card-body">
+                        
+
+                        <div class="row">
+                            <!-- Columna Izquierda -->
+                            <div class="col-md-6">
+                                <p><strong>Título:</strong> titu</p>
+                                <p><strong>Descripción:</strong> Descripción:</p>
+                                <p><strong>Fecha:</strong> Fecha:</p>
+                                <p><strong>Hora de inicio:</strong> Hora de inicio</p>
+                                <p><strong>Hora de fin:</strong> Hora de fin:</p>
+                                <p><strong>Ciudad:</strong> Ciudad:</p>
+                                <p><strong>Localidad:</strong> Localidad:</p>
+                                <p><strong>Dirección:</strong> Dirección:</p>
+                            </div>
+
+                            <!-- Columna Derecha -->
+                            <div class="col-md-6">
+                                <p><strong>Número de Voluntarios Requeridos:</strong> Número de Voluntarios Requeridos:
+                                </p>
+                                <p><strong>Horas Requeridas:</strong> Horas Requeridas:</p>
+                                <p><strong>Visibilidad:</strong> Visibilidad:</p>
+                                <p><strong>Número de Beneficiarios:</strong> Número de</p>
+                                <p><strong>Observaciones:</strong>Observaciones:</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3" style="text-align: right;">
+
+                            <div class="col">
+                                <button class="editar" (click)="toggleEdit()">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulario de edición -->
+                <app-edit-a *ngIf="isEditing" (cancel)="toggleEdit()"></app-edit-a>
+            </div>
+
+
+
+        </div>
+
+        <div *ngIf="currentContent === 'content2'" class="content">
+            <h5>Coordinador Actividad</h5>
+            <div class="d-flex">
+                
+                <img src="assets/img/user3.png" alt="">
+                <div class="mt-3 ml-3" style="text-align: left;">
+                    <p><strong>Nombre:</strong> titu</p>
+                    <p><strong>Email:</strong> Descripción:</p>
+                    <p><strong>Celular:</strong> Fecha:</p>
+                </div>
+            </div>
+            <h5 class="mt-4">Lider Comunidad</h5>
+            <div class="d-flex">
+                
+                <div class="mt-3 ml-3" style="text-align: left;">
+                    <p><strong>Nombre:</strong> titu</p>
+                    <p><strong>Email:</strong> Descripción:</p>
+                    <p><strong>Celular:</strong> Fecha:</p>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <div *ngIf="currentContent === 'content3'" class="content">
+            <div class="row">
+                <div class="col">
+                    <div id="chart">
+                        <apx-chart
+                          [series]="chartOptions.series"
+                          [chart]="chartOptions.chart"
+                          [plotOptions]="chartOptions.plotOptions"
+                          [labels]="chartOptions.labels"
+                          [fill]="chartOptions.fill"
+                        ></apx-chart>
+                      </div>
+                </div>
+                <div class="col">
+                    <div id="chart">
+                        <apx-chart
+                          [series]="chartOptions1.series"
+                          [chart]="chartOptions1.chart"
+                          [plotOptions]="chartOptions1.plotOptions"
+                          [labels]="chartOptions1.labels"
+                          [fill]="chartOptions1.fill"
+                        ></apx-chart>
+                      </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="currentContent === 'content4'" class="content">
+
+        </div>
+    </div>
+</div>

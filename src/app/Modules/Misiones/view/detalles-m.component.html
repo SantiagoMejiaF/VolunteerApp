@@ -1,0 +1,83 @@
+<div class="container">
+    <div class="row">
+        <div class="col text-center" id="tittle">
+            <h1>Misión</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center" id="tittle">
+            <div class="head d-flex">
+                <img src="assets/img/user3.png" id="misionimg">
+                <div class="ml-3 mt-3" style="text-align: left;">
+                    <h3>RECOLECCIÓN DE DINERO</h3>
+                    <h4><i class="bi bi-briefcase mr-2"></i>Fecha objetivo: 16 julio 2024</h4>
+                </div>
+            </div>
+            <hr style="height: 1px; background-color: black; border: none;">
+            <div class="row">
+                <div class="col-2 mr-4 ml-2">
+                    <div class="list-group">
+                        <button class="list-group-item list-group-item-action"
+                            [ngClass]="{'active': selectedSection === 'descripcion'}"
+                            (click)="selectSection('descripcion')">
+                            <i class="bi bi-chat-square-text mr-2"></i>Descripción
+                        </button>
+                        <button class="list-group-item list-group-item-action"
+                            [ngClass]="{'active': selectedSection === 'actividades'}"
+                            (click)="selectSection('actividades')">
+                            <i class="bi bi-calendar-check mr-2"></i>Actividades
+                        </button>
+                    </div>
+                </div>
+                <div class="col-9 details ml-3">
+                    <!-- Mostrar descripción o formulario de edición -->
+                    <div *ngIf="selectedSection === 'descripcion'">
+                        <div *ngIf="!isEditing">
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <h5>Detalles</h5>
+                                    </div>
+                                    
+                                    
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Tipo de misión:</strong> Educación</p>
+                                        <p><strong>Fecha inicio:</strong> July 14, 1995</p>
+                                        <p><strong>Fecha fin:</strong> July 24, 1995</p>
+                                        <p><strong>Departamento:</strong> Cucuta</p>
+                                        <p><strong>Visibilidad:</strong> Pública</p>
+                                        <p><strong>Habilidades requeridas:</strong> Inglés, trabajo en equipo, ...</p>
+                                        <p><strong>Requisitos:</strong> Residencia legal, curso de psicología ...</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Descripción:</strong> Lorem Ipsum es simplemente el texto de relleno de las imprentas...</p>
+                                    </div>
+                                </div>
+                                <div class="col" style="text-align: right;">
+                                    <button class="editar" (click)="toggleEdit()" >
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                       <!-- Formulario de edición -->
+                       <app-edit-m *ngIf="isEditing" (cancel)="toggleEdit()"></app-edit-m>
+                    </div>
+
+                    <!-- Actividades -->
+                    <div *ngIf="selectedSection === 'actividades'">
+                        <app-calendar-a></app-calendar-a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MisionesComponent } from '../Modules/Misiones/viewModel/misiones.component';
+import { EditAComponent } from '../Modules/Misiones/viewModel/edit-a.component';
 
-describe('MisionesComponent', () => {
-  let component: MisionesComponent;
-  let fixture: ComponentFixture<MisionesComponent>;
+describe('EditAComponent', () => {
+  let component: EditAComponent;
+  let fixture: ComponentFixture<EditAComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MisionesComponent]
+      declarations: [EditAComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MisionesComponent);
+    fixture = TestBed.createComponent(EditAComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

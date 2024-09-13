@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MisionesComponent } from '../Modules/Misiones/viewModel/misiones.component';
+import { CalendarAComponent } from '../Modules/Misiones/viewModel/calendar-a.component';
 
-describe('MisionesComponent', () => {
-  let component: MisionesComponent;
-  let fixture: ComponentFixture<MisionesComponent>;
+describe('CalendarAComponent', () => {
+  let component: CalendarAComponent;
+  let fixture: ComponentFixture<CalendarAComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MisionesComponent]
+      declarations: [CalendarAComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MisionesComponent);
+    fixture = TestBed.createComponent(CalendarAComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

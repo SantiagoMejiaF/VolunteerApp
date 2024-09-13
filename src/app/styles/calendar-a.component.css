@@ -1,0 +1,23 @@
+/* Estilo para los encabezados de días de la semana (dom, lun, mar, etc.) */
+.fc-col-header-cell {
+    background-color: #ED4B4B; /* Fondo rojo */
+    color: white; /* Texto blanco */
+    font-weight: bold; /* Opcional: hace que las letras sean más gruesas */
+  }
+  
+  /* Asegurarse de que el texto esté centrado */
+  .fc-col-header-cell .fc-day {
+    text-align: center;
+  }
+  #Crear{
+    background: #186DDE;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 8px 8px 8px;
+    border-radius: 10px;
+    border: none !important;
+  }
+  #aja{
+    color: red;
+  }

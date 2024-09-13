@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MisionesComponent } from '../Modules/Misiones/viewModel/misiones.component';
+import { DetallesMComponent } from '../Modules/Misiones/viewModel/detalles-m.component';
 
-describe('MisionesComponent', () => {
-  let component: MisionesComponent;
-  let fixture: ComponentFixture<MisionesComponent>;
+describe('DetallesMComponent', () => {
+  let component: DetallesMComponent;
+  let fixture: ComponentFixture<DetallesMComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MisionesComponent]
+      declarations: [DetallesMComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MisionesComponent);
+    fixture = TestBed.createComponent(DetallesMComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

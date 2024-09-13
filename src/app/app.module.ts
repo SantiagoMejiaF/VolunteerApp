@@ -12,7 +12,7 @@ import { NavbarComponent } from './shared/components/viewModel/navbar.component'
 import { AboutComponent } from './Modules/landingModule/viewModel/about.component';
 import { BenefitsComponent } from './Modules/landingModule/viewModel/benefits.component';
 import { TestimonialsComponent } from './Modules/landingModule/viewModel/testimonials.component';
-import { MisionesComponent } from './Modules/landingModule/viewModel/misiones.component';
+import { MisionesComponent } from './Modules/Misiones/viewModel/misiones.component';
 import { FooterComponent } from './shared/components/viewModel/footer.component';
 import { LoginComponent } from './Modules/authenticationModule/viewModel/login.component';
 import { TokenService } from './Modules/authenticationModule/model/services/token.service';
@@ -33,7 +33,15 @@ import { DashboardOrganizationComponent } from './Modules/Organization/viewModel
 import { PerfilComponent } from './Modules/Volunteer/viewModel/perfil.component';
 import { PerfilOComponent } from './Modules/Organization/viewModel/perfil-o.component';
 import { registerLocaleData } from '@angular/common';
-import localeEs from '@angular/common/locales/es'; // IMPORTA EL LOCALE ESPAÑOL
+import { CommonModule } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+import { DetallesMComponent } from './Modules/Misiones/viewModel/detalles-m.component';
+import { EditMComponent } from './Modules/Misiones/viewModel/edit-m.component';
+import { CalendarAComponent } from './Modules/Misiones/viewModel/calendar-a.component'; // IMPORTA EL LOCALE ESPAÑOL
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { DetallesAComponent } from './Modules/Misiones/viewModel/detalles-a.component';
+import { EditAComponent } from './Modules/Misiones/viewModel/edit-a.component'; // FullCalendar
+
 
 
 registerLocaleData(localeEs, 'es');
@@ -46,7 +54,6 @@ registerLocaleData(localeEs, 'es');
     AboutComponent,
     BenefitsComponent,
     TestimonialsComponent,
-    MisionesComponent,
     FooterComponent,
     LoginComponent,
     AuthComponent,
@@ -59,6 +66,12 @@ registerLocaleData(localeEs, 'es');
     DashboardOrganizationComponent,
     PerfilComponent,
     PerfilOComponent,
+    MisionesComponent,
+    DetallesMComponent,
+    EditMComponent,
+    CalendarAComponent,
+    DetallesAComponent,
+    EditAComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +82,9 @@ registerLocaleData(localeEs, 'es');
     NgMultiSelectDropDownModule.forRoot(),
     DataTablesModule,
     NgApexchartsModule,
-    HttpClientModule
+    HttpClientModule,
+    CommonModule,
+    FullCalendarModule
   ],
   providers: [
     TokenService,

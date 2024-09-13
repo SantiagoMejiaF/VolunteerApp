@@ -1,0 +1,51 @@
+.btn-secondary {
+    font-family: "Quicksand", sans-serif;
+    background-color:#0ecc95;
+    border: 2px; 
+    padding: 8px 15px;
+    color: white;
+    font-size: 14px;
+    border-radius: 15px;
+    transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+    margin-top: 10px;
+    margin-left: 12px;
+    font-weight: 500;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #09ad7f; 
+    color: white; 
+  }
+  
+  .btn-secondary:focus {
+    outline: none;
+  }
+
+  .btn-a {
+    font-family: "Quicksand", sans-serif;
+    background-color:#ED4B4B;
+    border: 2px; 
+    padding: 8px 15px;
+    color: white;
+    font-size: 14px;
+    border-radius: 15px;
+    transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+    margin-top: 10px;
+    margin-left: 12px;
+    font-weight: 500;
+  }
+  
+  .btn-a:hover {
+    background-color: #BC2C2C; 
+    color: white; 
+  }
+  
+  .btn-a:focus {
+    outline: none;
+  }
+
+  h3{
+    color:#186DDE;
+    font-weight: 600; 
+    font-size: 2rem;
+}
