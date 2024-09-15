@@ -50,7 +50,8 @@ export class FormsOrganizacionComponent implements OnInit {
       sectorTypeEnum: '',
       volunteeringTypeEnum: '',
       nit: '',
-      address: ''
+      address: '',
+      requiredCertificationHours: 100
     };
   }
 
@@ -157,6 +158,7 @@ export class FormsOrganizacionComponent implements OnInit {
       volunteeringTypeEnum: this.myForm.get('volunteeringTypeEnum')?.value.map((item: Elements) => item.item_text).join(', '),
       nit: this.myForm.get('nit')?.value,
       address: this.myForm.get('address')?.value,
+      requiredCertificationHours: 100
     };
     console.log('Datos que se enviarán:', JSON.stringify(this.organizationData, null, 2));
   }

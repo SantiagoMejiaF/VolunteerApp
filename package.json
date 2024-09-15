@@ -35,6 +35,7 @@
     "ng-multiselect-dropdown": "^1.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "volunteer-app": "file:",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {

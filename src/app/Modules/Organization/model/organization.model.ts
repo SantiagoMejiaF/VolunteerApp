@@ -8,4 +8,5 @@ export interface Organization {
     volunteeringTypeEnum: string;
     nit: string;
     address: string;
+    requiredCertificationHours: number;
 }

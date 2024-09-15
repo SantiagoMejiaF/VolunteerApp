@@ -1,10 +1,12 @@
 export interface Volunteer {
     userId: number;
+    visibility: string;
     personalInformation: {
         identificationCard: string;
         phoneNumber: string;
         address: string;
         bornDate: string;
+        personalDescription: string;
     };
     volunteeringInformation: {
         availabilityDaysList: string[];

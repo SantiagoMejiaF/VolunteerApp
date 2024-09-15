@@ -51,11 +51,13 @@ export class FormsVolunteerComponent implements OnInit {
 
     this.volunteerData = {
       userId: 0,
+      visibility: 'PUBLICA', // Valor predeterminado
       personalInformation: {
         identificationCard: '',
         phoneNumber: '',
         address: '',
-        bornDate: ''
+        bornDate: '',
+        personalDescription: '' // Valor predeterminado como cadena vacía
       },
       volunteeringInformation: {
         availabilityDaysList: [],
@@ -188,11 +190,13 @@ export class FormsVolunteerComponent implements OnInit {
   setVolunteerData() {
     this.volunteerData = {
       userId: JSON.parse(localStorage.getItem('userInfo')!).id,
+      visibility: 'PUBLICA',
       personalInformation: {
         identificationCard: this.myForm.get('dni')?.value,
         phoneNumber: this.myForm.get('cell')?.value,
         address: this.myForm.get('address')?.value,
-        bornDate: this.myForm.get('bornDate')?.value
+        bornDate: this.myForm.get('bornDate')?.value,
+        personalDescription: 'Mi descripción'
       },
       volunteeringInformation: {
         availabilityDaysList: this.myForm.get('days')?.value.map((item: Elements) => item.item_text),
@@ -209,6 +213,7 @@ export class FormsVolunteerComponent implements OnInit {
     };
     console.log('Datos que se enviarán:', JSON.stringify(this.volunteerData, null, 2));
   }
+
 
   onSubmit() {
     this.volunteerService.createVolunteer(this.volunteerData).subscribe(

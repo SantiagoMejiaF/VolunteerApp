@@ -20,7 +20,11 @@ h1 {
     font-size: 1.5rem;
 }
 
-body,span,.sidebar-footer a, li a, .d-flex .sidebar-logo a{
+body,
+span,
+.sidebar-footer a,
+li a,
+.d-flex .sidebar-logo a {
     font-family: 'Poppins', sans-serif;
     color: #292C32;
 }
@@ -36,15 +40,15 @@ body,span,.sidebar-footer a, li a, .d-flex .sidebar-logo a{
 #sidebar {
     width: 70px;
     min-width: 70px;
-    height: 100vh; 
-    position: fixed; 
+    height: 100vh;
+    position: fixed;
     top: 0;
     left: 0;
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    z-index: 1000; 
-    transition: all .25s ease-in-out; 
+    z-index: 1000;
+    transition: all .25s ease-in-out;
 }
 
 
@@ -55,18 +59,18 @@ body,span,.sidebar-footer a, li a, .d-flex .sidebar-logo a{
 
 
 .main {
-    margin-left: 70px; 
+    margin-left: 70px;
     min-height: 100vh;
-    width: calc(100% - 70px); 
+    width: calc(100% - 70px);
     overflow: hidden;
-    transition: margin-left 0.35s ease-in-out; 
+    transition: margin-left 0.35s ease-in-out;
     background-color: #f1f1f2;
 }
 
 
-#sidebar.expand ~ .main {
+#sidebar.expand~.main {
     margin-left: 70px;
-    width: calc(100% - 70px); 
+    width: calc(100% - 70px);
 }
 
 
@@ -109,6 +113,13 @@ a.sidebar-link {
     font-size: 0.9rem;
     white-space: nowrap;
     border-left: 3px solid transparent;
+}
+
+.sidebar-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
 }
 
 .sidebar-link i {
@@ -174,16 +185,22 @@ a.sidebar-link:hover {
 .logo-img {
     width: 200px;
     height: auto;
-    margin-left: auto; /* Mover el logo al lado derecho */
-    margin-right: 20px; /* Espacio entre el logo y el contenido */
+    margin-left: auto;
+    /* Mover el logo al lado derecho */
+    margin-right: 20px;
+    /* Espacio entre el logo y el contenido */
 }
-#nav img{
+
+#nav img {
     width: 80px;
     height: auto;
 }
-.contenido {
-    width: 100%; /* Asegúrate de que el contenido use el ancho disponible */
-    padding: 20px; /* Ajusta el padding si es necesario */
-    box-sizing: border-box; /* Incluye padding y bordes en el ancho total */
-}
 
+.contenido {
+    width: 100%;
+    /* Asegúrate de que el contenido use el ancho disponible */
+    padding: 20px;
+    /* Ajusta el padding si es necesario */
+    box-sizing: border-box;
+    /* Incluye padding y bordes en el ancho total */
+}

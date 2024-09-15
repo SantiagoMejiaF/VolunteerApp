@@ -80,8 +80,8 @@
         <h6>Celular: {{ selectedUser?.personalInformation?.phoneNumber }}</h6>
       </div>
       <div class="modal-footer">
-        <button type="button" class="aceptar" data-bs-dismiss="modal">Aceptar</button>
-        <button type="button" class="rechazar">Rechazar</button>
+        <button type="button" class="aceptar" (click)="acceptUser()" data-bs-dismiss="modal">Aceptar</button>
+        <button type="button" class="rechazar" (click)="rejectUser()" data-bs-dismiss="modal">Rechazar</button>
       </div>
     </div>
   </div>
