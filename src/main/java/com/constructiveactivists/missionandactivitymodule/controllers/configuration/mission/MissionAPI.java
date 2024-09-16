@@ -39,4 +39,11 @@ public interface MissionAPI {
     })
     @GetMapping
     ResponseEntity<List<MissionEntity>> getAllMissions();
+
+    @Operation(summary = "Obtener todas las misiones de una organización.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/organization/{organizationId}")
+    ResponseEntity<List<MissionEntity>> getMissionsByOrganizationId(@PathVariable Integer organizationId);
 }

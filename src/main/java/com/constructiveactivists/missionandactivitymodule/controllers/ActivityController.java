@@ -60,4 +60,10 @@ public class ActivityController implements ActivityAPI {
         headers.setContentType(MediaType.IMAGE_PNG);
         return new ResponseEntity<>(qrCode, headers, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<List<ActivityEntity>> getActivitiesByMissionId(@PathVariable Integer missionId) {
+        List<ActivityEntity> activities = activityService.getActivitiesByMissionId(missionId);
+        return ResponseEntity.ok(activities);
+    }
 }

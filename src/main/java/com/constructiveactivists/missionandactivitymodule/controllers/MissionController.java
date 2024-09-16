@@ -42,4 +42,10 @@ public class MissionController implements MissionAPI {
         MissionEntity createdMission = missionService.save(missionMapper.toDomain(missionRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdMission);
     }
+
+    @Override
+    public ResponseEntity<List<MissionEntity>> getMissionsByOrganizationId(@PathVariable Integer organizationId) {
+        List<MissionEntity> missions = missionService.getMissionsByOrganizationId(organizationId);
+        return ResponseEntity.ok(missions);
+    }
 }

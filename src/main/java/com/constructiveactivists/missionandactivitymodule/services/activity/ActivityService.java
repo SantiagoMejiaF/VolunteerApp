@@ -81,4 +81,8 @@ public class ActivityService {
         return qrCodeService.generateCheckOutQrCode(activityId);
     }
 
+    public List<ActivityEntity> getActivitiesByMissionId(Integer missionId) {
+        return activityRepository.findByMissionId(missionId);
+    }
+
 }
