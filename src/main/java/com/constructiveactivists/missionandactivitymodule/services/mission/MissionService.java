@@ -1,5 +1,6 @@
 package com.constructiveactivists.missionandactivitymodule.services.mission;
 
+import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.repositories.MissionRepository;
@@ -36,4 +37,9 @@ public class MissionService {
     public List<MissionEntity> getAllMisions() {
         return missionRepository.findAll();
     }
+
+    public List<MissionEntity> getMissionsByOrganizationId(Integer organizationId) {
+        return missionRepository.findByOrganizationId(organizationId);
+    }
+
 }
