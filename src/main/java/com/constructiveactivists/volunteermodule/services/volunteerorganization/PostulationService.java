@@ -12,10 +12,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 
 import static com.constructiveactivists.configurationmodule.constants.AppConstants.POSTULATION_NOT_FOUND;
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.ZONE_PLACE;
 
 @Service
 @AllArgsConstructor
@@ -29,7 +32,8 @@ public class PostulationService {
         PostulationEntity postulationEntity = new PostulationEntity();
         postulationEntity.setVolunteerOrganizationId(volunteerOrganizationId);
         postulationEntity.setStatus(OrganizationStatusEnum.PENDIENTE);
-        postulationEntity.setRegistrationDate(LocalDate.now());
+        ZonedDateTime bogotaDateTime = ZonedDateTime.now(ZoneId.of(ZONE_PLACE));
+        postulationEntity.setRegistrationDate(bogotaDateTime.toLocalDate());
         return postulationRepository.save(postulationEntity);
     }
 
