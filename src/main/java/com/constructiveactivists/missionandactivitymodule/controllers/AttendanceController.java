@@ -67,8 +67,12 @@ public class AttendanceController {
     private String buildHtmlCheckInMessage(boolean success, Integer activityId, String errorMessage) {
         String backgroundColor = success ? "#1E1450" : "#ED4B4B";
         String statusMessage = success ? "Check-in Registrado Exitosamente" : "Error al Procesar el Check-in";
+        String imageName = success ? "request-accepted.png" : "request-rejected.png";
 
-        // Asignar el mensaje de cuerpo basado en si es un éxito o error
+        // URL para acceder a la imagen en el directorio estático
+        String imageUrl = "/utils/" + imageName;
+
+        // Mensaje del cuerpo basado en si es un éxito o error
         String bodyMessage;
         if (success) {
             bodyMessage = "El check-in para la actividad con ID " + activityId + " ha sido registrado exitosamente.";
@@ -81,15 +85,17 @@ public class AttendanceController {
                         "<body style='font-family: Inter, sans-serif; color: #000000;'>" +
                         "<div style='background-color: %s; padding: 30px 10px; text-align: center; color: white;'>" +
                         "<span style='font-size: 28px; font-weight: bold;'>%s</span>" +
+                        "<br><img src='%s' alt='Check-in Status' style='display: block; margin: 20px auto; width: 50px;'>" +
                         "</div>" +
                         "<p style='color: #000000;'>%s</p>" +
                         "<p style='color: #000000;'>Atentamente,</p>" +
                         "<p style='font-weight: bold; color: #000000;'>Volunteer App</p>" +
                         "</body>" +
                         "</html>",
-                backgroundColor, statusMessage, bodyMessage
+                backgroundColor, statusMessage, imageUrl, bodyMessage
         );
     }
+
 
 
 
