@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("${request-mapping.controller.review}")
@@ -26,9 +28,15 @@ public class ReviewController implements ReviewAPI {
     @Override
     public ResponseEntity<ReviewEntity> createReviewForActivity(
             @RequestParam("activityId") Integer activityId,
-            @Valid @RequestBody ReviewRequest reviewRequest) {
+            @RequestParam("description") String description,
+            @RequestParam("imageUrls") List<String> imageUrls) {
 
         try {
+            // Crear el ReviewRequest manualmente ya que no usamos @RequestBody con GET
+            ReviewRequest reviewRequest = new ReviewRequest();
+            reviewRequest.setDescription(description);
+            reviewRequest.setImageUrls(imageUrls);
+
             ReviewEntity createdReview = reviewService.createReviewForActivity(activityId, reviewMapper.toDomain(reviewRequest));
             return ResponseEntity.status(HttpStatus.CREATED).body(createdReview);
         } catch (EntityNotFoundException e) {
