@@ -67,10 +67,7 @@ public class AttendanceController {
     private String buildHtmlCheckInMessage(boolean success, Integer activityId, String errorMessage) {
         String backgroundColor = success ? "#1E1450" : "#ED4B4B";
         String statusMessage = success ? "Check-in Registrado Exitosamente" : "Error al Procesar el Check-in";
-        String imageName = success ? "request-accepted.png" : "request-rejected.png";
-
-        // URL para acceder a la imagen en el directorio estático
-        String imageUrl = "/utils/" + imageName;
+        String imageUrl = success ? "https://static.vecteezy.com/system/resources/previews/004/459/449/non_2x/email-confirmation-color-icon-e-mail-approval-response-hiring-letter-email-with-check-mark-employment-verification-letter-isolated-illustration-vector.jpg" : "https://e7.pngegg.com/pngimages/133/899/png-clipart-computer-icons-agar-io-access-denied-logo-shield-thumbnail.png";
 
         // Mensaje del cuerpo basado en si es un éxito o error
         String bodyMessage;
@@ -95,6 +92,7 @@ public class AttendanceController {
                 backgroundColor, statusMessage, imageUrl, bodyMessage
         );
     }
+
 
 
 
