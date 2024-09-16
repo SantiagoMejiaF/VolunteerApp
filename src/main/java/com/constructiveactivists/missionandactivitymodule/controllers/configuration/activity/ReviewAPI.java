@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 @Tag(name = "Módulo de Misiones y Actividades", description = "Servicios relacionados con la gestión de misiones y actividades en la aplicación.")
 public interface ReviewAPI {
 
@@ -20,8 +22,9 @@ public interface ReviewAPI {
             @ApiResponse(responseCode = "400", description = "Solicitud inválida"),
             @ApiResponse(responseCode = "404", description = "Actividad no encontrada")
     })
-    @PostMapping("/review")
+    @GetMapping("/review")
     ResponseEntity<ReviewEntity> createReviewForActivity(
             @RequestParam("activityId") Integer activityId,
-            @Valid @RequestBody ReviewRequest reviewRequest);
+            @RequestParam("description") String description,
+            @RequestParam("imageUrls") List<String> imageUrls);
 }
