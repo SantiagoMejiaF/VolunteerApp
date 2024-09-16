@@ -81,6 +81,12 @@ public class AttendanceService {
         VolunteerOrganizationEntity volunteerOrganizationEntity = volunteerOrganizationService.findByVolunteerIdAndOrganizationId(volunteerEntity.getId(), missionEntity.getOrganizationId());
 
         PostulationEntity postulationEntity = postulationService.findById(volunteerOrganizationEntity.getId());
+
+        attendanceRepository.findByActivityIdAndVolunteerId(activityId, volunteerEntity.getId())
+                .ifPresent(attendance -> {
+                    throw new AttendanceException("Check-in esta registrado");
+                });
+
         postulationService.addTimeToPostulation(postulationEntity.getVolunteerOrganizationId(), activityEntity.getRequiredHours());
         ZoneId colombiaZoneId = ZoneId.of(ZONE_PLACE);
         ZonedDateTime nowInColombia = ZonedDateTime.now(colombiaZoneId);
@@ -112,6 +118,10 @@ public class AttendanceService {
 
         if (attendance.getCheckInTime() == null) {
             throw new AttendanceException("Check-in not registered, cannot perform check-out");
+        }
+
+        if (attendance.getCheckOutTime() != null) {
+            throw new AttendanceException("Check-out esta registrado");
         }
 
         // Validar el tiempo de check-out
