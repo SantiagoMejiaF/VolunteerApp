@@ -2,6 +2,7 @@ package com.constructiveactivists.volunteermodule.services.volunteerorganization
 
 
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.OrganizationStatusEnum;
+import com.constructiveactivists.volunteermodule.entities.volunteerorganization.DataShareVolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermodule.repositories.PostulationRepository;
@@ -14,12 +15,15 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.POSTULATION_NOT_FOUND;
+
 @Service
 @AllArgsConstructor
 public class PostulationService {
 
     private final PostulationRepository postulationRepository;
     private final VolunteerOrganizationRepository volunteerOrganizationRepository;
+    private final DataShareVolunteerOrganizationService dataShareVolunteerOrganizationService;
 
     public PostulationEntity addPostulationPending(Integer volunteerOrganizationId) {
         PostulationEntity postulationEntity = new PostulationEntity();
@@ -31,7 +35,7 @@ public class PostulationService {
 
     public void updateStatusAccept(Integer volunteerOrganizationId) {
         PostulationEntity postulation = postulationRepository.findById(volunteerOrganizationId)
-                .orElseThrow(() -> new EntityNotFoundException("Registro no encontrado con ID: " + volunteerOrganizationId));
+                .orElseThrow(() -> new EntityNotFoundException(POSTULATION_NOT_FOUND + volunteerOrganizationId));
         postulation.setRegistrationDate(LocalDate.now());
         postulation.setStatus(OrganizationStatusEnum.ACEPTADO);
         postulationRepository.save(postulation);
@@ -50,7 +54,7 @@ public class PostulationService {
 
     public PostulationEntity findById(Integer volunteerOrganizationId) {
         return postulationRepository.findById(volunteerOrganizationId)
-                .orElseThrow(() -> new EntityNotFoundException("Registro no encontrado con ID: " + volunteerOrganizationId));
+                .orElseThrow(() -> new EntityNotFoundException(POSTULATION_NOT_FOUND  + volunteerOrganizationId));
     }
 
     public List<PostulationEntity> getPostulationsByDateRange(LocalDate startDate, LocalDate endDate) {
@@ -59,6 +63,16 @@ public class PostulationService {
 
     public List<PostulationEntity> findAll() {
         return postulationRepository.findAll();
+    }
+
+    public void addTimeToPostulation(Integer volunteerOrganizationId, Integer hours) {
+        PostulationEntity postulation = postulationRepository.findById(volunteerOrganizationId)
+                .orElseThrow(() -> new EntityNotFoundException(POSTULATION_NOT_FOUND + volunteerOrganizationId));
+        DataShareVolunteerOrganizationEntity datashare = dataShareVolunteerOrganizationService.findById(postulation.getVolunteerOrganizationId());
+        datashare.setHoursDone(datashare.getHoursDone() + hours);
+        datashare.setHoursCertified(datashare.getHoursCertified() + hours);
+        datashare.setMonthlyHours(datashare.getMonthlyHours() + hours);
+        postulationRepository.save(postulation);
     }
 
 }

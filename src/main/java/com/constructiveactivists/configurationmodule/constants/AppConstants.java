@@ -19,9 +19,12 @@ public final class AppConstants {
     public static final String USER_NOT_FOUND = "Usuario no encontrado";
     public static final String VOLUNTEER_NOT_FOUND = "Voluntario no encontrado";
     public static final String ACTIVITY_NOT_FOUND = "Actividad no encontrada";
+    public static final String POSTULATION_NOT_FOUND = "Postulación no encontrada";
+    public static final String MISSION_NOT_FOUND = "Misión no encontrada";
     public static final String ATTENDANCE_RECORD_NOT_FOUND = "Registro de asistencia no encontrado";
     public static final String CHECK_IN_SUCCESS = "Check-in registrado exitosamente.";
     public static final String CHECK_OUT_SUCCESS = "Check-out registrado exitosamente.";
+    public static final String ZONE_PLACE = "America/Bogota";
 
     public static final String EMAIL_TEMPLATE = "<html>" +
             "<body style='font-family: Inter, sans-serif; color: #000000;'>" +
