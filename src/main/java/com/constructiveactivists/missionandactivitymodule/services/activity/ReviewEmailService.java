@@ -21,16 +21,38 @@ public class ReviewEmailService {
     }
 
     private String buildHtmlForm(Integer activityId) {
-        return "<h2>Formulario de Reseña</h2>" +
-                "<form action=\"https://volunteer-app.online/api/v1/back-volunteer-app/reviews/review\" method=\"POST\" enctype=\"multipart/form-data\">" +
+        return "<!DOCTYPE html>" +
+                "<html>" +
+                "<head>" +
+                "<title>Formulario de Reseña</title>" +
+                "<script>" +
+                "function handleFileSelect(event) {" +
+                "    const file = event.target.files[0];" +
+                "    const reader = new FileReader();" +
+                "    reader.onloadend = function () {" +
+                "        const base64String = reader.result.split(',')[1];" +
+                "        document.getElementById('imageBase64').value = base64String;" +
+                "    };" +
+                "    reader.readAsDataURL(file);" +
+                "}" +
+                "</script>" +
+                "</head>" +
+                "<body>" +
+                "<h2>Formulario de Reseña</h2>" +
+                "<form action='https://volunteer-app.online/api/v1/back-volunteer-app/reviews/review' method='POST'>" +
                 "<input type='hidden' name='activityId' value='" + activityId + "'/>" +
                 "<label for='description'>Descripción:</label><br>" +
                 "<textarea id='description' name='description' required></textarea><br>" +
                 "<label for='image'>Subir Imagen:</label><br>" +
-                "<input type='file' id='image' name='image' accept='image/*'><br>" +
+                "<input type='file' id='image' name='image' accept='image/*' onchange='handleFileSelect(event)'><br>" +
+                "<input type='hidden' id='imageBase64' name='imageBase64'/>" +
                 "<button type='submit'>Enviar Reseña</button>" +
-                "</form>";
+                "</form>" +
+                "</body>" +
+                "</html>";
     }
+
+
 
 
     private void sendHtmlEmail(String to, String subject, String htmlContent) {
