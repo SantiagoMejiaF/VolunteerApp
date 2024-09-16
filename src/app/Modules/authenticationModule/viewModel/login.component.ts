@@ -3,6 +3,7 @@ import { SocialAuthService, SocialUser, FacebookLoginProvider } from '@abacritt/
 import { Router, ActivatedRoute } from '@angular/router';
 import { OauthService } from '../model/services/oauth.service';
 import { TokenService } from '../model/services/token.service';
+import { OrganizationService } from '../../Organization/model/services/organization.service';
 import { TokenDto } from '../model/token-dto';
 import { HttpClient } from '@angular/common/http';
 
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private oauthService: OauthService,
     private tokenService: TokenService,
+    private organizationService: OrganizationService,
     private http: HttpClient
   ) { }
 
@@ -62,7 +64,7 @@ export class LoginComponent implements OnInit {
                   this.tokenService.setToken(res.token);
                   localStorage.setItem('userInfo', JSON.stringify(res.user));
                   this.islogged = true;
-                  this.getRoleAndRedirect(res.user.role.roleType, res.user.authorizationType);
+                  this.getRoleAndRedirect(res.user.role.roleType, res.user.authorizationType, res.user.id);
                 },
                 (err) => {
                   this.logOut();
@@ -84,7 +86,7 @@ export class LoginComponent implements OnInit {
           this.tokenService.setToken(res.token); // Guardar el token por separado
           localStorage.setItem('userInfo', JSON.stringify(res.user)); // Guardar solo el objeto `user`
           this.islogged = true;
-          this.getRoleAndRedirect(res.user.role.roleType, res.user.authorizationType);
+          this.getRoleAndRedirect(res.user.role.roleType, res.user.authorizationType, res.user.id);
         },
         (err) => {
           this.logOut();
@@ -95,7 +97,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  getRoleAndRedirect(roleType: string | null, authorizationType: string): void {
+  getRoleAndRedirect(roleType: string | null, authorizationType: string, userId: number): void {
     if (!roleType) {
       alert('Ha ocurrido un error, por favor vuélvalo a intentar');
       this.logOut();
@@ -112,17 +114,34 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/forms']);
         break;
       case 'VOLUNTARIO':
+        if (authorizationType === 'PENDIENTE') {
+          this.loadPendingMessage();
+        } else if (authorizationType === 'AUTORIZADO') {
+          this.router.navigate(['/dashVolunteer']);
+        }
+        break;
       case 'ORGANIZACION':
         if (authorizationType === 'PENDIENTE') {
           this.loadPendingMessage();
         } else if (authorizationType === 'AUTORIZADO') {
-          this.router.navigate([roleType === 'VOLUNTARIO' ? '/dashVolunteer' : '/dashOrganization']);
+          this.organizationService.getOrganizationByUserId(userId).subscribe(
+            (orgDetails) => {
+              console.log('OrgId:', orgDetails.id);
+              localStorage.setItem('OrgId', orgDetails.id.toString());
+              this.router.navigate(['/dashOrganization']);
+            },
+            (error) => {
+              console.error('Error al obtener los detalles de la organización:', error);
+              this.logOut();
+            }
+          );
         }
         break;
       default:
         console.error('Unknown role type:', roleType);
     }
   }
+
 
 
   loadPendingMessage(): void {

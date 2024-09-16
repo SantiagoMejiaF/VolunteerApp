@@ -1,37 +1,54 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { MissionsService } from '../model/services/mission.service'; // Servicio para obtener los detalles
+import { Mission } from '../model/mission.model'; // Modelo de Misión
 
 @Component({
   selector: 'app-detalles-m',
   templateUrl: '../view/detalles-m.component.html',
-  styleUrl: '../../../styles/detalles-m.component.css'
+  styleUrls: ['../../../styles/detalles-m.component.css']
 })
-export class DetallesMComponent {
+export class DetallesMComponent implements OnInit {
   selectedSection: string = 'descripcion'; // Por defecto, la sección de Descripción está activa
-  currentContent: string = 'content1';
   isEditing = false;
-    // Datos de ejemplo (puedes reemplazar estos valores por los tuyos)
-    tipoMision = 'Educación';
-    fechaInicio = '1995-07-14';
-    fechaFin = '1995-07-24';
-    departamento = 'Cucuta';
-    descripcion = 'Lorem Ipsum es simplemente el texto de relleno...';
+  missionId: number | null = null; // Almacenar el id de la misión
+  missionDetails: Mission | null = null; // Almacenar los detalles de la misión
+
+  constructor(private route: ActivatedRoute, private missionsService: MissionsService) { }
+
+  ngOnInit(): void {
+    // Obtener el ID de la misión de los parámetros de la URL
+    this.route.queryParams.subscribe(params => {
+      this.missionId = +params['id']; // Obtener el 'id' como número
+      if (this.missionId) {
+        this.getMissionDetails(this.missionId); // Llamar al servicio para obtener detalles
+      }
+    });
+  }
+
+  // Llamar al servicio para obtener los detalles de la misión
+  getMissionDetails(id: number): void {
+    this.missionsService.getMissionById(id).subscribe(
+      (mission: Mission) => {
+        this.missionDetails = mission;
+        console.log('Detalles de la misión cargada:', this.missionDetails);
+      },
+      (error) => {
+        console.error('Error al cargar los detalles de la misión:', error);
+      }
+    );
+  }
+
   // Función para cambiar la sección activa
-  selectSection(section: string) {
+  selectSection(section: string): void {
     this.selectedSection = section;
   }
 
-  showContent(contentId: string) {
-    this.currentContent = contentId;
-  }
-  constructor(private router: Router) { }
-
-  
-  toggleEdit() {
+  toggleEdit(): void {
     this.isEditing = !this.isEditing;
   }
 
-  save() {
+  save(): void {
     // Aquí puedes manejar la lógica de guardar los cambios
     this.isEditing = false;
   }

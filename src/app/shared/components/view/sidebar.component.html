@@ -33,30 +33,37 @@
                     <span>Tablero de Control</span>
                 </a>
             </li>
-            <li class="sidebar-item" *ngIf="role === 'VOLUNTARIO'">
+
+
+            <!-- Para ORGANIZACION -->
+            <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
+                <a [routerLink]="'/gestion-users'" class="sidebar-link" title="Inicio">
+                    <img src="assets/img/iInicio.png" alt="iInicio Icon" class="sidebar-icon">
+                    <span>Inicio</span>
+                </a>
+            </li>
+            <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
+                <a [routerLink]="'/dashOrganization'" class="sidebar-link">
+                    <i class="bi bi-columns-gap" style="font-size: 1.5rem; color: #292C32;"></i>
+                    <span>Tablero de Control</span>
+                </a>
+            </li>
+            <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
                 <a [routerLink]="'/gestion-users'" class="sidebar-link" title="Coordinadores">
                     <img src="assets/img/iCoordinadores.svg" alt="iCoordinadores Icon" class="sidebar-icon">
                     <span>Coordinadores</span>
                 </a>
             </li>
-            <li class="sidebar-item" *ngIf="role === 'VOLUNTARIO'">
+            <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
                 <a [routerLink]="'/gestion-users'" class="sidebar-link" title="Voluntarios">
                     <img src="assets/img/iVoluntarios.png" alt="iVoluntarios Icon" class="sidebar-icon">
                     <span>Voluntarios</span>
                 </a>
             </li>
-            <li class="sidebar-item" *ngIf="role === 'VOLUNTARIO'">
-                <a [routerLink]="'/gestion-users'" class="sidebar-link" title="Misiones">
+            <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
+                <a [routerLink]="'/misiones'" class="sidebar-link" title="Misiones">
                     <img src="assets/img/iMisiones.png" alt="iMisiones Icon" class="sidebar-icon">
                     <span>Misiones</span>
-                </a>
-            </li>
-
-            <!-- Para ORGANIZACION -->
-            <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
-                <a [routerLink]="'/dashOrganization'" class="sidebar-link">
-                    <i class="bi bi-columns-gap" style="font-size: 1.5rem; color: #292C32;"></i>
-                    <span>Tablero de Control</span>
                 </a>
             </li>
         </ul>

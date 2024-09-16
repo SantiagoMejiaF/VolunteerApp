@@ -41,4 +41,8 @@ export class OrganizationService {
   updateOrganization(id: number, organizationData: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/organizations/${id}`, organizationData, cabecera);
   }
+
+  getOrganizationByUserId(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/organizations/user/${userId}`);
+  }
 }

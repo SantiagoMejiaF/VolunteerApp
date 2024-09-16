@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MissionsService } from '../model/services/mission.service';
+import { Mission } from '../model/mission.model';
 
 @Component({
   selector: 'app-misiones',
@@ -8,19 +10,32 @@ import { Router } from '@angular/router';
 })
 export class MisionesComponent implements OnInit {
   selectedMission: any = {};
-  data: any[] = [];
+  data: Mission[] = [];
 
-  constructor(private router: Router) {}
-  
+  constructor(private router: Router, private missionsService: MissionsService) { }
+
   ngOnInit(): void {
-    // Crear una lista de misiones directamente en el archivo para probar
-    this.data = [
-      { id: 1, name: 'Misión A', startDate: '2023-09-01', endDate: '2023-09-30', department: 'Cundinamarca', visibility: 'Pública', status: 'Activa' },
-      { id: 2, name: 'Misión B', startDate: '2023-10-01', endDate: '2023-10-15', department: 'Antioquia', visibility: 'Privada', status: 'Cancelada' },
-      { id: 3, name: 'Misión C', startDate: '2023-11-01', endDate: '2023-11-20', department: 'Valle del Cauca', visibility: 'Pública', status: 'Completada' }
-    ];
-    console.log('Misiones generadas:', this.data);
-    this.initializeDataTable();
+    const orgId = localStorage.getItem('OrgId');
+    if (orgId) {
+      this.loadMissions(parseInt(orgId));
+    } else {
+      console.error('OrgId no encontrado en el localStorage');
+    }
+  }
+
+  // Método para cargar las misiones de la organización
+  loadMissions(orgId: number): void {
+    this.missionsService.getMissionsByOrganization(orgId).subscribe(
+      (missions) => {
+        // Asignar el status por defecto a cada misión
+        this.data = missions.map(mission => ({ ...mission, status: 'Activa' }));
+        console.log('Misiones cargadas:', this.data);
+        this.initializeDataTable();
+      },
+      (error) => {
+        console.error('Error al cargar misiones:', error);
+      }
+    );
   }
 
   // Inicializar DataTable
@@ -34,7 +49,7 @@ export class MisionesComponent implements OnInit {
         scrollX: true,
         columns: [
           { data: 'id' },
-          { data: 'name' },
+          { data: 'title' },
           { data: 'startDate' },
           { data: 'endDate' },
           { data: 'department' },
@@ -43,27 +58,23 @@ export class MisionesComponent implements OnInit {
             data: 'status',
             render: function (data, type, row) {
               if (type === 'display') {
-                let bgColor = '';
-                let textColor = '';
+                let bgColor = 'lightyellow';
+                let textColor = '#ADBF38';
 
-                // Modificar los colores dependiendo del estado
                 if (data === 'Completada') {
                   bgColor = 'rgba(82, 243, 101, 0.1)';
                   textColor = '#1CC52A';
-                } else if (data === 'Activa') {
-                  bgColor = 'lightyellow';
-                  textColor = '#ADBF38';
                 } else if (data === 'Cancelada') {
                   bgColor = '#FEEEEE';
                   textColor = '#F35252';
                 }
 
-                // Retornar el elemento con estilo inline
-                return `<span style="background-color:${bgColor}; color:${textColor}; padding: 4px 8px; border-radius: 12px; display: inline-block;">${data}</span>`;              }
+                return `<span style="background-color:${bgColor}; color:${textColor}; padding: 4px 8px; border-radius: 12px; display: inline-block;">${data}</span>`;
+              }
               return data;
             }
           },
-          {data: 'accion'}
+          { data: 'accion' }
         ],
         language: {
           info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
@@ -77,14 +88,15 @@ export class MisionesComponent implements OnInit {
     }, 1);
   }
 
+  // Método para abrir el modal de detalles de la misión
   openModal(mission: any) {
-    this.selectedMission = mission; // Cargar los datos de la misión seleccionada en el modal
+    this.selectedMission = mission;
     console.log('Misión seleccionada:', this.selectedMission);
   }
-  details(mission: any) {
-    this.selectedMission = mission;
-    console.log('Misión seleccionada:', mission);
-    this.router.navigate(['/detallesM']); // Navega a la ruta de detalles
+
+  // Método para manejar los detalles de la misión
+  details(mission: Mission): void {
+    console.log('Detalles de la misión seleccionada:', mission);
+    this.router.navigate(['/detallesM'], { queryParams: { id: mission.id } });
   }
-  
 }

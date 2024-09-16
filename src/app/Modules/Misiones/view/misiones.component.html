@@ -1,64 +1,65 @@
 <div class="container ">
     <div class="row">
-      <div class="col text-center" id="tittle">
-          <h1>Misiones</h1>
-      </div>
-    </div>
-    <div class="row">
-        
-        <div class="col" id="tittle1">
-            <div class="text-right">
-                <button  data-bs-toggle="modal" data-bs-target="#VolunteerModal" id="Crear"><i class="bi bi-plus-circle mr-2"></i>Crear Misión</button>
-              </div>
-              
-            <div class="table-container">
-                
-                <table class="table  table-bordered table-sm row-border hover" id="datatableexample">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Nombre Misión</th>
-                      <th>Fecha inicio</th>
-                      <th>Fecha fin</th>
-                      <th>Departamento</th>
-                      <th>Visibilidad</th>
-                      <th>Status</th>
-                      <th>Accion</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      <tr *ngFor="let mision of data">
-                        <td>{{ mision.id }}</td>
-                        <td>{{ mision.name}}</td>
-                        <td>{{ mision.startDate }}</td>
-                        <td>{{ mision.endDate }}</td>
-                        <td>{{ mision.department }}</td>
-                        <td>{{ mision.visibility }}</td>
-                        <td>{{ mision.status }}</td>
-                        <td>
-                            <a [routerLink]="['/detallesM']" style="border: none; background: none;">
-                                <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;" 
-                                  onmouseover="this.style.color='#186dde';" 
-                                  onmouseout="this.style.color='#80777c';"></i>
-                              </a>
-                          <button style="border: none; background: none;">
-                            <i class="bi bi-trash3" style="font-size: 1.1rem; color: #000000;" onmouseover="this.style.color='#186dde';"
-                              onmouseout="this.style.color='#80777c';"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                    
-                </table>
-              </div>
+        <div class="col text-center" id="tittle">
+            <h1>Misiones</h1>
         </div>
     </div>
-    
-  </div>
-  
+    <div class="row">
 
-  <!-- Modal Voluntario -->
-  <div class="modal fade" id="VolunteerModal" tabindex="-1" aria-labelledby="VolunteerModalLabel" aria-hidden="true">
+        <div class="col" id="tittle1">
+            <div class="text-right">
+                <button data-bs-toggle="modal" data-bs-target="#VolunteerModal" id="Crear">
+                    <i class="bi bi-plus-circle mr-2"></i>Crear Misión
+                </button>
+            </div>
+
+            <div class="table-container">
+
+                <table class="table table-bordered table-sm row-border hover" id="datatableexample">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre Misión</th>
+                            <th>Fecha inicio</th>
+                            <th>Fecha fin</th>
+                            <th>Departamento</th>
+                            <th>Visibilidad</th>
+                            <th>Status</th>
+                            <th>Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let mision of data">
+                            <td>{{ mision.id }}</td>
+                            <td>{{ mision.title }}</td>
+                            <td>{{ mision.startDate }}</td>
+                            <td>{{ mision.endDate }}</td>
+                            <td>{{ mision.department }}</td>
+                            <td>{{ mision.visibility }}</td>
+                            <td>{{ mision.status }}</td>
+                            <td>
+                                <a [routerLink]="['/detallesM']" [queryParams]="{ id: mision.id }"
+                                    style="border: none; background: none;">
+                                    <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
+                                        onmouseover="this.style.color='#186dde';"
+                                        onmouseout="this.style.color='#80777c';"></i>
+                                </a>
+                                <button style="border: none; background: none;">
+                                    <i class="bi bi-trash3" style="font-size: 1.1rem; color: #000000;"
+                                        onmouseover="this.style.color='#186dde';"
+                                        onmouseout="this.style.color='#80777c';"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Crear una nueva Misión -->
+<div class="modal fade" id="VolunteerModal" tabindex="-1" aria-labelledby="VolunteerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -81,13 +82,15 @@
                     <!-- Título -->
                     <div class="mb-3">
                         <label for="title" class="form-label">Título</label>
-                        <input type="text" id="title" class="form-control custom-input" placeholder="Escribe el título de la misión">
+                        <input type="text" id="title" class="form-control custom-input"
+                            placeholder="Escribe el título de la misión">
                     </div>
 
                     <!-- Descripción -->
                     <div class="mb-3">
                         <label for="description" class="form-label">Descripción</label>
-                        <textarea id="description" class="form-control custom-input" rows="3" placeholder="Describe la misión"></textarea>
+                        <textarea id="description" class="form-control custom-input" rows="3"
+                            placeholder="Describe la misión"></textarea>
                     </div>
 
                     <!-- Fechas (Inicio y Fin) -->
@@ -105,11 +108,11 @@
                     <!-- Departamento -->
                     <div class="mb-3">
                         <label for="department" class="form-label">Departamento</label>
-                        <input type="text" id="department" class="form-control custom-input" placeholder="Ingresa el departamento">
+                        <input type="text" id="department" class="form-control custom-input"
+                            placeholder="Ingresa el departamento">
                     </div>
 
-
-                    <!-- Requisitos para Voluntarios (Dropdown con selección múltiple) -->
+                    <!-- Requisitos para Voluntarios -->
                     <div class="mb-3">
                         <label for="volunteerRequirements" class="form-label">Requisitos para Voluntarios</label>
                         <select id="volunteerRequirements" class="form-select custom-select" multiple>
@@ -117,10 +120,11 @@
                             <option value="ACCESO_TRANSPORTE">Acceso a Transporte</option>
                             <option value="CERTIFICACION_MEDICA">Certificación Médica</option>
                         </select>
-                        <small class="form-text text-muted">Mantén presionada la tecla Ctrl (o Cmd en Mac) para seleccionar múltiples opciones.</small>
+                        <small class="form-text text-muted">Mantén presionada la tecla Ctrl (o Cmd en Mac) para
+                            seleccionar múltiples opciones.</small>
                     </div>
 
-                    <!-- Habilidades Requeridas (Dropdown con selección múltiple) -->
+                    <!-- Habilidades Requeridas -->
                     <div class="mb-3">
                         <label for="requiredSkills" class="form-label">Habilidades Requeridas</label>
                         <select id="requiredSkills" class="form-select custom-select" multiple>
@@ -129,10 +133,10 @@
                             <option value="LIDERAZGO">Liderazgo</option>
                             <option value="RESOLUCION_PROBLEMAS">Resolución de Problemas</option>
                         </select>
-                        <small class="form-text text-muted">Mantén presionada la tecla Ctrl (o Cmd en Mac) para seleccionar múltiples opciones.</small>
+                        <small class="form-text text-muted">Mantén presionada la tecla Ctrl (o Cmd en Mac) para
+                            seleccionar múltiples opciones.</small>
                     </div>
 
-                    
                     <!-- Visibilidad -->
                     <div class="form-check mb-3 ml-2">
                         <input class="form-check-input" type="checkbox" id="visibility" checked>
@@ -146,4 +150,3 @@
         </div>
     </div>
 </div>
-
