@@ -3,12 +3,17 @@ package com.constructiveactivists.missionandactivitymodule.services.mission;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionStatusEnum;
+import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionTypeEnum;
+import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VisibilityEnum;
+import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VolunteerMissionRequirementsEnum;
 import com.constructiveactivists.missionandactivitymodule.repositories.MissionRepository;
 import com.constructiveactivists.organizationmodule.services.organization.OrganizationService;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +45,26 @@ public class MissionService {
 
     public List<MissionEntity> getMissionsByOrganizationId(Integer organizationId) {
         return missionRepository.findByOrganizationId(organizationId);
+    }
+
+    public List<MissionTypeEnum> getMissionTypes() {
+        return Arrays.asList(MissionTypeEnum.values());
+    }
+
+    public List<VisibilityEnum> getVisibilityOptions() {
+        return Arrays.asList(VisibilityEnum.values());
+    }
+
+    public List<MissionStatusEnum> getMissionStatusOptions() {
+        return Arrays.asList(MissionStatusEnum.values());
+    }
+
+    public List<VolunteerMissionRequirementsEnum> getVolunteerRequirements() {
+        return Arrays.asList(VolunteerMissionRequirementsEnum.values());
+    }
+
+    public List<SkillEnum> getRequiredSkills() {
+        return Arrays.asList(SkillEnum.values());
     }
 
 }
