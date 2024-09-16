@@ -46,39 +46,52 @@ public class AttendanceController {
 
             attendanceService.handleCheckIn(email, activityId);
 
-            String successHtml = "<html>" +
-                    "<body>" +
-                    "<h1>Check-in Registrado Exitosamente</h1>" +
-                    "<p>El check-in para la actividad con ID " + activityId + " ha sido registrado exitosamente.</p>" +
-                    "</body>" +
-                    "</html>";
-
+            String successHtml = buildHtmlCheckInMessage(true, activityId, null);
             return ResponseEntity.ok()
                     .contentType(MediaType.TEXT_HTML)
                     .body(successHtml);
         } catch (AttendanceException e) {
             // HTML de error con el mensaje de la excepción
-            String errorHtml = "<html>" +
-                    "<body>" +
-                    "<h1>Error al Procesar el Check-in</h1>" +
-                    "<p>Hubo un error al procesar el check-in: " + escapeHtml(e.getMessage()) + "</p>" +
-                    "</body>" +
-                    "</html>";
+            String errorHtml = buildHtmlCheckInMessage(false, activityId, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .contentType(MediaType.TEXT_HTML)
                     .body(errorHtml);
         } catch (Exception e) {
-            String errorHtml = "<html>" +
-                    "<body>" +
-                    "<h1>Error al Procesar el Check-in</h1>" +
-                    "<p>Hubo un error al procesar el check-in. Por favor, intente de nuevo más tarde.</p>" +
-                    "</body>" +
-                    "</html>";
-            // Mensaje de error genérico
+            String errorHtml = buildHtmlCheckInMessage(false, activityId, "Hubo un error al procesar el check-in. Por favor, intente de nuevo más tarde.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .contentType(MediaType.TEXT_HTML)
-                    .body(errorHtml);        }
+                    .body(errorHtml);
+        }
     }
+
+    private String buildHtmlCheckInMessage(boolean success, Integer activityId, String errorMessage) {
+        String backgroundColor = success ? "#1E1450" : "#ED4B4B";
+        String statusMessage = success ? "Check-in Registrado Exitosamente" : "Error al Procesar el Check-in";
+
+        // Asignar el mensaje de cuerpo basado en si es un éxito o error
+        String bodyMessage;
+        if (success) {
+            bodyMessage = "El check-in para la actividad con ID " + activityId + " ha sido registrado exitosamente.";
+        } else {
+            bodyMessage = "Hubo un error al procesar el check-in: " + (errorMessage != null ? escapeHtml(errorMessage) : "Inténtelo nuevamente más tarde.");
+        }
+
+        return String.format(
+                "<html>" +
+                        "<body style='font-family: Inter, sans-serif; color: #000000;'>" +
+                        "<div style='background-color: %s; padding: 30px 10px; text-align: center; color: white;'>" +
+                        "<span style='font-size: 28px; font-weight: bold;'>%s</span>" +
+                        "</div>" +
+                        "<p style='color: #000000;'>%s</p>" +
+                        "<p style='color: #000000;'>Atentamente,</p>" +
+                        "<p style='font-weight: bold; color: #000000;'>Volunteer App</p>" +
+                        "</body>" +
+                        "</html>",
+                backgroundColor, statusMessage, bodyMessage
+        );
+    }
+
+
 
     private String escapeHtml(String text) {
         if (text == null) {
@@ -106,10 +119,51 @@ public class AttendanceController {
 
             // Registrar el check-out
             attendanceService.handleCheckOut(email, activityId);
-            return ResponseEntity.ok("Check-out registrado exitosamente.");
+
+            String successHtml = buildHtmlCheckOutMessage(true, activityId, null);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.TEXT_HTML)
+                    .body(successHtml);
+        } catch (AttendanceException e) {
+            String errorHtml = buildHtmlCheckOutMessage(false, activityId, e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .contentType(MediaType.TEXT_HTML)
+                    .body(errorHtml);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar el check-out.");
+            String errorHtml = buildHtmlCheckOutMessage(false, activityId, "Hubo un error al procesar el check-out. Por favor, intente de nuevo más tarde.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .contentType(MediaType.TEXT_HTML)
+                    .body(errorHtml);
         }
     }
+
+    private String buildHtmlCheckOutMessage(boolean success, Integer activityId, String errorMessage) {
+        String backgroundColor = success ? "#1E1450" : "#ED4B4B";
+        String statusMessage = success ? "Check-out Registrado Exitosamente" : "Error al Procesar el Check-out";
+
+        // Asignar el mensaje de cuerpo basado en si es un éxito o error
+        String bodyMessage;
+        if (success) {
+            bodyMessage = "El check-out para la actividad con ID " + activityId + " ha sido registrado exitosamente.";
+        } else {
+            bodyMessage = "Hubo un error al procesar el check-out: " + (errorMessage != null ? escapeHtml(errorMessage) : "Inténtelo nuevamente más tarde.");
+        }
+
+        return String.format(
+                "<html>" +
+                        "<body style='font-family: Inter, sans-serif; color: #000000;'>" +
+                        "<div style='background-color: %s; padding: 30px 10px; text-align: center; color: white;'>" +
+                        "<span style='font-size: 28px; font-weight: bold;'>%s</span>" +
+                        "</div>" +
+                        "<p style='color: #000000;'>%s</p>" +
+                        "<p style='color: #000000;'>Atentamente,</p>" +
+                        "<p style='font-weight: bold; color: #000000;'>Volunteer App</p>" +
+                        "</body>" +
+                        "</html>",
+                backgroundColor, statusMessage, bodyMessage
+        );
+    }
+
+
 
 }

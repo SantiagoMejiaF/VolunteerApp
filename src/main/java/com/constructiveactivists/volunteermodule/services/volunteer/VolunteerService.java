@@ -182,6 +182,27 @@ public class VolunteerService {
         }
     }
 
+    public void addVolunteerHours(Integer volunteerId, int hoursToAdd) {
+        VolunteerEntity volunteer = volunteerRepository.findById(volunteerId)
+                .orElseThrow(() -> new EntityNotFoundException("Volunteer not found with ID: " + volunteerId));
+
+        VolunteeringInformationEntity volunteeringInfo = volunteer.getVolunteeringInformation();
+        int updatedHours = volunteeringInfo.getVolunteeredTotalHours() + hoursToAdd;
+        volunteeringInfo.setVolunteeredTotalHours(updatedHours);
+        volunteerRepository.save(volunteer);
+    }
+
+    public void addVolunteerActivity(Integer volunteerId) {
+        VolunteerEntity volunteer = volunteerRepository.findById(volunteerId)
+                .orElseThrow(() -> new EntityNotFoundException("Volunteer not found with ID: " + volunteerId));
+
+        VolunteeringInformationEntity volunteeringInfo = volunteer.getVolunteeringInformation();
+        int updatedActivities = volunteeringInfo.getActivitiesCompleted() + 1;
+        volunteeringInfo.setActivitiesCompleted(updatedActivities);
+        volunteerRepository.save(volunteer);
+    }
+
+
     private void validateAge(LocalDate birthDate) {
         int age = calculateAge(birthDate);
         if (age < MINIMUM_AGE) {
