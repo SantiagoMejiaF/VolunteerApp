@@ -16,10 +16,6 @@ import java.util.List;
 public class ReviewRequest {
 
     @NotNull
-    @Comment("Id de la actividad a la que pertenece esta reseña")
-    private Integer activityId;
-
-    @NotNull
     @Comment("Descripción breve de la reseña")
     private String description;
 
