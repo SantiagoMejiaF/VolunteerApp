@@ -24,7 +24,17 @@ public class ReviewEmailService {
                 "<html>" +
                 "<head>" +
                 "<title>Formulario de Reseña</title>" +
-                "<script src='com/constructiveactivists/missionandactivitymodule/services/activity/form.js'></script>" +
+                "<script>" +
+                "function handleFileSelect(event) {" +
+                "    const file = event.target.files[0];" +
+                "    const reader = new FileReader();" +
+                "    reader.onloadend = function () {" +
+                "        const base64String = reader.result.split(',')[1];" +
+                "        document.getElementById('imageBase64').value = base64String;" +
+                "    };" +
+                "    reader.readAsDataURL(file);" +
+                "}" +
+                "</script>" +
                 "</head>" +
                 "<body>" +
                 "<h2>Formulario de Reseña</h2>" +
@@ -40,6 +50,7 @@ public class ReviewEmailService {
                 "</body>" +
                 "</html>";
     }
+
 
 
 
