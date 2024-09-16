@@ -29,6 +29,7 @@ public class ActivityService {
     private final ActivityRepository activityRepository;
     private final ActivityCoordinatorRepository activityCoordinatorRepository;
     private final QRCodeService qrCodeService;
+    private final ReviewEmailService reviewEmailService;
 
     public ActivityEntity save(ActivityEntity activity) {
 
@@ -57,6 +58,7 @@ public class ActivityService {
         volunteerGroupService.save(savedVolunteerGroup);
 
         activityRepository.save(activitySaved);
+        reviewEmailService.sendFormEmail(activitySaved.getPersonalDataCommunityLeaderEntity().getEmailCommunityLeader(), activitySaved.getId());
 
         return activitySaved;
     }

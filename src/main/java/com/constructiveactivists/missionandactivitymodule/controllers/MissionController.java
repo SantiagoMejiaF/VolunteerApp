@@ -3,8 +3,13 @@ package com.constructiveactivists.missionandactivitymodule.controllers;
 import com.constructiveactivists.missionandactivitymodule.controllers.configuration.mission.MissionAPI;
 import com.constructiveactivists.missionandactivitymodule.controllers.request.mission.MissionRequest;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
+import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionStatusEnum;
+import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionTypeEnum;
+import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VisibilityEnum;
+import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VolunteerMissionRequirementsEnum;
 import com.constructiveactivists.missionandactivitymodule.mappers.mission.MissionMapper;
 import com.constructiveactivists.missionandactivitymodule.services.mission.MissionService;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -48,4 +53,30 @@ public class MissionController implements MissionAPI {
         List<MissionEntity> missions = missionService.getMissionsByOrganizationId(organizationId);
         return ResponseEntity.ok(missions);
     }
+
+    @Override
+    public ResponseEntity<List<MissionTypeEnum>> getMissionTypes() {
+        return ResponseEntity.ok(missionService.getMissionTypes());
+    }
+
+    @Override
+    public ResponseEntity<List<VisibilityEnum>> getVisibilityOptions() {
+        return ResponseEntity.ok(missionService.getVisibilityOptions());
+    }
+
+    @Override
+    public ResponseEntity<List<MissionStatusEnum>> getMissionStatusOptions() {
+        return ResponseEntity.ok(missionService.getMissionStatusOptions());
+    }
+
+    @Override
+    public ResponseEntity<List<VolunteerMissionRequirementsEnum>> getVolunteerRequirements() {
+        return ResponseEntity.ok(missionService.getVolunteerRequirements());
+    }
+
+    @Override
+    public ResponseEntity<List<SkillEnum>> getRequiredSkills() {
+        return ResponseEntity.ok(missionService.getRequiredSkills());
+    }
+
 }
