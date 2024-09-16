@@ -30,7 +30,7 @@ public class ReviewEntity {
 
     @ElementCollection
     @CollectionTable(name = "IMAGENES_RESEÑA", joinColumns = @JoinColumn(name = "RESEÑA_ID"))
-    @Column(name = "IMAGEN_URL", length = 255)
+    @Column(name = "IMAGEN_URL", length = 1000)
     @Comment("URL de imágenes asociadas a la reseña")
     private List<String> imageUrls;
 
