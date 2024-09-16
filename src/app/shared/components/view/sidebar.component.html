@@ -2,7 +2,7 @@
     <aside id="sidebar">
         <div class="d-flex">
             <button class="toggle-btn" type="button">
-                <i class="bi bi-list" style="font-size: 2rem; color: #292C32;"></i>
+                <i class="bi bi-list" title="Expandir opciones" style="font-size: 2rem; color: #292C32;"></i>
             </button>
         </div>
         <ul class="sidebar-nav">
@@ -38,13 +38,13 @@
             <!-- Para ORGANIZACION -->
             <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
                 <a [routerLink]="'/gestion-users'" class="sidebar-link" title="Inicio">
-                    <img src="assets/img/iInicio.png" alt="iInicio Icon" class="sidebar-icon">
+                    <img src="assets/img/iInicio.svg" alt="iInicio Icon" class="sidebar-icon">
                     <span>Inicio</span>
                 </a>
             </li>
             <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
-                <a [routerLink]="'/dashOrganization'" class="sidebar-link">
-                    <i class="bi bi-columns-gap" style="font-size: 1.5rem; color: #292C32;"></i>
+                <a [routerLink]="'/dashOrganization'" class="sidebar-link" title="Tablero de Control">
+                    <img src="assets/img/iTablero.svg" alt="iCoordinadores Icon" class="sidebar-icon">
                     <span>Tablero de Control</span>
                 </a>
             </li>
@@ -56,13 +56,13 @@
             </li>
             <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
                 <a [routerLink]="'/gestion-users'" class="sidebar-link" title="Voluntarios">
-                    <img src="assets/img/iVoluntarios.png" alt="iVoluntarios Icon" class="sidebar-icon">
+                    <img src="assets/img/iVoluntarios.svg" alt="iVoluntarios Icon" class="sidebar-icon">
                     <span>Voluntarios</span>
                 </a>
             </li>
             <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
                 <a [routerLink]="'/misiones'" class="sidebar-link" title="Misiones">
-                    <img src="assets/img/iMisiones.png" alt="iMisiones Icon" class="sidebar-icon">
+                    <img src="assets/img/iMisiones.svg" alt="iMisiones Icon" class="sidebar-icon">
                     <span>Misiones</span>
                 </a>
             </li>
