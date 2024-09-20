@@ -47,7 +47,7 @@ export type ChartOptions3 = {
 @Component({
   selector: 'app-dashboard-organization',
   templateUrl: '../view/dashboard-organization.component.html',
-  styleUrl: '../../../styles/dashboard-organization.component.css'
+  styleUrl: '../styles/dashboard-organization.component.css'
 })
 export class DashboardOrganizationComponent implements AfterViewInit {
   public data: any[] = [];

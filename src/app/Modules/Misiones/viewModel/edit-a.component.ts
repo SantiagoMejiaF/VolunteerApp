@@ -3,7 +3,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 @Component({
   selector: 'app-edit-a',
   templateUrl: '../view/edit-a.component.html',
-  styleUrl: '../../../styles/edit-a.component.css'
+  styleUrl: '../styles/edit-a.component.css'
 })
 export class EditAComponent {
   currentStep: number = 1; 

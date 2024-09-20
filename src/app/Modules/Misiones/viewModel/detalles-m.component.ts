@@ -6,7 +6,7 @@ import { Mission } from '../model/mission.model'; // Modelo de Misión
 @Component({
   selector: 'app-detalles-m',
   templateUrl: '../view/detalles-m.component.html',
-  styleUrls: ['../../../styles/detalles-m.component.css']
+  styleUrls: ['../styles/detalles-m.component.css']
 })
 export class DetallesMComponent implements OnInit {
   selectedSection: string = 'descripcion'; // Por defecto, la sección de Descripción está activa

@@ -6,7 +6,7 @@ import { Mission } from '../model/mission.model';
 @Component({
   selector: 'app-misiones',
   templateUrl: '../view/misiones.component.html',
-  styleUrls: ['../../../styles/misione.component.css']
+  styleUrls: ['../styles/misione.component.css']
 })
 export class MisionesComponent implements OnInit {
   selectedMission: any = {};

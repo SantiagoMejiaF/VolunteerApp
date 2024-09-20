@@ -1,15 +1,43 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import interactionPlugin from '@fullcalendar/interaction';
 
 @Component({
-  selector: 'app-calendar-a',
-  templateUrl: '../view/calendar-a.component.html',
-  styleUrls: ['../styles/calendar-a.component.css']
+  selector: 'app-perfil-c',
+  templateUrl: '../view/perfil-c.component.html',
+  styleUrl: '../styles/perfil-c.component.css'
 })
-export class CalendarAComponent implements AfterViewInit {
+export class PerfilCComponent implements OnInit {
+  currentContent: string = 'content1';
+
+  firstName: string = '';
+  lastName: string = '';
+  email: string = '';
+  volunteerId: number = 0;
+
+  showContent(contentId: string) {
+    this.currentContent = contentId;
+  }
+
+  currentTab = 0;
+  myForm: FormGroup;
+  ngOnInit() {}
+
+  constructor(
+    private fb: FormBuilder,
+    
+  ) {
+    this.myForm = this.fb.group({
+      cell: [''],
+      email: [''],
+      
+    });
+
+   
+  }
+  onSubmit(): void {}
   currentStep: number = 1;  
   showCalendar: boolean = true;
   missionForm: FormGroup;  
@@ -81,28 +109,6 @@ export class CalendarAComponent implements AfterViewInit {
     }
   };
 
-  constructor(private fb: FormBuilder) {
-    // Inicializamos el formulario con los campos requeridos
-    this.missionForm = this.fb.group({
-      title: ['Plantación de árboles', Validators.required],
-      description: ['Plantación de 100 árboles en el parque central.', Validators.required],
-      activityCoordinator: ['0', Validators.required],
-      startDate: ['2024-09-03', Validators.required],
-      startTime: ['08:00', Validators.required],
-      endTime: ['12:00', Validators.required],
-      city: ['Bogotá', Validators.required],
-      locality: ['Usaquén'],
-      address: ['Parque Central, Calle 123', Validators.required],
-      numberOfVolunteersRequired: [20, Validators.required],
-      requiredHours: [4, Validators.required],
-      numberOfBeneficiaries: [100, Validators.required],
-      observations: ['Llevar agua y protector solar.'],
-      nameCommunityLeader: ['Juan Pérez', Validators.required],
-      emailCommunityLeader: ['juan.perez@example.com', [Validators.required, Validators.email]],
-      phoneCommunityLeader: ['3216549870', Validators.required]
-    });
-  }
-
   ngAfterViewInit() {
     this.adjustButtonSizes('normal'); 
     this.applyWeekdayHeaderStyles(); 
@@ -149,66 +155,8 @@ export class CalendarAComponent implements AfterViewInit {
       }
     }
   }
-
-  
-  nextStep() {
-    this.currentStep++;
-  }
-  
- 
-  previousStep() {
-    this.currentStep--;
-  }
-
-  submitForm() {
-    if (this.missionForm.valid) {
-      const formData = this.missionForm.value;
-
-      
-      const newEvent = {
-        title: formData.title,
-        start: `${formData.startDate}T${formData.startTime}`,
-        end: `${formData.startDate}T${formData.endTime}`,
-        description: formData.description,
-        extendedProps: {
-          activityCoordinator: formData.activityCoordinator,
-          city: formData.city,
-          address: formData.address,
-          volunteersRequired: formData.numberOfVolunteersRequired,
-          hoursRequired: formData.requiredHours,
-          beneficiaries: formData.numberOfBeneficiaries,
-          observations: formData.observations,
-          communityLeader: {
-            name: formData.nameCommunityLeader,
-            email: formData.emailCommunityLeader,
-            phone: formData.phoneCommunityLeader
-          }
-        }
-      };
-
-      
-      const currentEvents = this.calendarOptions.events as any[];
-      this.calendarOptions.events = [...currentEvents, newEvent];
-
-      
-      this.closeModal();
-
-      console.log('Evento creado:', newEvent);  
-    } else {
-      alert('Por favor complete todos los campos requeridos.');
-    }
-  }
-
-  
-  closeModal() {
-    const modal = document.getElementById('VolunteerModal');
-    if (modal) {
-      const modalInstance = (window as any).bootstrap.Modal.getInstance(modal);
-      modalInstance.hide();
-    }
-  }
-   // Manejador cuando se hace clic en un evento
-   handleEventClick(info: any) {
+  // Manejador cuando se hace clic en un evento
+  handleEventClick(info: any) {
     console.log('Evento seleccionado:', info.event);
     
     // Aquí podrías pasar los datos del evento al componente de detalles si lo deseas
@@ -226,4 +174,5 @@ export class CalendarAComponent implements AfterViewInit {
       this.applyWeekdayHeaderStyles();
     }, 0);  // Asegurarse de que las personalizaciones se apliquen después de que el calendario se renderice
   }
+
 }

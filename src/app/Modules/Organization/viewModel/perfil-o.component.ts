@@ -13,7 +13,7 @@ interface Elements {
 @Component({
   selector: 'app-perfil-o',
   templateUrl: '../view/perfil-o.component.html',
-  styleUrls: ['../../../styles/perfil-o.component.css']
+  styleUrls: ['../styles/perfil-o.component.css']
 })
 export class PerfilOComponent implements OnInit {
   currentContent: string = 'content1';

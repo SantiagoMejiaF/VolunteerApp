@@ -6,7 +6,7 @@ import { OrganizationService } from '../../Organization/model/services/organizat
 @Component({
   selector: 'app-gestion-usuarios',
   templateUrl: '../view/gestion-usuarios.component.html',
-  styleUrls: ['../../../styles/gestion-usuarios.component.css'],
+  styleUrls: ['../styles/gestion-usuarios.component.css'],
 })
 export class GestionUsuariosComponent implements OnInit {
   selectedUser: any = {};
