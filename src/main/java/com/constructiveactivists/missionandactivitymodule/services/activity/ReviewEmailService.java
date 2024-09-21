@@ -24,17 +24,6 @@ public class ReviewEmailService {
                 "<html>" +
                 "<head>" +
                 "<title>Formulario de Reseña</title>" +
-                "<script>" +
-                "function handleFileSelect(event) {" +
-                "    const file = event.target.files[0];" +
-                "    const reader = new FileReader();" +
-                "    reader.onloadend = function () {" +
-                "        const base64String = reader.result.split(',')[1];" +
-                "        document.getElementById('imageBase64').value = base64String;" +
-                "    };" +
-                "    reader.readAsDataURL(file);" +
-                "}" +
-                "</script>" +
                 "</head>" +
                 "<body>" +
                 "<h2>Formulario de Reseña</h2>" +
@@ -42,16 +31,11 @@ public class ReviewEmailService {
                 "<input type='hidden' name='activityId' value='" + activityId + "'/>" +
                 "<label for='description'>Descripción:</label><br>" +
                 "<textarea id='description' name='description' required></textarea><br>" +
-                "<label for='image'>Subir Imagen:</label><br>" +
-                "<input type='file' id='image' name='image' accept='image/*' onchange='handleFileSelect(event)'><br>" +
-                "<input type='hidden' id='imageBase64' name='imageBase64'/>" +
                 "<button type='submit'>Enviar Reseña</button>" +
                 "</form>" +
                 "</body>" +
                 "</html>";
     }
-
-
 
 
     private void sendHtmlEmail(String to, String subject, String htmlContent) {

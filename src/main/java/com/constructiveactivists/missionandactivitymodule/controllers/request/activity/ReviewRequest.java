@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Comment;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,6 +17,4 @@ public class ReviewRequest {
     @Comment("Descripción breve de la reseña")
     private String description;
 
-    @Comment("URL de imágenes asociadas a la reseña")
-    private List<String> imageUrls;
 }
