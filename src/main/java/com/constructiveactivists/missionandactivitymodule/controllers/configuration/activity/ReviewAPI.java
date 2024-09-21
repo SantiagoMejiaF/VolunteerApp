@@ -1,6 +1,5 @@
 package com.constructiveactivists.missionandactivitymodule.controllers.configuration.activity;
 
-import com.constructiveactivists.missionandactivitymodule.controllers.request.activity.ReviewRequest;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -8,9 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import jakarta.validation.Valid;
 
-import java.util.List;
 
 @Tag(name = "Módulo de Misiones y Actividades", description = "Servicios relacionados con la gestión de misiones y actividades en la aplicación.")
 public interface ReviewAPI {
@@ -25,6 +22,5 @@ public interface ReviewAPI {
     @GetMapping("/review")
     ResponseEntity<ReviewEntity> createReviewForActivity(
             @RequestParam("activityId") Integer activityId,
-            @RequestParam("description") String description,
-            @RequestParam("imageUrls") List<String> imageUrls);
+            @RequestParam("description") String description);
 }

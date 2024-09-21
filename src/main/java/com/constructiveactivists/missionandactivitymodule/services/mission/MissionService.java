@@ -1,6 +1,5 @@
 package com.constructiveactivists.missionandactivitymodule.services.mission;
 
-import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionTypeEnum;

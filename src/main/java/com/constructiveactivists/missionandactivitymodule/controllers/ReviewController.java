@@ -6,16 +6,13 @@ import com.constructiveactivists.missionandactivitymodule.entities.activity.Revi
 import com.constructiveactivists.missionandactivitymodule.mappers.activity.ReviewMapper;
 import com.constructiveactivists.missionandactivitymodule.services.activity.ReviewService;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -28,14 +25,12 @@ public class ReviewController implements ReviewAPI {
     @Override
     public ResponseEntity<ReviewEntity> createReviewForActivity(
             @RequestParam("activityId") Integer activityId,
-            @RequestParam("description") String description,
-            @RequestParam("imageUrls") List<String> imageUrls) {
+            @RequestParam("description") String description){
 
         try {
             // Crear el ReviewRequest manualmente ya que no usamos @RequestBody con GET
             ReviewRequest reviewRequest = new ReviewRequest();
             reviewRequest.setDescription(description);
-            reviewRequest.setImageUrls(imageUrls);
 
             ReviewEntity createdReview = reviewService.createReviewForActivity(activityId, reviewMapper.toDomain(reviewRequest));
             return ResponseEntity.status(HttpStatus.CREATED).body(createdReview);
