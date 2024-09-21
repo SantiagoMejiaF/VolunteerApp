@@ -22,7 +22,7 @@ public interface ReviewAPI {
             @ApiResponse(responseCode = "404", description = "Actividad no encontrada")
     })
     @GetMapping("/review")
-    ResponseEntity<ReviewEntity> createReviewForActivity(
+    ResponseEntity<String> createReviewForActivity(
             @RequestParam("activityId") Integer activityId,
             @ModelAttribute ReviewRequest reviewRequest);
 }
