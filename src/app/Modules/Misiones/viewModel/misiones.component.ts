@@ -88,15 +88,15 @@ export class MisionesComponent implements OnInit {
     }, 1);
   }
 
-  // Método para abrir el modal de detalles de la misión
   openModal(mission: any) {
     this.selectedMission = mission;
     console.log('Misión seleccionada:', this.selectedMission);
   }
 
-  // Método para manejar los detalles de la misión
-  details(mission: Mission): void {
-    console.log('Detalles de la misión seleccionada:', mission);
+  details(mission: Mission) {
+    console.log('Detalles de la misión seleccionada:', mission);  // Verifica si se imprime en la consola
     this.router.navigate(['/detallesM'], { queryParams: { id: mission.id } });
   }
+
+
 }
