@@ -75,7 +75,7 @@ public class ReviewController implements ReviewAPI {
                 "<body>" +
                 "   <div class='container'>" +
                 "       <div class='logo'>" +
-                "           <img src='https://your-server-url.com/path-to-logo/logo.png' alt='Logo'>" +
+                "           <img src='/utils/logo.png' alt='Logo'>" +
                 "       </div>" +
                 "       <h1>¡Reseña Creada con Éxito!</h1>" +
                 "       <p>Gracias por dejar tu reseña para la actividad <strong>" + activityName + "</strong>.</p>" +
