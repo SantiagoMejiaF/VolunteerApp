@@ -43,7 +43,7 @@ public class ReviewEmailService {
                 "<img src='cid:logo' alt='Logo' style='display: block; margin: 0 auto; width: 150px;'>" +
                 "<h2>Formulario de Reseña</h2>" +
                 "<p>Por favor, completa el siguiente formulario para dejar tu reseña sobre la actividad.</p>" +
-                "<form action='https://volunteer-app.online/api/v1/back-volunteer-app/reviews/review' method='POST'>" +
+                "<form action='https://volunteer-app.online/api/v1/back-volunteer-app/reviews/review' method='GET'>" +
                 "<input type='hidden' name='activityId' value='" + activityId + "'/>" +
                 "<label for='description'>Descripción:</label><br>" +
                 "<textarea id='description' name='description' required></textarea><br>" +
