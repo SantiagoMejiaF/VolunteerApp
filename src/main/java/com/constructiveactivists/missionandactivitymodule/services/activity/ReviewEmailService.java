@@ -2,6 +2,7 @@ package com.constructiveactivists.missionandactivitymodule.services.activity;
 
 import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
+import com.constructiveactivists.missionandactivitymodule.repositories.ActivityRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +18,10 @@ import java.util.Optional;
 public class ReviewEmailService {
 
     private final JavaMailSender mailSender;
-    private final ActivityService activityService;
+    private final ActivityRepository activityRepository;
 
     public void sendFormEmail(String recipientEmail, Integer activityId) {
-        Optional<ActivityEntity> activityOptional = activityService.getById(activityId);
+        Optional<ActivityEntity> activityOptional = activityRepository.findById(activityId);
         String title = activityOptional.map(ActivityEntity::getTitle).orElse("Actividad");
         String subject = "Formulario de Reseña de: "+title;
         String htmlContent = buildHtmlForm(activityId, title);
@@ -54,6 +55,7 @@ public class ReviewEmailService {
                 "<img src='cid:logo' alt='Logo' style='display: block; margin: 0 auto; width: 150px;'>" +
                 "<h2>Formulario de Reseña de: <strong>" + activityTitle + "</strong></h2>" +
                 "<p>Por favor, completa el siguiente formulario para dejar tu reseña sobre la actividad.</p>" +
+                "<p style='color: red; font-weight: bold;'>Nota: Una vez enviado el formulario, no se puede editar la reseña.</p>" +
                 "<form action='https://volunteer-app.online/api/v1/back-volunteer-app/reviews/review' method='GET'>" +
                 "<input type='hidden' name='activityId' value='" + activityId + "'/>" +
                 "<label for='description'>Descripción:</label>" +
