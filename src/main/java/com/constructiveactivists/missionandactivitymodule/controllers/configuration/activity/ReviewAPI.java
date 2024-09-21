@@ -24,5 +24,5 @@ public interface ReviewAPI {
     @GetMapping("/review")
     ResponseEntity<ReviewEntity> createReviewForActivity(
             @RequestParam("activityId") Integer activityId,
-            @RequestBody @Valid ReviewRequest reviewRequest);
+            @ModelAttribute ReviewRequest reviewRequest);
 }
