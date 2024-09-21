@@ -4,7 +4,7 @@ import { Mission } from '../model/mission.model';
 @Component({
   selector: 'app-edit-m',
   templateUrl: '../view/edit-m.component.html',
-  styleUrls: ['../../../styles/edit-m.component.css']
+  styleUrls: ['../styles/edit-m.component.css']
 })
 export class EditMComponent implements OnInit {
   @Input() mission: Mission | null = null; // Recibimos la misión desde el padre

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-auth',
   templateUrl: '../view/auth.component.html',
-  styleUrls: ['../../../styles/auth.component.css']
+  styleUrls: ['../styles/auth.component.css']
 })
 export class AuthComponent {
   tempRole: string = '';

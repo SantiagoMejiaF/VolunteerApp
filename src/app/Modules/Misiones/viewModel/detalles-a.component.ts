@@ -27,7 +27,7 @@ export type ChartOptions1 = {
 @Component({
   selector: 'app-detalles-a',
   templateUrl: '../view/detalles-a.component.html',
-  styleUrl: '../../../styles/detalles-a.component.css'
+  styleUrl: '../styles/detalles-a.component.css'
 })
 export class DetallesAComponent {
   currentContent: string = 'content1';

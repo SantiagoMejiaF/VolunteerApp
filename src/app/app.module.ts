@@ -40,7 +40,10 @@ import { EditMComponent } from './Modules/Misiones/viewModel/edit-m.component';
 import { CalendarAComponent } from './Modules/Misiones/viewModel/calendar-a.component'; // IMPORTA EL LOCALE ESPAÑOL
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { DetallesAComponent } from './Modules/Misiones/viewModel/detalles-a.component';
-import { EditAComponent } from './Modules/Misiones/viewModel/edit-a.component'; // FullCalendar
+import { EditAComponent } from './Modules/Misiones/viewModel/edit-a.component';
+import { CoordinadoresComponent } from './Modules/Organization/viewModel/coordinadores.component';
+import { PerfilCComponent } from './Modules/Coordinators/viewModel/perfil-c.component';
+import { DetallesCComponent } from './Modules/Coordinators/viewModel/detalles-c.component';
 
 
 
@@ -71,7 +74,10 @@ registerLocaleData(localeEs, 'es');
     EditMComponent,
     CalendarAComponent,
     DetallesAComponent,
-    EditAComponent
+    EditAComponent,
+    CoordinadoresComponent,
+    PerfilCComponent,
+    DetallesCComponent
   ],
   imports: [
     BrowserModule,

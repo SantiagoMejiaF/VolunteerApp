@@ -13,7 +13,7 @@ interface Elements {
 @Component({
   selector: 'app-forms-volunteer',
   templateUrl: '../view/forms-volunteer.component.html',
-  styleUrls: ['../../../styles/forms-volunteer.component.css'],
+  styleUrls: ['../styles/forms-volunteer.component.css'],
 })
 export class FormsVolunteerComponent implements OnInit {
   currentTab = 0;

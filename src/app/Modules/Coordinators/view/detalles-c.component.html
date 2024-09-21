@@ -1,0 +1,110 @@
+<div class="col ">
+    <div style="text-align: left;">
+        <button class="" (click)="onComeBack()"><i class="bi bi-arrow-left"></i></button>
+    </div>
+
+    <div class="column2">
+        <ul class="nav mb-4">
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content1'}"
+                    (click)="showContent('content1')">Descripción Actividad</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content2'}"
+                    (click)="showContent('content2')">Voluntarios inscritos</a>
+            </li>
+
+
+        </ul>
+
+        <div *ngIf="currentContent === 'content1'" class="content">
+            <div class="col-9  ml-3">
+
+
+
+                <div class="card-body">
+
+
+                    <div class="row">
+                        <!-- Columna Izquierda -->
+                        <div class="col-md-6">
+                            <p><strong>Título:</strong> titu</p>
+                            <p><strong>Descripción:</strong> Descripción:</p>
+                            <p><strong>Fecha:</strong> Fecha:</p>
+                            <p><strong>Hora de inicio:</strong> Hora de inicio</p>
+                            <p><strong>Hora de fin:</strong> Hora de fin:</p>
+                            <p><strong>Ciudad:</strong> Ciudad:</p>
+                            <p><strong>Localidad:</strong> Localidad:</p>
+                            <p><strong>Dirección:</strong> Dirección:</p>
+                        </div>
+
+                        <!-- Columna Derecha -->
+                        <div class="col-md-6">
+                            <p><strong>Número de Voluntarios Requeridos:</strong> Número de Voluntarios Requeridos:
+                            </p>
+                            <p><strong>Horas Requeridas:</strong> Horas Requeridas:</p>
+                            <p><strong>Visibilidad:</strong> Visibilidad:</p>
+                            <p><strong>Número de Beneficiarios:</strong> Número de</p>
+                            <p><strong>Observaciones:</strong>Observaciones:</p>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+        <div *ngIf="currentContent === 'content2'" class="content">
+
+            <div class="table-responsive"></div>
+            <table class="table table-sm" id="datatableexample">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Perfil</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Cedula</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of data; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td width="60px">
+                            <div class="imgBx">
+                                <img [src]="user.image || 'assets/img/user2.png'" alt="Perfil"
+                                    (error)="user.image='assets/img/user3.png'"
+                                    style="width:50px; height:50px; border-radius:50%;">
+                            </div>
+                        </td>
+                        <td>
+                            <h4>{{user.firstName}} {{user.lastName}} <br></h4>
+                        </td>
+                        <td>{{ user.email }}</td>
+                        <td style="text-align: left;">{{ user.cedula }}</td>
+                        <td style="text-align: center;"><a [routerLink]="['/detallesM']"
+                                style="border: none; background: none;">
+                                <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
+                                    onmouseover="this.style.color='#186dde';"
+                                    onmouseout="this.style.color='#80777c';"></i>
+                            </a>
+                            <button style="border: none; background: none;">
+                                <i class="bi bi-clipboard-check" style="font-size: 1.1rem; color: #000000;"
+                                    onmouseover="this.style.color='#186dde';"
+                                    onmouseout="this.style.color='#80777c';"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>

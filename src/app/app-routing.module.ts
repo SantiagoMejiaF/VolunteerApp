@@ -17,6 +17,9 @@ import { DetallesMComponent } from './Modules/Misiones/viewModel/detalles-m.comp
 import { EditMComponent } from './Modules/Misiones/viewModel/edit-m.component';
 import { CalendarAComponent } from './Modules/Misiones/viewModel/calendar-a.component';
 import { DetallesAComponent } from './Modules/Misiones/viewModel/detalles-a.component';
+import { CoordinadoresComponent } from './Modules/Organization/viewModel/coordinadores.component';
+import { PerfilCComponent } from './Modules/Coordinators/viewModel/perfil-c.component';
+import { DetallesCComponent } from './Modules/Coordinators/viewModel/detalles-c.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -72,6 +75,18 @@ const routes: Routes = [
       {
         path: 'detallesA',
         component:DetallesAComponent,
+      },
+      {
+        path: 'coordinador',
+        component:CoordinadoresComponent,
+      },
+      {
+        path: 'perfilc',
+        component:PerfilCComponent,
+      },
+      {
+        path: 'detallesC',
+        component:DetallesCComponent,
       },
       
 

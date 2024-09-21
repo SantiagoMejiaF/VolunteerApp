@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-login',
   templateUrl: '../view/login.component.html',
-  styleUrls: ['../../../styles/login.component.css']
+  styleUrls: ['../styles/login.component.css']
 })
 export class LoginComponent implements OnInit {
   socialUser!: SocialUser;

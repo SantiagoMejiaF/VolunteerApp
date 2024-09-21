@@ -1,0 +1,44 @@
+/*tabla*/
+#recentCustomers table tr th {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.2rem;
+  }
+  table tr td h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--black2);
+  }
+  
+
+   table tr:hover {
+    background: var(--blue);
+    color: var(--white);
+  }
+
+  #datatableexample td {
+    vertical-align: middle;
+  }
+
+  /*Menus*/
+  .nav-link {
+    border-radius: 10px;
+    position: relative;
+    padding-bottom: 5px;
+    color: black; /* Color por defecto del texto */
+}
+
+.nav-link.active-link {
+    font-weight: 600; /* Cambia solo el color del texto cuando esté activo */
+}
+
+.nav-link.active-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #186DDE; /* Color de la línea debajo */
+    border-radius: 5px;
+}

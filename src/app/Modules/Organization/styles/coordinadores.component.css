@@ -1,0 +1,88 @@
+.tittle{
+    background-color: white; /* Fondo blanco */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  margin-bottom:20px;
+  }
+
+  h2 {
+    font-weight: 600;
+    font-size: 20px;
+  }
+  p {
+    font-weight: 400;
+    font-size: 14px;
+  }
+  h1{
+    color: #ED4B4B;
+  }
+  #recentCustomers table tr th {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.2rem;
+  }
+  table tr td h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--black2);
+  }
+  
+
+   table tr:hover {
+    background: var(--blue);
+    color: var(--white);
+  }
+
+  #datatableexample td {
+    vertical-align: middle;
+  }
+  .custom-button {
+    font-family: "Quicksand", sans-serif;
+    background-color: transparent;
+    border: 2px solid #FFD700; 
+    color: black; 
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 30px;
+    transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+  }
+  
+  .custom-button:hover {
+    background-color: #FFD700; 
+    color: #1E1E1E; 
+  }
+  
+  .custom-button:focus {
+    outline: none;
+  }
+
+  #Crear{
+    background: #1E1450;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 8px 8px 8px;
+    border-radius: 10px;
+    border: none !important;
+  }
+
+
+  /*Form */
+
+  
+
+.uno {
+    padding-right: 200px;
+}
+
+h4 {
+    font-family: "Quicksand", sans-serif;
+    font-size: 14px;
+}
+
+h5 {
+    font-family: "Quicksand", sans-serif;
+    font-size: 18px;
+}
+

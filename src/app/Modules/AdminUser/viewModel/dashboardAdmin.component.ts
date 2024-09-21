@@ -34,7 +34,7 @@ export type ChartOptions = {
 @Component({
   selector: 'app-dash-borrar',
   templateUrl: '../view/dashboardAdmin.component.html',
-  styleUrls: ['../../../styles/dashboardAdmin.component.css'],
+  styleUrls: ['../styles/dashboardAdmin.component.css'],
 })
 export class DashboardAdminComponent implements OnInit {
   @ViewChild('chart') chart: ChartComponent;

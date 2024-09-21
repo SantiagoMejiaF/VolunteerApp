@@ -1,0 +1,118 @@
+<div class="container">
+    <div class="row">
+        <div class="col text-center tittle" id="">
+            <h1>Coordinadores</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col tittle" id="recentCustomers">
+            <div class="text-right mr-3">
+                <button data-bs-toggle="modal" data-bs-target="#VolunteerModal" id="Crear">
+                    <i class="bi bi-plus-circle mr-2"></i>Crear Coordinador
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-sm" id="datatableexample">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Perfil</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Cedula</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of data; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td width="60px" >
+                                <div class="imgBx">
+                                    <img [src]="user.image || 'assets/img/user2.png'" alt="Perfil"
+                                        (error)="user.image='assets/img/user3.png'"
+                                        style="width:50px; height:50px; border-radius:50%;">
+                                </div>
+                            </td>
+                            <td>
+                                <h4>{{user.firstName}} {{user.lastName}} <br></h4>
+                            </td>
+                            <td>{{ user.email }}</td>
+                            <td style="text-align: left;">{{ user.cedula }}</td>
+                            <td style="text-align: center;"><a [routerLink]="['/detallesM']"
+                                style="border: none; background: none;">
+                                <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
+                                    onmouseover="this.style.color='#186dde';"
+                                    onmouseout="this.style.color='#80777c';"></i>
+                            </a>
+                            <button style="border: none; background: none;">
+                                <i class="bi bi-trash3" style="font-size: 1.1rem; color: #000000;"
+                                    onmouseover="this.style.color='#186dde';"
+                                    onmouseout="this.style.color='#80777c';"></i>
+                            </button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal para Crear una nueva Misión -->
+<div class="modal fade" id="VolunteerModal" tabindex="-1" aria-labelledby="VolunteerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h4>Empecemos</h4>
+                    <h5>Crea un nuevo coordinador</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Mostrar botones sociales o campos de cédula y celular según la variable de estado -->
+                <div *ngIf="showSocialButtons">
+                    <!-- Botón de Google -->
+                    <div class="btn-outlinetemplate-1-copy mb-3" id="custom-google-signin-button"
+                         style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; display: flex; align-items: center; cursor: pointer; border-radius: 10px; width: 100%; justify-content: center;"
+                         (click)="onGoogleSignIn()">
+                        <img class="icons-8-google" src="/assets/img/google.png"
+                             style="width: 40px; height: 40px; margin-right: 10px;">
+                        <div class="sign-up-with-google" style="flex-grow: 1; text-align: center;">Ingresa con Google</div>
+                    </div>
+
+                    <!-- Botón de Facebook (solo visible si no se ha hecho click en Google) -->
+                    <div class="btn-outlinetemplate-1-copy mb-3"
+                         style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; display: flex; align-items: center; cursor: not-allowed; pointer-events: none; opacity: 0.5; border-radius: 10px; width: 100%; justify-content: center;">
+                        <img class="icons-8-facebook" src="/assets/img/face.png"
+                             style="width: 40px; height: 40px; margin-right: 10px;">
+                        <div class="sign-up-with-facebook" style="flex-grow: 1; text-align: center;">Ingresa con Facebook</div>
+                    </div>
+
+                    <!-- Botón de Apple -->
+                    <div class="btn-outlinetemplate-1-copy mb-3"
+                         style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; display: flex; align-items: center; cursor: not-allowed; pointer-events: none; opacity: 0.5; border-radius: 10px; width: 100%; justify-content: center;">
+                        <img class="apple" src="/assets/img/apple.png"
+                             style="width: 40px; height: 40px; margin-right: 10px;">
+                        <div class="sign-up-with-apple" style="flex-grow: 1; text-align: center;">Ingresa con Apple</div>
+                    </div>
+                </div>
+
+                <!-- Campos de cédula y celular después de hacer clic en "Ingresar con Google" -->
+                <div *ngIf="!showSocialButtons">
+                    <div class="mb-3">
+                        <label for="cedula" class="form-label">Cédula</label>
+                        <input type="text" class="form-control" id="cedula" placeholder="Ingrese su cédula">
+                    </div>
+                    <div class="mb-3">
+                        <label for="celular" class="form-label">Número de Celular</label>
+                        <input type="text" class="form-control" id="celular" placeholder="Ingrese su número de celular">
+                    </div>
+                    <button type="button" class="btn btn-primary" style="width: 100%;">Crear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
