@@ -75,7 +75,7 @@ public class ReviewController implements ReviewAPI {
                 "<body>" +
                 "   <div class='container'>" +
                 "       <div class='logo'>" +
-                "           <img src='https://drive.google.com/uc?id=1HYCNrWYWOQZ38cwHlPg__HJQLMgN1XLx' alt='Logo'>"+
+                "           <img src='https://tinypic.host/image/logo.2RkYRX' alt='Logo'>"+
                 "       </div>" +
                 "       <h1>¡Reseña Creada con Éxito!</h1>" +
                 "       <p>Gracias por dejar tu reseña para la actividad <strong>" + activityName + "</strong>.</p>" +
@@ -107,7 +107,7 @@ public class ReviewController implements ReviewAPI {
                 "<body>" +
                 "   <div class='container'>" +
                 "       <div class='logo'>" +
-                "          <img src='https://drive.google.com/uc?id=1HYCNrWYWOQZ38cwHlPg__HJQLMgN1XLx' alt='Logo'>" +
+                "          <img src='https://tinypic.host/image/logo.2RkYRX' alt='Logo'>" +
                 "       </div>" +
                 "       <h1>" + errorTitle + "</h1>" +
                 "       <p>" + errorMessage + "</p>" +
