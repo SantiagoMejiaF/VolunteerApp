@@ -7,59 +7,122 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-5">
-            <div class="column1">
-                <div class="text-center">
-                    <img class="mt-3 text-center" src="assets/img/user3.png" alt="">
-                    <div class="text-center">
-                        <h2>{{ firstName }} {{ lastName }}</h2>
-                        <h4>Voluntario</h4>
-                    </div>
-                    <div class="award-container">
-                        <i class="bi bi-award"></i>
-                        <h4>154</h4>
-                    </div>
-                </div>
-
-                <hr style="border-color: #000;">
-                <div class="datos">
-                    <h6>Email</h6>
-                    <p>{{ email }}</p>
-                    <h6>Teléfono</h6>
-                    <p>{{ volunteerData.personalInformation.phoneNumber }}</p>
-                    <h6>Dirección</h6>
-                    <p>{{ volunteerData.personalInformation.address }}</p>
-                </div>
-            </div>
-        </div>
+        
+        
         <div class="col">
+            
             <div class="column2">
+                <div class="head d-flex">
+                    <img src="assets/img/user3.png" id="misionimg">
+                    <div class="ml-3 mt-3" style="text-align: left;">
+                        <h3>{{ firstName }} {{ lastName }}</h3> <!-- Nombre de la misión -->
+                        <div class="datos">
+                            <h6>Email</h6>
+                            <p>{{ email }}</p>
+                            <h6>Teléfono</h6>
+                            <p>{{ volunteerData.personalInformation.phoneNumber }}</p>
+                            <h6>Dirección</h6>
+                            <p>{{ volunteerData.personalInformation.address }}</p>
+                        </div>
+                        
+                    </div>
+                </div>
+                <hr class="mt-3" style="height: 1px; background-color: black; border: none;">
                 <ul class="nav mb-4">
                     <li class="nav-item">
-                        <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content1'}"
-                            (click)="showContent('content1')">Historial</a>
+                      <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content1'}"
+                          (click)="showContent('content1')">
+                        <strong><i class="bi bi-archive"></i></strong> 
+                        <span class="nav-text">Historial</span>
+                      </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content2'}"
-                            (click)="showContent('content2')">Perfil</a>
+                      <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content2'}"
+                          (click)="showContent('content2')">
+                        <strong><i class="bi bi-person-vcard"></i></strong> 
+                        <span class="nav-text">Datos Personales</span>
+                      </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content3'}"
-                            (click)="showContent('content3')">Datos Personales</a>
+                      <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content3'}"
+                          (click)="showContent('content3')">
+                        <strong><i class="bi bi-hospital"></i></strong> 
+                        <span class="nav-text">Datos de emergencia</span>
+                      </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content4'}"
-                            (click)="showContent('content4')">Datos de emergencia</a>
-                    </li>
-                </ul>
+                  </ul>
+                  
 
                 <div *ngIf="currentContent === 'content1'" class="content">
-                    <p>Este es el contenido 1.</p>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div id="timeline">
+                                <div class="row timeline-movement timeline-movement-top">
+                                    <div class="timeline-badge timeline-future-movement">
+                                            <p>2018</p>
+                                    </div>
+                                </div>
+                                <div class="row timeline-movement">
+                                    <div class="timeline-badge center-left">
+                                        
+                                    </div>
+                                    <div class="col-sm-6  timeline-item">
+                                        <div class="row">
+                                            <div class="col-sm-11">
+                                                <div class="timeline-panel credits">
+                                                    <ul class="timeline-panel-ul">
+                                                        <div class="righting-wrap">
+                                                            <li><a href="#" class="importo">Mussum ipsum cacilds</a></li>
+                                                            <li><span class="causale" style="color:#000; font-weight: 600;">Developer </span> </li>
+                                                            <span *ngFor="let star of getStars(3)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                                                            <li><span class="causale">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </span> </li>
+                                                            <li><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 13/01/2018, 13:05"</small></p> </li>
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </ul>
+                                                </div>
+                    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                <div class="row timeline-movement">
+                                    <div class="timeline-badge center-left">
+                                    
+                                    </div>
+                                    <div class="offset-sm-6 col-sm-6  timeline-item">
+                                        <div class="row">
+                                            <div class="offset-sm-1 col-sm-11">
+                                                <div class="timeline-panel debits">
+                                                    <ul class="timeline-panel-ul">
+                                                       
+                                                        <div class="righting-wrap">
+                                                            <li><a href="#" class="importo">Mussum ipsum cacilds</a></li>
+                                                            <li><span class="causale" style="color:#000; font-weight: 600;">Web Designer </span> </li>
+                                                            <span *ngFor="let star of getStars(3)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                                                            <li><span class="causale">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </span> </li>
+                                                            <li><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 12/01/2018, 13:05"</small></p> </li>
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </ul>
+                                                </div>
+                    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                      
                 </div>
 
-                <div *ngIf="currentContent === 'content2'" class="content"></div>
 
-                <div *ngIf="currentContent === 'content3'" class="content">
+                <div *ngIf="currentContent === 'content2'" class="content">
                     <form [formGroup]="myForm">
                         <!-- Datos Personales -->
                         <div class="tab ml-3" [formGroup]="myForm">
@@ -91,7 +154,7 @@
                     <button class="btn-secondary" (click)="onSubmit()">Actualizar datos</button>
                 </div>
 
-                <div *ngIf="currentContent === 'content4'" class="content">
+                <div *ngIf="currentContent === 'content3'" class="content">
                     <form [formGroup]="myForm">
                         <!-- Contacto de Emergencia -->
                         <div class="tab ml-3" [formGroup]="myForm">

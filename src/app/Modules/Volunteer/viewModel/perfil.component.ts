@@ -16,7 +16,6 @@ interface Elements {
 })
 export class PerfilComponent implements OnInit {
   currentContent: string = 'content1';
-
   firstName: string = '';
   lastName: string = '';
   email: string = '';
@@ -110,6 +109,7 @@ export class PerfilComponent implements OnInit {
     this.loadDropdownData();
     this.loadTerms();
     this.loadVolunteerData();
+   
 
     const userInfo = JSON.parse(localStorage.getItem('userInfo')!);
     this.firstName = userInfo.firstName;
@@ -211,5 +211,9 @@ export class PerfilComponent implements OnInit {
       }
     );
   }
-
+  getStars(rating: number): string[] {
+    const totalStars = 5;
+    return Array(totalStars).fill('gray').map((_, index) => index < rating ? 'gold' : 'gray');
+  }
+  
 }
