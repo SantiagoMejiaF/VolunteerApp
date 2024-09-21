@@ -65,24 +65,33 @@ public class ReviewController implements ReviewAPI {
                 "   <title>Reseña Creada</title>" +
                 "   <style>" +
                 "       body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 0; }" +
-                "       .container { max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); }" +
-                "       h1 { color: #1E1450; }" +
-                "       p { font-size: 16px; line-height: 1.5; color: #333; }" +
+                "       .container { max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); border-radius: 8px; }" +
+                "       h1 { color: #1E1450; text-align: center; }" +
+                "       p { font-size: 16px; line-height: 1.6; color: #333; }" +
                 "       .logo { text-align: center; margin-bottom: 20px; }" +
-                "       .logo img { max-width: 150px; }" +
+                "       .logo img { max-width: 150px; height: auto; }" +
+                "       .highlight { background-color: #e7f3fe; border-left: 4px solid #2196F3; padding: 10px; margin: 20px 0; }" +
+                "       @media (max-width: 600px) {" +
+                "           .container { padding: 15px; }" +
+                "           h1 { font-size: 24px; }" +
+                "           p { font-size: 14px; }" +
+                "       }" +
                 "   </style>" +
                 "</head>" +
                 "<body>" +
                 "   <div class='container'>" +
                 "       <div class='logo'>" +
-                "           <img src='https://tinypic.host/images/2024/09/21/logo.png' alt='Logo'>"+
+                "           <img src='https://tinypic.host/images/2024/09/21/logo.png' alt='Logo'>" +
                 "       </div>" +
                 "       <h1>¡Reseña Creada con Éxito!</h1>" +
                 "       <p>Gracias por dejar tu reseña para la actividad <strong>" + activityName + "</strong>.</p>" +
-                "       <p><strong>Descripción de la reseña:</strong></p>" +
-                "       <p>" + reviewDescription + "</p>" +
+                "       <div class='highlight'>" +
+                "           <p><strong>Descripción de la reseña:</strong></p>" +
+                "           <p>" + reviewDescription + "</p>" +
+                "       </div>" +
                 "       <p>Fecha de creación: " + review.getCreationDate() + "</p>" +
                 "       <p>¡Esperamos verte pronto en futuras actividades!</p>" +
+                "       <p>Si tienes más comentarios o preguntas, no dudes en contactarnos.</p>" +
                 "   </div>" +
                 "</body>" +
                 "</html>";
@@ -97,24 +106,34 @@ public class ReviewController implements ReviewAPI {
                 "   <title>Error</title>" +
                 "   <style>" +
                 "       body { font-family: Arial, sans-serif; background-color: #f8d7da; margin: 0; padding: 0; }" +
-                "       .container { max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); border: 1px solid #f5c2c7; }" +
-                "       h1 { color: #721c24; }" +
-                "       p { font-size: 16px; line-height: 1.5; color: #721c24; }" +
+                "       .container { max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); border-radius: 8px; border: 1px solid #f5c2c7; }" +
+                "       h1 { color: #721c24; text-align: center; }" +
+                "       p { font-size: 16px; line-height: 1.6; color: #721c24; }" +
                 "       .logo { text-align: center; margin-bottom: 20px; }" +
-                "       .logo img { max-width: 150px; }" +
+                "       .logo img { max-width: 150px; height: auto; }" +
+                "       .suggestion { background-color: #fff3cd; border-left: 4px solid #ffeeba; padding: 10px; margin: 20px 0; }" +
+                "       @media (max-width: 600px) {" +
+                "           .container { padding: 15px; }" +
+                "           h1 { font-size: 24px; }" +
+                "           p { font-size: 14px; }" +
+                "       }" +
                 "   </style>" +
                 "</head>" +
                 "<body>" +
                 "   <div class='container'>" +
                 "       <div class='logo'>" +
-                "          <img src='https://tinypic.host/images/2024/09/21/logo.png' alt='Logo'>" +
+                "           <img src='https://tinypic.host/images/2024/09/21/logo.png' alt='Logo'>" +
                 "       </div>" +
                 "       <h1>" + errorTitle + "</h1>" +
                 "       <p>" + errorMessage + "</p>" +
+                "       <div class='suggestion'>" +
+                "           <p>Si el problema persiste, por favor, contacta a nuestro soporte.</p>" +
+                "       </div>" +
                 "   </div>" +
                 "</body>" +
                 "</html>";
     }
+
 
 
 
