@@ -18,7 +18,7 @@ public class ReviewEmailService {
     public void sendFormEmail(String recipientEmail, Integer activityId) {
         String subject = "Formulario de Reseña";
         String htmlContent = buildHtmlForm(activityId);
-        sendHtmlEmail(recipientEmail, subject, htmlContent, "correo.png");
+        sendHtmlEmail(recipientEmail, subject, htmlContent);
     }
 
     private String buildHtmlForm(Integer activityId) {
@@ -54,7 +54,7 @@ public class ReviewEmailService {
                 "</html>";
     }
 
-    private void sendHtmlEmail(String to, String subject, String htmlContent, String imageName) {
+    private void sendHtmlEmail(String to, String subject, String htmlContent) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -64,10 +64,8 @@ public class ReviewEmailService {
 
             // Añadir logo y banner al correo electrónico
             ClassPathResource logoResource = new ClassPathResource("utils/logo.png");
-            ClassPathResource bannerResource = new ClassPathResource("utils/" + imageName);
 
             helper.addInline("logo", logoResource, "image/png");
-            helper.addInline("correo", bannerResource, "image/png");
 
             mailSender.send(message);
         } catch (MessagingException e) {
