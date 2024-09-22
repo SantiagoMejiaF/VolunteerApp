@@ -18,6 +18,7 @@ import jakarta.validation.Valid;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -67,4 +68,19 @@ public class ActivityCoordinatorController implements ActivityCoordinatorAPI {
         List<ActivityCoordinatorEntity> coordinators = activityCoordinatorService.findAvailableCoordinators(coordinatorAvailabilityMapper.toDomain(request));
         return ResponseEntity.ok(coordinators);
     }
+
+    @Override
+    public ResponseEntity<List<ActivityCoordinatorEntity>> getCoordinatorsByOrganization(@PathVariable Integer organizationId) {
+        List<ActivityCoordinatorEntity> coordinators = activityCoordinatorService.findByOrganizationId(organizationId);
+        return ResponseEntity.ok(coordinators);
+    }
+
+    @Override
+    public ResponseEntity<ActivityCoordinatorEntity> getCoordinatorById(@PathVariable Integer id) {
+        Optional<ActivityCoordinatorEntity> coordinator = activityCoordinatorService.getCoordinatorById(id);
+        return coordinator.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+
 }
