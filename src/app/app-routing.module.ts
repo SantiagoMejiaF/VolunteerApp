@@ -20,6 +20,10 @@ import { DetallesAComponent } from './Modules/Misiones/viewModel/detalles-a.comp
 import { CoordinadoresComponent } from './Modules/Organization/viewModel/coordinadores.component';
 import { PerfilCComponent } from './Modules/Coordinators/viewModel/perfil-c.component';
 import { DetallesCComponent } from './Modules/Coordinators/viewModel/detalles-c.component';
+import { VerPerfilVComponent } from './Modules/Volunteer/viewModel/ver-perfil-v.component';
+import { VerPerfilOComponent } from './Modules/Organization/viewModel/ver-perfil-o.component';
+import { ActividadDComponent } from './Modules/Misiones/viewModel/actividad-d.component';
+import { VerPerfilCComponent } from './Modules/Coordinators/viewModel/ver-perfil-c.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -88,7 +92,22 @@ const routes: Routes = [
         path: 'detallesC',
         component:DetallesCComponent,
       },
-      
+      {
+        path: 'verPerfilV',
+        component:VerPerfilVComponent,
+      },
+      {
+        path: 'verPerfilO',
+        component:VerPerfilOComponent,
+      },
+      {
+        path: 'verPerfilC',
+        component:VerPerfilCComponent,
+      },
+      { 
+        path: 'actividad/:id/:image/:btnClass', 
+        component: ActividadDComponent
+      },
 
       
     ],

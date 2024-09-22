@@ -215,5 +215,16 @@ export class PerfilComponent implements OnInit {
     const totalStars = 5;
     return Array(totalStars).fill('gray').map((_, index) => index < rating ? 'gold' : 'gray');
   }
+  verDetalles(index: number | undefined) {
+    // Asignar 1 por defecto si el index es undefined o null
+    const validIndex = index ?? 1;
+  
+    // Asegurarse de que la imagenId esté en el rango adecuado (1-3)
+    const imagenId = (validIndex % 3) + 1;
+    const btnClass = 'btn-outline-primary' + imagenId;
+  
+    // Navegar a la ruta con los parámetros calculados
+    this.router.navigate(['/actividad', validIndex, `card${imagenId}.jpg`, btnClass]);
+  }
   
 }

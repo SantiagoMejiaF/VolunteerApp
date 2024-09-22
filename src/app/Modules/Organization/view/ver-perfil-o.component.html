@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col">
             <div class="column1">
-                <h2>Perfil</h2>
+                <h2>Perfil Fundación Manitas</h2>
             </div>
         </div>
     </div>
@@ -11,7 +11,7 @@
         <div class="col">
             <div class="column2">
                 <div class="head d-flex">
-                    <img src="assets/img/user3.png" id="misionimg">
+                    <img src="assets/img/fundacion.jpeg" id="misionimg">
                     <div class="ml-3 mt-3" style="text-align: left;">
                         <h3>{{ organizationData.organizationName }}</h3> <!-- Nombre de la misión -->
                         <div class="datos">
@@ -38,6 +38,12 @@
                             (click)="showContent('content2')"><strong><i class="bi bi-building-exclamation"></i></strong> 
                             <span class="nav-text">Datos</span></a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content3'}"
+                            (click)="showContent('content3')"><strong><i class="bi bi-calendar-heart"></i></strong> 
+                            <span class="nav-text">Actividades</span></a>
+                    </li>
                 </ul>
 
                 <div *ngIf="currentContent === 'content1'" class="content">
@@ -59,7 +65,7 @@
                                                 <div class="timeline-panel credits">
                                                     <ul class="timeline-panel-ul">
                                                         <div class="righting-wrap">
-                                                            <li><a (click)="verDetalles(1)"  class="importo">Nombre actividad</a></li>
+                                                            <li><a (click)="verDetalles(1)" class="importo">Nombre actividad</a></li>
                                                             <li><span class="causale" style="color:#000; font-weight: 600;">Categoría </span> </li>
                                                             <span *ngFor="let star of getStars(3)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
                                                             <li><span class="causale">Reseña del líder: Lorem ipsum dolor sit amet, consectetur adipiscing elit. </span> </li>
@@ -85,7 +91,7 @@
                                                     <ul class="timeline-panel-ul">
                                                        
                                                         <div class="righting-wrap">
-                                                            <li><a (click)="verDetalles(1)"  class="importo">Nombre actividad</a></li>
+                                                            <li><a (click)="verDetalles(1)" class="importo">Nombre actividad</a></li>
                                                             <li><span class="causale" style="color:#000; font-weight: 600;">Categoría </span> </li>
                                                             <span *ngFor="let star of getStars(3)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
                                                             <li><span class="causale">Reseña del líder:Lorem ipsum dolor sit amet, consectetur adipiscing elit. </span> </li>
@@ -108,37 +114,66 @@
                 </div>
 
                 <div *ngIf="currentContent === 'content2'" class="content">
-                    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-                        <div class="tab ml-3">
-                            <h6>Nombre de la Fundación</h6>
-                            <p><input id="nor" placeholder="Fundación Manitas..." formControlName="organizationName"
-                                    oninput="this.className = ''"></p>
-                            <h6>Número Celular del Responsable</h6>
-                            <p><input id="nor" placeholder="312456789..." formControlName="responsiblePersonPhoneNumber"
-                                    oninput="this.className = ''"></p>
-                            <h6>Dirección de la Fundación</h6>
-                            <p><input id="nor" placeholder="Cra 15 #87-95.." formControlName="address"
-                                    oninput="this.className = ''"></p>
-
-                            <h6>Tipo de Organización</h6>
-                            <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="typeOrganization"
-                                formControlName="organizationTypeEnum" (onSelect)="onItemSelect($event)">
-                            </ng-multiselect-dropdown>
-
-                            <h6 class="mt-3">Sector al que pertenece la Organización</h6>
-                            <ng-multiselect-dropdown [settings]="dropdownSettings3" [data]="sectorOrganization"
-                                formControlName="sectorTypeEnum" (onSelect)="onItemSelect($event)">
-                            </ng-multiselect-dropdown>
-
-                            <h6 class="mt-3">Tipo de Voluntariado</h6>
-                            <ng-multiselect-dropdown [settings]="dropdownSettings2" [data]="volunteeringType"
-                                formControlName="volunteeringTypeEnum" (onSelect)="onItemSelect($event)">
-                            </ng-multiselect-dropdown>
+                    
+                    <!-- Datos Personales -->
+                    <div class="tab ml-3">
+                      
+                        <!-- Celular -->
+                        <div class="data-section">
+                          <h6> Nombre de la Fundación:</h6>
+                          <p>{{ 'Nombre de la Fundación '|| 'No especificado' }}</p>
                         </div>
-
-                        <button class="btn-secondary" type="submit">Actualizar datos</button>
-                    </form>
+                        
+                        <!-- Dirección -->
+                        <div class="data-section">
+                          <h6> Dirección de la Fundación:</h6>
+                          <p>{{ 'Dirección de la Fundación '|| 'No especificado' }}</p>
+                        </div>
+                    
+                        <!-- Fecha de Nacimiento -->
+                        <div class="data-section">
+                          <h6>Tipo de Organización:</h6>
+                          <p>{{ 'Tipo de Organización'  || 'No especificado' }}</p>
+                        </div>
+                    
+                        <!-- Días Disponibles -->
+                        <div class="data-section">
+                          <h6> Sector al que pertenece la Organización:</h6>
+                          <p>{{ 'Sector al que pertenece la Organización' || 'No especificado' }}</p>
+                        </div>
+                    
+                        <!-- Habilidades -->
+                        <div class="data-section">
+                          <h6>Tipo de Voluntariado:</h6>
+                          <p>{{ 'Tipo de Voluntariado'|| 'No especificado' }}</p>
+                        </div>
+                    
+                        
+                      </div>
                 </div>
+                <div *ngIf="currentContent === 'content3'" class="content">
+                    <div class="row p-2">
+                      <div *ngFor="let actividad of actividades; let i = index" class="col-12 col-md-6 col-lg-4 mb-3">
+                        <div class="card custom-card" (click)="verDetalles(i)">
+                          <!-- Asignar imágenes fijas basadas en el índice + 1 -->
+                          <img [src]="'assets/img/card' + ((i % 3) + 1) + '.jpg'" class="card-img-top custom-img" alt="Imagen de la actividad">
+                          <div class="card-body">
+                            <h5 class="card-title">{{ actividad.nombre }}</h5>
+                            <p class="card-text">{{ actividad.descripcion }}</p>
+                            <p class="card-text">
+                              <strong>Fecha:</strong> {{ actividad.fecha }}<br>
+                              <strong>Cupos:</strong> {{ actividad.cuposRestantes }}/{{ actividad.cuposTotales }}
+                            </p>
+                            <!-- Cambiar la clase del botón basándose en el índice -->
+                            <a href="#" (click)="unirse($event, i)" [ngClass]="'btn btn-outline-primary' + ((i % 3) + 1)">Unirse</a>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                
             </div>
         </div>
     </div>

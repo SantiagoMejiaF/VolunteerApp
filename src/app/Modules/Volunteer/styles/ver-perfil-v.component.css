@@ -1,19 +1,5 @@
 /* Aplica la fuente Quicksand a todos los textos */
-body,
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-span,
-div,
-button,
-input,
-textarea {
-  font-family: "Quicksand", sans-serif;
-}
+
 
 h2  {
   font-weight: 600;
@@ -35,6 +21,12 @@ h4 {
 h6{
     font-weight: 700;
     font-size: 15px;
+}
+#misionimg{
+    width: 135px;
+    height: 135px;
+    border-radius: 8px;
+
 }
 .column1 img {
   width: 120px;
@@ -335,3 +327,46 @@ ng-multiselect-dropdown {
 }
 
 /*END: TIMELINE*/
+
+
+/*START: PERSONAL DATA*/
+.tab {
+    padding: 15px;
+    margin: 0 auto;
+  }
+  
+  .data-section {
+    margin-bottom: 15px;
+  }
+  
+  .data-section h6 {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: BLACK;
+  }
+  
+  .data-section p {
+    font-size: 16px;
+    color: BLACK;
+  }
+  
+  h4 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  i {
+    margin-right: 5px;color: BLACK;
+  }
+  
+  @media (max-width: 768px) {
+    .tab {
+      padding: 10px;
+      margin: 10px;
+    }
+  
+    .data-section p {
+      font-size: 14px;
+    }
+  }
+  

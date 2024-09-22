@@ -44,6 +44,10 @@ import { EditAComponent } from './Modules/Misiones/viewModel/edit-a.component';
 import { CoordinadoresComponent } from './Modules/Organization/viewModel/coordinadores.component';
 import { PerfilCComponent } from './Modules/Coordinators/viewModel/perfil-c.component';
 import { DetallesCComponent } from './Modules/Coordinators/viewModel/detalles-c.component';
+import { VerPerfilVComponent } from './Modules/Volunteer/viewModel/ver-perfil-v.component';
+import { VerPerfilOComponent } from './Modules/Organization/viewModel/ver-perfil-o.component';
+import { VerPerfilCComponent } from './Modules/Coordinators/viewModel/ver-perfil-c.component';
+import { ActividadDComponent } from './Modules/Misiones/viewModel/actividad-d.component';
 
 
 
@@ -77,7 +81,11 @@ registerLocaleData(localeEs, 'es');
     EditAComponent,
     CoordinadoresComponent,
     PerfilCComponent,
-    DetallesCComponent
+    DetallesCComponent,
+    VerPerfilVComponent,
+    VerPerfilOComponent,
+    VerPerfilCComponent,
+    ActividadDComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,453 @@
+/* Aplica la fuente Quicksand a todos los textos */
+
+
+h2  {
+    font-weight: 600;
+    font-size: 20px;
+  }
+  a{
+      font-weight: 400;
+      font-size: 16px;
+    }
+  p {
+    font-weight: 400;
+    font-size: 14px;
+  }
+  h4 {
+    font-weight: 500;
+    font-size: 18px;
+    color: #949494;
+  }
+  h6{
+      font-weight: 700;
+      font-size: 15px;
+  }
+  #misionimg{
+      width: 135px;
+      height: 135px;
+      border-radius: 8px;
+  
+  }
+  .column1 img {
+    width: 120px;
+    height: auto !important;
+  }
+  
+  .column1,
+  .column2 {
+    background-color: white; /* Fondo blanco */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 20px; /* Espaciado interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+    margin-bottom: 20px;
+  }
+  
+  /* Start: Estilo para los enlaces de navegación */
+  .nav-link {
+    border-radius: 10px;
+    position: relative;
+    padding: 10px;
+    color: black;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Cuando el enlace está activo, cambia el color */
+  .nav-link.active-link, .nav-link.active-link i {
+    color: #186DDE;
+  }
+  
+  /* Línea debajo del enlace activo */
+  .nav-link.active-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #186DDE;
+    border-radius: 5px;
+  }
+  
+  
+  @media (max-width: 768px) {
+   
+    .nav-text {
+      display: none;
+    }
+  
+   
+    .nav-link.active-link .nav-text {
+      display: inline-block;
+    }
+  }
+  
+  
+  .nav-text {
+    transition: opacity 0.3s ease;
+  }
+  /* End: Estilo para los enlaces de navegación */
+  
+  p {
+      font-family: "Quicksand", sans-serif;
+      font-weight: regular;
+      font-size: 20px;
+      color: #ffffff;
+  }
+  .datos h6{
+      color: #b7c0c7;
+      font-weight: 500;
+  }
+  .datos p{
+      color: #000;
+      font-size: 14px;
+  }
+  
+  #nor {
+      padding: 10px;
+      width: 100%;
+      font-size: 17px;
+      font-family: "Quicksand", sans-serif;
+      border: 1px solid #c6c6c6;
+      border-radius: 10px;
+      -webkit-appearance: none;
+      transition: border-color 0.3s ease; /* Añade una transición suave */
+  }
+  
+  #nor:focus {
+      border-color: #186dde; 
+      outline: none; 
+  }
+  
+  ng-multiselect-dropdown {
+      width: 100%;
+      font-size: 17px;
+      font-family: "Quicksand", sans-serif;
+      display: block;
+  }
+  
+  .btn-secondary {
+      font-family: "Quicksand", sans-serif;
+      background-color:#0ecc95;
+      border: 2px; 
+      padding: 8px 15px;
+      color: white;
+      font-size: 14px;
+      border-radius: 30px;
+      transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+      margin-top: 10px;
+      margin-left: 12px;
+      font-weight: 500;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #09ad7f; 
+      color: white; 
+    }
+    
+    .btn-secondary:focus {
+      outline: none;
+    }
+  
+    .award-container {
+      display: flex; /* Alinea los elementos en una fila */
+      align-items: center; /* Alinea verticalmente los elementos en el centro */
+      justify-content: center; /* Centra los elementos horizontalmente */
+      gap: 8px; /* Espacio entre el ícono y el número */
+      margin-top: 10px; /* Espacio encima del contenedor, ajusta según sea necesario */
+      transition: color 0.3s ease; /* Suaviza el cambio de color del texto e ícono */
+  }
+  
+  .award-container:hover {
+      color: blue; /* Cambia el color del texto e ícono al pasar el mouse */
+  }
+  
+  .award-container i {
+      font-size: 24px; /* Tamaño del ícono */
+  }
+  
+  .award-container h4 {
+      margin: 0; 
+  }
+  
+  /*TIMELINE*/
+  
+  .star {
+    font-size: 20px;
+    margin-right: 2px;
+  }
+  
+  .gold {
+    color: gold;
+  }
+  
+  .gray {
+    color: lightgray;
+  }
+  
+  
+  /**************Who View Your Profile CSS Start Here****************/
+  #timeline {
+    list-style: none;
+    position: relative;
+    margin:50px auto;
+    width:90%;
+  }
+  #timeline:before {
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 2px;
+    background-color: #4997cd;
+    left: 50%;
+    margin-left: -1.5px;
+  }
+  #timeline .clearFix {
+    clear: both;
+    height: 0;
+  }
+  #timeline .timeline-badge {
+    color: #fff;
+    width: 10px; /* Tamaño pequeño para el círculo */
+    height: 10px; /* Alto igual al ancho */
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -13px; /* Mover horizontalmente la mitad del ancho (10px / 2) */
+    background-color: #fff;
+    z-index: 6;
+    border-radius: 50%; /* Esto crea el círculo */
+    border: 2px solid #4997cd; /* Borde azul */
+  }
+  
+  
+  #timeline .timeline-badge span.timeline-balloon-date-day {
+    font-size: 1.4em;
+  }
+  #timeline .timeline-badge span.timeline-balloon-date-month {
+    font-size: .7em;
+    position: relative;
+    top: -10px;
+  }
+  #timeline .timeline-badge.timeline-filter-movement {
+    background-color: #ffffff;
+    font-size: 1.7em;
+    height: 35px;
+    margin-left: -18px;
+    width: 35px;
+    top: 40px;
+  }
+  #timeline .timeline-badge.timeline-filter-movement a span {
+    color: #4997cd;
+    font-size: 1.3em;
+    top: -1px;
+  }
+  #timeline .timeline-badge.timeline-future-movement {
+      background-color: #ffffff;
+      height: 80px;
+      width: 80px;
+      font-size: 1.7em;
+      top: -16px;
+      margin-left: -40px;
+      border: 2px solid #4997cd;
+  }
+  #timeline .timeline-badge.timeline-future-movement p {
+      color:#1782cc;
+      position: absolute;
+      top: 25px;
+      left: 18px;
+  }
+  #timeline .timeline-badge.timeline-future-movement a span {
+    color: #4997cd;
+    font-size: .5em;
+    top: 0;
+    left: 1px;
+  }
+  #timeline .timeline-movement {
+  /*   border-bottom: dashed 1px #4997cd; */
+    position: relative;
+    margin-bottom: 10rem;
+  }
+  #timeline .timeline-movement.timeline-movement-top {
+    height: 60px;
+  }
+  
+  #timeline .timeline-movement .timeline-item .timeline-panel {
+    border: 1px solid #d4d4d4;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    color: #666;
+    padding: 10px;
+    position: relative;
+    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+  }
+  #timeline .timeline-movement .timeline-item .timeline-panel .timeline-panel-ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  #timeline .timeline-movement .timeline-item .timeline-panel.credits  .timeline-panel-ul .lefting-wrap {
+      float: right;
+      width: 100%;
+      height: 130px;
+  }
+  #timeline .timeline-movement .timeline-item .timeline-panel.debits  .timeline-panel-ul .lefting-wrap {
+      float: right;
+      width: 100%;
+      height: 130px;
+  }
+  #timeline .timeline-movement .timeline-item .timeline-panel.credits .timeline-panel-ul li {
+    color: #666;
+    width: 100%;
+  }
+  #timeline .timeline-movement .timeline-item .timeline-panel.debits .timeline-panel-ul li {
+      color: #666;
+      width: 100%;
+  }
+  .clear {
+      clear:both;
+  }
+  
+  
+  #timeline .timeline-movement .timeline-item .timeline-panel.credits .timeline-panel-ul li a.importo  {
+    color: #468c1f;
+    font-size: 1.3em;
+    font-weight: 600;
+  }
+  
+  #timeline .timeline-movement .timeline-item .timeline-panel.debits .timeline-panel-ul a.importo {
+    color: #e2001a;
+    font-size: 1.3em;
+    font-weight: 600;
+  }
+  
+  /*END: TIMELINE*/
+  
+  
+  /*START: PERSONAL DATA*/
+  .tab {
+      padding: 15px;
+      margin: 0 auto;
+    }
+    
+    .data-section {
+      margin-bottom: 15px;
+    }
+    
+    .data-section h6 {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: BLACK;
+    }
+    
+    .data-section p {
+      font-size: 16px;
+      color: BLACK;
+    }
+    
+    h4 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    
+    i {
+      margin-right: 5px;color: BLACK;
+    }
+    
+    @media (max-width: 768px) {
+      .tab {
+        padding: 10px;
+        margin: 10px;
+      }
+    
+      .data-section p {
+        font-size: 14px;
+      }
+    }
+  
+    /*START:CARD*/
+    .card p{
+        font-size: 14px;
+        color: black;
+    }
+    .custom-img {
+        height: 150px; 
+        object-fit: cover; 
+        width: 100%; 
+    }
+    .custom-card {
+        border-radius: 10px; 
+        overflow: hidden; 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+        transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    }
+    
+    .custom-card:hover {
+        transform: translateY(-5px); 
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); 
+    }
+    
+    .custom-gradient {
+        height: 150px;
+        width: 100%;
+        background: linear-gradient(90deg, #68c6b4, #00657a, #00657a);
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+    
+    .card-body {
+        padding: 20px; 
+        text-align: left; 
+    }
+    
+    .card-title {
+        font-size: 1.5rem; 
+        font-weight: bold;
+        color: #1E1450; 
+    }
+    
+    .card-text {
+        font-size: 1rem;
+        color: #555; 
+        margin-bottom: 15px;
+    }
+    
+    .btn-outline-primary1 {
+        border-color: #1E1450;
+        color: #1E1450;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    .btn-outline-primary1:hover {
+        background-color: #1E1450;
+        color: white;
+    }
+
+    .btn-outline-primary2 {
+        border-color: #ED4B4B;
+        color: #1E1450;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    .btn-outline-primary2:hover {
+        background-color: #ED4B4B;
+        color: white;
+    }
+
+    .btn-outline-primary3 {
+        border-color: #EFC940;
+        color: #1E1450;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    .btn-outline-primary3:hover {
+        background-color: #EFC940;
+        color: white;
+    }
+    
+    
