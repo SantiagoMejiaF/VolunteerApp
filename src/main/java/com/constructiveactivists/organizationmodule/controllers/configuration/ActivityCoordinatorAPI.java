@@ -48,4 +48,21 @@ public interface ActivityCoordinatorAPI {
             @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
             @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) String startTime,
             @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) String endTime);
+
+    @Operation(summary = "Obtener coordinadores de actividad por organización, sin tener en cuenta la disponibilidad")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/organization/{organizationId}")
+    ResponseEntity<List<ActivityCoordinatorEntity>> getCoordinatorsByOrganization(@PathVariable Integer organizationId);
+
+    @Operation(summary = "Obtener un coordinador de actividad por su ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "404", description = "No encontrado")
+    })
+    @GetMapping("/{id}")
+    ResponseEntity<ActivityCoordinatorEntity> getCoordinatorById(@PathVariable Integer id);
+
+
 }

@@ -93,4 +93,13 @@ public class ActivityCoordinatorService {
     private boolean isTimeOverlap(ActivityEntity activity, LocalTime startTime, LocalTime endTime) {
         return activity.getStartTime().isBefore(endTime) && activity.getEndTime().isAfter(startTime);
     }
+
+    public List<ActivityCoordinatorEntity> findByOrganizationId(Integer organizationId) {
+        return activityCoordinatorRepository.findByOrganizationId(organizationId);
+    }
+
+    public Optional<ActivityCoordinatorEntity> getCoordinatorById(Integer id) {
+        return activityCoordinatorRepository.findById(id);
+    }
+
 }

@@ -27,4 +27,11 @@ public interface VolunteerGroupAPI {
     })
     @GetMapping
     ResponseEntity<List<VolunteerGroupEntity>> getAllVolunteerGroups();
+
+    @Operation(summary = "Obtener los grupos de voluntarios por el ID de la organización")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/organization/{organizationId}")
+    ResponseEntity<List<VolunteerGroupEntity>> getVolunteerGroupsByOrganizationId(@PathVariable Integer organizationId);
 }

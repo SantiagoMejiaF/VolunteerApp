@@ -33,4 +33,10 @@ public class VolunteerGroupController implements VolunteerGroupAPI {
         Optional<VolunteerGroupEntity> volunteerGroup = volunteerGroupService.getVolunteerGroupById(id);
         return volunteerGroup.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
+
+    @Override
+    public ResponseEntity<List<VolunteerGroupEntity>> getVolunteerGroupsByOrganizationId(@PathVariable Integer organizationId) {
+        List<VolunteerGroupEntity> volunteerGroups = volunteerGroupService.getVolunteerGroupByOrganizationId(organizationId);
+        return ResponseEntity.ok(volunteerGroups);
+    }
 }
