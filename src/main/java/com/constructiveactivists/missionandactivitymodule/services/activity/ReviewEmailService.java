@@ -60,6 +60,15 @@ public class ReviewEmailService {
                 "<input type='hidden' name='activityId' value='" + activityId + "'/>" +
                 "<label for='description'>Descripción:</label>" +
                 "<textarea id='description' name='description' required></textarea>" +
+                "<label for='rating'>Calificación:</label>" +
+                "<select id='rating' name='rating' required>" +
+                "  <option value=''>Selecciona una calificación</option>" +
+                "  <option value='1'>1 - Muy malo</option>" +
+                "  <option value='2'>2 - Malo</option>" +
+                "  <option value='3'>3 - Regular</option>" +
+                "  <option value='4'>4 - Bueno</option>" +
+                "  <option value='5'>5 - Excelente</option>" +
+                "</select>" +
                 "<button type='submit'>Enviar Reseña</button>" +
                 "</form>" +
                 "</div>" +

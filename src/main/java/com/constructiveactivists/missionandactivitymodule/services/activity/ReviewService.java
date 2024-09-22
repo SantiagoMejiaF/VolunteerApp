@@ -52,6 +52,7 @@ public class ReviewService {
         review.setActivity(activity);
         review.setDescription(reviewRequest.getDescription());
         review.setImageUrls(reviewRequest.getImageUrls());
+        review.setRating(reviewRequest.getRating());
         ZoneId colombiaZoneId = ZoneId.of(ZONE_PLACE);
         ZonedDateTime nowInColombia = ZonedDateTime.now(colombiaZoneId);
         LocalDate currentDateInColombia = nowInColombia.toLocalDate();

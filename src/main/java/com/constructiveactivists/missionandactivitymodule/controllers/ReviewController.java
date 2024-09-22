@@ -56,6 +56,7 @@ public class ReviewController implements ReviewAPI {
     private String buildSuccessHtml(ReviewEntity review) {
         String activityName = review.getActivity().getTitle();
         String reviewDescription = review.getDescription();
+        Integer reviewRating = review.getRating();
 
         return "<!DOCTYPE html>" +
                 "<html lang='es'>" +
@@ -88,6 +89,7 @@ public class ReviewController implements ReviewAPI {
                 "       <div class='highlight'>" +
                 "           <p><strong>Descripción de la reseña:</strong></p>" +
                 "           <p>" + reviewDescription + "</p>" +
+                "           <p><strong>Calificación:</strong> " + reviewRating + "/5</p>" +
                 "       </div>" +
                 "       <p>Fecha de creación: " + review.getCreationDate() + "</p>" +
                 "       <p>¡Esperamos verte pronto en futuras actividades!</p>" +
