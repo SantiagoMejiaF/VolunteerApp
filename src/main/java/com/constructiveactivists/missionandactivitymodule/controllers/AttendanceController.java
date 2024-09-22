@@ -2,6 +2,7 @@ package com.constructiveactivists.missionandactivitymodule.controllers;
 
 import com.constructiveactivists.configurationmodule.exceptions.AttendanceException;
 import com.constructiveactivists.externalservicesmodule.services.GoogleService;
+import com.constructiveactivists.missionandactivitymodule.controllers.configuration.activity.AttendanceAPI;
 import com.constructiveactivists.missionandactivitymodule.services.activity.AttendanceService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -16,23 +17,23 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("${request-mapping.controller.attendace}")
-public class AttendanceController {
+public class AttendanceController implements AttendanceAPI {
 
     private final AttendanceService attendanceService;
     private final GoogleService googleService;
 
 
-    @GetMapping("/google/auth/checkin")
+    @Override
     public void redirectToGoogleForCheckIn(@RequestParam("activityId") Integer activityId, HttpServletResponse response) throws IOException {
         googleService.redirectToGoogleForCheckIn(response, activityId);
     }
 
-    @GetMapping("/google/auth/checkout")
+    @Override
     public void redirectToGoogleForCheckOut(@RequestParam("activityId") Integer activityId, HttpServletResponse response) throws IOException {
         googleService.redirectToGoogleForCheckOut(response, activityId);
     }
 
-    @GetMapping("/google/checkin")
+    @Override
     public ResponseEntity<String> googleCheckInCallback(
             @RequestParam("code") String authorizationCode,
             @RequestParam("state") Integer activityId) {
@@ -109,7 +110,7 @@ public class AttendanceController {
                 .replace("'", "&#39;");
     }
 
-    @GetMapping("/google/checkout")
+    @Override
     public ResponseEntity<String> googleCheckOutCallback(
             @RequestParam("code") String authorizationCode,
             @RequestParam("state") Integer activityId) {
