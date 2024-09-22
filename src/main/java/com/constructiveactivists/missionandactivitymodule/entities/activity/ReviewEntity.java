@@ -43,5 +43,8 @@ public class ReviewEntity {
     @Comment("Número de likes en la reseña")
     private Integer likes;
 
+    @Column(name = "CALIFICACION", columnDefinition = "INTEGER", nullable = false)
+    @Comment("Calificación de la reseña")
+    private Integer rating;
 
 }
