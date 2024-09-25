@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "RESEÑA", schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
+@Table(name = "RESENA", schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
 public class ReviewEntity {
 
     @Id
@@ -29,7 +29,7 @@ public class ReviewEntity {
     private String description;
 
     @ElementCollection
-    @CollectionTable(name = "IMAGENES_RESEÑA", schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES", joinColumns = @JoinColumn(name = "RESEÑA_ID"))
+    @CollectionTable(name = "IMAGENES_RESENA", schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES", joinColumns = @JoinColumn(name = "RESEÑA_ID"))
     @Column(name = "IMAGEN_URL", length = 1000)
     @Comment("URL de imágenes asociadas a la reseña")
     private List<String> imageUrls;
