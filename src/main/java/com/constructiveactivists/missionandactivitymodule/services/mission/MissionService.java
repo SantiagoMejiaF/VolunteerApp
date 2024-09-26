@@ -1,11 +1,13 @@
 package com.constructiveactivists.missionandactivitymodule.services.mission;
 
+import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionTypeEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VisibilityEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VolunteerMissionRequirementsEnum;
 import com.constructiveactivists.missionandactivitymodule.repositories.MissionRepository;
+import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
 import com.constructiveactivists.organizationmodule.services.organization.OrganizationService;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,6 +27,7 @@ public class MissionService {
 
     private final MissionRepository missionRepository;
     private final OrganizationService organizationService;
+    private final ActivityService activityService;
 
     public MissionEntity save(MissionEntity mission) {
         if (!organizationService.getOrganizationById(mission.getOrganizationId()).isPresent()) {
@@ -65,5 +68,20 @@ public class MissionService {
     public List<SkillEnum> getRequiredSkills() {
         return Arrays.asList(SkillEnum.values());
     }
+
+    public void cancelMissionById(Integer missionId) {
+        Optional<MissionEntity> missionOptional = missionRepository.findById(missionId);
+        if (missionOptional.isPresent()) {
+            MissionEntity mission = missionOptional.get();
+            mission.setMissionStatus(MissionStatusEnum.CANCELADA);
+            missionRepository.save(mission);
+            List<ActivityEntity> activities = activityService.getActivitiesByMissionId(missionId);
+            activities.forEach(activity -> activityService.deleteActivityById(activity.getId()));
+        } else {
+            throw new EntityNotFoundException("Mission with ID " + missionId + " not found");
+        }
+    }
+
+
 
 }

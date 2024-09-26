@@ -5,6 +5,7 @@ import com.constructiveactivists.missionandactivitymodule.controllers.request.ac
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.mappers.activity.ActivityMapper;
 import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -65,5 +66,19 @@ public class ActivityController implements ActivityAPI {
     public ResponseEntity<List<ActivityEntity>> getActivitiesByMissionId(@PathVariable Integer missionId) {
         List<ActivityEntity> activities = activityService.getActivitiesByMissionId(missionId);
         return ResponseEntity.ok(activities);
+    }
+
+    @Override
+    public ResponseEntity<String> deleteActivity(@PathVariable Integer id) {
+        try {
+            activityService.deleteActivityById(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Activity with ID " + id + " not found.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while trying to delete the activity.");
+        }
     }
 }

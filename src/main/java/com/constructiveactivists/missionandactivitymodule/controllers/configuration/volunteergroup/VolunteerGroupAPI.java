@@ -34,4 +34,5 @@ public interface VolunteerGroupAPI {
     })
     @GetMapping("/organization/{organizationId}")
     ResponseEntity<List<VolunteerGroupEntity>> getVolunteerGroupsByOrganizationId(@PathVariable Integer organizationId);
+
 }

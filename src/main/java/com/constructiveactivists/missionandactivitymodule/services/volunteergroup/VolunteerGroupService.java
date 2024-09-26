@@ -33,4 +33,8 @@ public class VolunteerGroupService {
     public VolunteerGroupEntity save(VolunteerGroupEntity volunteerGroup) {
         return volunteerGroupRepository.save(volunteerGroup);
     }
+
+    public void deleteVolunteerGroupById(Integer id) {
+        volunteerGroupRepository.deleteById(id);
+    }
 }
