@@ -1,26 +1,45 @@
--- Inserción de - 16 usuarios
---                - 2 organizaciones
---                - 14 voluntarios (12 privados - 2 independientes)
---                - 3 misiones (2 privadas - 1 publica) con 5 actividades en cada una
+-- 1. Se insertan 20 roles en la tabla ROL, incluyendo múltiples instancias de "ORGANIZACION"
+-- y "VOLUNTARIO", así como varios "COORDINADOR_ACTIVIDAD".
+-- 2. Usuarios (20 Usuarios)
+-- Se insertan 20 usuarios en la tabla USUARIO, todos con el estado de autorización 'AUTORIZADO'.
+-- Cada usuario tiene un nombre, apellido, correo electrónico y una imagen de perfil.
+-- 3. Organizaciones (2 Organizaciones)
+-- Se registran 2 organizaciones en la tabla ORGANIZACION, cada una asociada a un usuario
+-- con información sobre el responsable, tipo de organización y dirección.
+-- 4. Información Personal de Voluntarios (13 Registros)
+-- Se insertan 13 registros de información personal de voluntarios, incluyendo cédula,
+-- dirección, edad y una breve descripción personal.
+-- 5. Misiones (5 misiones)
+-- Se insertan 5 registros
+-- 6. Lider de comunidad y Coordinador
+-- Se insertan 5 registros
+-- 7. Actividades y Grupos de voluntarios
+-- Se insertan 5 registros
+
+
 INSERT INTO modulo_gestion_usuarios.ROL (TIPO_ROL)
 VALUES
-('ORGANIZACION'),  -- Rol 1
-('ORGANIZACION'),  -- Rol 2
-('VOLUNTARIO'),   -- Rol 3
-('VOLUNTARIO'),   -- Rol 4
-('VOLUNTARIO'),   -- Rol 5
-('VOLUNTARIO'), -- Rol 6
-('VOLUNTARIO'), -- Rol 7
-('VOLUNTARIO'), -- Rol 8
-('VOLUNTARIO'), -- Rol 9
-('VOLUNTARIO'), -- Rol 10
-('VOLUNTARIO'), -- Rol 11
-('VOLUNTARIO'), -- Rol 12
-('VOLUNTARIO'), -- Rol 13
-('VOLUNTARIO'), -- Rol 14
-('VOLUNTARIO'); -- Rol 15
+('ORGANIZACION'),
+('ORGANIZACION'),
+('VOLUNTARIO'),
+('VOLUNTARIO'),
+('VOLUNTARIO'),
+('VOLUNTARIO'),
+('VOLUNTARIO'),
+('VOLUNTARIO'),
+('VOLUNTARIO'),
+('VOLUNTARIO'),
+('VOLUNTARIO'),
+('VOLUNTARIO'),
+('VOLUNTARIO'),
+('VOLUNTARIO'),
+('VOLUNTARIO'),
+('COORDINADOR_ACTIVIDAD'),
+('COORDINADOR_ACTIVIDAD'),
+('COORDINADOR_ACTIVIDAD'),
+('COORDINADOR_ACTIVIDAD'),
+('COORDINADOR_ACTIVIDAD');
 
--- Inserción de Usuarios (15 usuarios asociados a los roles anteriores)
 INSERT INTO modulo_gestion_usuarios.USUARIO (ROL_ID, ESTADO_AUTORIZACION, NOMBRE, APELLIDO, CORREO, IMAGEN, FECHA_REGISTRO)
 VALUES
 (1, 'AUTORIZADO', 'John', 'Doe', 'johndoe@example.com', 'https://randomuser.me/api/portraits/men/1.jpg', CURRENT_DATE),
@@ -37,12 +56,17 @@ VALUES
 (12, 'AUTORIZADO', 'Bruce', 'Wayne', 'brucewayne@example.com', 'https://randomuser.me/api/portraits/men/12.jpg', CURRENT_DATE),
 (13, 'AUTORIZADO', 'Clark', 'Kent', 'clarkkent@example.com', 'https://randomuser.me/api/portraits/men/13.jpg', CURRENT_DATE),
 (14, 'AUTORIZADO', 'Diana', 'Prince', 'dianaprince@example.com', 'https://randomuser.me/api/portraits/women/14.jpg', CURRENT_DATE),
-(15, 'AUTORIZADO', 'Peter', 'Parker', 'peterparker@example.com', 'https://randomuser.me/api/portraits/men/15.jpg', CURRENT_DATE);
+(15, 'AUTORIZADO', 'Peter', 'Parker', 'peterparker@example.com', 'https://randomuser.me/api/portraits/men/15.jpg', CURRENT_DATE),
+(16, 'AUTORIZADO', 'Alice', 'Smith', 'alicesmith@example.com', 'https://randomuser.me/api/portraits/women/16.jpg', CURRENT_DATE),
+(17, 'AUTORIZADO', 'Bob', 'Johnson', 'bobjohnson@example.com', 'https://randomuser.me/api/portraits/men/17.jpg', CURRENT_DATE),
+(18, 'AUTORIZADO', 'Charlie', 'Brown', 'charliebrown@example.com', 'https://randomuser.me/api/portraits/men/18.jpg', CURRENT_DATE),
+(19, 'AUTORIZADO', 'Dana', 'White', 'danawhite@example.com', 'https://randomuser.me/api/portraits/women/19.jpg', CURRENT_DATE),
+(20, 'AUTORIZADO', 'Eve', 'Black', 'eveblack@example.com', 'https://randomuser.me/api/portraits/women/20.jpg', CURRENT_DATE);
 
-INSERT INTO modulo_gestion_organizaciones.ORGANIZACION (USUARIO_ID, CEDULA_RESPONSABLE, TELEFONO_RESPONSABLE, NOMBRE_ORGANIZACION, TIPO_ORGANIZACION, SECTOR, TIPO_VOLUNTARIADO, NIT, DIRECCION_ORGANIZACION)
+INSERT INTO modulo_gestion_organizaciones.ORGANIZACION (USUARIO_ID, CEDULA_RESPONSABLE, TELEFONO_RESPONSABLE, NOMBRE_ORGANIZACION, TIPO_ORGANIZACION, SECTOR, TIPO_VOLUNTARIADO, NIT, DIRECCION_ORGANIZACION, HORAS_REQUERIDAS_CERTIFICACION)
 VALUES
-(1, '1234567890', '0987654321', 'Org1', 'ONG', 'SALUD', 'ADJUNTA', '1111111111', 'Calle 1 #123'),
-(2, '0987654321', '1234567890', 'Org2', 'FUNDACION', 'EDUCACION', 'ADJUNTA', '2222222222', 'Calle 2 #456');
+(1, '1234567890', '0987654321', 'Org1', 'ONG', 'SALUD', 'ADJUNTA', '1111111111', 'Calle 1 #123',150),
+(2, '0987654321', '1234567890', 'Org2', 'FUNDACION', 'EDUCACION', 'ADJUNTA', '2222222222', 'Calle 2 #456',200);
 
 INSERT INTO modulo_gestion_voluntarios.INFORMACION_PERSONAL (CEDULA, DIRECCION, AGE, BORN_DATE, TELEFONO, DESCRIPCION_PERSONAL)
 VALUES
@@ -60,7 +84,7 @@ VALUES
 ('1213141516', 'Avenida La Playa 700', 31, '1993-10-20', '0876543210', 'Focalizado en salud pública.'),
 ('1314151617', 'Calle Las Américas 950', 23, '2001-02-14', '0865432109', 'Interesado en desarrollo urbano.');
 
-INSERT INTO modulo_gestion_voluntarios.INFORMACION_VOLUNTARIADO (HORAS_VOLUNTARIADAS, TIPO_VOLUNTARIO, ACTIVIDADES_COMPLETADAS)
+INSERT INTO modulo_gestion_voluntarios.INFORMACION_VOLUNTARIADO (HORAS_VOLUNTARIADAS_TOTALES, TIPO_VOLUNTARIO, ACTIVIDADES_COMPLETADAS)
 VALUES
 (50, 'VOLUNTARIO', 10),
 (120, 'VOLUNTARIO', 20),
@@ -95,19 +119,20 @@ VALUES
 
 INSERT INTO modulo_gestion_voluntarios.VOLUNTARIO (USUARIO_ID, ORGANIZACION_ID, VISIBILIDAD, INFORMACION_PERSONAL_ID, INFORMACION_VOLUNTARIADO_ID, INFORMACION_EMERGENCIA_ID)
 VALUES
-(3, 1, 1, 1, 1, 1),
-(4, 1, 1, 2, 2, 2),
-(5, 1, 0, 3, 3, 3),
-(6, 2, 1, 4, 4, 4),
-(7, 2, 0, 5, 5, 5),
-(8, 2, 1, 6, 6, 6),
-(9, NULL, 1, 7, 7, 7),
-(10, 1, 1, 8, 8, 8),
-(11, 1, 1, 9, 9, 9),
-(12, 2, 1, 10, 10, 10),
-(13, 2, 1, 11, 11, 11),
-(14, NULL, 0, 12, 12, 12),
-(15, NULL, 1, 13, 13, 13);
+(3,NULL, 1, 1, 1, 1),
+(4,NULL, 1, 2, 2, 2),
+(5,NULL, 2, 3, 3, 3),
+(6,null, 1, 4, 4, 4),
+(7,null, 2, 5, 5, 5),
+(8,null, 1, 6, 6, 6),
+(9,null, 1, 7, 7, 7),
+(10,null, 1, 8, 8, 8),
+(11,null, 1, 9, 9, 9),
+(12,null, 1, 10, 10, 10),
+(13,null, 1, 11, 11, 11),
+(14,null, 2, 12, 12, 12),
+(15,null, 1, 13, 13, 13);
+
 
 INSERT INTO modulo_gestion_voluntarios.dias_disponibles_voluntario (informacion_voluntariado_id , dia) VALUES
 (1, 'LUNES'),
@@ -154,98 +179,124 @@ INSERT INTO modulo_gestion_voluntarios.habilidades_voluntario (informacion_volun
 (12, 'COMUNICACION'),
 (13, 'ORGANIZACION');
 
-
-INSERT INTO modulo_gestion_misiones_y_actividades.MISION
-(ORGANIZACION_ID, TIPO_MISION, TITULO, DESCRIPCION, FECHA_INICIO, FECHA_FIN, CIUDAD, VISIBILIDAD, ESTADO)
+-- Inserciones en la tabla VOLUNTARIO_ORGANIZACION
+INSERT INTO MODULO_GESTION_VOLUNTARIOS.VOLUNTARIO_ORGANIZACION (VOLUNTARIO_ID, ORGANIZACION_ID)
 VALUES
-(null, 'SOCIAL', 'Misión de Apoyo Comunitario', 'Misión para brindar apoyo a comunidades locales en diversas actividades sociales.', '2024-09-01', '2024-12-31', 'Bogota', 'PUBLICA', 'EN_CURSO'),
-(2, 'MEDIO_AMBIENTE', 'Misión de Reforestación', 'Misión dedicada a la reforestación de áreas afectadas por la deforestación.', '2024-10-01', '2025-03-31', 'Bogota', 'PRIVADA', 'EN_CURSO'),
-(1, 'EDUCACION', 'Misión Educativa para Jóvenes', 'Misión enfocada en brindar educación y talleres para jóvenes en situación de vulnerabilidad.', '2024-11-01', '2025-05-31', 'Bogota', 'PRIVADA', 'EN_CURSO');
+(1, 1),
+(2, 2),
+(3, 1),
+(4, 2),
+(5, 1),
+(6, 2),
+(7, 1),
+(8, 2),
+(9, 1),
+(10, 2),
+(11, 1),
+(12, 2),
+(13, 1);
+
+INSERT INTO MODULO_GESTION_VOLUNTARIOS.POSTULACION (ID, ESTADO, FECHA_INSCRIPCION)
+VALUES
+(1, 0, '2024-01-01'),
+(2, 0, '2024-02-01'),
+(3, 0, '2024-03-01'),
+(4, 0, '2024-04-01'),
+(5, 0, '2024-05-01'),
+(6, 0, '2024-06-01'),
+(7, 0, '2024-07-01'),
+(8, 0, '2024-08-01'),
+(9, 0, '2024-09-01'),
+(10, 0, '2024-10-01'),
+(11, 0, '2024-11-01'),
+(12, 0, '2024-12-01'),
+(13, 0, '2025-01-01');
+
+INSERT INTO MODULO_GESTION_VOLUNTARIOS.DATOS_COMPARTIDOS_VOLUNTARIO_ORGANIZACION (ID, HORAS_HECHAS, HORAS_CERTIFICADAS, HORAS_MENSUALES)
+VALUES
+(1, 10, 0, 1),
+(2, 20, 0, 2),
+(3, 15, 0, 1),
+(4, 30, 0, 3),
+(5, 40, 0, 4),
+(6, 25, 0, 2),
+(7, 35, 0, 3),
+(8, 45, 0, 4),
+(9, 50, 0, 5),
+(10, 60, 0, 6),
+(11, 55, 0, 5),
+(12, 65, 0, 6),
+(13, 70, 0, 7);
+
+INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.COORDINADOR_ACTIVIDAD (USUARIO_ID, ORGANIZACION_ID, CEDULA, CELULAR)
+VALUES
+(16, 1, '2345678901', '3001112233'),
+(17, 2, '3456789012', '3002223344'),
+(18, 1, '4567890123', '3003334455'),
+(19, 2, '5678901234', '3004445566'),
+(20, 1, '6789012345', '3005556677');
+
+-- Inserción de Misiones
+INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.MISION
+(ORGANIZACION_ID, TIPO_MISION, TITULO, DESCRIPCION, FECHA_INICIO, FECHA_FIN, DEPARTAMENTO, VISIBILIDAD, ESTADO)
+VALUES
+(1, 'SOCIAL', 'Voluntariado en Amazonas', 'Apoyo a comunidades indígenas con educación y salud.', '2024-10-01', '2024-10-15', 'Amazonas', 'PUBLICA', 'DISPONIBLE'),
+(2, 'MEDIO_AMBIENTE', 'Voluntariado de Reforestación en Antioquia', 'Plantación de árboles y restauración de áreas verdes.', '2024-09-15', '2024-09-30', 'Antioquia', 'PUBLICA', 'DISPONIBLE'),
+(1, 'SOCIAL', 'Voluntariado Educativo en Boyacá', 'Apoyo en escuelas rurales con actividades de alfabetización.', '2024-11-01', '2024-11-10', 'Boyacá', 'PRIVADA', 'DISPONIBLE'),
+(2, 'SALUD', 'Voluntariado en Brigadas de Salud en Bolívar', 'Jornadas médicas para comunidades rurales en Bolívar.', '2024-10-10', '2024-10-20', 'Bolívar', 'PUBLICA', 'DISPONIBLE'),
+(1, 'EDUCACION', 'Voluntariado Tecnológico en Cundinamarca', 'Capacitación tecnológica para jóvenes en zonas rurales.', '2024-09-01', '2024-09-15', 'Cundinamarca', 'PUBLICA', 'DISPONIBLE');
+
+INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.LIDER_COMUNIDAD (NOMBRE, correo , celular)
+VALUES
+('Juan Pérez', 'juancho.perez@example.com', '3216549870'),
+('Ana Gómez', 'anasta.gomez@example.com', '3216549871'),
+('Luis Rodríguez', 'luisa.rodriguez@example.com', '3216549872'),
+('Marta López', 'marta.lopez@example.com', '3216549873'),
+('Carlos Hernández', 'carlos.hernandez@example.com', '3216549874');
+
+-- Inserción de requisitos para las misiones
+INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.REQUISITOS_REQUERIDOS (MISSION_ID, REQUISITOS)
+VALUES
+(1, 'RESIDENCIA_LEGAL'),
+(1, 'CERTIFICADO_MEDICO'),
+(2, 'EXPERIENCIA_PREVIA'),
+(2, 'DISPONIBILIDAD_MINIMA'),
+(3, 'CAPACITACION_COMPLETA'),
+(3, 'DOMINIO_IDIOMA'),
+(4, 'ANTECEDENTES_APROBADOS'),
+(4, 'PERIODO_COMPROMISO'),
+(5, 'NO_APLICA');
+
+-- Inserción de habilidades requeridas para las misiones
+INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.HABILIDADES_REQUERIDAS (MISSION_ID, HABILIDADES)
+VALUES
+(1, 'COMUNICACION'),
+(1, 'TRABAJO_EN_EQUIPO'),
+(2, 'GESTION_DE_PROYECTOS'),
+(2, 'EDUCACION'),
+(3, 'LIDERAZGO'),
+(3, 'PRIMEROS_AUXILIOS'),
+(4, 'ORGANIZACION'),
+(4, 'MARKETING'),
+(5, 'TECNOLOGIA'),
+(5, 'IDIOMAS');
+
+INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.ACTIVIDAD (MISION_ID,lider_comunidad_id , coordinador_actividad_id , TITULO, DESCRIPCION, FECHA, HORA_INICIO, HORA_FIN, CIUDAD, LOCALIDAD, DIRECCION, NUMERO_VOLUNTARIOS_REQUERIDOS, HORAS_REQUERIDAS, VISIBILIDAD, numero_personas_beneficiadas , OBSERVACIONES, grupo_voluntario_id,estado)
+VALUES
+(1,1, 16, 'Plantación de árboles', 'Plantación de 100 árboles en el parque central.', '2024-09-03', '08:00', '12:00', 'Bogotá', 'Usaquén', 'Parque Central, Calle 123', 20, 4, 'PUBLICA', 100, 'Llevar agua y protector solar.',1,'DISPONIBLE'),
+(2,2, 17, 'Limpieza de Parque', 'Recolección de basura en el parque central.', '2024-09-10', '09:00', '13:00', 'Antioquia', 'Medellín', 'Parque Arví, Calle 45', 15, 4, 'PUBLICA', 50, 'Traer bolsas y guantes.',2,'DISPONIBLE'),
+(3,3, 18, 'Cuidado Animal', 'Cuidado y alimentación de animales en el refugio.', '2024-09-15', '10:00', '14:00', 'Boyacá', 'Tunja', 'Refugio de Animales, Calle 10', 10, 5, 'PUBLICA', 30, 'Llevar comida y agua.',3,'DISPONIBLE'),
+(4,4, 19, 'Taller de Reciclaje', 'Educación sobre reciclaje y recolección de materiales reciclables.', '2024-09-20', '14:00', '17:00', 'Bolívar', 'Cartagena', 'Centro Cultural, Calle 12', 25, 3, 'PUBLICA', 100, 'Proveer materiales reciclables.',4,'DISPONIBLE'),
+(5,5, 20, 'Fumigación de Plagas', 'Control de plagas en áreas rurales.', '2024-09-25', '08:00', '12:00', 'Cundinamarca', 'Soacha', 'Granja de Ejemplo, Calle 5', 5, 6, 'PUBLICA', 20, 'Uso de mascarillas necesario.',5,'DISPONIBLE');
+
+INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.GRUPO_VOLUNTARIO
+(ORGANIZACION_ID, ACTIVIDAD_ID, NOMBRE, CANTIDAD_VOLUNTARIOS_REQUERIDOS, CANTIDAD_DE_VOLUNTARIOS_ACTUAL)
+VALUES
+(1, 1, 'Grupo Árboles Bogotá', 20, 0),
+(2, 2, 'Grupo Limpieza Medellín', 15, 0),
+(3, 3, 'Grupo Cuidado Animal', 10, 0),
+(4, 4, 'Grupo Taller de Reciclaje', 25, 0),
+(5, 5, 'Grupo Fumigación Soacha', 5, 0);
 
 
-INSERT INTO modulo_gestion_misiones_y_actividades.REQUISITOS_REQUERIDOS (MISSION_ID, REQUISITOS) VALUES
-    (1, 'CERTIFICADO_MEDICO'),
-    (1, 'EXPERIENCIA_PREVIA'),
-    (1, 'DOMINIO_IDIOMA'),
-    (1, 'DISPONIBILIDAD_MINIMA'),
-    (1, 'CAPACITACION_COMPLETA'),
-    (2, 'CERTIFICADO_MEDICO'),
-    (2, 'EXPERIENCIA_PREVIA'),
-    (2, 'DOMINIO_IDIOMA'),
-    (2, 'DISPONIBILIDAD_MINIMA'),
-    (2, 'PERIODO_COMPROMISO'),
-    (3, 'CERTIFICADO_MEDICO'),
-    (3, 'EXPERIENCIA_PREVIA'),
-    (3, 'DOMINIO_IDIOMA'),
-    (3, 'DISPONIBILIDAD_MINIMA'),
-    (3, 'NO_APLICA');
 
--- Insertar habilidades requeridas para cada misión
-INSERT INTO modulo_gestion_misiones_y_actividades.HABILIDADES_REQUERIDAS (MISSION_ID, HABILIDADES) VALUES
-    (1, 'COMUNICACION'),
-    (1, 'ORGANIZACION'),
-    (1, 'LIDERAZGO'),
-    (1, 'TRABAJO_EN_EQUIPO'),
-    (1, 'EDUCACION'),
-    (2, 'COMUNICACION'),
-    (2, 'PRIMEROS_AUXILIOS'),
-    (2, 'GESTION_DE_PROYECTOS'),
-    (2, 'MARKETING'),
-    (2, 'TECNOLOGIA'),
-    (3, 'ORGANIZACION'),
-    (3, 'LIDERAZGO'),
-    (3, 'TRABAJO_EN_EQUIPO'),
-    (3, 'PRIMEROS_AUXILIOS'),
-    (3, 'IDIOMAS');
-
--- Insertar líderes de comunidad
-INSERT INTO modulo_gestion_misiones_y_actividades.LIDER_COMUNIDAD (
-    NOMBRE, CEDULA, CORREO, CELULAR
-) VALUES
-    ('Juan Pérez', '1234567890', 'juan.perez@example.com', '5551234567'),
-    ('María Gómez', '2345678901', 'maria.gomez@example.com', '5555678901'),
-    ('Carlos López', '3456789012', 'carlos.lopez@example.com', '5559876543'),
-    ('Ana Martínez', '4567890123', 'ana.martinez@example.com', '5554321098'),
-    ('Luis Fernández', '5678901234', 'luis.fernandez@example.com', '5556789012');
-
-
-
--- Insertar coordinadores de actividad
-INSERT INTO modulo_gestion_misiones_y_actividades.COORDINADOR_ACTIVIDAD (
-    USUARIO_ID, ORGANIZACION_ID, NOMBRE, APELLIDO, CEDULA, CORREO, CELULAR
-) VALUES
-    (1, NULL, 'Ricardo', 'Mendoza', '6789012345', 'ricardo.mendoza@example.com', '5552345678'),
-    (2, NULL, 'Laura', 'Reyes', '7890123456', 'laura.reyes@example.com', '5553456789'),
-    (3, 2, 'Fernando', 'Castro', '8901234567', 'fernando.castro@example.com', '5554567890'),
-    (4, 2, 'Isabel', 'Morales', '9012345678', 'isabel.morales@example.com', '5555678901'),
-    (5, 1, 'Daniel', 'Rodríguez', '0123456789', 'daniel.rodriguez@example.com', '5556789012');
-
--- Insertar actividades para la misión 1
-INSERT INTO modulo_gestion_misiones_y_actividades.ACTIVIDAD (
-    MISSION_ID, LIDER_COMUNIDAD_ID, COORDINADOR_ACTIVIDAD_ID, TITULO, DESCRIPCION, FECHA, HORA_INICIO, HORA_FIN, DIRECCION, NUMERO_VOLUNTARIOS_REQUERIDOS, HORAS_REQUERIDAS, ESTADO, OBSERVACIONES
-) VALUES
-    (1, 1, 1, 'Reunión Inicial', 'Reunión para organizar la misión y asignar tareas.', '2024-09-05', '09:00:00', '11:00:00', 'Dirección A', 10, 2, 'DISPONIBLE', 'Reunión de planificación.'),
-    (1, 1, 2, 'Taller de Capacitación', 'Taller para capacitar a los voluntarios.', '2024-09-10', '10:00:00', '15:00:00', 'Dirección B', 15, 5, 'DISPONIBLE', 'Capacitación intensiva.'),
-    (1, 2, 1, 'Distribución de Materiales', 'Distribución de materiales educativos.', '2024-09-15', '08:00:00', '12:00:00', 'Dirección C', 8, 4, 'DISPONIBLE', 'Entrega y organización de materiales.'),
-    (1, 2, 2, 'Sesión de Apoyo', 'Sesión de apoyo individual para estudiantes.', '2024-09-20', '13:00:00', '16:00:00', 'Dirección D', 12, 3, 'DISPONIBLE', 'Apoyo educativo personalizado.'),
-    (1, 1, 1, 'Evaluación Final', 'Evaluación final del impacto de la misión.', '2024-12-01', '09:00:00', '11:00:00', 'Dirección E', 10, 2, 'DISPONIBLE', 'Revisión y evaluación de resultados.');
-
--- Insertar actividades para la misión 2
-INSERT INTO modulo_gestion_misiones_y_actividades.ACTIVIDAD (
-    MISSION_ID, LIDER_COMUNIDAD_ID, COORDINADOR_ACTIVIDAD_ID, TITULO, DESCRIPCION, FECHA, HORA_INICIO, HORA_FIN, DIRECCION, NUMERO_VOLUNTARIOS_REQUERIDOS, HORAS_REQUERIDAS, ESTADO, OBSERVACIONES
-) VALUES
-    (2, 3, 3, 'Revisión de Vacunas', 'Revisión de las vacunas a administrar.', '2024-10-02', '08:00:00', '10:00:00', 'Dirección F', 5, 2, 'DISPONIBLE', 'Preparación para la campaña.'),
-    (2, 3, 4, 'Campaña de Vacunación', 'Vacunación en centros de salud.', '2024-10-05', '09:00:00', '14:00:00', 'Dirección G', 20, 6, 'DISPONIBLE', 'Vacunación en diferentes puntos.'),
-    (2, 4, 3, 'Distribución de Folletos', 'Distribución de folletos informativos.', '2024-10-10', '10:00:00', '13:00:00', 'Dirección H', 8, 3, 'DISPONIBLE', 'Entrega de material informativo.'),
-    (2, 4, 4, 'Control Post-Vacunación', 'Seguimiento y control post-vacunación.', '2024-10-20', '11:00:00', '15:00:00', 'Dirección I', 12, 4, 'DISPONIBLE', 'Monitoreo de posibles efectos secundarios.'),
-    (2, 3, 3, 'Evaluación de la Campaña', 'Evaluación de resultados y feedback.', '2024-11-30', '09:00:00', '11:00:00', 'Dirección J', 10, 2, 'DISPONIBLE', 'Revisión final de la campaña.');
-
--- Insertar actividades para la misión 3
-INSERT INTO modulo_gestion_misiones_y_actividades.ACTIVIDAD (
-    MISSION_ID, LIDER_COMUNIDAD_ID, COORDINADOR_ACTIVIDAD_ID, TITULO, DESCRIPCION, FECHA, HORA_INICIO, HORA_FIN, DIRECCION, NUMERO_VOLUNTARIOS_REQUERIDOS, HORAS_REQUERIDAS, ESTADO, OBSERVACIONES
-) VALUES
-    (3, 2, 5, 'Reunión de Coordinación', 'Coordinación de actividades de limpieza.', '2024-09-18', '09:00:00', '11:00:00', 'Dirección K', 8, 2, 'DISPONIBLE', 'Organización de tareas de limpieza.'),
-    (3, 2, 5, 'Limpieza de Áreas Verdes', 'Limpieza y mantenimiento de parques.', '2024-09-25', '08:00:00', '14:00:00', 'Dirección L', 15, 6, 'DISPONIBLE', 'Limpieza de áreas verdes locales.'),
-    (3, 3, 5, 'Recolección de Residuos', 'Recolección y disposición de residuos.', '2024-10-05', '10:00:00', '12:00:00', 'Dirección M', 10, 3, 'DISPONIBLE', 'Recolección de residuos en áreas específicas.'),
-    (3, 3, 5, 'Mantenimiento de Equipos', 'Revisión y mantenimiento de equipos de limpieza.', '2024-10-15', '09:00:00', '11:00:00', 'Dirección N', 7, 2, 'DISPONIBLE', 'Chequeo y mantenimiento de herramientas.'),
-    (3, 2, 5, 'Evaluación de Resultados', 'Evaluación del impacto de la limpieza.', '2024-11-05', '10:00:00', '12:00:00', 'Dirección O', 8, 2, 'DISPONIBLE', 'Revisión y evaluación de resultados de limpieza.');

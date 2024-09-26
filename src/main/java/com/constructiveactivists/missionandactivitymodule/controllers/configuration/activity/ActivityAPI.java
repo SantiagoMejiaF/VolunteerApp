@@ -60,4 +60,12 @@ public interface ActivityAPI {
     })
     @GetMapping("/mission/{missionId}")
     ResponseEntity<List<ActivityEntity>> getActivitiesByMissionId(@PathVariable Integer missionId);
+
+    @Operation(summary = "Eliminar una actividad por su ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Actividad eliminada exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Actividad no encontrada")
+    })
+    @DeleteMapping("/{id}")
+    ResponseEntity<String> deleteActivity(@PathVariable Integer id);
 }

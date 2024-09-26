@@ -4,6 +4,7 @@ import com.constructiveactivists.missionandactivitymodule.entities.activity.Acti
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupEntity;
+import com.constructiveactivists.missionandactivitymodule.repositories.MissionRepository;
 import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupService;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.organizationmodule.repositories.ActivityCoordinatorRepository;
@@ -25,7 +26,7 @@ import static com.constructiveactivists.configurationmodule.constants.AppConstan
 public class ActivityService {
 
     private final VolunteerGroupService volunteerGroupService;
-    private final MissionService missionService;
+    private final MissionRepository missionRepository;
     private final ActivityRepository activityRepository;
     private final ActivityCoordinatorRepository activityCoordinatorRepository;
     private final QRCodeService qrCodeService;
@@ -33,7 +34,7 @@ public class ActivityService {
 
     public ActivityEntity save(ActivityEntity activity) {
 
-        MissionEntity mission = missionService.getMissionById(activity.getMissionId())
+        MissionEntity mission = missionRepository.getMissionById(activity.getMissionId())
                 .orElseThrow(() -> new EntityNotFoundException(MISSION_MEESAGE_ID + activity.getMissionId().toString() + NOT_FOUND_MESSAGE));
 
         Optional<ActivityCoordinatorEntity> coordinator = activityCoordinatorRepository.findById(activity.getActivityCoordinator());
@@ -85,6 +86,25 @@ public class ActivityService {
 
     public List<ActivityEntity> getActivitiesByMissionId(Integer missionId) {
         return activityRepository.findByMissionId(missionId);
+    }
+
+    public void deleteActivityById(Integer id) {
+        activityRepository.findById(id).ifPresent(activity -> {
+            volunteerGroupService.deleteVolunteerGroupById(activity.getId());
+            this.updateActivityStatus(id, ActivityStatusEnum.CANCELADA);
+        });
+    }
+
+    public ActivityEntity updateActivityStatus(Integer id, ActivityStatusEnum newStatus) {
+        Optional<ActivityEntity> activityOptional = activityRepository.findById(id);
+
+        if (activityOptional.isPresent()) {
+            ActivityEntity activity = activityOptional.get();
+            activity.setActivityStatus(newStatus);
+            return activityRepository.save(activity);
+        } else {
+            throw new EntityNotFoundException("Activity with id " + id + " not found");
+        }
     }
 
 }

@@ -86,4 +86,12 @@ public interface MissionAPI {
     })
     @GetMapping("/required-skills")
     ResponseEntity<List<SkillEnum>> getRequiredSkills();
+
+    @Operation(summary = "Cancelar una misión por su ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Misión cancelada exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Misión no encontrada")
+    })
+    @DeleteMapping("/{id}")
+    ResponseEntity<Void> cancelMission(@PathVariable Integer id);
 }

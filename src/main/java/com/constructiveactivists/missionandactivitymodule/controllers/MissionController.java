@@ -10,6 +10,7 @@ import com.constructiveactivists.missionandactivitymodule.entities.mission.enums
 import com.constructiveactivists.missionandactivitymodule.mappers.mission.MissionMapper;
 import com.constructiveactivists.missionandactivitymodule.services.mission.MissionService;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -77,6 +78,18 @@ public class MissionController implements MissionAPI {
     @Override
     public ResponseEntity<List<SkillEnum>> getRequiredSkills() {
         return ResponseEntity.ok(missionService.getRequiredSkills());
+    }
+
+    @Override
+    public ResponseEntity<Void> cancelMission(@PathVariable Integer id) {
+        try {
+            missionService.cancelMissionById(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 }
