@@ -48,6 +48,11 @@ import { VerPerfilVComponent } from './Modules/Volunteer/viewModel/ver-perfil-v.
 import { VerPerfilOComponent } from './Modules/Organization/viewModel/ver-perfil-o.component';
 import { VerPerfilCComponent } from './Modules/Coordinators/viewModel/ver-perfil-c.component';
 import { ActividadDComponent } from './Modules/Misiones/viewModel/actividad-d.component';
+import { VerVoluntariosComponent } from './Modules/Organization/viewModel/ver-voluntarios.component';
+import { HomeVoluntariosComponent } from './Modules/Volunteer/viewModel/home-voluntarios.component';
+import { MisFundacionesComponent } from './Modules/Volunteer/viewModel/mis-fundaciones.component';
+
+import { ActividadesVComponent } from './Modules/Volunteer/viewModel/actividades-v.component';
 
 
 
@@ -85,7 +90,11 @@ registerLocaleData(localeEs, 'es');
     VerPerfilVComponent,
     VerPerfilOComponent,
     VerPerfilCComponent,
-    ActividadDComponent
+    ActividadDComponent,
+    VerVoluntariosComponent,
+    HomeVoluntariosComponent,
+    MisFundacionesComponent,
+    ActividadesVComponent
   ],
   imports: [
     BrowserModule,
@@ -98,7 +107,7 @@ registerLocaleData(localeEs, 'es');
     NgApexchartsModule,
     HttpClientModule,
     CommonModule,
-    FullCalendarModule
+    FullCalendarModule,
   ],
   providers: [
     TokenService,

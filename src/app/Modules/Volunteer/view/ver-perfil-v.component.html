@@ -1,204 +1,222 @@
 <div class="container">
+  
+  <div class="row">
     <div class="row">
-        <div class="col">
-            <div class="column1">
-                <h2>Perfil Voluntario</h2>
-            </div>
+      <div class="col">
+        <div class="d-flex justify-content-between align-items-center column1">
+          <h2>Perfil Voluntario</h2>
+          <div *ngIf="volunteerData.volunteeringInformation.status === 'Pendiente'">
+            <button class="Aceptar">Aceptar</button>
+            <button class="Rechazar" (click)="confirmReject()">Rechazar</button>
+          </div>
         </div>
+      </div>
     </div>
+    
+    
     <div class="row">
-        
-        
-        <div class="col">
-            
-            <div class="column2">
-                <div class="head d-flex">
-                    <img src="assets/img/ejemplo.jpg" id="misionimg">
-                    <div class="ml-3 mt-3" style="text-align: left;">
-                        <div class="datos">
-                            <h6>Nombre</h6>
-                            <p>{{ firstName }} {{ lastName }}</p>
-                            <h6>Email</h6>
-                            <p>{{ email }}</p>
-                            <h6>Teléfono</h6>
-                            <p>{{ volunteerData.personalInformation.phoneNumber }}</p>
-                           
-                        </div>
-                        
+
+
+      <div class="col">
+
+        <div class="column2">
+          <div class="head d-flex">
+            <img src="assets/img/ejemplo.jpg" id="misionimg">
+            <div class="datos ml-3 mt-3">
+              <h6>Nombre</h6>
+              <p>{{ firstName }} {{ lastName }}</p>
+              <h6>Email</h6>
+              <p>{{ email }}</p>
+              <h6>Teléfono</h6>
+              <p>{{ volunteerData.personalInformation.phoneNumber }}</p>
+            </div>
+          </div>
+          
+          
+          <hr class="mt-3" style="height: 1px; background-color: black; border: none;">
+          <ul class="nav mb-4">
+            <li class="nav-item">
+              <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content1'}"
+                (click)="showContent('content1')">
+                <strong><i class="bi bi-archive"></i></strong>
+                <span class="nav-text">Historial</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content2'}"
+                (click)="showContent('content2')">
+                <strong><i class="bi bi-person-vcard"></i></strong>
+                <span class="nav-text">Datos Personales</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content3'}"
+                (click)="showContent('content3')">
+                <strong><i class="bi bi-hospital"></i></strong>
+                <span class="nav-text">Datos de emergencia</span>
+              </a>
+            </li>
+          </ul>
+
+
+          <div *ngIf="currentContent === 'content1'" class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <div id="timeline">
+                  <div class="row timeline-movement timeline-movement-top">
+                    <div class="timeline-badge timeline-future-movement">
+                      <p>2018</p>
                     </div>
-                </div>
-                <hr class="mt-3" style="height: 1px; background-color: black; border: none;">
-                <ul class="nav mb-4">
-                    <li class="nav-item">
-                      <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content1'}"
-                          (click)="showContent('content1')">
-                        <strong><i class="bi bi-archive"></i></strong> 
-                        <span class="nav-text">Historial</span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content2'}"
-                          (click)="showContent('content2')">
-                        <strong><i class="bi bi-person-vcard"></i></strong> 
-                        <span class="nav-text">Datos Personales</span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content3'}"
-                          (click)="showContent('content3')">
-                        <strong><i class="bi bi-hospital"></i></strong> 
-                        <span class="nav-text">Datos de emergencia</span>
-                      </a>
-                    </li>
-                  </ul>
-                  
+                  </div>
+                  <div class="row timeline-movement">
+                    <div class="timeline-badge center-left">
 
-                <div *ngIf="currentContent === 'content1'" class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div id="timeline">
-                                <div class="row timeline-movement timeline-movement-top">
-                                    <div class="timeline-badge timeline-future-movement">
-                                            <p>2018</p>
-                                    </div>
-                                </div>
-                                <div class="row timeline-movement">
-                                    <div class="timeline-badge center-left">
-                                        
-                                    </div>
-                                    <div class="col-sm-6  timeline-item">
-                                        <div class="row">
-                                            <div class="col-sm-11">
-                                                <div class="timeline-panel credits">
-                                                    <ul class="timeline-panel-ul">
-                                                        <div class="righting-wrap">
-                                                            <li><a (click)="verDetalles(1)" class="importo">Nombre Actividad</a></li>
-                                                            <li><span class="causale" style="color:#000; font-weight: 600;">Nombre de la fundación que la creo </span> </li>
-                                                            <span *ngFor="let star of getStars(3)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
-                                                            <li><span class="causale">Reseña que le dejaron: Lorem ipsum dolor sit amet, consectetur adipiscing elit. </span> </li>
-                                                            <li><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 13/01/2018, 13:05"</small></p> </li>
-                                                        </div>
-                                                        <div class="clear"></div>
-                                                    </ul>
-                                                </div>
-                    
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                    
-                                <div class="row timeline-movement">
-                                    <div class="timeline-badge center-left">
-                                    
-                                    </div>
-                                    <div class="offset-sm-6 col-sm-6  timeline-item">
-                                        <div class="row">
-                                            <div class="offset-sm-1 col-sm-11">
-                                                <div class="timeline-panel debits">
-                                                    <ul class="timeline-panel-ul">
-                                                       
-                                                        <div class="righting-wrap">
-                                                            <li><a (click)="verDetalles(1)" class="importo">Mussum ipsum cacilds</a></li>
-                                                            <li><span class="causale" style="color:#000; font-weight: 600;">Web Designer </span> </li>
-                                                            <span *ngFor="let star of getStars(3)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
-                                                            <li><span class="causale">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </span> </li>
-                                                            <li><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 12/01/2018, 13:05"</small></p> </li>
-                                                        </div>
-                                                        <div class="clear"></div>
-                                                    </ul>
-                                                </div>
-                    
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                    
-                                
-                                
-                            </div>
-                        </div>
                     </div>
-                      
-                </div>
+                    <div class="col-sm-6  timeline-item">
+                      <div class="row">
+                        <div class="col-sm-11">
+                          <div class="timeline-panel credits">
+                            <ul class="timeline-panel-ul">
+                              <div class="righting-wrap">
+                                <li><a (click)="verDetalles(1)" class="importo">Nombre Actividad</a></li>
+                                <li><span class="causale" style="color:#000; font-weight: 600;">Nombre de la fundación
+                                    que la creo </span> </li>
+                                <span *ngFor="let star of getStars(3)"
+                                  [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                                <li><span class="causale">Reseña que le dejaron: Lorem ipsum dolor sit amet, consectetur
+                                    adipiscing elit. </span> </li>
+                                <li>
+                                  <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 13/01/2018,
+                                      13:05"</small></p>
+                                </li>
+                              </div>
+                              <div class="clear"></div>
+                            </ul>
+                          </div>
 
-
-                <div *ngIf="currentContent === 'content2'" class="content">
-                    <!-- Datos Personales -->
-                    <div class="tab ml-3">
-                      
-                      <!-- Celular -->
-                      <div class="data-section">
-                        <h6> Número celular:</h6>
-                        <p>{{ volunteerData.personalInformation.phoneNumber || 'No especificado' }}</p>
-                      </div>
-                      
-                      <!-- Dirección -->
-                      <div class="data-section">
-                        <h6> Dirección:</h6>
-                        <p>{{ volunteerData.personalInformation.address || 'No especificado' }}</p>
-                      </div>
-                  
-                      <!-- Fecha de Nacimiento -->
-                      <div class="data-section">
-                        <h6> Fecha de nacimiento:</h6>
-                        <p>{{ volunteerData.personalInformation.birthDate  || 'No especificado' }}</p>
-                      </div>
-                  
-                      <!-- Días Disponibles -->
-                      <div class="data-section">
-                        <h6> Días disponibles:</h6>
-                        <p>{{ volunteerData.volunteeringInformation.availabilityDaysList?.join(', ') || 'No especificado' }}</p>
-                      </div>
-                  
-                      <!-- Habilidades -->
-                      <div class="data-section">
-                        <h6>Habilidades:</h6>
-                        <p>{{ volunteerData.volunteeringInformation.skillsList?.join(', ') || 'No especificado' }}</p>
-                      </div>
-                  
-                      <!-- Intereses -->
-                      <div class="data-section">
-                        <h6> Intereses:</h6>
-                        <p>{{ volunteerData.volunteeringInformation.interestsList?.join(', ') || 'No especificado' }}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  
 
-                <div *ngIf="currentContent === 'content3'" class="content">
-                    <!-- Datos Personales -->
-                    <div class="tab ml-3">
-                      
-                        <!-- Nombre -->
-                        <div class="data-section">
-                          <h6> Nombre completo del contacto:</h6>
-                          <p>{{ volunteerData.emergencyInformation.emergencyContactFirstName || 'No especificado' }}</p>
+                  <div class="row timeline-movement">
+                    <div class="timeline-badge center-left">
+
+                    </div>
+                    <div class="offset-sm-6 col-sm-6  timeline-item">
+                      <div class="row">
+                        <div class="offset-sm-1 col-sm-11">
+                          <div class="timeline-panel debits">
+                            <ul class="timeline-panel-ul">
+
+                              <div class="righting-wrap">
+                                <li><a (click)="verDetalles(1)" class="importo">Mussum ipsum cacilds</a></li>
+                                <li><span class="causale" style="color:#000; font-weight: 600;">Web Designer </span>
+                                </li>
+                                <span *ngFor="let star of getStars(3)"
+                                  [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                                <li><span class="causale">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                  </span> </li>
+                                <li>
+                                  <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 12/01/2018,
+                                      13:05"</small></p>
+                                </li>
+                              </div>
+                              <div class="clear"></div>
+                            </ul>
+                          </div>
+
                         </div>
-                        
-                        <!-- Cel -->
-                        <div class="data-section">
-                          <h6> Número de teléfono del contacto:</h6>
-                          <p>{{ volunteerData.emergencyInformation.emergencyContactPhone || 'No especificado' }}</p>
-                        </div>
-                    
-                        <!-- Email -->
-                        <div class="data-section">
-                          <h6> Correo electrónico del contacto:</h6>
-                          <p>{{ volunteerData.emergencyInformation.emergencyContactEmail  || 'No especificado' }}</p>
-                        </div>
-                    
-                        <!-- Relación-->
-                        <div class="data-section">
-                          <h6> Relación con el contacto:</h6>
-                          <p>{{ volunteerData.emergencyInformation.emergencyContactRelationship || 'No especificado' }}</p>
-                        </div>
-                    
-                       
                       </div>
-                    
-            
+                    </div>
+                  </div>
+
+
+
                 </div>
+              </div>
             </div>
+
+          </div>
+
+
+          <div *ngIf="currentContent === 'content2'" class="content">
+            <!-- Datos Personales -->
+            <div class="tab ml-3">
+
+              <!-- Celular -->
+              <div class="data-section">
+                <h6> Número celular:</h6>
+                <p>{{ volunteerData.personalInformation.phoneNumber || 'No especificado' }}</p>
+              </div>
+
+              <!-- Dirección -->
+              <div class="data-section">
+                <h6> Dirección:</h6>
+                <p>{{ volunteerData.personalInformation.address || 'No especificado' }}</p>
+              </div>
+
+              <!-- Fecha de Nacimiento -->
+              <div class="data-section">
+                <h6> Fecha de nacimiento:</h6>
+                <p>{{ volunteerData.personalInformation.birthDate || 'No especificado' }}</p>
+              </div>
+
+              <!-- Días Disponibles -->
+              <div class="data-section">
+                <h6> Días disponibles:</h6>
+                <p>{{ volunteerData.volunteeringInformation.availabilityDaysList?.join(', ') || 'No especificado' }}</p>
+              </div>
+
+              <!-- Habilidades -->
+              <div class="data-section">
+                <h6>Habilidades:</h6>
+                <p>{{ volunteerData.volunteeringInformation.skillsList?.join(', ') || 'No especificado' }}</p>
+              </div>
+
+              <!-- Intereses -->
+              <div class="data-section">
+                <h6> Intereses:</h6>
+                <p>{{ volunteerData.volunteeringInformation.interestsList?.join(', ') || 'No especificado' }}</p>
+              </div>
+            </div>
+          </div>
+
+
+          <div *ngIf="currentContent === 'content3'" class="content">
+            <!-- Datos Personales -->
+            <div class="tab ml-3">
+
+              <!-- Nombre -->
+              <div class="data-section">
+                <h6> Nombre completo del contacto:</h6>
+                <p>{{ volunteerData.emergencyInformation.emergencyContactFirstName || 'No especificado' }}</p>
+              </div>
+
+              <!-- Cel -->
+              <div class="data-section">
+                <h6> Número de teléfono del contacto:</h6>
+                <p>{{ volunteerData.emergencyInformation.emergencyContactPhone || 'No especificado' }}</p>
+              </div>
+
+              <!-- Email -->
+              <div class="data-section">
+                <h6> Correo electrónico del contacto:</h6>
+                <p>{{ volunteerData.emergencyInformation.emergencyContactEmail || 'No especificado' }}</p>
+              </div>
+
+              <!-- Relación-->
+              <div class="data-section">
+                <h6> Relación con el contacto:</h6>
+                <p>{{ volunteerData.emergencyInformation.emergencyContactRelationship || 'No especificado' }}</p>
+              </div>
+
+
+            </div>
+
+
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>

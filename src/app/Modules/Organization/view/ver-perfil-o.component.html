@@ -1,4 +1,6 @@
 <div class="container">
+    
+
     <div class="row">
         <div class="col">
             <div class="column1">
@@ -7,7 +9,7 @@
         </div>
     </div>
     <div class="row">
-       
+
         <div class="col">
             <div class="column2">
                 <div class="head d-flex">
@@ -22,26 +24,27 @@
                             <h6>Dirección</h6>
                             <p>{{ organizationData.address }}</p>
                         </div>
-                        
+
                     </div>
                 </div>
                 <hr class="mt-3" style="height: 1px; background-color: black; border: none;">
                 <ul class="nav mb-4">
                     <li class="nav-item">
                         <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content1'}"
-                            (click)="showContent('content1')"><strong><i class="bi bi-archive"></i></strong> 
+                            (click)="showContent('content1')"><strong><i class="bi bi-archive"></i></strong>
                             <span class="nav-text">Historial</span></a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content2'}"
-                            (click)="showContent('content2')"><strong><i class="bi bi-building-exclamation"></i></strong> 
+                            (click)="showContent('content2')"><strong><i
+                                    class="bi bi-building-exclamation"></i></strong>
                             <span class="nav-text">Datos</span></a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content3'}"
-                            (click)="showContent('content3')"><strong><i class="bi bi-calendar-heart"></i></strong> 
+                            (click)="showContent('content3')"><strong><i class="bi bi-calendar-heart"></i></strong>
                             <span class="nav-text">Actividades</span></a>
                     </li>
                 </ul>
@@ -52,12 +55,12 @@
                             <div id="timeline">
                                 <div class="row timeline-movement timeline-movement-top">
                                     <div class="timeline-badge timeline-future-movement">
-                                            <p>2018</p>
+                                        <p>2018</p>
                                     </div>
                                 </div>
                                 <div class="row timeline-movement">
                                     <div class="timeline-badge center-left">
-                                        
+
                                     </div>
                                     <div class="col-sm-6  timeline-item">
                                         <div class="row">
@@ -65,115 +68,136 @@
                                                 <div class="timeline-panel credits">
                                                     <ul class="timeline-panel-ul">
                                                         <div class="righting-wrap">
-                                                            <li><a (click)="verDetalles(1)" class="importo">Nombre actividad</a></li>
-                                                            <li><span class="causale" style="color:#000; font-weight: 600;">Categoría </span> </li>
-                                                            <span *ngFor="let star of getStars(3)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
-                                                            <li><span class="causale">Reseña del líder: Lorem ipsum dolor sit amet, consectetur adipiscing elit. </span> </li>
-                                                            <li><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 13/01/2018, 13:05"</small></p> </li>
+                                                            <li><a (click)="verDetalles(1)" class="importo">Nombre
+                                                                    actividad</a></li>
+                                                            <li><span class="causale"
+                                                                    style="color:#000; font-weight: 600;">Categoría
+                                                                </span> </li>
+                                                            <span *ngFor="let star of getStars(3)"
+                                                                [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                                                            <li><span class="causale">Reseña del líder: Lorem ipsum
+                                                                    dolor sit amet, consectetur adipiscing elit. </span>
+                                                            </li>
+                                                            <li>
+                                                                <p><small class="text-muted"><i
+                                                                            class="glyphicon glyphicon-time"></i>
+                                                                        13/01/2018, 13:05"</small></p>
+                                                            </li>
                                                         </div>
                                                         <div class="clear"></div>
                                                     </ul>
                                                 </div>
-                    
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                    
+
                                 <div class="row timeline-movement">
                                     <div class="timeline-badge center-left">
-                                    
+
                                     </div>
                                     <div class="offset-sm-6 col-sm-6  timeline-item">
                                         <div class="row">
                                             <div class="offset-sm-1 col-sm-11">
                                                 <div class="timeline-panel debits">
                                                     <ul class="timeline-panel-ul">
-                                                       
+
                                                         <div class="righting-wrap">
-                                                            <li><a (click)="verDetalles(1)" class="importo">Nombre actividad</a></li>
-                                                            <li><span class="causale" style="color:#000; font-weight: 600;">Categoría </span> </li>
-                                                            <span *ngFor="let star of getStars(3)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
-                                                            <li><span class="causale">Reseña del líder:Lorem ipsum dolor sit amet, consectetur adipiscing elit. </span> </li>
-                                                            <li><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 12/01/2018, 13:05"</small></p> </li>
+                                                            <li><a (click)="verDetalles(1)" class="importo">Nombre
+                                                                    actividad</a></li>
+                                                            <li><span class="causale"
+                                                                    style="color:#000; font-weight: 600;">Categoría
+                                                                </span> </li>
+                                                            <span *ngFor="let star of getStars(3)"
+                                                                [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                                                            <li><span class="causale">Reseña del líder:Lorem ipsum dolor
+                                                                    sit amet, consectetur adipiscing elit. </span> </li>
+                                                            <li>
+                                                                <p><small class="text-muted"><i
+                                                                            class="glyphicon glyphicon-time"></i>
+                                                                        12/01/2018, 13:05"</small></p>
+                                                            </li>
                                                         </div>
                                                         <div class="clear"></div>
                                                     </ul>
                                                 </div>
-                    
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                    
-                                
-                                
+
+
+
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div *ngIf="currentContent === 'content2'" class="content">
-                    
+
                     <!-- Datos Personales -->
                     <div class="tab ml-3">
-                      
+
                         <!-- Celular -->
                         <div class="data-section">
-                          <h6> Nombre de la Fundación:</h6>
-                          <p>{{ 'Nombre de la Fundación '|| 'No especificado' }}</p>
+                            <h6> Nombre de la Fundación:</h6>
+                            <p>{{ 'Nombre de la Fundación '|| 'No especificado' }}</p>
                         </div>
-                        
+
                         <!-- Dirección -->
                         <div class="data-section">
-                          <h6> Dirección de la Fundación:</h6>
-                          <p>{{ 'Dirección de la Fundación '|| 'No especificado' }}</p>
+                            <h6> Dirección de la Fundación:</h6>
+                            <p>{{ 'Dirección de la Fundación '|| 'No especificado' }}</p>
                         </div>
-                    
+
                         <!-- Fecha de Nacimiento -->
                         <div class="data-section">
-                          <h6>Tipo de Organización:</h6>
-                          <p>{{ 'Tipo de Organización'  || 'No especificado' }}</p>
+                            <h6>Tipo de Organización:</h6>
+                            <p>{{ 'Tipo de Organización' || 'No especificado' }}</p>
                         </div>
-                    
+
                         <!-- Días Disponibles -->
                         <div class="data-section">
-                          <h6> Sector al que pertenece la Organización:</h6>
-                          <p>{{ 'Sector al que pertenece la Organización' || 'No especificado' }}</p>
+                            <h6> Sector al que pertenece la Organización:</h6>
+                            <p>{{ 'Sector al que pertenece la Organización' || 'No especificado' }}</p>
                         </div>
-                    
+
                         <!-- Habilidades -->
                         <div class="data-section">
-                          <h6>Tipo de Voluntariado:</h6>
-                          <p>{{ 'Tipo de Voluntariado'|| 'No especificado' }}</p>
+                            <h6>Tipo de Voluntariado:</h6>
+                            <p>{{ 'Tipo de Voluntariado'|| 'No especificado' }}</p>
                         </div>
-                    
-                        
-                      </div>
+
+
+                    </div>
                 </div>
                 <div *ngIf="currentContent === 'content3'" class="content">
                     <div class="row p-2">
-                      <div *ngFor="let actividad of actividades; let i = index" class="col-12 col-md-6 col-lg-4 mb-3">
-                        <div class="card custom-card" (click)="verDetalles(i)">
-                          <!-- Asignar imágenes fijas basadas en el índice + 1 -->
-                          <img [src]="'assets/img/card' + ((i % 3) + 1) + '.jpg'" class="card-img-top custom-img" alt="Imagen de la actividad">
-                          <div class="card-body">
-                            <h5 class="card-title">{{ actividad.nombre }}</h5>
-                            <p class="card-text">{{ actividad.descripcion }}</p>
-                            <p class="card-text">
-                              <strong>Fecha:</strong> {{ actividad.fecha }}<br>
-                              <strong>Cupos:</strong> {{ actividad.cuposRestantes }}/{{ actividad.cuposTotales }}
-                            </p>
-                            <!-- Cambiar la clase del botón basándose en el índice -->
-                            <a href="#" (click)="unirse($event, i)" [ngClass]="'btn btn-outline-primary' + ((i % 3) + 1)">Unirse</a>
+                        <div *ngFor="let actividad of actividades; let i = index" class="col-12 col-md-6 col-lg-4 mb-3">
+                            <div class="card custom-card" (click)="verDetalles(i)">
+                                <!-- Asignar imágenes fijas basadas en el índice + 1 -->
+                                <img [src]="'assets/img/card' + ((i % 3) + 1) + '.jpg'" class="card-img-top custom-img"
+                                    alt="Imagen de la actividad">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ actividad.nombre }}</h5>
+                                    <p class="card-text">{{ actividad.descripcion }}</p>
+                                    <p class="card-text">
+                                        <strong>Fecha:</strong> {{ actividad.fecha }}<br>
+                                        <strong>Cupos:</strong> {{ actividad.cuposRestantes }}/{{ actividad.cuposTotales
+                                        }}
+                                    </p>
+                                    <!-- Cambiar la clase del botón basándose en el índice -->
+                                    <a [ngClass]="'btn btn-outline-primary' + ((i % 3) + 1)">Ver detalles</a>
 
-                          </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
-                  
-                
+                </div>
+
+
             </div>
         </div>
     </div>

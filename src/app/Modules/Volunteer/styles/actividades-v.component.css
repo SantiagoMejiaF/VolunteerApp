@@ -1,0 +1,114 @@
+::ng-deep .fc {
+    background-color: #fdfdfd;
+    border-radius: 0 0 15px 15px; /* Solo bordes redondeados en la parte inferior */
+    overflow: hidden;
+    border: 1px solid #ececec;
+    margin-top: 0 !important;  /* Eliminar márgenes superiores */
+    padding-top: 0 !important; /* Eliminar relleno superior */
+}
+/* Aplicar bordes redondeados y color de fondo al menú superior del calendario */
+::ng-deep .fc-toolbar {
+    background-color: #f2796e !important;  /* Fondo color salmón */
+    color: white !important;               /* Texto blanco */
+    border-radius: 15px 15px 0 0 !important;  /* Bordes redondeados en la parte superior */
+    padding: 20px;                         /* Añadir espaciado alrededor */
+    display: flex;
+    justify-content: space-between;        /* Distribuir el contenido */
+    align-items: center;                   /* Centrar verticalmente */
+}
+
+/* Estilo del título del mes */
+::ng-deep .fc-toolbar-title {
+    font-size: 1.5rem !important;         /* Tamaño de fuente grande */
+    color: white !important;              /* Color blanco */
+    font-weight: bold;                    /* Negrita */
+}
+
+/* Botones de la barra de herramientas */
+::ng-deep .fc-button {
+    background-color: transparent !important;  /* Fondo transparente para los botones */
+    color: white !important;                   /* Texto blanco */
+    border: none !important;                   /* Sin bordes */
+    font-size: 1rem !important;                /* Tamaño de fuente */
+    margin-left: 10px !important;              /* Espaciado entre botones */
+}
+
+/* Botones de navegación prev y next */
+::ng-deep .fc-prev-button, 
+::ng-deep .fc-next-button {
+    background-color: #f2796e !important;  /* Mismo fondo que la barra */
+    color: white !important;
+    border-radius: 50% !important;         /* Botones circulares */
+    width: 35px;                           /* Ancho del botón */
+    height: 35px;                          /* Alto del botón */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+::ng-deep .fc-prev-button:hover, 
+::ng-deep .fc-next-button:hover {
+    background-color: #e06355 !important;  /* Color más oscuro al pasar el cursor */
+}
+
+/* Iconos de los botones */
+::ng-deep .fc-icon {
+    font-size: 1.2rem !important;         /* Tamaño de los iconos */
+    color: white !important;              /* Iconos blancos */
+}
+
+::ng-deep .fc-dayGridMonth-button, 
+::ng-deep .fc-timeGridWeek-button, 
+::ng-deep .fc-timeGridDay-button {
+    background-color: transparent !important;  /* Fondo transparente */
+    border: none !important;                   /* Sin bordes */
+    color: white !important;                   /* Texto blanco */
+    font-size: 1rem !important;                /* Tamaño de fuente */
+}
+
+::ng-deep .fc-dayGridMonth-button:hover, 
+::ng-deep .fc-timeGridWeek-button:hover, 
+::ng-deep .fc-timeGridDay-button:hover {
+    background-color: #e06355 !important;  /* Fondo más oscuro al pasar el cursor */
+}
+
+/* Asegurarse de que no haya margen entre la cabecera y el calendario */
+::ng-deep .fc-daygrid {
+    margin-top: 0 !important;
+    margin-right: 20px;  /* Eliminar margen superior del contenido del calendario */
+    margin-left: 20px; 
+    margin-bottom: 20px;
+}
+
+/* Media Query para pantallas pequeñas (como celulares) */
+@media (max-width: 768px) {
+    ::ng-deep .fc-toolbar-title {
+        font-size: 1rem !important;  /* Tamaño más pequeño para pantallas móviles */
+        text-align: center;          /* Asegurar que el texto esté centrado */
+    }
+
+    /* Ajustes adicionales para botones y otros elementos si es necesario */
+    ::ng-deep .fc-prev-button, 
+    ::ng-deep .fc-next-button {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;  /* Reducir tamaño de los botones en pantallas pequeñas */
+    }
+
+    ::ng-deep .fc-button {
+        font-size: 0.9rem !important;  /* Reducir el tamaño del texto de los botones */
+    }
+}
+
+
+h2  {
+    font-weight: 600;
+    font-size: 20px;
+  }
+  .column1 {
+  background-color: white; /* Fondo blanco */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 20px; /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  margin-bottom: 20px;
+}

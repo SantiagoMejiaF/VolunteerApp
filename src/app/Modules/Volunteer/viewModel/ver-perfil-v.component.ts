@@ -105,7 +105,13 @@ export class VerPerfilVComponent implements OnInit {
     // Navegar a la ruta con los parámetros calculados
     this.router.navigate(['/actividad', validIndex, `card${imagenId}.jpg`, btnClass]);
   }
-  
+  // Función de confirmación para rechazar
+  confirmReject() {
+    const isConfirmed = window.confirm('¿Está seguro de que quiere rechazar a este voluntario?');
+    if (isConfirmed) {
+      
+    }
+  }
   
 }
 

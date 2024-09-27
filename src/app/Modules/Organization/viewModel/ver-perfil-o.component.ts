@@ -76,9 +76,10 @@ export class VerPerfilOComponent {
   
 
   // Función para mostrar el mensaje de alerta
-  unirse(event: Event, index: number) {
-    event.preventDefault(); // Prevenir el comportamiento predeterminado del enlace
-    const actividad = this.actividades[index];
-    alert(`Te has unido exitosamente a ${actividad.nombre}`);
+  unirse(index: number) {
+    const validIndex = index ?? 1;
+    const imagenId = (validIndex % 3) + 1;
+    const btnClass = 'btn-outline-primary' + imagenId;
+    this.router.navigate(['/actividad', validIndex, `card${imagenId}.jpg`, btnClass]);
   }
 }

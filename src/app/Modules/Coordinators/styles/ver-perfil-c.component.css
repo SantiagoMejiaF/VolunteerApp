@@ -369,4 +369,19 @@ h2  {
         font-size: 14px;
       }
     }
+    @media (max-width: 768px) {
+      .head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    
+     
+      #misionimg {
+        text-align: center;
+      }
+    
+      .ml-3 {
+        margin-left: 0 !important; 
+      }
+    }
     

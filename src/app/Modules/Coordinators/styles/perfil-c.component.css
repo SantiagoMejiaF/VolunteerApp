@@ -51,16 +51,39 @@ h6{
 }
 .profile {
 }
+/* Start: Estilo para los enlaces de navegación */
 .nav-link {
-    border-radius: 10px;
+  border-radius: 10px;
+  position: relative;
+  padding: 10px;
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.nav-link.active-link {
-    background-color: #186dde;
-    color: white;
-    border-radius: 10px;
+/* Cuando el enlace está activo, cambia el color */
+.nav-link.active-link, .nav-link.active-link i {
+  color: #186DDE;
 }
 
+/* Línea debajo del enlace activo */
+.nav-link.active-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #186DDE;
+  border-radius: 5px;
+}
+#misionimg{
+  width: 135px;
+  height: 135px;
+  border-radius: 8px;
+
+}
 p {
     font-family: "Quicksand", sans-serif;
     font-weight: regular;
@@ -141,4 +164,19 @@ ng-multiselect-dropdown {
 
 .award-container h4 {
     margin: 0; 
+}
+@media (max-width: 768px) {
+  .head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+ 
+  #misionimg {
+    text-align: center;
+  }
+
+  .ml-3 {
+    margin-left: 0 !important; 
+  }
 }

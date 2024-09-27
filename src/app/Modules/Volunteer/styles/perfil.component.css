@@ -333,5 +333,23 @@ ng-multiselect-dropdown {
   font-size: 1.3em;
   font-weight: 600;
 }
+#misionimg{
+  width: 135px;
+  height: 135px;
+  border-radius: 8px;
+
+}
 
 /*END: TIMELINE*/
+@media (max-width: 768px) {
+  .head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+ 
+
+  .ml-3 {
+    margin-left: 0 !important; 
+  }
+}

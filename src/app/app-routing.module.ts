@@ -24,6 +24,10 @@ import { VerPerfilVComponent } from './Modules/Volunteer/viewModel/ver-perfil-v.
 import { VerPerfilOComponent } from './Modules/Organization/viewModel/ver-perfil-o.component';
 import { ActividadDComponent } from './Modules/Misiones/viewModel/actividad-d.component';
 import { VerPerfilCComponent } from './Modules/Coordinators/viewModel/ver-perfil-c.component';
+import { VerVoluntariosComponent } from './Modules/Organization/viewModel/ver-voluntarios.component';
+import { HomeVoluntariosComponent } from './Modules/Volunteer/viewModel/home-voluntarios.component';
+import { MisFundacionesComponent } from './Modules/Volunteer/viewModel/mis-fundaciones.component';
+import { ActividadesVComponent } from './Modules/Volunteer/viewModel/actividades-v.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -36,6 +40,7 @@ const routes: Routes = [
     path: '', // Utiliza una ruta vacía como prefijo para las rutas con Navbar
     component: SidebarComponent, // Este componente actúa como un layout
     children: [
+      //ADMIN
       {
         path: 'gestion-users',
         component: GestionUsuariosComponent,
@@ -44,22 +49,29 @@ const routes: Routes = [
         path: 'dashAdmin',
         component: DashboardAdminComponent,
       },
-      {
-        path: 'dashVolunteer',
-        component: DashboardVolunteerComponent,
-      },
+      
+    
+     
+      
+      //PANTALLAS ORGANIZACIÓN
       {
         path: 'dashOrganization',
         component: DashboardOrganizationComponent,
       },
       {
-        path: 'perfil',
-        component: PerfilComponent,
+        path: 'verPerfilO',
+        component:VerPerfilOComponent,
       },
       {
         path: 'perfilO',
         component: PerfilOComponent,
       },
+      {
+        path: 'verVoluntarios',
+        component:VerVoluntariosComponent,
+      },
+
+      //MISIONES 
       {
         path: 'misiones',
         component:MisionesComponent,
@@ -80,35 +92,54 @@ const routes: Routes = [
         path: 'detallesA',
         component:DetallesAComponent,
       },
+      { 
+        path: 'actividad/:id/:image/:btnClass', 
+        component: ActividadDComponent
+      },
+      
+      //PANTALLAS DE VOLUNTARIO
       {
-        path: 'coordinador',
-        component:CoordinadoresComponent,
+        path: 'homeV',
+        component:HomeVoluntariosComponent,
       },
       {
-        path: 'perfilc',
-        component:PerfilCComponent,
+        path: 'dashVolunteer',
+        component: DashboardVolunteerComponent,
       },
       {
-        path: 'detallesC',
-        component:DetallesCComponent,
+        path: 'misF',
+        component:MisFundacionesComponent,
+      },
+      {
+        path: 'misA',
+        component:ActividadesVComponent,
       },
       {
         path: 'verPerfilV',
         component:VerPerfilVComponent,
       },
       {
-        path: 'verPerfilO',
-        component:VerPerfilOComponent,
+        path: 'perfil',
+        component: PerfilComponent,
+      },
+
+      //COORDINADOR
+      {
+        path: 'verCoordinador',
+        component:CoordinadoresComponent,
+      },
+      {
+        path: 'perfilC',
+        component:PerfilCComponent,
       },
       {
         path: 'verPerfilC',
         component:VerPerfilCComponent,
       },
-      { 
-        path: 'actividad/:id/:image/:btnClass', 
-        component: ActividadDComponent
+      {
+        path: 'detallesC',
+        component:DetallesCComponent,
       },
-
       
     ],
   },
