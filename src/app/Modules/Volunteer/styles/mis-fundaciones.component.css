@@ -62,6 +62,29 @@ h2  {
   }
   
   .custombtn{
-    background: #1E1450;
+    background: #fb9778;
     color: #fff;
+  }
+  .custom-container {
+    max-width: 1200px; /* Ajusta este valor según el ancho deseado */
+    margin: 0 auto; /* Centrar el contenedor */
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+
+  @media (max-width: 768px) {
+    .custom-container {
+     
+      padding-left: 2px;
+      padding-right: 2px;
+    }
+    .column1 {
+  background-color: white; /* Fondo blanco */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 10px; /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  margin-bottom: 20px;
+      
+}
   }

@@ -40,72 +40,148 @@
                     </li>
                 </ul>
 
-                <div *ngIf="currentContent === 'content1'" class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div id="timeline">
-                                <div class="row timeline-movement timeline-movement-top">
-                                    <div class="timeline-badge timeline-future-movement">
-                                            <p>2018</p>
-                                    </div>
-                                </div>
-                                <div class="row timeline-movement">
-                                    <div class="timeline-badge center-left">
-                                        
-                                    </div>
-                                    <div class="col-sm-6  timeline-item">
-                                        <div class="row">
-                                            <div class="col-sm-11">
-                                                <div class="timeline-panel credits">
-                                                    <ul class="timeline-panel-ul">
-                                                        <div class="righting-wrap">
-                                                            <li><a (click)="verDetalles(1)"  class="importo">Nombre actividad</a></li>
-                                                            <li><span class="causale" style="color:#000; font-weight: 600;">Categoría </span> </li>
-                                                            <span *ngFor="let star of getStars(3)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
-                                                            <li><span class="causale">Reseña del líder: Lorem ipsum dolor sit amet, consectetur adipiscing elit. </span> </li>
-                                                            <li><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 13/01/2018, 13:05"</small></p> </li>
-                                                        </div>
-                                                        <div class="clear"></div>
-                                                    </ul>
-                                                </div>
-                    
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                    
-                                <div class="row timeline-movement">
-                                    <div class="timeline-badge center-left">
-                                    
-                                    </div>
-                                    <div class="offset-sm-6 col-sm-6  timeline-item">
-                                        <div class="row">
-                                            <div class="offset-sm-1 col-sm-11">
-                                                <div class="timeline-panel debits">
-                                                    <ul class="timeline-panel-ul">
-                                                       
-                                                        <div class="righting-wrap">
-                                                            <li><a (click)="verDetalles(1)"  class="importo">Nombre actividad</a></li>
-                                                            <li><span class="causale" style="color:#000; font-weight: 600;">Categoría </span> </li>
-                                                            <span *ngFor="let star of getStars(3)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
-                                                            <li><span class="causale">Reseña del líder:Lorem ipsum dolor sit amet, consectetur adipiscing elit. </span> </li>
-                                                            <li><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 12/01/2018, 13:05"</small></p> </li>
-                                                        </div>
-                                                        <div class="clear"></div>
-                                                    </ul>
-                                                </div>
-                    
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                    
-                                
-                                
-                            </div>
+                <div *ngIf="currentContent === 'content1'" class="content mt-5">
+                    <div class="" id="lindo">
+                      <div class="container">
+                        
+                        <!-- Paso 1 (Fijo) -->
+                        <div class="row align-items-center how-it-works d-flex">
+                          <div class="col-2 text-center bottom d-inline-flex justify-content-center align-items-center">
+                            <div class="circle font-weight-bold">1</div>
+                          </div>
+                          <div class="col-6">
+                            <h5>Título de actividad</h5>
+                            <span *ngFor="let star of getStars(3)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                            <p>Reseña que se dio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam. Morbi orci urna, iaculis in ligula et, posuere interdum lectus.</p>
+                            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 13/01/2018, 13:05</small></p>
+                          </div>
                         </div>
+                  
+                        <!-- Línea entre paso 1 y 2 -->
+                        <div class="row timeline">
+                          <div class="col-2">
+                            <div class="corner top-right"></div>
+                          </div>
+                          <div class="col-8">
+                            <hr />
+                          </div>
+                          <div class="col-2">
+                            <div class="corner left-bottom"></div>
+                          </div>
+                        </div>
+                  
+                        <!-- Paso 2 (Fijo) -->
+                        <div class="row align-items-center justify-content-end how-it-works d-flex">
+                          <div class="col-6 text-right">
+                            <h5>Fully Responsive</h5>
+                            <span *ngFor="let star of getStars(3)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam. Morbi orci urna, iaculis in ligula et, posuere interdum lectus.</p>
+                            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 13/01/2018, 13:05</small></p>
+                          </div>
+                          <div class="col-2 text-center full d-inline-flex justify-content-center align-items-center">
+                            <div class="circle font-weight-bold">2</div>
+                          </div>
+                        </div>
+                  
+                        <!-- Línea entre paso 2 y 3 -->
+                        <div class="row timeline">
+                          <div class="col-2">
+                            <div class="corner right-bottom"></div>
+                          </div>
+                          <div class="col-8">
+                            <hr />
+                          </div>
+                          <div class="col-2">
+                            <div class="corner top-left"></div>
+                          </div>
+                        </div>
+                  
+                        <!-- Paso 3 (Fijo) -->
+                        <div class="row align-items-center how-it-works d-flex">
+                          <div class="col-2 text-center top d-inline-flex justify-content-center align-items-center">
+                            <div class="circle font-weight-bold">3</div>
+                          </div>
+                          <div class="col-6">
+                            <h5>Fully Responsive</h5>
+                            <span *ngFor="let star of getStars(3)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam. Morbi orci urna, iaculis in ligula et, posuere interdum lectus.</p>
+                            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 13/01/2018, 13:05</small></p>
+                          </div>
+                        </div>
+                  
+                        <!-- Línea después del paso 3 -->
+                        <div class="row timeline" *ngIf="timelineData.length > 3">
+                          <div class="col-2">
+                            <div class="corner top-right"></div>
+                          </div>
+                          <div class="col-8">
+                            <hr />
+                          </div>
+                          <div class="col-2">
+                            <div class="corner left-bottom"></div>
+                          </div>
+                        </div>
+                  
+                        <!-- Nuevos pasos dinámicos a partir del paso 4 -->
+                        <ng-container *ngFor="let item of timelineData.slice(3); let i = index">
+                          
+                          <!-- Sección Par (Patrón igual que paso 2) -->
+                          <div *ngIf="i % 2 === 0" class="row align-items-center justify-content-end how-it-works d-flex">
+                            <div class="col-6 text-right">
+                              <h5>{{ item.title }}</h5>
+                              <span *ngFor="let star of getStars(item.stars)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                              <p>{{ item.review }}</p>
+                              <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{ item.date }}</small></p>
+                            </div>
+                            <div class="col-2 text-center full d-inline-flex justify-content-center align-items-center">
+                              <div class="circle font-weight-bold">{{ i + 4 }}</div>
+                            </div>
+                          </div>
+                  
+                          <!-- Línea entre pasos pares e impares -->
+                          <div class="row timeline" *ngIf="i < timelineData.slice(3).length - 1">
+                            <div class="col-2">
+                              <div class="corner right-bottom"></div>
+                            </div>
+                            <div class="col-8">
+                              <hr />
+                            </div>
+                            <div class="col-2">
+                              <div class="corner top-left"></div>
+                            </div>
+                          </div>
+                  
+                          <!-- Sección Impar (Patrón igual que paso 1) -->
+                          <div *ngIf="i % 2 !== 0" class="row align-items-center how-it-works d-flex">
+                            <div class="col-2 text-center bottom d-inline-flex justify-content-center align-items-center">
+                              <div class="circle font-weight-bold">{{ i + 4 }}</div>
+                            </div>
+                            <div class="col-6">
+                              <h5>{{ item.title }}</h5>
+                              <span *ngFor="let star of getStars(item.stars)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                              <p>{{ item.review}}</p>
+                              <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{ item.date }}</small></p>
+                            </div>
+                          </div>
+                  
+                          <!-- Línea entre pasos impares y pares -->
+                          <div class="row timeline" *ngIf="i < timelineData.slice(3).length - 1">
+                            <div class="col-2">
+                              <div class="corner top-right"></div>
+                            </div>
+                            <div class="col-8">
+                              <hr />
+                            </div>
+                            <div class="col-2">
+                              <div class="corner left-bottom"></div>
+                            </div>
+                          </div>
+                  
+                        </ng-container>
+                  
+                      </div>
                     </div>
-                </div>
+                  </div>
 
                 <div *ngIf="currentContent === 'content2'" class="content">
                     <form [formGroup]="myForm" (ngSubmit)="onSubmit()">

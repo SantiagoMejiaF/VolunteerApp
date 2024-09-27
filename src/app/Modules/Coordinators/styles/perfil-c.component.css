@@ -64,7 +64,7 @@ h6{
 
 /* Cuando el enlace está activo, cambia el color */
 .nav-link.active-link, .nav-link.active-link i {
-  color: #186DDE;
+  color: #fb9778;
 }
 
 /* Línea debajo del enlace activo */
@@ -75,13 +75,13 @@ h6{
   left: 0;
   right: 0;
   height: 3px;
-  background-color: #186DDE;
+  background-color: #fb9778;
   border-radius: 5px;
 }
 #misionimg{
   width: 135px;
   height: 135px;
-  border-radius: 8px;
+  border-radius: 50%;
 
 }
 p {

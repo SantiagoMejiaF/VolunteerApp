@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container custom-container">
 
 
     <div class="row  column1">
-        <div class="row justify-content-between align-items-center  p-2">
+        <div class="row justify-content-between align-items-center ">
             <div class="col-md-4">
                 <div class="input-group">
                     <h2>Mis fundaciones</h2>
@@ -24,7 +24,7 @@
     </div>
     <div class="row column1 ">
 
-        <div *ngFor="let organizacion of organizaciones; let i = index" class="col-12 col-lg-4 mb-4">
+        <div *ngFor="let organizacion of organizaciones; let i = index" class="col-12 col-lg-4 mb-4 mt-4">
             <div class="card custom-card">
 
                 <div class="position-relative">
@@ -39,7 +39,7 @@
                     </div>
                     <h5 class="card-description">{{ organizacion.descripcion }}</h5>
                     <div class="d-flex justify-content-start gap-2 my-2 mt-2">
-                        <div *ngFor="let etiqueta of organizacion.etiquetas" class="p-1 px-3 text-white rounded custom"
+                        <div *ngFor="let etiqueta of organizacion.etiquetas" class="p-1 px-3 custom" style="border-radius: 20px;"
                             [ngStyle]="{ 'background-color': getBackgroundColor(i) }">{{ etiqueta }}</div>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-3">

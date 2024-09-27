@@ -14,7 +14,7 @@ export class HomeVoluntariosComponent {
     // Puedes añadir más actividades según lo que necesites
   ];
 
-  imagenes = ['assets/img/card1.jpg', 'assets/img/card2.jpg', 'assets/img/card3.jpg'];
+  imagenes = ['assets/img/card1.jpg', 'assets/img/card2.svg', 'assets/img/card3.svg', 'assets/img/card4.svg', 'assets/img/card5.svg', 'assets/img/card6.svg'];
 
   // Función para obtener la imagen correspondiente, repitiendo cada 3
   getImage(index: number): string {
