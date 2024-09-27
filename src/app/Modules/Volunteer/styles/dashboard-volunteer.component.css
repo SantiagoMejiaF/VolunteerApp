@@ -41,21 +41,22 @@ p {
 }
 
 #Users .card-container {
-  background-image: url("/assets/img/3.png");
+  background: #06C9D7;
   background-size: cover; /* Llena todo el contenedor */
   background-repeat: no-repeat;
   background-position: center;
   height: 100%;
 }
 #Volunteer .card-container {
-  background-image: url("/assets/img/4.png");
+  background-image: url("/assets/img/4.svg");
   background-size: cover; /* Llena todo el contenedor */
   background-repeat: no-repeat;
   background-position: center;
   height: 100%;
+  
 }
 #Organization .card-container {
-  background-image: url("/assets/img/5.png");
+  background: #FB9778;
   background-size: cover; /* Llena todo el contenedor */
   background-repeat: no-repeat;
   background-position: center;
@@ -72,6 +73,17 @@ p {
   font-weight: 400;  
   font-size: 18px;  
   color: #F9F7F6;
+}
+#Volunteer .card-container p {
+  font-weight: 600;  
+  font-size: 18px;  
+  color: black;
+}
+#Volunteer .card-container h3{
+  color: black;
+}
+#Volunteer .card-container i{
+  color: black;
 }
 h3 {
   font-weight: 600;
@@ -141,7 +153,7 @@ margin-bottom:20px;
 
 #card .col.bg-primary {
   color: #fff;
-  background-color: #1E1450!important;
+  background-color: #06C9D7!important;
   border-radius: 50%; 
 }
 
@@ -168,11 +180,11 @@ margin-bottom:20px;
   background:none;
 }
 .card-header button{
-  background: 1E1450 important;
+  background: #06C9D7 important;
 }
 
 .custom-btn {
-  background-color: #1E1450; /* Fondo azul */
+  background-color: #06C9D7; /* Fondo azul */
   color: white; /* Ícono blanco */
   border: none; /* Quitar el borde */
 }
