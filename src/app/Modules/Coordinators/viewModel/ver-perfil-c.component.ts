@@ -14,6 +14,43 @@ export class VerPerfilCComponent {
   lastName: string = '';
   email: string = '';
   volunteerId: number = 0;
+  data = [
+    {
+      tittle: 'Limpieza de parque',
+      city: 'Madrid',
+      address: 'Calle Mayor 123',
+      noVolunteers: 20,
+      Status: 'Activo',
+    },
+    {
+      tittle: 'Reforestación urbana',
+      city: 'Barcelona',
+      address: 'Avenida Diagonal 456',
+      noVolunteers: 15,
+      Status: 'Pendiente',
+    },
+    {
+      tittle: 'Recogida de alimentos',
+      city: 'Valencia',
+      address: 'Calle de la Paz 789',
+      noVolunteers: 30,
+      Status: 'Completado',
+    },
+    {
+      tittle: 'Ayuda en comedor social',
+      city: 'Sevilla',
+      address: 'Plaza Nueva 10',
+      noVolunteers: 25,
+      Status: 'Activo',
+    },
+    {
+      tittle: 'Reciclaje comunitario',
+      city: 'Bilbao',
+      address: 'Gran Vía 14',
+      noVolunteers: 12,
+      Status: 'Aplazado',
+    }
+  ];
   timelineData = [
     {
       id: 1,
@@ -136,7 +173,20 @@ export class VerPerfilCComponent {
     // Navegar a la ruta con los parámetros calculados
     this.router.navigate(['/actividad', validIndex, `card${imagenId}.jpg`, btnClass]);
   }
-  
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'Activo':
+        return 'status-activo';
+      case 'Pendiente':
+        return 'status-pendiente';
+      case 'Completado':
+        return 'status-completado';
+      case 'Aplazado':
+        return 'status-aplazado';
+      default:
+        return '';
+    }
+  }
   
 }
 

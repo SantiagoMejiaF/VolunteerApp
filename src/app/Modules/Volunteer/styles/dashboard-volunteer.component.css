@@ -35,21 +35,20 @@ p {
   font-size: 14px;
 }
 #texto{
-  /*Arriba derecha abajo izquierda*/
   padding: 20px 20px 0px 20px;
   margin-left: 20px;
 }
 
 #Users .card-container {
   background: #06C9D7;
-  background-size: cover; /* Llena todo el contenedor */
+  background-size: cover; 
   background-repeat: no-repeat;
   background-position: center;
   height: 100%;
 }
 #Volunteer .card-container {
   background-image: url("/assets/img/4.svg");
-  background-size: cover; /* Llena todo el contenedor */
+  background-size: cover; 
   background-repeat: no-repeat;
   background-position: center;
   height: 100%;
@@ -57,7 +56,7 @@ p {
 }
 #Organization .card-container {
   background: #FB9778;
-  background-size: cover; /* Llena todo el contenedor */
+  background-size: cover; 
   background-repeat: no-repeat;
   background-position: center;
   height: 100%;

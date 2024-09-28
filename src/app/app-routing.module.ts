@@ -28,6 +28,7 @@ import { VerVoluntariosComponent } from './Modules/Organization/viewModel/ver-vo
 import { HomeVoluntariosComponent } from './Modules/Volunteer/viewModel/home-voluntarios.component';
 import { MisFundacionesComponent } from './Modules/Volunteer/viewModel/mis-fundaciones.component';
 import { ActividadesVComponent } from './Modules/Volunteer/viewModel/actividades-v.component';
+import { DetallesAxCComponent } from './Modules/Organization/viewModel/detalles-ax-c.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -70,6 +71,15 @@ const routes: Routes = [
         path: 'verVoluntarios',
         component:VerVoluntariosComponent,
       },
+      {
+        path: 'verCoordinador',
+        component:CoordinadoresComponent,
+      },
+      {
+        path: 'verDetallesAxC',
+        component:DetallesAxCComponent,
+      },
+
 
       //MISIONES 
       {
@@ -124,10 +134,7 @@ const routes: Routes = [
       },
 
       //COORDINADOR
-      {
-        path: 'verCoordinador',
-        component:CoordinadoresComponent,
-      },
+      
       {
         path: 'perfilC',
         component:PerfilCComponent,
