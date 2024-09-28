@@ -1,32 +1,32 @@
 <div class="col ">
- 
-    
+
+
     <div class="column2">
         <ul class="nav mb-4">
             <li class="nav-item">
                 <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content1'}"
                     (click)="showContent('content1')">
                     <strong><i class="bi bi-blockquote-left"></i></strong>
-                <span class="nav-text">Descripción</span>
-                    
+                    <span class="nav-text">Descripción</span>
+
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content2'}"
                     (click)="showContent('content2')">
                     <strong><i class="bi bi-person-vcard"></i></strong>
-                <span class="nav-text">Encargados</span>
+                    <span class="nav-text">Encargados</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content3'}"
                     (click)="showContent('content3')">
                     <strong><i class="bi bi-graph-up"></i></strong>
-                <span class="nav-text">Informes</span>
-                    
+                    <span class="nav-text">Informes</span>
+
                 </a>
             </li>
-            
+
         </ul>
 
         <div *ngIf="currentContent === 'content1'" class="content">
@@ -35,7 +35,7 @@
 
                 <div *ngIf="!isEditing">
                     <div class="card-body">
-                        
+
 
                         <div class="row">
                             <!-- Columna Izquierda -->
@@ -66,7 +66,7 @@
                                 <button class="editar" (click)="toggleEdit()">
                                     <i class="bi bi-pencil"></i>
                                 </button>
-                                <button class="editar1" (click)="onComeBack()" ><i class="bi bi-calendar"></i></button>
+                                <button class="editar1" (click)="onComeBack()"><i class="bi bi-calendar"></i></button>
                             </div>
 
                         </div>
@@ -93,7 +93,7 @@
             <hr>
             <h2 class="mt-4">Lider Comunidad</h2>
             <div class="d-flex">
-                
+
                 <div class="mt-3 ml-3" style="text-align: left;">
                     <p><strong>Nombre:</strong> titu</p>
                     <p><strong>Email:</strong> Descripción:</p>
@@ -103,48 +103,102 @@
             <div class="row mb-3">
 
                 <div class="col d-flex justify-content-end">
-                    <button class="editar1" (click)="onComeBack()" ><i class="bi bi-calendar"></i></button>
+                    <button class="editar1" (click)="onComeBack()"><i class="bi bi-calendar"></i></button>
                 </div>
 
             </div>
-            
+
         </div>
 
         <div *ngIf="currentContent === 'content3'" class="content">
-            <div class="row">
-                <div class="col">
-                    <div id="chart">
-                        <apx-chart
-                          [series]="chartOptions.series"
-                          [chart]="chartOptions.chart"
-                          [plotOptions]="chartOptions.plotOptions"
-                          [labels]="chartOptions.labels"
-                          [fill]="chartOptions.fill"
-                        ></apx-chart>
-                      </div>
-                </div>
-                <div class="col">
-                    <div id="chart">
-                        <apx-chart
-                          [series]="chartOptions1.series"
-                          [chart]="chartOptions1.chart"
-                          [plotOptions]="chartOptions1.plotOptions"
-                          [labels]="chartOptions1.labels"
-                          [fill]="chartOptions1.fill"
-                        ></apx-chart>
-                      </div>
+            <div class="card text-center custom-card1 mt-5 mb-5">
+                <div class="card-body text-center">
+                    <h2>Horas relizadas</h2>
+                    <i class="bi bi-stopwatch" style="font-size:2rem"></i>
+                    <h1>5</h1>
                 </div>
             </div>
-            <div class="row mb-3">
+            <div class="row ml-1 mr-1">
+                <div class="col custom-card mr-4">
+                  <div id="chart">
+                    <apx-chart [series]="chartOptions.series" 
+                               [chart]="chartOptions.chart"
+                               [plotOptions]="chartOptions.plotOptions" 
+                               [labels]="chartOptions.labels"
+                               [fill]="chartOptions.fill" 
+                               [title]="chartOptions.title">
+                    </apx-chart>
+                  </div>
+                </div>
+                
+                <div class="col custom-card">
+                  <div id="chart">
+                    <apx-chart [series]="chartOptions1.series" 
+                               [chart]="chartOptions1.chart"
+                               [plotOptions]="chartOptions1.plotOptions" 
+                               [labels]="chartOptions1.labels"
+                               [fill]="chartOptions1.fill" 
+                               [title]="chartOptions1.title">
+                    </apx-chart>
+                  </div>
+                </div>
+              </div>
+            <!-- Mostrar promedio de horas realizadas -->
+            <!-- Mostrar promedio de horas realizadas con tarjeta estilizada -->
+            
+            <div class="col tittle mt-4 custom-card" id="recentCustomers">
+                <h2 class="mt-3">Lista voluntarios</h2>
+                <div class="table-responsive">
+                    <table class="table table-sm" id="datatableexample">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Perfil</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Cedula</th>
+                                <th>Horas Realizadas</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of data; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td width="60px">
+                                    <div class="imgBx">
+                                        <img [src]="user.image || 'assets/img/user2.png'" alt="Perfil"
+                                            (error)="user.image='assets/img/user3.png'"
+                                            style="width:50px; height:50px; border-radius:50%;">
+                                    </div>
+                                </td>
+                                <td>
+                                    <h4>{{user.firstName}} {{user.lastName}} <br></h4>
+                                </td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.cedula }}</td>
+                                <td>5</td>
+
+                                <td style="text-align: center;"><a [routerLink]="['/verPerfilV']"
+                                        style="border: none; background: none;">
+                                        <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
+                                            onmouseover="this.style.color='#186dde';"
+                                            onmouseout="this.style.color='#80777c';"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="row mb-3 mt-4">
 
                 <div class="col d-flex justify-content-end">
-                    <button class="editar1" (click)="onComeBack()" ><i class="bi bi-calendar"></i></button>
+                    <button class="editar1" (click)="onComeBack()"><i class="bi bi-calendar"></i></button>
                 </div>
 
             </div>
         </div>
-        <div *ngIf="currentContent === 'content4'" class="content">
 
-        </div>
     </div>
 </div>
