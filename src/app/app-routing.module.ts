@@ -36,6 +36,7 @@ const routes: Routes = [
   { path: 'forms', component: AuthComponent },
   { path: 'formsV', component: FormsVolunteerComponent },
   { path: 'formsO', component: FormsOrganizacionComponent },
+  { path: 'sideB', component: SidebarComponent },
 
   {
     path: '', // Utiliza una ruta vacía como prefijo para las rutas con Navbar
