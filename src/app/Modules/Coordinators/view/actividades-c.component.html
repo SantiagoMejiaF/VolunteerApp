@@ -1,0 +1,147 @@
+<div class="container ">
+    <div class="row">
+        <div class="col d-flex justify-content-between align-items-center  " id="tittle">
+            <h2>Mis actividades programadas</h2>
+            
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col" id="tittle1">
+            
+            <div class="table-container">
+
+                <table class="table  table-sm  hover" id="datatableexample">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre Actividad</th>
+                            <th>Fecha inicio</th>
+                            <th>Dirección</th>
+                            <th># voluntarios</th>
+                            <th>Status</th>
+                            <th>Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let mision of data">
+                            <td class="text-left">{{ mision.id }}</td>
+                            <td>{{ mision.title }}</td>
+                            <td class="text-left">{{ mision.startDate }}</td>
+                            <td>{{ mision.address }}</td>
+                            <td class="text-left">{{ mision.noVolunteers }}</td>
+                            <td>
+                                <span [ngClass]="getStatusClass(mision.status)">{{ mision.status }}</span>
+                              </td>
+                            <td>
+                                <a [routerLink]="['/verDetallesAxC']" [queryParams]="{ id: mision.id }"
+                                    style="border: none; background: none;">
+                                    <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
+                                        onmouseover="this.style.color='#186dde';"
+                                        onmouseout="this.style.color='#80777c';"></i>
+                                </a>
+                                
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Crear una nueva Misión -->
+<div class="modal fade" id="VolunteerModal" tabindex="-1" aria-labelledby="VolunteerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h4>Empecemos</h4>
+                    <h5>Crea un nuevo coordinador</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <!-- Tipo de Misión -->
+                    <div class="mb-3">
+                        <label for="missionType" class="form-label">Tipo de Misión</label>
+                        <select id="missionType" class="form-select custom-select" required>
+                            <option value="">Selecciona el tipo de misión</option>
+                            <option value="MEDIO_AMBIENTE">Medio Ambiente</option>
+                            <option value="SOCIAL">Social</option>
+                            <option value="EDUCACION">Educación</option>
+                        </select>
+                    </div>
+
+                    <!-- Título -->
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Título</label>
+                        <input type="text" id="title" class="form-control custom-input"
+                            placeholder="Escribe el título de la misión">
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Descripción</label>
+                        <textarea id="description" class="form-control custom-input" rows="3"
+                            placeholder="Describe la misión"></textarea>
+                    </div>
+
+                    <!-- Fechas (Inicio y Fin) -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="startDate" class="form-label">Fecha de Inicio</label>
+                            <input type="date" id="startDate" class="form-control custom-input" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="endDate" class="form-label">Fecha de Fin</label>
+                            <input type="date" id="endDate" class="form-control custom-input" required>
+                        </div>
+                    </div>
+
+                    <!-- Departamento -->
+                    <div class="mb-3">
+                        <label for="department" class="form-label">Departamento</label>
+                        <input type="text" id="department" class="form-control custom-input"
+                            placeholder="Ingresa el departamento">
+                    </div>
+
+                    <!-- Requisitos para Voluntarios -->
+                    <div class="mb-3">
+                        <label for="volunteerRequirements" class="form-label">Requisitos para Voluntarios</label>
+                        <select id="volunteerRequirements" class="form-select custom-select" multiple>
+                            <option value="EXPERIENCIA_PREVIA">Experiencia Previa</option>
+                            <option value="ACCESO_TRANSPORTE">Acceso a Transporte</option>
+                            <option value="CERTIFICACION_MEDICA">Certificación Médica</option>
+                        </select>
+                        <small class="form-text text-muted">Mantén presionada la tecla Ctrl (o Cmd en Mac) para
+                            seleccionar múltiples opciones.</small>
+                    </div>
+
+                    <!-- Habilidades Requeridas -->
+                    <div class="mb-3">
+                        <label for="requiredSkills" class="form-label">Habilidades Requeridas</label>
+                        <select id="requiredSkills" class="form-select custom-select" multiple>
+                            <option value="TRABAJO_EN_EQUIPO">Trabajo en Equipo</option>
+                            <option value="COMUNICACION">Comunicación</option>
+                            <option value="LIDERAZGO">Liderazgo</option>
+                            <option value="RESOLUCION_PROBLEMAS">Resolución de Problemas</option>
+                        </select>
+                        <small class="form-text text-muted">Mantén presionada la tecla Ctrl (o Cmd en Mac) para
+                            seleccionar múltiples opciones.</small>
+                    </div>
+
+                    <!-- Visibilidad -->
+                    <div class="form-check mb-3 ml-2">
+                        <input class="form-check-input" type="checkbox" id="visibility" checked>
+                        <label class="form-check-label" for="visibility">Visible al público</label>
+                    </div>
+
+                    <!-- Botón de Envío -->
+                    <button type="submit" class="btn custom-button">Crear Misión</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

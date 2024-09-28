@@ -29,6 +29,7 @@ import { HomeVoluntariosComponent } from './Modules/Volunteer/viewModel/home-vol
 import { MisFundacionesComponent } from './Modules/Volunteer/viewModel/mis-fundaciones.component';
 import { ActividadesVComponent } from './Modules/Volunteer/viewModel/actividades-v.component';
 import { DetallesAxCComponent } from './Modules/Organization/viewModel/detalles-ax-c.component';
+import { ActividadesCComponent } from './Modules/Coordinators/viewModel/actividades-c.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -148,6 +149,10 @@ const routes: Routes = [
       {
         path: 'detallesC',
         component:DetallesCComponent,
+      },
+      {
+        path: 'misAC',
+        component:ActividadesCComponent,
       },
       
     ],

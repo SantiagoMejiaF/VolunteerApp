@@ -3,7 +3,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 @Component({
   selector: 'app-navbar',
   templateUrl: '../view/navbar.component.html',
-  styleUrls: ['../../../styles/navbar.component.css']
+  styleUrls: ['../styles/navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
   constructor(private renderer: Renderer2) { }

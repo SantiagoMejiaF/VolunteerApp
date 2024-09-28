@@ -103,28 +103,32 @@ h5 {
   .status-activo {
     background-color: rgba(229,250,251,255);
     color: #03c9d7;
-    padding: 5px 10px 0px 10px;
-    border-radius: 20px;
+    padding: 4px 8px;
+    border-radius: 12px;
     display: inline-block;
-    vertical-align: middle;
   }
   
-  .status-cancelado {
+  .status-pendiente {
+    background-color: rgba(255,248,236,255);
+    color: #fec96c;
+    padding: 4px 8px;
+    border-radius: 12px;
+    display: inline-block;
+  }
+  
+  .status-aplazado {
     background-color: rgba(255,229,220,255);
     color: #F36060;
-    padding: 5px 10px 0px 10px;
-    border-radius: 20px;
+    padding: 4px 8px;
+    border-radius: 12px;
     display: inline-block;
-    vertical-align: middle;
   }
   .status-completado {
     background-color: rgba(63, 194, 138, 0.1);
     color: #3FC28A;
-    padding: 5px 10px 0px 10px;
-    border-radius: 20px;
+    padding: 4px 8px;
+    border-radius: 12px;
     display: inline-block;
-    vertical-align: middle;
   }
-
 
   

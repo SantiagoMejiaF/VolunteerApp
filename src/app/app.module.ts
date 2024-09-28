@@ -54,6 +54,8 @@ import { MisFundacionesComponent } from './Modules/Volunteer/viewModel/mis-funda
 
 import { ActividadesVComponent } from './Modules/Volunteer/viewModel/actividades-v.component';
 import { DetallesAxCComponent } from './Modules/Organization/viewModel/detalles-ax-c.component';
+import { ActividadesCComponent } from './Modules/Coordinators/viewModel/actividades-c.component';
+
 
 
 
@@ -96,7 +98,8 @@ registerLocaleData(localeEs, 'es');
     HomeVoluntariosComponent,
     MisFundacionesComponent,
     ActividadesVComponent,
-    DetallesAxCComponent
+    DetallesAxCComponent,
+    ActividadesCComponent
   ],
   imports: [
     BrowserModule,
