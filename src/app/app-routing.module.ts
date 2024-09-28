@@ -79,6 +79,7 @@ const routes: Routes = [
         path: 'verDetallesAxC',
         component:DetallesAxCComponent,
       },
+    
 
 
       //MISIONES 
@@ -103,7 +104,7 @@ const routes: Routes = [
         component:DetallesAComponent,
       },
       { 
-        path: 'actividad/:id/:image/:btnClass', 
+        path: 'actividad/:id/:image', 
         component: ActividadDComponent
       },
       

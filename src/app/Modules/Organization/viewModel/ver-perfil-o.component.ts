@@ -106,10 +106,9 @@ export class VerPerfilOComponent {
   
     // Asegurarse de que la imagenId esté en el rango adecuado (1-3)
     const imagenId = (validIndex % 6) + 1;
-    const btnClass = 'btn-outline-primary' + imagenId;
   
     // Navegar a la ruta con los parámetros calculados
-    this.router.navigate(['/actividad', validIndex, `card${imagenId}.svg`, btnClass]);
+    this.router.navigate(['/actividad', validIndex, `card${imagenId}.svg`]);
   }
   
 
@@ -118,6 +117,6 @@ export class VerPerfilOComponent {
     const validIndex = index ?? 1;
     const imagenId = (validIndex % 3) + 1;
     const btnClass = 'btn-outline-primary' + imagenId;
-    this.router.navigate(['/actividad', validIndex, `card${imagenId}.jpg`, btnClass]);
+    this.router.navigate(['/actividad', validIndex, `card${imagenId}.jpg`]);
   }
 }

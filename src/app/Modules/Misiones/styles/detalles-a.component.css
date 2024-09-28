@@ -1,14 +1,20 @@
+/* Start: Estilo para los enlaces de navegación */
 .nav-link {
     border-radius: 10px;
     position: relative;
-    padding-bottom: 5px;
-    color: black; /* Color por defecto del texto */
-}
-
-.nav-link.active-link {
-    font-weight: 600; /* Cambia solo el color del texto cuando esté activo */
-}
-
+    padding: 10px;
+    color: black;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Cuando el enlace está activo, cambia el color */
+  .nav-link.active-link, .nav-link.active-link i {
+    color: #fb9778;
+  }
+  
+  /* Línea debajo del enlace activo */
 .nav-link.active-link::after {
     content: '';
     position: absolute;
@@ -16,9 +22,26 @@
     left: 0;
     right: 0;
     height: 3px;
-    background-color: #186DDE; /* Color de la línea debajo */
+    background-color: #fb9778;
     border-radius: 5px;
-}
+  }
+  @media (max-width: 768px) {
+ 
+    .nav-text {
+      display: none;
+    }
+  
+   
+    .nav-link.active-link .nav-text {
+      display: inline-block;
+    }
+  }
+  
+  
+  .nav-text {
+    transition: opacity 0.3s ease;
+  }
+  
 
 
   h1{
@@ -76,28 +99,6 @@
     text-align: left;
 }
 
-/*Se va?*/
-.nav-link {
-    border-radius: 10px;
-    position: relative;
-    padding-bottom: 5px;
-    color: black; /* Color por defecto del texto */
-}
-
-.nav-link.active-link {
-    font-weight: 600; /* Cambia solo el color del texto cuando esté activo */
-}
-
-.nav-link.active-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background-color: #186DDE; /* Color de la línea debajo */
-    border-radius: 5px;
-}
 
 .details {
     border-radius: 5px;
@@ -105,17 +106,32 @@
 }
 
 
+
+h5{
+    color:#186DDE;
+    font-weight: 600; 
+    font-size: 1.3rem;
+}
+
 .editar {
-    background-color: #186DDE;
-    box-shadow: 0 0 0 2px #186DDE;
+    background-color: #fb9778;
+    box-shadow: 0 0 0 2px #fb9778;
+    margin-right: 10px;
     border: none;
+    border-radius: 3px;
 }
 .editar i{
     color:white;
     font-size: 1.3rem;
 }
-h5{
-    color:#186DDE;
-    font-weight: 600; 
+
+.editar1 {
+    background-color: #06c9d7;
+    box-shadow: 0 0 0 2px #06c9d7;
+    border: none;
+    border-radius: 3px;
+}
+.editar1 i{
+    color:white;
     font-size: 1.3rem;
 }

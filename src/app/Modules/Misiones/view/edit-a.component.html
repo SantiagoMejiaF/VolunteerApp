@@ -105,8 +105,11 @@
                 <label class="form-check-label" for="visibility">Visible al público</label>
             </div>
 
-
-            <button type="button" class="btn btn-primary mt-3" (click)="nextStep()">Siguiente</button>
+            <div style="text-align: left;">
+                <button type="button" class="btn btn-primary mt-3 mr-2" (click)="nextStep()">Siguiente</button>
+                <button type="submit" class="btn btn-success mt-3" (click)="onCancel()">Cancelar</button>
+            </div>
+            
         </div>
 
         <!-- Paso 2: Datos del Líder de la Actividad -->
@@ -131,7 +134,7 @@
                     formControlName="phoneCommunityLeader">
             </div>
             <div style="text-align: left;">
-                <button type="button" class="btn btn-secondary mt-3 mr-2" (click)="previousStep()">Anterior</button>
+                <button type="button" class="btn btn-primary mt-3 mr-2" (click)="previousStep()">Anterior</button>
                 <button type="submit" class="btn btn-success mt-3">Actualizar</button>
             </div>
             

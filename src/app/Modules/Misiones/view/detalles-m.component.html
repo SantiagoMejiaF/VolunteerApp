@@ -1,84 +1,92 @@
 <div class="container">
     <div class="row">
-        <div class="col text-center" id="tittle">
-            <h1>Misión</h1>
+        <div class="col" id="tittle">
+            <h2>Misión</h2>
         </div>
     </div>
     <div class="row">
-        <div class="col text-center" id="tittle">
-            <div class="head d-flex">
-                <img src="assets/img/user3.png" id="misionimg">
-                <div class="ml-3 mt-3" style="text-align: left;">
-                    <h3>{{ missionDetails?.title }}</h3> <!-- Nombre de la misión -->
-                    <h4><i class="bi bi-briefcase mr-2"></i>Fecha objetivo: {{ missionDetails?.endDate | date: 'dd MMMM
-                        yyyy' }}</h4> <!-- Fecha objetivo -->
-                </div>
-            </div>
-            <hr style="height: 1px; background-color: black; border: none;">
-            <div class="row">
-                <div class="col-2 mr-4 ml-2">
-                    <div class="list-group">
+        <div class="app-container">
+            <!-- Menú lateral -->
+            <aside class="sidebar" [ngClass]="{'hidden': !isSidebarVisible}">
+                <h2 class="app-title m-3">Nombre misión</h2>
+                <ul>
+
+                    <li>
                         <button class="list-group-item list-group-item-action"
                             [ngClass]="{'active': selectedSection === 'descripcion'}"
                             (click)="selectSection('descripcion')">
                             <i class="bi bi-chat-square-text mr-2"></i>Descripción
                         </button>
+                    </li>
+                    <li>
                         <button class="list-group-item list-group-item-action"
                             [ngClass]="{'active': selectedSection === 'actividades'}"
                             (click)="selectSection('actividades')">
                             <i class="bi bi-calendar-check mr-2"></i>Actividades
                         </button>
-                    </div>
-                </div>
-                <div class="col-9 details ml-3">
-                    <!-- Mostrar descripción o formulario de edición -->
-                    <div *ngIf="selectedSection === 'descripcion'">
-                        <div *ngIf="!isEditing">
-                            <div class="card-body">
-                                <div class="row mb-3">
-                                    <div class="col">
-                                        <h5>Detalles</h5>
-                                    </div>
-                                </div>
+                    </li>
+                </ul>
+            </aside>
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p><strong>Tipo de misión:</strong> {{ missionDetails?.missionType }}</p>
-                                        <p><strong>Fecha inicio:</strong> {{ missionDetails?.startDate | date: 'dd MMMM
-                                            yyyy' }}</p>
-                                        <p><strong>Fecha fin:</strong> {{ missionDetails?.endDate | date: 'dd MMMM yyyy'
-                                            }}</p>
-                                        <p><strong>Departamento:</strong> {{ missionDetails?.department }}</p>
-                                        <p><strong>Visibilidad:</strong> {{ missionDetails?.visibility }}</p>
-                                        <p><strong>Habilidades requeridas:</strong> {{
-                                            missionDetails?.requiredSkillsList?.join(', ') || 'N/A' }}</p>
-                                        <p><strong>Requisitos:</strong> {{
-                                            missionDetails?.volunteerMissionRequirementsEnumList?.join(', ') || 'N/A' }}
-                                        </p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p><strong>Descripción:</strong> {{ missionDetails?.description }}</p>
-                                    </div>
-                                </div>
-                                <div class="col" style="text-align: right;">
-                                    <button class="editar" (click)="toggleEdit()">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
+            <!-- Contenido principal -->
+            <main class="content" [ngClass]="{'expanded': !isSidebarVisible}">
+                <div class="app-header ml-2">
+                    <button class="menu-toggle"  (click)="toggleSidebar()">&#9776;</button>
+
+                </div>
+                <hr style="height: 1px; background-color: black; border: none;">
+
+                <!-- Mostrar descripción o formulario de edición -->
+                <div *ngIf="selectedSection === 'descripcion'">
+                    <div *ngIf="!isEditing">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h2>Detalles</h2>
                                 </div>
                             </div>
+                            <hr style="height: 1px; background-color: rgb(97, 95, 95); border: none;">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Tipo de misión:</strong> {{ missionDetails?.missionType }}</p>
+                                    <p><strong>Fecha inicio:</strong> {{ missionDetails?.startDate | date: 'dd MMMM
+                                        yyyy' }}</p>
+                                    <p><strong>Fecha fin:</strong> {{ missionDetails?.endDate | date: 'dd MMMM yyyy'
+                                        }}</p>
+                                    <p><strong>Departamento:</strong> {{ missionDetails?.department }}</p>
+                                    <p><strong>Visibilidad:</strong> {{ missionDetails?.visibility }}</p>
+                                    <p><strong>Habilidades requeridas:</strong> {{
+                                        missionDetails?.requiredSkillsList?.join(', ') || 'N/A' }}</p>
+                                    <p><strong>Requisitos:</strong> {{
+                                        missionDetails?.volunteerMissionRequirementsEnumList?.join(', ') || 'N/A' }}
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Descripción:</strong> {{ missionDetails?.description }}</p>
+                                </div>
+                            </div>
+                            <div class="col" style="text-align: right;">
+                                <button class="editar" (click)="toggleEdit()">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </div>
                         </div>
-
-                        <!-- Formulario de edición -->
-                        <app-edit-m *ngIf="isEditing" [mission]="missionDetails" (cancel)="toggleEdit()"></app-edit-m>
                     </div>
 
-
-                    <!-- Actividades -->
-                    <div *ngIf="selectedSection === 'actividades'">
-                        <app-calendar-a></app-calendar-a>
-                    </div>
+                    <!-- Formulario de edición -->
+                    <app-edit-m *ngIf="isEditing" [mission]="missionDetails" (cancel)="toggleEdit()"></app-edit-m>
                 </div>
-            </div>
+
+
+                <!-- Actividades -->
+                <div *ngIf="selectedSection === 'actividades'">
+                    <app-calendar-a></app-calendar-a>
+                </div>
+                <!-- Añade más tareas -->
+            </main>
+
         </div>
+
     </div>
 </div>

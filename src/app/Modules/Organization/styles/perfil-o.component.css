@@ -44,7 +44,7 @@ h6{
 .column1,
 .column2 {
   background-color: white; /* Fondo blanco */
-  border-radius: 10px; /* Bordes redondeados */
+  border-radius: 20px; /* Bordes redondeados */
   padding: 20px; /* Espaciado interno */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
   margin-bottom: 20px;
@@ -136,28 +136,20 @@ ng-multiselect-dropdown {
 }
 
 .btn-secondary {
-    font-family: "Quicksand", sans-serif;
-    background-color:#0ecc95;
+    background-color:#fb9778;
     border: 2px; 
     padding: 8px 15px;
     color: white;
     font-size: 14px;
-    border-radius: 30px;
+    border-radius: 4px;
     transition: background-color 0.1s, color 0.3s, border-color 0.3s;
     margin-top: 10px;
     margin-left: 12px;
     font-weight: 500;
   }
   
-  .btn-secondary:hover {
-    background-color: #09ad7f; 
-    color: white; 
-  }
+ 
   
-  .btn-secondary:focus {
-    outline: none;
-  }
-
   .award-container {
     display: flex; /* Alinea los elementos en una fila */
     align-items: center; /* Alinea verticalmente los elementos en el centro */

@@ -18,7 +18,6 @@ export class ActividadDComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.actividadId = +params['id'];
       this.imagen = 'assets/img/' + params['image'];
-      this.btnClass = params['btnClass'];
     });
   }
 

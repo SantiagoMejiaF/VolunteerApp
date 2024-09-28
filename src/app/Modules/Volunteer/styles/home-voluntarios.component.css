@@ -9,6 +9,9 @@
 
 .custom{
     font-size:14px;
+    background: #dfdfdf;
+    color: black !important;
+    border-radius: 15px;
 }
 
 h2  {
@@ -18,7 +21,7 @@ h2  {
   .column1,
 .column2 {
   background-color: white; /* Fondo blanco */
-  border-radius: 10px; /* Bordes redondeados */
+  border-radius: 20px; /* Bordes redondeados */
   padding: 10px; /* Espaciado interno */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
   margin-bottom: 20px;

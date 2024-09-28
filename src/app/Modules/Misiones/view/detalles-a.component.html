@@ -1,21 +1,30 @@
 <div class="col ">
-    <div style="text-align: left;">
-        <button class="" (click)="onComeBack()" ><i class="bi bi-arrow-left"></i></button>
-    </div>
+ 
     
     <div class="column2">
         <ul class="nav mb-4">
             <li class="nav-item">
                 <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content1'}"
-                    (click)="showContent('content1')">Descripción</a>
+                    (click)="showContent('content1')">
+                    <strong><i class="bi bi-blockquote-left"></i></strong>
+                <span class="nav-text">Descripción</span>
+                    
+                </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content2'}"
-                    (click)="showContent('content2')">Encargado</a>
+                    (click)="showContent('content2')">
+                    <strong><i class="bi bi-person-vcard"></i></strong>
+                <span class="nav-text">Encargados</span>
+                </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content3'}"
-                    (click)="showContent('content3')">Informes</a>
+                    (click)="showContent('content3')">
+                    <strong><i class="bi bi-graph-up"></i></strong>
+                <span class="nav-text">Informes</span>
+                    
+                </a>
             </li>
             
         </ul>
@@ -51,12 +60,13 @@
                                 <p><strong>Observaciones:</strong>Observaciones:</p>
                             </div>
                         </div>
-                        <div class="row mb-3" style="text-align: right;">
+                        <div class="row mb-3">
 
-                            <div class="col">
+                            <div class="col d-flex justify-content-end">
                                 <button class="editar" (click)="toggleEdit()">
                                     <i class="bi bi-pencil"></i>
                                 </button>
+                                <button class="editar1" (click)="onComeBack()" ><i class="bi bi-calendar"></i></button>
                             </div>
 
                         </div>
@@ -72,17 +82,16 @@
         </div>
 
         <div *ngIf="currentContent === 'content2'" class="content">
-            <h5>Coordinador Actividad</h5>
+            <h2>Coordinador Actividad</h2>
             <div class="d-flex">
-                
-                <img src="assets/img/user3.png" alt="">
                 <div class="mt-3 ml-3" style="text-align: left;">
                     <p><strong>Nombre:</strong> titu</p>
                     <p><strong>Email:</strong> Descripción:</p>
                     <p><strong>Celular:</strong> Fecha:</p>
                 </div>
             </div>
-            <h5 class="mt-4">Lider Comunidad</h5>
+            <hr>
+            <h2 class="mt-4">Lider Comunidad</h2>
             <div class="d-flex">
                 
                 <div class="mt-3 ml-3" style="text-align: left;">
@@ -91,7 +100,13 @@
                     <p><strong>Celular:</strong> Fecha:</p>
                 </div>
             </div>
-            
+            <div class="row mb-3">
+
+                <div class="col d-flex justify-content-end">
+                    <button class="editar1" (click)="onComeBack()" ><i class="bi bi-calendar"></i></button>
+                </div>
+
+            </div>
             
         </div>
 
@@ -119,6 +134,13 @@
                         ></apx-chart>
                       </div>
                 </div>
+            </div>
+            <div class="row mb-3">
+
+                <div class="col d-flex justify-content-end">
+                    <button class="editar1" (click)="onComeBack()" ><i class="bi bi-calendar"></i></button>
+                </div>
+
             </div>
         </div>
         <div *ngIf="currentContent === 'content4'" class="content">

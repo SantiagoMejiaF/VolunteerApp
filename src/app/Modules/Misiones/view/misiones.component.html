@@ -1,21 +1,19 @@
 <div class="container ">
     <div class="row">
-        <div class="col text-center" id="tittle">
-            <h1>Misiones</h1>
+        <div class="col d-flex justify-content-between align-items-center  " id="tittle">
+            <h2>Misiones</h2>
+            <button data-bs-toggle="modal" data-bs-target="#VolunteerModal" id="Crear">
+                <i class="bi bi-plus-circle mr-2"></i>Crear Misión
+            </button>
         </div>
     </div>
     <div class="row">
 
         <div class="col" id="tittle1">
-            <div class="text-right  mb-3">
-                <button data-bs-toggle="modal" data-bs-target="#VolunteerModal" id="Crear">
-                    <i class="bi bi-plus-circle mr-2"></i>Crear Misión
-                </button>
-            </div>
-
+            
             <div class="table-container">
 
-                <table class="table table-bordered table-sm row-border hover" id="datatableexample">
+                <table class="table  table-sm  hover" id="datatableexample">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -36,7 +34,9 @@
                             <td>{{ mision.endDate }}</td>
                             <td>{{ mision.department }}</td>
                             <td>{{ mision.visibility }}</td>
-                            <td>{{ mision.status }}</td>
+                            <td>
+                                <span [ngClass]="getStatusClass(mision.status)">{{ mision.status }}</span>
+                              </td>
                             <td>
                                 <a [routerLink]="['/detallesM']" [queryParams]="{ id: mision.id }"
                                     style="border: none; background: none;">
@@ -63,7 +63,10 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="VolunteerModalLabel">Crea tu misión</h1>
+                <div>
+                    <h4>Empecemos</h4>
+                    <h5>Crea un nuevo coordinador</h5>
+                </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

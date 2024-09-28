@@ -10,10 +10,58 @@ import { Mission } from '../model/mission.model';
 })
 export class MisionesComponent implements OnInit {
   selectedMission: any = {};
-  data: Mission[] = [];
+  data = [
+    {
+      id: 1,
+      title: 'Reforestación en la Amazonía',
+      startDate: '2024-10-01',
+      endDate: '2024-10-15',
+      department: 'Medio Ambiente',
+      visibility: 'Pública',
+      status: 'Activo'
+    },
+    {
+      id: 2,
+      title: 'Campaña de educación rural',
+      startDate: '2024-11-05',
+      endDate: '2024-11-20',
+      department: 'Educación',
+      visibility: 'Pública',
+      status: 'Completado'
+    },
+    {
+      id: 3,
+      title: 'Banco de alimentos comunitario',
+      startDate: '2024-09-20',
+      endDate: '2024-09-30',
+      department: 'Social',
+      visibility: 'Privada',
+      status: 'Completado'
+    },
+    {
+      id: 4,
+      title: 'Limpieza de playas en la costa',
+      startDate: '2024-12-01',
+      endDate: '2024-12-10',
+      department: 'Medio Ambiente',
+      visibility: 'Pública',
+      status: 'Cancelado'
+    },
+    {
+      id: 5,
+      title: 'Taller de liderazgo juvenil',
+      startDate: '2024-11-25',
+      endDate: '2024-12-05',
+      department: 'Educación',
+      visibility: 'Pública',
+      status: 'Activo'
+    }
+  ];
 
   constructor(private router: Router, private missionsService: MissionsService) { }
-
+  ngAfterViewInit(): void {
+    this.initializeDataTable();
+  }
   ngOnInit(): void {
     const orgId = localStorage.getItem('OrgId');
     if (orgId) {
@@ -47,35 +95,6 @@ export class MisionesComponent implements OnInit {
         processing: true,
         lengthMenu: [5, 10, 25],
         scrollX: true,
-        columns: [
-          { data: 'id' },
-          { data: 'title' },
-          { data: 'startDate' },
-          { data: 'endDate' },
-          { data: 'department' },
-          { data: 'visibility' },
-          {
-            data: 'status',
-            render: function (data, type, row) {
-              if (type === 'display') {
-                let bgColor = 'lightyellow';
-                let textColor = '#ADBF38';
-
-                if (data === 'Completada') {
-                  bgColor = 'rgba(82, 243, 101, 0.1)';
-                  textColor = '#1CC52A';
-                } else if (data === 'Cancelada') {
-                  bgColor = '#FEEEEE';
-                  textColor = '#F35252';
-                }
-
-                return `<span style="background-color:${bgColor}; color:${textColor}; padding: 4px 8px; border-radius: 12px; display: inline-block;">${data}</span>`;
-              }
-              return data;
-            }
-          },
-          { data: 'accion' }
-        ],
         language: {
           info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
           search: '<span style="font-size: 0.875rem;">Buscar</span>',
@@ -98,5 +117,18 @@ export class MisionesComponent implements OnInit {
   details(mission: Mission): void {
     console.log('Detalles de la misión seleccionada:', mission);
     this.router.navigate(['/detallesM'], { queryParams: { id: mission.id } });
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'Activo':
+        return 'status-activo';
+      case 'Completado':
+        return 'status-completado';
+      case 'Cancelado':
+        return 'status-cancelado';
+      default:
+        return '';
+    }
   }
 }

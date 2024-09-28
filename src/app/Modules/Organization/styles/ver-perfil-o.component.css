@@ -36,7 +36,7 @@ h2  {
   .column1,
   .column2 {
     background-color: white; /* Fondo blanco */
-    border-radius: 10px; /* Bordes redondeados */
+    border-radius: 20px; /* Bordes redondeados */
     padding: 20px; /* Espaciado interno */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
     margin-bottom: 20px;
@@ -279,38 +279,16 @@ h2  {
         margin-bottom: 15px;
     }
     
-    .btn-outline-primary1 {
-        border-color: #1E1450;
-        color: #1E1450;
+    .btn-outline-primary {
+        background: #fb9778;
+        color: white !important;
+        border: none;
         transition: background-color 0.3s ease, color 0.3s ease;
     }
     
-    .btn-outline-primary1:hover {
-        background-color: #1E1450;
-        color: white;
-    }
-
-    .btn-outline-primary2 {
-        border-color: #ED4B4B;
-        color: #1E1450;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
     
-    .btn-outline-primary2:hover {
-        background-color: #ED4B4B;
-        color: white;
-    }
-
-    .btn-outline-primary3 {
-        border-color: #EFC940;
-        color: #1E1450;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
+   
     
-    .btn-outline-primary3:hover {
-        background-color: #EFC940;
-        color: white;
-    }
     
 /*MODIFICAR TIMELINE*/
 

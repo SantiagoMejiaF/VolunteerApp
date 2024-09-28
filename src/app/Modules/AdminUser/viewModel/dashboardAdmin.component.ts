@@ -139,7 +139,9 @@ export class DashboardAdminComponent implements OnInit {
       this.populateUserRoles();
     });
   }
-
+  ngAfterViewInit(): void {
+    this.populateUserRoles();
+  }
   populateUserRoles(): void {
     this.data.forEach((user) => {
       user.rol = user.role.roleType; // Utilizar directamente el rol desde el objeto usuario
@@ -154,6 +156,8 @@ export class DashboardAdminComponent implements OnInit {
         });
       }
     });
+
+
 
     setTimeout(() => {
       $('#datatableexample').DataTable({
@@ -173,4 +177,6 @@ export class DashboardAdminComponent implements OnInit {
       });
     }, 1000);
   }
+
+
 }

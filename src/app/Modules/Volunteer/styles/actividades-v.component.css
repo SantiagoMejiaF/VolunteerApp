@@ -8,7 +8,7 @@
 }
 /* Aplicar bordes redondeados y color de fondo al menú superior del calendario */
 ::ng-deep .fc-toolbar {
-    background-color: #f2796e !important;  /* Fondo color salmón */
+    background-color: #fb9778 !important;  /* Fondo color salmón */
     color: white !important;               /* Texto blanco */
     border-radius: 15px 15px 0 0 !important;  /* Bordes redondeados en la parte superior */
     padding: 20px;                         /* Añadir espaciado alrededor */
@@ -36,7 +36,7 @@
 /* Botones de navegación prev y next */
 ::ng-deep .fc-prev-button, 
 ::ng-deep .fc-next-button {
-    background-color: #f2796e !important;  /* Mismo fondo que la barra */
+    background-color: #fb9778 !important;  /* Mismo fondo que la barra */
     color: white !important;
     border-radius: 50% !important;         /* Botones circulares */
     width: 35px;                           /* Ancho del botón */
@@ -107,7 +107,7 @@ h2  {
   }
   .column1 {
   background-color: white; /* Fondo blanco */
-  border-radius: 10px; /* Bordes redondeados */
+  border-radius: 20px; /* Bordes redondeados */
   padding: 20px; /* Espaciado interno */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
   margin-bottom: 20px;
