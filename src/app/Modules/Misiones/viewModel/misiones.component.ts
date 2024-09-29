@@ -239,16 +239,4 @@ export class MisionesComponent implements OnInit {
     }
   }
 
-  getStatusClass(status: string): string {
-    switch (status) {
-      case 'Activo':
-        return 'status-activo';
-      case 'Completado':
-        return 'status-completado';
-      case 'Cancelado':
-        return 'status-cancelado';
-      default:
-        return '';
-    }
-  }
 }
