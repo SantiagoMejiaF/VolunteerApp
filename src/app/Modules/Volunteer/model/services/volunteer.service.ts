@@ -39,7 +39,7 @@ export class VolunteerService {
   }
 
   getActiveVolunteers(): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/dashboardsvolunteer/active-count`, cabecera);
+    return this.http.get<number>(`${this.apiUrl}/volunteers-dashboard/active-count`, cabecera);
   }
 
   updateVolunteer(id: number, volunteerData: any): Observable<any> {

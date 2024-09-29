@@ -35,7 +35,7 @@ export class OrganizationService {
   }
 
   getActiveOrganizations(): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/dashboardsorganization/active-count`);
+    return this.http.get<number>(`${this.apiUrl}/organizations-dashboard/active-count`);
   }
 
   updateOrganization(id: number, organizationData: any): Observable<any> {

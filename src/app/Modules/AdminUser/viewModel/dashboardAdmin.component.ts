@@ -160,23 +160,25 @@ export class DashboardAdminComponent implements OnInit {
 
 
     setTimeout(() => {
-      $('#datatableexample').DataTable({
-        pagingType: 'full_numbers',
-        pageLength: 5,
-        processing: true,
-        lengthMenu: [5, 10, 25],
-        scrollX: true,
-        language: {
-          info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
-          search: '<span style="font-size: 0.875rem;">Buscar</span>',
-          infoEmpty: '<span style="font-size: 0.875rem;">No hay registros</span>',
-          infoFiltered: '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
-          lengthMenu: '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
-          zeroRecords: '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
-        },
-      });
+      // Verifica si la tabla ya está inicializada antes de reinicializarla
+      const tableId = '#datatableexample';
+      if (!$.fn.DataTable.isDataTable(tableId)) {
+        $(tableId).DataTable({
+          pagingType: 'full_numbers',
+          pageLength: 5,
+          processing: true,
+          lengthMenu: [5, 10, 25],
+          scrollX: true,
+          language: {
+            info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
+            search: '<span style="font-size: 0.875rem;">Buscar</span>',
+            infoEmpty: '<span style="font-size: 0.875rem;">No hay registros</span>',
+            infoFiltered: '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
+            lengthMenu: '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
+            zeroRecords: '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
+          },
+        });
+      }
     }, 1000);
   }
-
-
 }
