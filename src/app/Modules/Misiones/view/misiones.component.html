@@ -5,7 +5,6 @@
         </div>
     </div>
     <div class="row">
-
         <div class="col" id="tittle1">
             <div class="text-right">
                 <button data-bs-toggle="modal" data-bs-target="#VolunteerModal" id="Crear">
@@ -14,7 +13,6 @@
             </div>
 
             <div class="table-container">
-
                 <table class="table table-bordered table-sm row-border hover" id="datatableexample">
                     <thead>
                         <tr>
@@ -36,18 +34,18 @@
                             <td>{{ mision.endDate }}</td>
                             <td>{{ mision.department }}</td>
                             <td>{{ mision.visibility }}</td>
-                            <td>{{ mision.status }}</td>
+                            <td>{{ mision.missionStatus }}</td>
                             <td>
                                 <a [routerLink]="['/detallesM']" [queryParams]="{ id: mision.id }"
                                     style="border: none; background: none;">
                                     <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
                                         onmouseover="this.style.color='#186dde';"
-                                        onmouseout="this.style.color='#80777c';"></i>
+                                        onmouseout="this.style.color='#000000';"></i>
                                 </a>
                                 <button style="border: none; background: none;">
                                     <i class="bi bi-trash3" style="font-size: 1.1rem; color: #000000;"
                                         onmouseover="this.style.color='#186dde';"
-                                        onmouseout="this.style.color='#80777c';"></i>
+                                        onmouseout="this.style.color='#000000';"></i>
                                 </button>
                             </td>
                         </tr>
@@ -58,93 +56,106 @@
     </div>
 </div>
 
+<!-- Toast de notificación para éxito -->
+<div id="missionCreatedToast" class="toast-notification position-fixed bottom-0 end-0 p-3" role="alert"
+    aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+        <div class="toast-body">
+            La misión fue creada exitosamente.
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+            aria-label="Close"></button>
+    </div>
+</div>
+
+
+
 <!-- Modal para Crear una nueva Misión -->
 <div class="modal fade" id="VolunteerModal" tabindex="-1" aria-labelledby="VolunteerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="VolunteerModalLabel">Crea tu misión</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form (ngSubmit)="createMission()">
                     <!-- Tipo de Misión -->
                     <div class="mb-3">
-                        <label for="missionType" class="form-label">Tipo de Misión</label>
-                        <select id="missionType" class="form-select custom-select" required>
+                        <label for="missionType">Tipo de Misión</label>
+                        <select id="missionType" [(ngModel)]="newMission.missionType" name="missionType"
+                            class="form-select" required>
                             <option value="">Selecciona el tipo de misión</option>
-                            <option value="MEDIO_AMBIENTE">Medio Ambiente</option>
-                            <option value="SOCIAL">Social</option>
-                            <option value="EDUCACION">Educación</option>
+                            <option *ngFor="let type of missionTypes" [value]="type">{{ type }}</option>
                         </select>
                     </div>
 
                     <!-- Título -->
                     <div class="mb-3">
-                        <label for="title" class="form-label">Título</label>
-                        <input type="text" id="title" class="form-control custom-input"
-                            placeholder="Escribe el título de la misión">
+                        <label for="title">Título</label>
+                        <input type="text" id="title" [(ngModel)]="newMission.title" name="title" class="form-control"
+                            placeholder="Escribe el título de la misión" required>
                     </div>
 
                     <!-- Descripción -->
                     <div class="mb-3">
-                        <label for="description" class="form-label">Descripción</label>
-                        <textarea id="description" class="form-control custom-input" rows="3"
-                            placeholder="Describe la misión"></textarea>
+                        <label for="description">Descripción</label>
+                        <textarea id="description" [(ngModel)]="newMission.description" name="description"
+                            class="form-control" rows="3" placeholder="Describe la misión" required></textarea>
                     </div>
 
                     <!-- Fechas (Inicio y Fin) -->
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="startDate" class="form-label">Fecha de Inicio</label>
-                            <input type="date" id="startDate" class="form-control custom-input" required>
+                            <label for="startDate">Fecha de Inicio</label>
+                            <input type="date" id="startDate" [(ngModel)]="newMission.startDate" name="startDate"
+                                class="form-control" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="endDate" class="form-label">Fecha de Fin</label>
-                            <input type="date" id="endDate" class="form-control custom-input" required>
+                            <label for="endDate">Fecha de Fin</label>
+                            <input type="date" id="endDate" [(ngModel)]="newMission.endDate" name="endDate"
+                                class="form-control" required>
                         </div>
                     </div>
 
                     <!-- Departamento -->
                     <div class="mb-3">
-                        <label for="department" class="form-label">Departamento</label>
-                        <input type="text" id="department" class="form-control custom-input"
-                            placeholder="Ingresa el departamento">
+                        <label for="department">Departamento</label>
+                        <input type="text" id="department" [(ngModel)]="newMission.department" name="department"
+                            class="form-control" placeholder="Ingresa el departamento" required>
                     </div>
 
                     <!-- Requisitos para Voluntarios -->
                     <div class="mb-3">
-                        <label for="volunteerRequirements" class="form-label">Requisitos para Voluntarios</label>
-                        <select id="volunteerRequirements" class="form-select custom-select" multiple>
-                            <option value="EXPERIENCIA_PREVIA">Experiencia Previa</option>
-                            <option value="ACCESO_TRANSPORTE">Acceso a Transporte</option>
-                            <option value="CERTIFICACION_MEDICA">Certificación Médica</option>
+                        <label for="volunteerRequirements">Requisitos para Voluntarios</label>
+                        <select id="volunteerRequirements" [(ngModel)]="newMission.volunteerMissionRequirementsEnumList"
+                            name="volunteerRequirements" class="form-select" multiple>
+                            <option *ngFor="let requirement of volunteerRequirements" [value]="requirement">{{
+                                requirement }}</option>
                         </select>
-                        <small class="form-text text-muted">Mantén presionada la tecla Ctrl (o Cmd en Mac) para
-                            seleccionar múltiples opciones.</small>
                     </div>
 
                     <!-- Habilidades Requeridas -->
                     <div class="mb-3">
-                        <label for="requiredSkills" class="form-label">Habilidades Requeridas</label>
-                        <select id="requiredSkills" class="form-select custom-select" multiple>
-                            <option value="TRABAJO_EN_EQUIPO">Trabajo en Equipo</option>
-                            <option value="COMUNICACION">Comunicación</option>
-                            <option value="LIDERAZGO">Liderazgo</option>
-                            <option value="RESOLUCION_PROBLEMAS">Resolución de Problemas</option>
+                        <label for="requiredSkills">Habilidades Requeridas</label>
+                        <select id="requiredSkills" [(ngModel)]="newMission.requiredSkillsList" name="requiredSkills"
+                            class="form-select" multiple>
+                            <option *ngFor="let skill of requiredSkills" [value]="skill">{{ skill }}</option>
                         </select>
-                        <small class="form-text text-muted">Mantén presionada la tecla Ctrl (o Cmd en Mac) para
-                            seleccionar múltiples opciones.</small>
                     </div>
 
                     <!-- Visibilidad -->
                     <div class="form-check mb-3 ml-2">
-                        <input class="form-check-input" type="checkbox" id="visibility" checked>
+                        <input class="form-check-input" type="checkbox" id="visibility"
+                            [(ngModel)]="newMission.visibility" name="visibility" checked>
                         <label class="form-check-label" for="visibility">Visible al público</label>
                     </div>
 
                     <!-- Botón de Envío -->
-                    <button type="submit" class="btn custom-button">Crear Misión</button>
+                    <button type="submit" class="btn custom-button"
+                        style="border: 2px solid #ffcc00; border-radius: 50px; background-color: transparent; color: #000; padding: 5px 20px;">
+                        Crear Misión
+                    </button>
                 </form>
             </div>
         </div>

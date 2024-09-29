@@ -1,5 +1,5 @@
 export interface Mission {
-  id: number;
+  id?: number;
   organizationId: number;
   missionType: string;
   title: string;
@@ -8,7 +8,7 @@ export interface Mission {
   endDate: string;
   department: string;
   visibility: string;
+  missionStatus?: string;
   volunteerMissionRequirementsEnumList: string[];
   requiredSkillsList: string[];
-  status: string;
 }

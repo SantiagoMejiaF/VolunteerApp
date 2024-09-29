@@ -1,30 +1,51 @@
-#tittle, #tittle1{
-    background-color: white; /* Fondo blanco */
-  border-radius: 10px; /* Bordes redondeados */
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
-  margin-bottom:20px;
-  }
-  h1{
-    font-weight: bold;
-    color: #ED4B4B;
+html,
+body {
+  height: 100%;
+  overflow-y: auto;
+  /* Permitir siempre el desplazamiento vertical */
 }
-  h2 {
-    font-weight: 600;
-    font-size: 20px;
-  }
 
-  .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: #0d6efd;
-    color: white;
-    border: 1px solid #0d6efd;
-    padding: 2px 5px;
-    margin-right: 5px;
+.container {
+  min-height: 100vh;
+  /* Asegurar que el contenedor ocupe al menos la altura completa de la pantalla */
+  display: flex;
+  flex-direction: column;
+}
+
+
+#tittle,
+#tittle1 {
+  background-color: white;
+  /* Fondo blanco */
+  border-radius: 10px;
+  /* Bordes redondeados */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Sombra para darle profundidad */
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-weight: bold;
+  color: #ED4B4B;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: #0d6efd;
+  color: white;
+  border: 1px solid #0d6efd;
+  padding: 2px 5px;
+  margin-right: 5px;
 }
 
 
 .modal-body {
-    overflow-y: auto; 
+  overflow-y: auto;
 }
 
 
@@ -34,70 +55,112 @@
 
 
 .form-label {
-    font-weight: bold;
-    color: #333;
+  font-weight: bold;
+  color: #333;
 }
 
-.custom-input, .custom-select {
-    border-radius: 10px;
-    padding: 3px;
-    border: 1px solid #ced4da;
-    background-color: #fff;
-    transition: border-color 0.3s ease;
+.custom-input,
+.custom-select {
+  border-radius: 10px;
+  padding: 3px;
+  border: 1px solid #ced4da;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
 }
 
-.custom-input:focus, .custom-select:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+.custom-input:focus,
+.custom-select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 .custom-checkbox {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 
 
 .modal-body {
-    padding: 20px;
-    max-height: 70vh;
-    overflow-y: auto;
+  padding: 20px;
+  max-height: 70vh;
+  overflow-y: auto;
 }
 
 /* Estilos adicionales para mejorar la experiencia visual */
 .modal-content {
-    background-image: linear-gradient(to bottom right, #ffffff, #e9ecef);
-    padding: 20px;
+  background-image: linear-gradient(to bottom right, #ffffff, #e9ecef);
+  padding: 20px;
 }
 
 .custom-button {
-    font-family: "Quicksand", sans-serif;
-    background-color: transparent;
-    border: 2px solid #FFD700; 
-    color: black; 
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 30px;
-    transition: background-color 0.1s, color 0.3s, border-color 0.3s;
-  }
-  
-  .custom-button:hover {
-    background-color: #FFD700; 
-    color: #1E1E1E; 
-  }
-  
-  .custom-button:focus {
-    outline: none;
-  }
+  font-family: "Quicksand", sans-serif;
+  background-color: transparent;
+  border: 2px solid #FFD700;
+  color: black;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 30px;
+  transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+}
 
-  #Crear{
-    background: #1E1450;
-    color: white;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 8px 8px 8px 8px;
-    border-radius: 10px;
-    border: none !important;
-  }
+.custom-button:hover {
+  background-color: #FFD700;
+  color: #1E1E1E;
+}
 
+.custom-button:focus {
+  outline: none;
+}
 
-  
+#Crear {
+  background: #1E1450;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 8px 8px 8px;
+  border-radius: 10px;
+  border: none !important;
+}
+
+.toast-notification {
+  background-color: #28a745;
+  color: white;
+  border-radius: 5px;
+  opacity: 0;
+  /* Inicialmente oculto */
+  transition: opacity 0.5s ease-in-out;
+  /* Transición suave */
+  z-index: 1050;
+  /* Asegurar que aparezca encima */
+  max-width: 500px;
+  /* Hacerlo más largo */
+  height: 50px;
+  /* Reducir la altura */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  bottom: 20px;
+  /* Colocar en la parte inferior */
+  right: 20px;
+  /* Separación de la derecha */
+  position: fixed;
+  /* Mantener el toast fijo en la parte inferior derecha */
+  display: flex;
+  /* Asegurar que el contenido esté alineado horizontalmente */
+  align-items: center;
+  /* Centrar verticalmente el contenido */
+}
+
+.toast-notification.show {
+  opacity: 1;
+  /* Mostrar el toast */
+}
+
+.toast-body {
+  padding: 0 1rem;
+  /* Ajustar el padding para hacer el contenido más horizontal */
+  font-size: 0.875rem;
+  /* Mantener el tamaño de la fuente compacto */
+}
+
+.btn-close {
+  margin-left: 10px;
+}

@@ -19,4 +19,24 @@ export class MissionsService {
     getMissionById(id: number): Observable<Mission> {
         return this.http.get<Mission>(`${this.apiUrl}/missions/${id}`);
     }
+
+    getMissionTypes(): Observable<string[]> {
+        return this.http.get<string[]>(`${this.apiUrl}/missions/mission-types`);
+    }
+
+    getVolunteerRequirements(): Observable<string[]> {
+        return this.http.get<string[]>(`${this.apiUrl}/missions/volunteer-requirements`);
+    }
+
+    getRequiredSkills(): Observable<string[]> {
+        return this.http.get<string[]>(`${this.apiUrl}/missions/required-skills`);
+    }
+
+    getMissionStatusOptions(): Observable<string[]> {
+        return this.http.get<string[]>(`${this.apiUrl}/missions/mission-status-options`);
+    }
+
+    createMission(mission: Mission): Observable<Mission> {
+        return this.http.post<Mission>(`${this.apiUrl}/missions`, mission);
+    }
 }
