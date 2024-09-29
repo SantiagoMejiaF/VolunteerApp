@@ -34,7 +34,37 @@ export class PerfilOComponent implements OnInit {
   dropdownSettings2: any = {};
   sectorOrganization: Elements[] = [];
   dropdownSettings3: any = {};
-
+  timelineData = [
+    {
+      id: 1,
+      title: 'Título de actividad 1',
+      review: 'Reseña que se dio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
+      stars: 3,
+      date: '13/01/2018, 13:05'
+    },
+    {
+      id: 2,
+      title: 'Título de actividad 2',
+      review: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
+      stars: 4,
+      date: '15/02/2019, 14:10'
+    },
+    {
+      id: 3,
+      title: 'Título de actividad 3',
+      review: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
+      stars: 5,
+      date: '18/03/2020, 16:20'
+    },
+    {
+      id: 3,
+      title: 'Título de actividad 3',
+      review: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
+      stars: 5,
+      date: '18/03/2020, 16:20'
+    },
+    
+  ];
   constructor(private fb: FormBuilder, private organizationService: OrganizationService, private http: HttpClient, private router: Router) {
     this.myForm = this.fb.group({
       responsiblePersonId: [''],
@@ -150,5 +180,22 @@ export class PerfilOComponent implements OnInit {
         console.error('Error updating organization data:', error);
       }
     );
+  }
+
+  getStars(rating: number): string[] {
+    const totalStars = 5;
+    return Array(totalStars).fill('gray').map((_, index) => index < rating ? 'gold' : 'gray');
+  }
+
+  verDetalles(index: number | undefined) {
+    // Asignar 1 por defecto si el index es undefined o null
+    const validIndex = index ?? 1;
+  
+    // Asegurarse de que la imagenId esté en el rango adecuado (1-3)
+    const imagenId = (validIndex % 3) + 1;
+    const btnClass = 'btn-outline-primary' + imagenId;
+  
+    // Navegar a la ruta con los parámetros calculados
+    this.router.navigate(['/actividad', validIndex, `card${imagenId}.jpg`, btnClass]);
   }
 }

@@ -29,7 +29,9 @@ export class MisionesComponent implements OnInit {
   };
 
   constructor(private router: Router, private missionsService: MissionsService) { }
-
+  ngAfterViewInit(): void {
+    this.initializeDataTable();
+  }
   ngOnInit(): void {
     const orgId = localStorage.getItem('OrgId');
     if (orgId) {
@@ -222,5 +224,31 @@ export class MisionesComponent implements OnInit {
   // Restaurar la función 'details'
   details(missionId: number) {
     this.router.navigate(['/detallesM'], { queryParams: { id: missionId } });
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'Activo':
+        return 'status-activo';
+      case 'Completado':
+        return 'status-completado';
+      case 'Cancelado':
+        return 'status-cancelado';
+      default:
+        return '';
+    }
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'Activo':
+        return 'status-activo';
+      case 'Completado':
+        return 'status-completado';
+      case 'Cancelado':
+        return 'status-cancelado';
+      default:
+        return '';
+    }
   }
 }

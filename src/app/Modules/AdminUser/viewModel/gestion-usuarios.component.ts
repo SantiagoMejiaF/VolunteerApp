@@ -55,7 +55,9 @@ export class GestionUsuariosComponent implements OnInit {
       }
     });
   }
-
+  ngAfterViewInit(): void {
+    this.initializeDataTable();
+  }
   // Inicializar DataTable
   initializeDataTable(): void {
     setTimeout(() => {

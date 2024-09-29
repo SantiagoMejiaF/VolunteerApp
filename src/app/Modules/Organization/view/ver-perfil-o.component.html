@@ -1,0 +1,269 @@
+<div class="container">
+
+
+    <div class="row">
+        <div class="col">
+            <div class="column1">
+                <h2>Perfil Fundación Manitas</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col">
+            <div class="column2">
+                <div class="head d-flex">
+                    <img src="assets/img/fundacion.jpeg" id="misionimg">
+                    <div class="ml-3 mt-3" style="text-align: left;">
+                        <h3>{{ organizationData.organizationName }}</h3> <!-- Nombre de la misión -->
+                        <div class="datos">
+                            <h6>Email</h6>
+                            <p>{{ email }}</p>
+                            <h6>Teléfono</h6>
+                            <p>{{ organizationData.responsiblePersonPhoneNumber }}</p>
+                            <h6>Dirección</h6>
+                            <p>{{ organizationData.address }}</p>
+                        </div>
+
+                    </div>
+                </div>
+                <hr class="mt-3" style="height: 1px; background-color: black; border: none;">
+                <ul class="nav mb-4">
+                    <li class="nav-item">
+                        <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content1'}"
+                            (click)="showContent('content1')"><strong><i class="bi bi-archive"></i></strong>
+                            <span class="nav-text">Historial</span></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content2'}"
+                            (click)="showContent('content2')"><strong><i
+                                    class="bi bi-building-exclamation"></i></strong>
+                            <span class="nav-text">Datos</span></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content3'}"
+                            (click)="showContent('content3')"><strong><i class="bi bi-calendar-heart"></i></strong>
+                            <span class="nav-text">Actividades</span></a>
+                    </li>
+                </ul>
+
+                <div *ngIf="currentContent === 'content1'" class="content mt-5">
+                    <div class="" id="lindo">
+                      <div class="container">
+                        
+                        <!-- Paso 1 (Fijo) -->
+                        <div class="row align-items-center how-it-works d-flex">
+                          <div class="col-2 text-center bottom d-inline-flex justify-content-center align-items-center">
+                            <div class="circle font-weight-bold">1</div>
+                          </div>
+                          <div class="col-6">
+                            <h5>Título de actividad</h5>
+                            <span *ngFor="let star of getStars(3)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                            <p>Reseña que se dio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam. Morbi orci urna, iaculis in ligula et, posuere interdum lectus.</p>
+                            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 13/01/2018, 13:05</small></p>
+                          </div>
+                        </div>
+                  
+                        <!-- Línea entre paso 1 y 2 -->
+                        <div class="row timeline">
+                          <div class="col-2">
+                            <div class="corner top-right"></div>
+                          </div>
+                          <div class="col-8">
+                            <hr />
+                          </div>
+                          <div class="col-2">
+                            <div class="corner left-bottom"></div>
+                          </div>
+                        </div>
+                  
+                        <!-- Paso 2 (Fijo) -->
+                        <div class="row align-items-center justify-content-end how-it-works d-flex">
+                          <div class="col-6 text-right">
+                            <h5>Fully Responsive</h5>
+                            <span *ngFor="let star of getStars(3)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam. Morbi orci urna, iaculis in ligula et, posuere interdum lectus.</p>
+                            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 13/01/2018, 13:05</small></p>
+                          </div>
+                          <div class="col-2 text-center full d-inline-flex justify-content-center align-items-center">
+                            <div class="circle font-weight-bold">2</div>
+                          </div>
+                        </div>
+                  
+                        <!-- Línea entre paso 2 y 3 -->
+                        <div class="row timeline">
+                          <div class="col-2">
+                            <div class="corner right-bottom"></div>
+                          </div>
+                          <div class="col-8">
+                            <hr />
+                          </div>
+                          <div class="col-2">
+                            <div class="corner top-left"></div>
+                          </div>
+                        </div>
+                  
+                        <!-- Paso 3 (Fijo) -->
+                        <div class="row align-items-center how-it-works d-flex">
+                          <div class="col-2 text-center top d-inline-flex justify-content-center align-items-center">
+                            <div class="circle font-weight-bold">3</div>
+                          </div>
+                          <div class="col-6">
+                            <h5>Fully Responsive</h5>
+                            <span *ngFor="let star of getStars(3)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam. Morbi orci urna, iaculis in ligula et, posuere interdum lectus.</p>
+                            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 13/01/2018, 13:05</small></p>
+                          </div>
+                        </div>
+                  
+                        <!-- Línea después del paso 3 -->
+                        <div class="row timeline" *ngIf="timelineData.length > 3">
+                          <div class="col-2">
+                            <div class="corner top-right"></div>
+                          </div>
+                          <div class="col-8">
+                            <hr />
+                          </div>
+                          <div class="col-2">
+                            <div class="corner left-bottom"></div>
+                          </div>
+                        </div>
+                  
+                        <!-- Nuevos pasos dinámicos a partir del paso 4 -->
+                        <ng-container *ngFor="let item of timelineData.slice(3); let i = index">
+                          
+                          <!-- Sección Par (Patrón igual que paso 2) -->
+                          <div *ngIf="i % 2 === 0" class="row align-items-center justify-content-end how-it-works d-flex">
+                            <div class="col-6 text-right">
+                              <h5>{{ item.title }}</h5>
+                              <span *ngFor="let star of getStars(item.stars)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                              <p>{{ item.review }}</p>
+                              <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{ item.date }}</small></p>
+                            </div>
+                            <div class="col-2 text-center full d-inline-flex justify-content-center align-items-center">
+                              <div class="circle font-weight-bold">{{ i + 4 }}</div>
+                            </div>
+                          </div>
+                  
+                          <!-- Línea entre pasos pares e impares -->
+                          <div class="row timeline" *ngIf="i < timelineData.slice(3).length - 1">
+                            <div class="col-2">
+                              <div class="corner right-bottom"></div>
+                            </div>
+                            <div class="col-8">
+                              <hr />
+                            </div>
+                            <div class="col-2">
+                              <div class="corner top-left"></div>
+                            </div>
+                          </div>
+                  
+                          <!-- Sección Impar (Patrón igual que paso 1) -->
+                          <div *ngIf="i % 2 !== 0" class="row align-items-center how-it-works d-flex">
+                            <div class="col-2 text-center bottom d-inline-flex justify-content-center align-items-center">
+                              <div class="circle font-weight-bold">{{ i + 4 }}</div>
+                            </div>
+                            <div class="col-6">
+                              <h5>{{ item.title }}</h5>
+                              <span *ngFor="let star of getStars(item.stars)" [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                              <p>{{ item.review}}</p>
+                              <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{ item.date }}</small></p>
+                            </div>
+                          </div>
+                  
+                          <!-- Línea entre pasos impares y pares -->
+                          <div class="row timeline" *ngIf="i < timelineData.slice(3).length - 1">
+                            <div class="col-2">
+                              <div class="corner top-right"></div>
+                            </div>
+                            <div class="col-8">
+                              <hr />
+                            </div>
+                            <div class="col-2">
+                              <div class="corner left-bottom"></div>
+                            </div>
+                          </div>
+                  
+                        </ng-container>
+                  
+                      </div>
+                    </div>
+                  </div>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+
+                <div *ngIf="currentContent === 'content2'" class="content">
+
+                    <!-- Datos Personales -->
+                    <div class="tab ml-3">
+
+                        <!-- Celular -->
+                        <div class="data-section">
+                            <h6> Nombre de la Fundación:</h6>
+                            <p>{{ 'Nombre de la Fundación '|| 'No especificado' }}</p>
+                        </div>
+
+                        <!-- Dirección -->
+                        <div class="data-section">
+                            <h6> Dirección de la Fundación:</h6>
+                            <p>{{ 'Dirección de la Fundación '|| 'No especificado' }}</p>
+                        </div>
+
+                        <!-- Fecha de Nacimiento -->
+                        <div class="data-section">
+                            <h6>Tipo de Organización:</h6>
+                            <p>{{ 'Tipo de Organización' || 'No especificado' }}</p>
+                        </div>
+
+                        <!-- Días Disponibles -->
+                        <div class="data-section">
+                            <h6> Sector al que pertenece la Organización:</h6>
+                            <p>{{ 'Sector al que pertenece la Organización' || 'No especificado' }}</p>
+                        </div>
+
+                        <!-- Habilidades -->
+                        <div class="data-section">
+                            <h6>Tipo de Voluntariado:</h6>
+                            <p>{{ 'Tipo de Voluntariado'|| 'No especificado' }}</p>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div *ngIf="currentContent === 'content3'" class="content">
+                    <div class="row p-2">
+                        <div *ngFor="let actividad of actividades; let i = index" class="col-12 col-md-6 col-lg-4 mb-3">
+                            <div class="card custom-card" (click)="verDetalles(i)">
+                                <!-- Asignar imágenes fijas basadas en el índice + 1 -->
+                                <img [src]="'assets/img/card' + ((i % 6) + 1) + '.svg'" class="card-img-top custom-img"
+                                    alt="Imagen de la actividad">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ actividad.nombre }}</h5>
+                                    <p class="card-text">{{ actividad.descripcion }}</p>
+                                    <p class="card-text">
+                                        <strong>Fecha:</strong> {{ actividad.fecha }}<br>
+                                        <strong>Cupos:</strong> {{ actividad.cuposRestantes }}/{{ actividad.cuposTotales
+                                        }}
+                                    </p>
+                                    <!-- Cambiar la clase del botón basándose en el índice -->
+                                    <a class="btn btn-outline-primary">Ver detalles</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

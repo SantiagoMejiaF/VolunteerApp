@@ -1,14 +1,20 @@
+/* Start: Estilo para los enlaces de navegación */
 .nav-link {
     border-radius: 10px;
     position: relative;
-    padding-bottom: 5px;
-    color: black; /* Color por defecto del texto */
-}
-
-.nav-link.active-link {
-    font-weight: 600; /* Cambia solo el color del texto cuando esté activo */
-}
-
+    padding: 10px;
+    color: black;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Cuando el enlace está activo, cambia el color */
+  .nav-link.active-link, .nav-link.active-link i {
+    color: #fb9778;
+  }
+  
+  /* Línea debajo del enlace activo */
 .nav-link.active-link::after {
     content: '';
     position: absolute;
@@ -16,14 +22,31 @@
     left: 0;
     right: 0;
     height: 3px;
-    background-color: #186DDE; /* Color de la línea debajo */
+    background-color: #fb9778;
     border-radius: 5px;
-}
+  }
+  @media (max-width: 768px) {
+ 
+    .nav-text {
+      display: none;
+    }
+  
+   
+    .nav-link.active-link .nav-text {
+      display: inline-block;
+    }
+  }
+  
+  
+  .nav-text {
+    transition: opacity 0.3s ease;
+  }
+  
 
 
   h1{
     font-weight: bold;
-    color: #ED4B4B;
+    color: white;
 }
   h2 {
     font-weight: 600;
@@ -76,28 +99,6 @@
     text-align: left;
 }
 
-/*Se va?*/
-.nav-link {
-    border-radius: 10px;
-    position: relative;
-    padding-bottom: 5px;
-    color: black; /* Color por defecto del texto */
-}
-
-.nav-link.active-link {
-    font-weight: 600; /* Cambia solo el color del texto cuando esté activo */
-}
-
-.nav-link.active-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background-color: #186DDE; /* Color de la línea debajo */
-    border-radius: 5px;
-}
 
 .details {
     border-radius: 5px;
@@ -105,17 +106,118 @@
 }
 
 
+
+h5{
+    color:#186DDE;
+    font-weight: 600; 
+    font-size: 1.3rem;
+}
+
 .editar {
-    background-color: #186DDE;
-    box-shadow: 0 0 0 2px #186DDE;
+    background-color: #fb9778;
+    box-shadow: 0 0 0 2px #fb9778;
+    margin-right: 10px;
     border: none;
+    border-radius: 3px;
 }
 .editar i{
     color:white;
     font-size: 1.3rem;
 }
-h5{
-    color:#186DDE;
-    font-weight: 600; 
+
+.editar1 {
+    background-color: #06c9d7;
+    box-shadow: 0 0 0 2px #06c9d7;
+    border: none;
+    border-radius: 3px;
+}
+.editar1 i{
+    color:white;
     font-size: 1.3rem;
+}
+
+
+/*TABLA*/
+  /*TABLA*/
+  /*TABLE*/
+  #recentCustomers .imgBx {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    overflow: hidden;
+  }
+  #recentCustomers .imgBx img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #recentCustomers table tr td {
+    padding: 12px 10px;
+  }
+  #recentCustomers table tr td h4, #recentCustomers table tr td {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2rem;
+  }
+  #recentCustomers table tr th {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.2rem;
+  }
+  #datatableexample table tr td h4 span {
+    font-size: 14px;
+    color: var(--black2);
+  }
+  #datatableexample table tr:hover {
+    background: var(--blue);
+    color: var(--white);
+  }
+  #datatableexample table tr:hover td h4 span {
+    color: var(--white);
+  }
+
+
+.custom-card {
+  border-radius: 10px; 
+  overflow: hidden; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+.custom-card1 {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: linear-gradient(135deg, #06c9d7, #a6eff2);
+  color: #000;
+}
+.custom-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+}
+
+.custom-card1 .card-body {
+  color: white !important;
+}
+
+.animated-icon {
+  font-size: 3rem;
+  color: #fb9778;
+  transition: transform 0.3s ease;
+}
+
+.animated-icon:hover {
+  transform: rotate(20deg);
+}
+
+.card-text {
+  font-size: 2.25rem;
+  color: #000000;
+  font-weight: 600;
+  margin-top: 15px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }

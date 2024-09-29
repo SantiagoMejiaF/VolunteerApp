@@ -1,0 +1,45 @@
+<div class="container mt-5">
+  <div class="row  ">
+
+    <div class="container ">
+      <!-- Título y calendario deben estar en el mismo sistema de columnas -->
+      <div class="row">
+        <div class="col-12">
+          <div class="column1">
+            <h2>Mis Actividades</h2>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Calendario dentro del mismo contenedor de ancho completo -->
+      <div class="row">
+        <div class="col-12">
+          <full-calendar [options]="calendarOptions"></full-calendar>
+        </div>
+      </div>
+    </div>
+    
+
+  <!-- Modal para mostrar los detalles del evento -->
+  <div *ngIf="isModalOpen" class="modal" tabindex="-1" style="display: block; background: rgba(0,0,0,0.5);">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ selectedEvent?.title }}</h5>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Fecha:</strong> {{ selectedEvent?.start }}</p>
+          <p><strong>Hora de inicio:</strong> {{ selectedEvent?.hourS }}</p>
+          <p><strong>Hora de fin:</strong> {{ selectedEvent?.hourE }}</p>
+          <p><strong>Descripción:</strong> {{ selectedEvent?.description }}</p>
+          <p><strong>Ciudad:</strong> {{ selectedEvent?.extendedProps?.city }}</p>
+          <p><strong>Dirección:</strong> {{ selectedEvent?.extendedProps?.address }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="cancelarSuscripcion()">Cancelar suscripción</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,3 +10,25 @@
     font-weight: 600; 
     font-size: 2rem;
 }
+.btn-primary{
+  background-color: #fb9778;
+  border-color: #fb9778;
+  padding: 8px 15px;
+  color: white;
+  font-size: 14px;
+  border-radius: 6px;
+  margin-top: 10px;
+  margin-left: 12px;
+  font-weight: 500;
+}
+.btn-success{
+  background-color: #06c9d7;
+  border-color:#06c9d7;
+  padding: 8px 15px;
+  color: white;
+  font-size: 14px;
+  border-radius: 6px;
+  margin-top: 10px;
+  margin-left: 12px;
+  font-weight: 500;
+}

@@ -44,6 +44,19 @@ import { EditAComponent } from './Modules/Misiones/viewModel/edit-a.component';
 import { CoordinadoresComponent } from './Modules/Organization/viewModel/coordinadores.component';
 import { PerfilCComponent } from './Modules/Coordinators/viewModel/perfil-c.component';
 import { DetallesCComponent } from './Modules/Coordinators/viewModel/detalles-c.component';
+import { VerPerfilVComponent } from './Modules/Volunteer/viewModel/ver-perfil-v.component';
+import { VerPerfilOComponent } from './Modules/Organization/viewModel/ver-perfil-o.component';
+import { VerPerfilCComponent } from './Modules/Coordinators/viewModel/ver-perfil-c.component';
+import { ActividadDComponent } from './Modules/Misiones/viewModel/actividad-d.component';
+import { VerVoluntariosComponent } from './Modules/Organization/viewModel/ver-voluntarios.component';
+import { HomeVoluntariosComponent } from './Modules/Volunteer/viewModel/home-voluntarios.component';
+import { MisFundacionesComponent } from './Modules/Volunteer/viewModel/mis-fundaciones.component';
+
+import { ActividadesVComponent } from './Modules/Volunteer/viewModel/actividades-v.component';
+import { DetallesAxCComponent } from './Modules/Organization/viewModel/detalles-ax-c.component';
+import { ActividadesCComponent } from './Modules/Coordinators/viewModel/actividades-c.component';
+import { MisionesLComponent } from './Modules/landingModule/viewModel/misiones-l.component';
+
 
 
 
@@ -77,7 +90,18 @@ registerLocaleData(localeEs, 'es');
     EditAComponent,
     CoordinadoresComponent,
     PerfilCComponent,
-    DetallesCComponent
+    DetallesCComponent,
+    VerPerfilVComponent,
+    VerPerfilOComponent,
+    VerPerfilCComponent,
+    ActividadDComponent,
+    VerVoluntariosComponent,
+    HomeVoluntariosComponent,
+    MisFundacionesComponent,
+    ActividadesVComponent,
+    DetallesAxCComponent,
+    ActividadesCComponent,
+    MisionesLComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +114,7 @@ registerLocaleData(localeEs, 'es');
     NgApexchartsModule,
     HttpClientModule,
     CommonModule,
-    FullCalendarModule
+    FullCalendarModule,
   ],
   providers: [
     TokenService,

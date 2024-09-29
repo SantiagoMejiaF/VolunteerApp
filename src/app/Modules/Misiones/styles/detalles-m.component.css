@@ -1,105 +1,184 @@
-#tittle, #tittle1{
-    background-color: white; /* Fondo blanco */
-  border-radius: 10px; /* Bordes redondeados */
+#tittle,
+#tittle1 {
+  background-color: white; /* Fondo blanco */
+  border-radius: 20px; /* Bordes redondeados */
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
-  margin-bottom:20px;
-  }
-  h1{
-    font-weight: bold;
-    color: #ED4B4B;
+  margin-bottom: 20px;
 }
-  h2 {
-    font-weight: 600;
-    font-size: 20px;
-  }
-  h3{
-    font-weight: bold;
-    font-size: 20px;
-  }
-  h4{
-    font-weight: 500;
-    font-size: 16px;
-  }
-
-
-  body {
-    background-color: #f8f9fa;
+h1 {
+  font-weight: bold;
+  color: #ed4b4b;
+}
+h2 {
+  font-weight: 600;
+  font-size: 20px;
+}
+h3 {
+  font-weight: bold;
+  font-size: 20px;
+}
+h4 {
+  font-weight: 500;
+  font-size: 16px;
 }
 
-#misionimg{
-    width: 100px;
-    height:auto;
+body {
+  background-color: #f8f9fa;
+}
+
+#misionimg {
+  width: 100px;
+  height: auto;
 }
 
 .card-title {
-    font-size: 18px;
-    font-weight: bold;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .list-group-item {
-    text-align: center;
+  text-align: left;
+  border: none;
+  border-radius: 6px;
+}
+.list-group-item i {
+  color: white;
+  background-color: #fb9778;
+  padding: 7px;
+  border-radius: 4px;
 }
 
 .list-group-item.active {
-    background-color: #186DDE;
-    border-color: #0d6efd;
-    color: white;
+  background-color: #ffe5dc;
+  border-color: #ffe5dc;
+  color: black;
+  border-radius: 6px;
 }
 
 .nav-tabs .nav-link.active {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .card-header {
-    background-color: #f8f9fa;
+  background-color: #f8f9fa;
 }
 
 .card-body p {
-    font-size: 16px;
-    text-align: left;
-}
-
-/*Se va?*/
-.nav-link {
-    border-radius: 10px;
-    position: relative;
-    padding-bottom: 5px;
-    color: black; /* Color por defecto del texto */
-}
-
-.nav-link.active-link {
-    font-weight: 600; /* Cambia solo el color del texto cuando esté activo */
-}
-
-.nav-link.active-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background-color: #186DDE; /* Color de la línea debajo */
-    border-radius: 5px;
+  font-size: 16px;
+  text-align: left;
 }
 
 .details {
-    border-radius: 5px;
-    box-shadow: 0 0 0 0.2px #A2A1A8; /* Simula un borde de 0.5px */
+  border-radius: 5px;
+  box-shadow: 0 0 0 0.2px #a2a1a8; /* Simula un borde de 0.5px */
 }
-
 
 .editar {
-    background-color: #186DDE;
-    box-shadow: 0 0 0 2px #186DDE;
-    border: none;
+  background-color: #06c9d7;
+  box-shadow: 0 0 0 2px #06c9d7;
+  border: #06c9d7;
+  border-radius: 6px;
 }
-.editar i{
-    color:white;
-    font-size: 1.3rem;
+.editar i {
+  color: white;
+  font-size: 1.3rem;
 }
-h5{
-    color:#186DDE;
-    font-weight: 600; 
-    font-size: 2rem;
+h5 {
+  color: #186dde;
+  font-weight: 600;
+  font-size: 2rem;
 }
+
+/* Estilos base */
+.app-container {
+  display: flex;
+  height: 100vh;
+  overflow-x: hidden; /* Oculta el desplazamiento horizontal */
+  background: white;
+  border-radius: 20px;
+  padding: 0 !important; /* Elimina el padding */
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.menu-toggle {
+  font-size: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #ffffff;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  margin-left: 0px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Sombra por defecto */
+  z-index: 100; /* Asegura que esté encima del contenido */
+}
+
+/* Agregamos la sombra al lado derecho cuando el sidebar está visible */
+.sidebar:not(.hidden) {
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3); /* Sombra en el lado derecho */
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+}
+
+.content {
+  flex: 1;
+  background-color: white;
+  padding: 10px;
+  overflow-y: auto; /* Habilita el desplazamiento vertical si es necesario */
+  overflow-x: hidden;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.todo-item input {
+  margin-right: 10px;
+}
+
+/* Estilos para ocultar el sidebar */
+.sidebar.hidden {
+  display: none;
+}
+/* Media query para pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none; /* Ocultar el sidebar por defecto en móviles */
+  }
+
+  .sidebar.hidden {
+    display: block; /* Mostrar el sidebar al activar el toggle */
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
+  }
+
+  .content.expanded {
+    width: 100%; /* El contenido ocupará todo el ancho cuando el sidebar esté oculto */
+  }
+}
+

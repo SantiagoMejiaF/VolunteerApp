@@ -1,0 +1,486 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+::after,
+::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+h2 {
+  font-weight: 600;
+  font-size: 20px;
+}
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+h1 {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+body,
+span,
+.sidebar-footer a,
+li a,
+.d-flex .sidebar-logo a {
+  font-family: "Poppins", sans-serif;
+  color: #292c32;
+}
+
+.wrapper {
+  display: flex;
+}
+
+#sidebar {
+  width: 70px;
+  min-width: 70px;
+  height: 100vh;
+  position: fixed;
+  padding: 10px;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+#sidebar.expand {
+  width: 260px;
+  min-width: 260px;
+}
+
+.main {
+  margin-left: 70px;
+  min-height: 100vh;
+  width: calc(100% - 70px);
+  overflow: hidden;
+  transition: margin-left 0.35s ease-in-out;
+  background-color: #f1f1f2;
+}
+
+#sidebar.expand ~ .main {
+  margin-left: 70px;
+  width: calc(100% - 70px);
+}
+
+.toggle-btn {
+  background-color: transparent;
+  cursor: pointer;
+  border: 0;
+  padding: 1rem 1.5rem;
+}
+
+.toggle-btn i {
+  font-size: 1.5rem;
+  color: #000000;
+}
+
+.sidebar-logo {
+  margin: auto 0;
+}
+
+.sidebar-logo a {
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+#sidebar:not(.expand) .sidebar-logo,
+#sidebar:not(.expand) a.sidebar-link span {
+  display: none;
+}
+
+.sidebar-nav {
+  padding: 2rem 0;
+  flex: 1 1 auto;
+}
+#sidebar:not(.expand) a.sidebar-link {
+  padding: 5px 10px 5px 10px;
+}
+a.sidebar-link {
+  padding: 8px 10px 8px 20px;
+  color: #fff;
+  display: block;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  margin-bottom: 3px;
+}
+
+.sidebar-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.sidebar-link i {
+  font-size: 0.5rem;
+  margin-right: 0.75rem;
+}
+
+a.sidebar-link:hover {
+  background-color: rgba(59, 65, 66, 0.076);
+  border-radius: 30px;
+}
+
+/* Efecto cuando el enlace está activo */
+a.sidebar-link.active,
+a.sidebar-link:active {
+  background-color: #06c9d7;
+  color: white;
+  border-radius: 30px;
+}
+/* Cambiar el color del ícono cuando el enlace está activo */
+a.sidebar-link.active i,
+a.sidebar-link.router-link-active i {
+  color: white !important;
+}
+
+a.sidebar-link.active span,
+a.sidebar-link.router-link-active span {
+  color: white !important;
+}
+.sidebar-item {
+  position: relative;
+}
+#sidebar:not(.expand) a.sidebar-link {
+  padding: 8px 8px 8px 15px;
+}
+#sidebar:not(.expand) .volunteer {
+  display: none;
+}
+#sidebar.expand {
+  width: 260px;
+  min-width: 260px;
+}
+#sidebar.expand ~ .main {
+  margin-left: 260px; /* Ajusta el contenido cuando el sidebar está expandido */
+  width: calc(100% - 260px);
+}
+#sidebar:not(.expand) .cancel {
+  display: none;
+}
+#sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
+  position: absolute;
+  top: 0;
+  left: 70px;
+  background-color: #ffffff;
+  padding: 0;
+  min-width: 15rem;
+  display: none;
+}
+
+#sidebar:not(.expand) .sidebar-item:hover .has-dropdown + .sidebar-dropdown {
+  display: block;
+  max-height: 15em;
+  width: 100%;
+  opacity: 1;
+}
+
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
+  border: solid;
+  border-width: 0 0.075rem 0.075rem 0;
+  content: "";
+  display: inline-block;
+  padding: 2px;
+  position: absolute;
+  right: 1.5rem;
+  top: 1.4rem;
+  transform: rotate(-135deg);
+  transition: all 0.2s ease-out;
+}
+
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+  transform: rotate(45deg);
+  transition: all 0.2s ease-out;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-img {
+  width: 200px;
+  height: auto;
+  margin-left: auto;
+  /* Mover el logo al lado derecho */
+  margin-right: 20px;
+  /* Espacio entre el logo y el contenido */
+}
+.logo {
+  width: 50px;
+  height: auto;
+}
+
+#nav img {
+  width: 50px;
+  height: auto;
+}
+
+.contenido {
+  width: 100%;
+  /* Asegúrate de que el contenido use el ancho disponible */
+  padding: 20px;
+  /* Ajusta el padding si es necesario */
+  box-sizing: border-box;
+  /* Incluye padding y bordes en el ancho total */
+}
+
+.notification-icon {
+  position: relative; /* Para poder posicionar el contador respecto al ícono */
+  display: inline-block; /* Mantiene el ícono en línea con otros elementos */
+}
+
+.notification-icon i {
+  font-size: 20px; /* Tamaño del ícono de la campana */
+}
+
+.notification-count {
+  position: absolute; /* Posiciona el contador sobre el ícono */
+  top: -10px; /* Ajusta la posición superior */
+  right: -10px; /* Ajusta la posición derecha */
+  background-color: #f88; /* Color de fondo del contador */
+  color: white; /* Color del texto */
+  border-radius: 50%; /* Para hacerlo circular */
+  padding: 2px 6px; /* Espacio interno alrededor del número */
+  font-size: 10px; /* Tamaño del texto del número */
+  font-weight: 600; /* Hace el número más grueso */
+  display: flex; /* Centra el número dentro del círculo */
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
+  min-width: 18px; /* Asegura que el círculo tenga un tamaño mínimo */
+  height: 18px; /* Ajusta la altura del círculo */
+}
+
+.volunteer {
+  font-size: 20px;
+  font-weight: 700;
+}
+@media (min-width: 768px) {
+  .cancel {
+    display: none;
+  }
+}
+/* Sidebar oculto en móvil */
+@media (max-width: 768px) {
+  #sidebar {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.3s ease;
+    position: fixed;
+    left: -260px; /* Ocultar el sidebar */
+    z-index: 1000;
+  }
+
+  /* Sidebar visible en móvil */
+  #sidebar.mobile-visible {
+    width: 260px;
+    left: 0; /* Mostramos el sidebar */
+    position: fixed;
+    z-index: 2000; /* Superponer sobre el contenido */
+  }
+  #sidebar.mobile-visible .sidebar-item span {
+    display: inline-block !important;
+  }
+  #sidebar.mobile-visible .volunteer {
+    display: block;
+  }
+  #sidebar.mobile-visible .cancel {
+    display: block;
+  }
+  /* Hacer visible el botón de cerrar solo en móvil */
+  #sidebar .cancel {
+    display: block;
+  }
+  /* Expandir el contenido cuando el sidebar esté cerrado */
+  .main {
+    margin-left: 0;
+    width: 100%; /* El contenido ocupa todo el ancho */
+    transition: width 0.3s ease-in-out;
+}
+}
+
+/*MENUUUU*/
+
+
+
+.user-menu {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  z-index: 10;
+}
+
+
+.user-profile-container {
+  width: 300px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  z-index: 10;
+}
+
+.user-profile-header {
+  display: flex;
+  align-items: center;
+}
+
+.user2-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.user-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.user-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: gray;
+}
+
+.user-email {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #777;
+  text-decoration: none;
+}
+
+.user-email i {
+  margin-right: 5px;
+}
+
+.user-menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0;
+}
+
+.user-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.user-menu-item i {
+  font-size: 1.5rem;
+  color: #ff6b6b;
+  margin-right: 15px;
+}
+
+.user-menu-item div {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-menu-item span {
+  font-size: 1rem;
+}
+
+.user-menu-item small {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.user-menu-item:hover {
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+
+
+
+.logout-btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: #fb9778;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 20px;
+  transition: background-color 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #ff4a4a;
+}
+
+/*NOTIFICACIONES*/
+.formaCircular{
+  background: #fb9778;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  align-items: center; 
+}
+.formaCircular{
+  align-items: center; 
+  font-size: 2rem;
+}
+.red-bg {
+  background-color: #ffe5dc;
+}
+
+.blue-bg {
+  background-color: #e5fafb;
+}
+
+.pink-bg {
+  background-color: #f9e7eb;
+}
+
+.green-bg {
+  background-color: #ebfaf2;
+}
+.yellow-bg {
+  background-color: #fff8ec;
+}
+
+.red-bg-icon {
+  color: #fb9778;
+}
+
+.blue-bg-icon {
+  color: #06c9d7;
+}
+
+.pink-bg-icon {
+  color: #fc5c7a;
+}
+
+.green-bg-icon {
+  color: #34cea7
+}
+.yellow-bg-icon {
+  color: #fed549;
+}

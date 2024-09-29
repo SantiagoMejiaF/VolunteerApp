@@ -13,6 +13,7 @@ export class DetallesMComponent implements OnInit {
   isEditing = false;
   missionId: number | null = null; // Almacenar el id de la misión
   missionDetails: Mission | null = null; // Almacenar los detalles de la misión
+  isSidebarVisible: boolean = true;
 
   constructor(private route: ActivatedRoute, private missionsService: MissionsService) { }
 
@@ -52,4 +53,10 @@ export class DetallesMComponent implements OnInit {
     // Aquí puedes manejar la lógica de guardar los cambios
     this.isEditing = false;
   }
+   // Alternar la visibilidad del menú lateral
+   toggleSidebar(): void {
+    this.isSidebarVisible = !this.isSidebarVisible;
+  }
+
+  
 }

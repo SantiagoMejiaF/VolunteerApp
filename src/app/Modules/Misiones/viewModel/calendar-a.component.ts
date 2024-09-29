@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { CalendarOptions } from '@fullcalendar/core';
+import { CalendarOptions, EventInput  } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -13,75 +13,56 @@ export class CalendarAComponent implements AfterViewInit {
   currentStep: number = 1;  
   showCalendar: boolean = true;
   missionForm: FormGroup;  
+  calendarOptions: CalendarOptions;
   isEditing=false;
-  calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth', 
-    eventClick: this.handleEventClick.bind(this),
-    plugins: [dayGridPlugin, interactionPlugin],
-    editable: true,
-    selectable: true,
-    locale: 'es', 
-    events: [
-      {
-        title: 'BCH237',
-        start: '2024-09-17',
-        end: '2024-09-17T11:30:00',
-        extendedProps: {
-          department: 'BioChemistry'
-        },
-        description: 'Lecture'
-      }
-    ],
-    headerToolbar: {
-      left: 'prev,next', 
-      center: 'title',  
-      right: ''          
-    },
-    views: {
-      dayGridMonth: {
-        buttonText: 'Mes',
-        dayHeaderFormat: { weekday: 'short' }
-      }
-    },
-    height: 'auto', 
-    
-    windowResize: () => {
-      const width = window.innerWidth;
-      if (width <= 768) {
-        this.adjustButtonSizes('small');
-        this.adjustTitleSize('small');
-        this.calendarOptions.headerToolbar = {
-          left: 'prev,next', 
-          center: 'title',   
-          right: ''          
-        };
-        this.calendarOptions.views = {
-          dayGridMonth: {
-            buttonText: 'Mes',
-            dayHeaderFormat: { weekday: 'narrow' } 
-          }
-        };
-        this.calendarOptions.contentHeight = 'auto'; 
-      } else {
-        this.adjustButtonSizes('normal');
-        this.adjustTitleSize('normal');
-        this.calendarOptions.headerToolbar = {
-          left: 'prev,next',
-          center: 'title',
-          right: '' 
-        };
-        this.calendarOptions.views = {
-          dayGridMonth: {
-            buttonText: 'Mes',
-            dayHeaderFormat: { weekday: 'short' } 
-          }
-        };
-        this.calendarOptions.contentHeight = 600; 
-      }
+  // Lista de eventos
+  calendarEvents: EventInput[] = [
+    {
+      id: '1', 
+      title: 'BCH237',
+      start: '2024-09-30T09:00:00',
+      end: '2024-09-30T11:30:00',
+      extendedProps: {
+        city: 'Ciudad X',
+        address: 'Dirección Y'
+      },
+      description: 'Lecture'
     }
-  };
+  ];
+  setCalendarOptions() {
+    const isMobile = window.innerWidth <= 768; 
+    this.calendarOptions = {
+    
+      initialView: 'dayGridMonth', 
+      eventClick: this.handleEventClick.bind(this),
+      plugins: [dayGridPlugin, interactionPlugin],
+      editable: true,
+      selectable: true,
+      locale: 'es', 
+      events: this.calendarEvents,
+      headerToolbar: {
+        left: 'prev,next', 
+        center: 'title',  
+        right: ''          
+      },
+      views: {
+        dayGridMonth: {
+          buttonText: 'Mes',
+          dayHeaderFormat: isMobile
+            ? { weekday: 'narrow' }  
+            : { weekday: 'short' }  
+        }
+      },
+      height: 'auto', 
+      
+      
+    };
+  }
+  
 
   constructor(private fb: FormBuilder) {
+    this.setCalendarOptions();
+    window.addEventListener('resize', this.setCalendarOptions.bind(this));
     // Inicializamos el formulario con los campos requeridos
     this.missionForm = this.fb.group({
       title: ['Plantación de árboles', Validators.required],
@@ -104,51 +85,13 @@ export class CalendarAComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.adjustButtonSizes('normal'); 
-    this.applyWeekdayHeaderStyles(); 
-  }
-
-  adjustButtonSizes(size: 'small' | 'normal') {
-    const buttons = document.querySelectorAll('.fc-prev-button, .fc-next-button');
-    buttons.forEach((button) => {
-      const htmlButton = button as HTMLElement; 
-      if (size === 'small') {
-        htmlButton.style.fontSize = '0.4rem'; 
-        htmlButton.style.padding = '5px 10px'; 
-        htmlButton.style.background = '#ED4B4B'; 
-        htmlButton.style.border = 'none'; 
-      } else {
-        htmlButton.style.fontSize = ''; 
-        htmlButton.style.padding = '';  
-        htmlButton.style.background = '#ED4B4B'; 
-        htmlButton.style.border = 'none'; 
-      }
-    });
-  }
-
-  applyWeekdayHeaderStyles() {
-    const dayHeaders = document.querySelectorAll('.fc-col-header-cell');
-    dayHeaders.forEach((header) => {
-      const htmlHeader = header as HTMLElement;
-      htmlHeader.style.backgroundColor = '#ED4B4B'; 
-      htmlHeader.style.color = 'white';           
-      htmlHeader.style.fontWeight = 'bold';         
-      htmlHeader.style.textAlign = 'center';        
-    });
   }
 
  
-  adjustTitleSize(size: 'small' | 'normal') {
-    const title = document.querySelector('.fc-toolbar-title') as HTMLElement;
-    if (title) {
-      if (size === 'small') {
-        title.style.fontSize = '1.2rem'; 
-        title.style.marginLeft = '10px'; 
-      } else {
-        title.style.fontSize = '';
-      }
-    }
-  }
+
+  
+ 
+  
 
   
   nextStep() {
@@ -221,9 +164,5 @@ export class CalendarAComponent implements AfterViewInit {
    // Manejador para el evento "Back" emitido desde el componente `app-detalles-a`
    handleBack() {
     this.showCalendar = true;  // Volver a mostrar el calendario
-    setTimeout(() => {
-      this.adjustButtonSizes('normal');
-      this.applyWeekdayHeaderStyles();
-    }, 0);  // Asegurarse de que las personalizaciones se apliquen después de que el calendario se renderice
   }
 }

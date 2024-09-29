@@ -4,10 +4,12 @@ import { Component, ViewChild, EventEmitter, Output } from "@angular/core";
 import {
   ApexNonAxisChartSeries,
   ApexPlotOptions,
+  ApexTitleSubtitle,
   ApexChart,
   ApexFill,
   ChartComponent
 } from "ng-apexcharts";
+
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -15,13 +17,16 @@ export type ChartOptions = {
   labels: string[];
   plotOptions: ApexPlotOptions;
   fill: ApexFill;
+  title: ApexTitleSubtitle; // Agregamos el título
 };
+
 export type ChartOptions1 = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
   labels: string[];
   plotOptions: ApexPlotOptions;
   fill: ApexFill;
+  title: ApexTitleSubtitle; // Agregamos el título
 };
 
 @Component({
@@ -33,6 +38,43 @@ export class DetallesAComponent {
   currentContent: string = 'content1';
   selectedSection: string = 'descripcion';
   isEditing = false;
+  public data: any[] = [
+    {
+      firstName: 'Juan',
+      lastName: 'Pérez',
+      email: 'juan.perez@example.com',
+      cedula: '12345678',
+      image: 'assets/img/user1.png',
+    },
+    {
+      firstName: 'María',
+      lastName: 'Gómez',
+      email: 'maria.gomez@example.com',
+      cedula: '87654321',
+      image: 'assets/img/user2.png',
+    },
+    {
+      firstName: 'Carlos',
+      lastName: 'Rodríguez',
+      email: 'carlos.rodriguez@example.com',
+      cedula: '12349876',
+      image: 'assets/img/user3.png',
+    },
+    {
+      firstName: 'Lucía',
+      lastName: 'Martínez',
+      email: 'lucia.martinez@example.com',
+      cedula: '98761234',
+      image: '',
+    },
+    {
+      firstName: 'Pedro',
+      lastName: 'Sánchez',
+      email: 'pedro.sanchez@example.com',
+      cedula: '13579246',
+      image: 'assets/img/user5.png',
+    }
+  ];
   
   showContent(contentId: string) {
     this.currentContent = contentId;
@@ -94,7 +136,15 @@ export class DetallesAComponent {
           stops: [0, 50, 53, 91]
         }
       },
-      labels: ["Average Results"]
+      labels: ["Average Results"],
+      title: {
+        text: "# de Voluntarios", // Título de la gráfica
+        align: 'center',
+        style: {
+          fontSize: '16px',
+          color: '#333'
+        }
+      }
     };
     this.chartOptions1 = {
       series: [76],
@@ -140,7 +190,15 @@ export class DetallesAComponent {
           stops: [0, 50, 53, 91]
         }
       },
-      labels: ["Average Results"]
+      labels: ["Average Results"],
+      title: {
+        text: "# de Beneficiarios", // Título de la gráfica
+        align: 'center',
+        style: {
+          fontSize: '16px',
+          color: '#333'
+        }
+      }
     };
   }
 }

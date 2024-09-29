@@ -1,0 +1,258 @@
+.column1,
+.column2 {
+  background-color: white; /* Fondo blanco */
+  border-radius: 20px; /* Bordes redondeados */
+  padding: 20px; /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  margin-bottom: 20px;
+}
+.column1 h2  {
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  h3  {
+    font-weight: 600;
+    font-size: 14px;
+  }
+/* Estilos generales */
+.container {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.custom-card {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.custom-img {
+    height: 250px;
+    object-fit: cover;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+}
+
+.card-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1E1450;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.btn-outline-primary1 {
+    border-color: #1E1450;
+    color: #1E1450;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-outline-primary1:hover {
+    background-color: #1E1450;
+    color: white;
+}
+
+.content {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+}
+
+.content-title {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #1E1450;
+}
+
+ul, ol {
+    padding-left: 20px;
+    line-height: 1.6;
+}
+
+hr {
+    margin: 20px 0;
+    border-color: #dee2e6;
+}
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+    .profile-img {
+        display: none; /* Oculta la imagen de perfil en pantallas pequeñas */
+    }
+
+    .card-title {
+        font-size: 1.5rem; /* Reduce el tamaño del título en pantallas pequeñas */
+    }
+
+    .custom-img {
+        height: 200px; /* Ajusta la altura de la imagen de fondo para pantallas más pequeñas */
+    }
+}
+.btn-outline-primary1 {
+    border-color: #1E1450;
+    color: #1E1450;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-outline-primary1:hover {
+    background-color: #1E1450;
+    color: white;
+}
+
+.btn-outline-primary2 {
+    border-color: #ED4B4B;
+    color: #1E1450;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-outline-primary2:hover {
+    background-color: #ED4B4B;
+    color: white;
+}
+
+.btn-outline-primary3 {
+    border-color: #EFC940;
+    color: #1E1450;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-outline-primary3:hover {
+    background-color: #EFC940;
+    color: white;
+}
+
+
+.status-activo {
+    background-color: rgba(229,250,251,255);
+    color: #03c9d7;
+    padding: 5px 10px 0px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  .status-pendiente {
+    background-color: rgba(255,248,236,255);
+    color: #fec96c;
+    padding: 5px 10px 0px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  .status-aplazado {
+    background-color: rgba(255,229,220,255);
+    color: #F36060;
+    padding: 5px 10px 0px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .status-completado {
+    background-color: rgba(63, 194, 138, 0.1);
+    color: #3FC28A;
+    padding: 5px 10px 0px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+
+  /*TABLA*/
+  /*TABLE*/
+#recentCustomers .imgBx {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    overflow: hidden;
+  }
+  #recentCustomers .imgBx img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #recentCustomers table tr td {
+    padding: 12px 10px;
+  }
+  #recentCustomers table tr td h4, #recentCustomers table tr td {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2rem;
+  }
+  #recentCustomers table tr th {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.2rem;
+  }
+  #datatableexample table tr td h4 span {
+    font-size: 14px;
+    color: var(--black2);
+  }
+  #datatableexample table tr:hover {
+    background: var(--blue);
+    color: var(--white);
+  }
+  #datatableexample table tr:hover td h4 span {
+    color: var(--white);
+  }
+
+  .custom1{
+    background: #fb9778;
+    border: none !important;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 10px;
+  }
+  .custom2{
+    background: #06c9d7;
+    border: none !important;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 10px;
+  }
+
+  h4 {
+    font-family: "Quicksand", sans-serif;
+    font-size: 14px;
+}
+
+h5 {
+    font-family: "Quicksand", sans-serif;
+    font-size: 18px;
+}
+
+
+.qr-container {
+  width: 200px;  /* Ancho fijo */
+  height: 200px; /* Alto fijo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc; /* Para visualizar el contenedor */
+  margin: 0 auto;  /* Centrado horizontal */
+}
+
+.qr-container img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.btn-primary{
+  background: #06c9d7;
+  color: white;
+  border: none;
+}
+
+  

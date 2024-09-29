@@ -1,0 +1,134 @@
+#tittle, #tittle1{
+    background-color: white; /* Fondo blanco */
+  border-radius: 20px; /* Bordes redondeados */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  margin-bottom:20px;
+  }
+  h1{
+    font-weight: bold;
+    color: #ED4B4B;
+}
+  h2 {
+    font-weight: 600;
+    font-size: 20px;
+  }
+  h4 {
+    font-family: "Quicksand", sans-serif;
+    font-size: 14px;
+}
+
+h5 {
+    font-family: "Quicksand", sans-serif;
+    font-size: 18px;
+}
+  .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #0d6efd;
+    color: white;
+    border: 1px solid #0d6efd;
+    padding: 2px 5px;
+    margin-right: 5px;
+}
+
+
+.modal-body {
+    overflow-y: auto; 
+}
+
+
+/**/
+/* Personalización general del formulario */
+
+
+
+.form-label {
+    font-weight: bold;
+    color: #333;
+}
+
+.custom-input, .custom-select {
+    border-radius: 10px;
+    padding: 3px;
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+.custom-input:focus, .custom-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.custom-checkbox {
+    margin-left: 5px;
+}
+
+
+
+.modal-body {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+/* Estilos adicionales para mejorar la experiencia visual */
+.modal-content {
+    background-image: linear-gradient(to bottom right, #ffffff, #e9ecef);
+    padding: 20px;
+}
+
+.custom-button {
+    background-color: #06c9d7;
+    color: white !important;
+    font-weight: 600;
+  }
+  
+  
+  
+  .custom-button:focus {
+    outline: none;
+  }
+
+  #Crear{
+    background: #FB9778;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 8px 8px 8px;
+    border-radius: 10px;
+    border: none !important;
+  }
+
+
+  .status-activo {
+    background-color: rgba(229,250,251,255);
+    color: #03c9d7;
+    padding: 4px 8px;
+    border-radius: 12px;
+    display: inline-block;
+  }
+  
+  .status-pendiente {
+    background-color: rgba(255,248,236,255);
+    color: #fec96c;
+    padding: 4px 8px;
+    border-radius: 12px;
+    display: inline-block;
+  }
+  
+  .status-aplazado {
+    background-color: rgba(255,229,220,255);
+    color: #F36060;
+    padding: 4px 8px;
+    border-radius: 12px;
+    display: inline-block;
+  }
+  .status-completado {
+    background-color: rgba(63, 194, 138, 0.1);
+    color: #3FC28A;
+    padding: 4px 8px;
+    border-radius: 12px;
+    display: inline-block;
+  }
+
+  

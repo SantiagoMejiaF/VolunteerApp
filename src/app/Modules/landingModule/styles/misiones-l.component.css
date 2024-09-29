@@ -1,0 +1,71 @@
+h3 {
+    font-family: "Quicksand", sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+  }
+  
+  h4 {
+    font-family: "Quicksand", sans-serif;
+    font-weight: bold;
+    color: #EFC940;
+  }
+  h5 {
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+  }
+  h6 {
+    font-family: "Quicksand", sans-serif;
+    font-weight: 200;
+    font-size: 15px;
+  }
+  
+  p {
+    font-family: "Quicksand", sans-serif;
+    font-weight: regular;
+    font-size: 20px;
+    padding-top: 2%;
+  }
+
+  .misionestarjeta {
+    margin: 15px;
+    text-align: center;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.misionestarjeta img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.misionestarjeta h4, .misionestarjeta p {
+    margin: 10px 0;
+}
+
+.details svg {
+    margin-right: 10px;
+}
+
+.btn-secondary {
+    font-family: "Quicksand", sans-serif;
+    background-color: transparent;
+    border: 2px solid #FFD700;
+    color: #1E1E1E; 
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 15px; 
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #FFD700; 
+    color: #1E1E1E; 
+}
+
+.btn-secondary:focus {
+    outline: none;
+}

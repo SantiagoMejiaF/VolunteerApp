@@ -44,23 +44,46 @@ h6{
 .column1,
 .column2 {
   background-color: white; /* Fondo blanco */
-  border-radius: 10px; /* Bordes redondeados */
+  border-radius: 20px; /* Bordes redondeados */
   padding: 20px; /* Espaciado interno */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
   margin-bottom: 20px;
 }
 .profile {
 }
+/* Start: Estilo para los enlaces de navegación */
 .nav-link {
-    border-radius: 10px;
+  border-radius: 10px;
+  position: relative;
+  padding: 10px;
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.nav-link.active-link {
-    background-color: #186dde;
-    color: white;
-    border-radius: 10px;
+/* Cuando el enlace está activo, cambia el color */
+.nav-link.active-link, .nav-link.active-link i {
+  color: #fb9778;
 }
 
+/* Línea debajo del enlace activo */
+.nav-link.active-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #fb9778;
+  border-radius: 5px;
+}
+#misionimg{
+  width: 135px;
+  height: 135px;
+  border-radius: 50%;
+
+}
 p {
     font-family: "Quicksand", sans-serif;
     font-weight: regular;
@@ -101,26 +124,21 @@ ng-multiselect-dropdown {
 
 .btn-secondary {
     font-family: "Quicksand", sans-serif;
-    background-color:#0ecc95;
+    background-color:#fb9778;
     border: 2px; 
     padding: 8px 15px;
     color: white;
     font-size: 14px;
-    border-radius: 30px;
+    border-radius: 8px;
     transition: background-color 0.1s, color 0.3s, border-color 0.3s;
     margin-top: 10px;
     margin-left: 12px;
     font-weight: 500;
   }
   
-  .btn-secondary:hover {
-    background-color: #09ad7f; 
-    color: white; 
-  }
+
   
-  .btn-secondary:focus {
-    outline: none;
-  }
+  
 
   .award-container {
     display: flex; /* Alinea los elementos en una fila */
@@ -141,4 +159,19 @@ ng-multiselect-dropdown {
 
 .award-container h4 {
     margin: 0; 
+}
+@media (max-width: 768px) {
+  .head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+ 
+  #misionimg {
+    text-align: center;
+  }
+
+  .ml-3 {
+    margin-left: 0 !important; 
+  }
 }

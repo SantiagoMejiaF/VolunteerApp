@@ -20,6 +20,16 @@ import { DetallesAComponent } from './Modules/Misiones/viewModel/detalles-a.comp
 import { CoordinadoresComponent } from './Modules/Organization/viewModel/coordinadores.component';
 import { PerfilCComponent } from './Modules/Coordinators/viewModel/perfil-c.component';
 import { DetallesCComponent } from './Modules/Coordinators/viewModel/detalles-c.component';
+import { VerPerfilVComponent } from './Modules/Volunteer/viewModel/ver-perfil-v.component';
+import { VerPerfilOComponent } from './Modules/Organization/viewModel/ver-perfil-o.component';
+import { ActividadDComponent } from './Modules/Misiones/viewModel/actividad-d.component';
+import { VerPerfilCComponent } from './Modules/Coordinators/viewModel/ver-perfil-c.component';
+import { VerVoluntariosComponent } from './Modules/Organization/viewModel/ver-voluntarios.component';
+import { HomeVoluntariosComponent } from './Modules/Volunteer/viewModel/home-voluntarios.component';
+import { MisFundacionesComponent } from './Modules/Volunteer/viewModel/mis-fundaciones.component';
+import { ActividadesVComponent } from './Modules/Volunteer/viewModel/actividades-v.component';
+import { DetallesAxCComponent } from './Modules/Organization/viewModel/detalles-ax-c.component';
+import { ActividadesCComponent } from './Modules/Coordinators/viewModel/actividades-c.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -27,11 +37,13 @@ const routes: Routes = [
   { path: 'forms', component: AuthComponent },
   { path: 'formsV', component: FormsVolunteerComponent },
   { path: 'formsO', component: FormsOrganizacionComponent },
+  { path: 'sideB', component: SidebarComponent },
 
   {
     path: '', // Utiliza una ruta vacía como prefijo para las rutas con Navbar
     component: SidebarComponent, // Este componente actúa como un layout
     children: [
+      //ADMIN
       {
         path: 'gestion-users',
         component: GestionUsuariosComponent,
@@ -40,22 +52,39 @@ const routes: Routes = [
         path: 'dashAdmin',
         component: DashboardAdminComponent,
       },
-      {
-        path: 'dashVolunteer',
-        component: DashboardVolunteerComponent,
-      },
+      
+    
+     
+      
+      //PANTALLAS ORGANIZACIÓN
       {
         path: 'dashOrganization',
         component: DashboardOrganizationComponent,
       },
       {
-        path: 'perfil',
-        component: PerfilComponent,
+        path: 'verPerfilO',
+        component:VerPerfilOComponent,
       },
       {
         path: 'perfilO',
         component: PerfilOComponent,
       },
+      {
+        path: 'verVoluntarios',
+        component:VerVoluntariosComponent,
+      },
+      {
+        path: 'verCoordinador',
+        component:CoordinadoresComponent,
+      },
+      {
+        path: 'verDetallesAxC',
+        component:DetallesAxCComponent,
+      },
+    
+
+
+      //MISIONES 
       {
         path: 'misiones',
         component:MisionesComponent,
@@ -76,20 +105,55 @@ const routes: Routes = [
         path: 'detallesA',
         component:DetallesAComponent,
       },
+      { 
+        path: 'actividad/:id/:image', 
+        component: ActividadDComponent
+      },
+      
+      //PANTALLAS DE VOLUNTARIO
       {
-        path: 'coordinador',
-        component:CoordinadoresComponent,
+        path: 'homeV',
+        component:HomeVoluntariosComponent,
       },
       {
-        path: 'perfilc',
+        path: 'dashVolunteer',
+        component: DashboardVolunteerComponent,
+      },
+      {
+        path: 'misF',
+        component:MisFundacionesComponent,
+      },
+      {
+        path: 'misA',
+        component:ActividadesVComponent,
+      },
+      {
+        path: 'verPerfilV',
+        component:VerPerfilVComponent,
+      },
+      {
+        path: 'perfil',
+        component: PerfilComponent,
+      },
+
+      //COORDINADOR
+      
+      {
+        path: 'perfilC',
         component:PerfilCComponent,
+      },
+      {
+        path: 'verPerfilC',
+        component:VerPerfilCComponent,
       },
       {
         path: 'detallesC',
         component:DetallesCComponent,
       },
-      
-
+      {
+        path: 'misAC',
+        component:ActividadesCComponent,
+      },
       
     ],
   },

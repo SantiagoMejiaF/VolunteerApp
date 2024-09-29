@@ -1,0 +1,406 @@
+/* Aplica la fuente Quicksand a todos los textos */
+
+
+h2  {
+    font-weight: 600;
+    font-size: 20px;
+  }
+  a{
+      font-weight: 400;
+      font-size: 16px;
+    }
+  p {
+    font-weight: 400;
+    font-size: 14px;
+  }
+  h4 {
+    font-weight: 500;
+    font-size: 18px;
+    color: #949494;
+  }
+  h6{
+      font-weight: 700;
+      font-size: 15px;
+  }
+  #misionimg{
+      width: 135px;
+      height: 135px;
+      border-radius: 50%;
+  
+  }
+  .column1 img {
+    width: 120px;
+    height: auto !important;
+  }
+  
+  .column1,
+  .column2 {
+    background-color: white; /* Fondo blanco */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 20px; /* Espaciado interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+    margin-bottom: 20px;
+  }
+  
+  /* Start: Estilo para los enlaces de navegación */
+  .nav-link {
+    border-radius: 10px;
+    position: relative;
+    padding: 10px;
+    color: black;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Cuando el enlace está activo, cambia el color */
+  .nav-link.active-link, .nav-link.active-link i {
+    color: #fb9778;
+  }
+  
+  /* Línea debajo del enlace activo */
+  .nav-link.active-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #fb9778;
+    border-radius: 5px;
+  }
+  
+  
+  @media (max-width: 768px) {
+   
+    .nav-text {
+      display: none;
+    }
+  
+   
+    .nav-link.active-link .nav-text {
+      display: inline-block;
+    }
+  }
+  
+  
+  .nav-text {
+    transition: opacity 0.3s ease;
+  }
+  /* End: Estilo para los enlaces de navegación */
+  
+  p {
+      font-family: "Quicksand", sans-serif;
+      font-weight: regular;
+      font-size: 20px;
+      color: #ffffff;
+  }
+  .datos h6{
+      color: #b7c0c7;
+      font-weight: 500;
+  }
+  .datos p{
+      color: #000;
+      font-size: 14px;
+  }
+  
+  #nor {
+      padding: 10px;
+      width: 100%;
+      font-size: 17px;
+      font-family: "Quicksand", sans-serif;
+      border: 1px solid #c6c6c6;
+      border-radius: 10px;
+      -webkit-appearance: none;
+      transition: border-color 0.3s ease; /* Añade una transición suave */
+  }
+  
+  #nor:focus {
+      border-color: #186dde; 
+      outline: none; 
+  }
+  
+  ng-multiselect-dropdown {
+      width: 100%;
+      font-size: 17px;
+      font-family: "Quicksand", sans-serif;
+      display: block;
+  }
+  
+  .btn-secondary {
+      font-family: "Quicksand", sans-serif;
+      background-color:#0ecc95;
+      border: 2px; 
+      padding: 8px 15px;
+      color: white;
+      font-size: 14px;
+      border-radius: 30px;
+      transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+      margin-top: 10px;
+      margin-left: 12px;
+      font-weight: 500;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #09ad7f; 
+      color: white; 
+    }
+    
+    .btn-secondary:focus {
+      outline: none;
+    }
+  
+    .award-container {
+      display: flex; /* Alinea los elementos en una fila */
+      align-items: center; /* Alinea verticalmente los elementos en el centro */
+      justify-content: center; /* Centra los elementos horizontalmente */
+      gap: 8px; /* Espacio entre el ícono y el número */
+      margin-top: 10px; /* Espacio encima del contenedor, ajusta según sea necesario */
+      transition: color 0.3s ease; /* Suaviza el cambio de color del texto e ícono */
+  }
+  
+  .award-container:hover {
+      color: blue; /* Cambia el color del texto e ícono al pasar el mouse */
+  }
+  
+  .award-container i {
+      font-size: 24px; /* Tamaño del ícono */
+  }
+  
+  .award-container h4 {
+      margin: 0; 
+  }
+  
+  /*START: TIMELINE*/
+
+.star {
+  font-size: 20px;
+  margin-right: 2px;
+}
+
+.gold {
+  color: gold;
+}
+
+.gray {
+  color: lightgray;
+}
+
+
+.circle {
+  padding: 13px 20px;
+  border-radius: 50%;
+  background-color: #06c9d7;
+  color: #fff;
+  max-height: 50px;
+  z-index: 2;
+}
+
+.how-it-works.row .col-2 {
+  align-self: stretch;
+}
+.how-it-works.row .col-2::after {
+  content: "";
+  position: absolute;
+  border-left: 3px solid #06c9d7;
+  z-index: 1;
+}
+.how-it-works.row .col-2.bottom::after {
+  height: 50%;
+  left: 50%;
+  top: 50%;
+}
+.how-it-works.row .col-2.full::after {
+  height: 100%;
+  left: calc(50% - 3px);
+}
+.how-it-works.row .col-2.top::after {
+  height: 50%;
+  left: 50%;
+  top: 0;
+}
+
+
+.timeline div {
+  padding: 0;
+  height: 40px;
+}
+.timeline hr {
+  border-top: 3px solid #06c9d7;
+  margin: 0;
+  top: 17px;
+  position: relative;
+}
+.timeline .col-2 {
+  display: flex;
+  overflow: hidden;
+}
+.timeline .corner {
+  border: 3px solid #06c9d7;
+  width: 100%;
+  position: relative;
+  border-radius: 15px;
+}
+.timeline .top-right {
+  left: 50%;
+  top: -50%;
+}
+.timeline .left-bottom {
+  left: -50%;
+  top: calc(50% - 3px);
+}
+.timeline .top-left {
+  left: -50%;
+  top: -50%;
+}
+.timeline .right-bottom {
+  left: 50%;
+  top: calc(50% - 3px);
+}
+
+#lindo h5,#lindo p {
+  color: black;
+}
+#lindo h5{
+  font-size: 18px;
+}
+#lindo p{
+  font-size: 14px;
+}
+
+
+
+/*END: TIMELINE*/
+  
+  
+  /*START: PERSONAL DATA*/
+  .tab {
+      padding: 15px;
+      margin: 0 auto;
+    }
+    
+    .data-section {
+      margin-bottom: 15px;
+    }
+    
+    .data-section h6 {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: BLACK;
+    }
+    
+    .data-section p {
+      font-size: 16px;
+      color: BLACK;
+    }
+    
+    h4 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    
+    i {
+      margin-right: 5px;color: BLACK;
+    }
+    
+    /*START TABLE*/
+    #recentCustomers .imgBx {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      border-radius: 50px;
+      overflow: hidden;
+    }
+    #recentCustomers .imgBx img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    #recentCustomers table tr td {
+      padding: 12px 10px;
+    }
+    #recentCustomers table tr td h4, #recentCustomers table tr td {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.2rem;
+    }
+    #recentCustomers table tr th {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.2rem;
+    }
+    #datatableexample table tr td h4 span {
+      font-size: 14px;
+      color: var(--black2);
+    }
+    #datatableexample table tr:hover {
+      background: var(--blue);
+      color: var(--white);
+    }
+    #datatableexample table tr:hover td h4 span {
+      color: var(--white);
+    }
+    .status-activo {
+      background-color: rgba(229,250,251,255);
+      color: #03c9d7;
+      padding: 4px 8px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+    
+    .status-pendiente {
+      background-color: rgba(255,248,236,255);
+      color: #fec96c;
+      padding: 4px 8px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+    
+    .status-aplazado {
+      background-color: rgba(255,229,220,255);
+      color: #F36060;
+      padding: 4px 8px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+    .status-completado {
+      background-color: rgba(63, 194, 138, 0.1);
+      color: #3FC28A;
+      padding: 4px 8px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+
+    /*END TABLE*/
+
+
+    @media (max-width: 768px) {
+      .tab {
+        padding: 10px;
+        margin: 10px;
+      }
+    
+      .data-section p {
+        font-size: 14px;
+      }
+    }
+    @media (max-width: 768px) {
+      .head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    
+     
+      #misionimg {
+        text-align: center;
+      }
+    
+      .ml-3 {
+        margin-left: 0 !important; 
+      }
+    }
+    

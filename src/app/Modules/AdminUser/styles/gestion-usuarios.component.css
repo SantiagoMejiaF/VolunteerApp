@@ -1,39 +1,24 @@
-/* Aplica la fuente Quicksand a todos los textos */
-body,
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-span,
-div,
-button,
-input,
-textarea {
-  font-family: "Quicksand", sans-serif;
-}
+
 h1{
   font-weight: bold;
   color: #ED4B4B;
 }
 .tittle{
   background-color: white; /* Fondo blanco */
-border-radius: 10px; /* Bordes redondeados */
-padding: 20px; /* Espaciado interno */
+border-radius: 20px; /* Bordes redondeados */
+padding: 10px; /* Espaciado interno */
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
 margin-bottom:20px;
 
 }
 #header .cards {
   background-color: white; /* Fondo blanco */
-  border-radius: 10px; /* Bordes redondeados */
+  border-radius: 20px; /* Bordes redondeados */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
 }
 .table-container {
   background-color: white; /* Fondo blanco */
-  border-radius: 10px; /* Bordes redondeados */
+  border-radius: 20px; /* Bordes redondeados */
   padding: 20px; /* Espaciado interno */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
 }
