@@ -3,7 +3,8 @@
         <div class="d-flex align-items-center">
             <img src="assets/img/LOGO_VOLUNTEERE.png" alt="" class="logo mr-1">
             <h2 class="volunteer mr-4"> VolunterApp</h2>
-            <i class="bi bi-x cancel" (click)="closeSidebar()" style="font-size: 2rem; color: #292C32; cursor: pointer;"></i>
+            <i class="bi bi-x cancel" (click)="closeSidebar()"
+                style="font-size: 2rem; color: #292C32; cursor: pointer;"></i>
 
 
         </div>
@@ -24,7 +25,7 @@
             </li>
 
             <!-- Para VOLUNTARIO *ngIf="role === 'VOLUNTARIO'"-->
-            <li class="sidebar-item" *ngIf="role === 'VOLUNTARIO'" >
+            <li class="sidebar-item" *ngIf="role === 'VOLUNTARIO'">
                 <a [routerLink]="'/homeV'" class="sidebar-link" title="Inicio" routerLinkActive="active">
                     <i class="bi bi-house" style="font-size: 1.3rem; color: #292C32;"></i>
                     <span>Inicio</span>
@@ -51,15 +52,17 @@
 
 
             <!-- Para ORGANIZACION *ngIf="role === 'ORGANIZACION'"-->
-            
+
             <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
-                <a [routerLink]="'/dashOrganization'" class="sidebar-link" title="Tablero de Control" routerLinkActive="active">
+                <a [routerLink]="'/dashOrganization'" class="sidebar-link" title="Tablero de Control"
+                    routerLinkActive="active">
                     <strong><i class="bi bi-columns-gap" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Tablero de Control</span>
                 </a>
             </li>
             <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
-                <a [routerLink]="'/verCoordinador'" class="sidebar-link" title="Coordinadores" routerLinkActive="active">
+                <a [routerLink]="'/verCoordinador'" class="sidebar-link" title="Coordinadores"
+                    routerLinkActive="active">
                     <strong><i class="bi bi-people" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Coordinadores</span>
                 </a>
@@ -103,11 +106,68 @@
                 <i class="bi bi-list" title="Expandir opciones" style="font-size: 2rem; color: #292C32;"></i>
             </button>
             <div class="">
-                <div class="notification-icon mr-4">
+                <div class="notification-icon mr-4" (click)="toggle2Menu()">
                     <i class="bi bi-bell"></i>
-                    <span class="notification-count">1</span>
+                    <span class="notification-count">{{ notifications.length }}</span>
                 </div>
-                <img src="assets/img/user3.png" alt="Logo" class="logo-img">
+                <div *ngIf="isMenu2Visible" class="user-menu">
+                    
+                    <div class="user-profile-container">
+                        <h2>Notificaciones</h2>
+                        <hr class="mt-3" style="height: 1px; background-color: rgb(136, 135, 135); border: none;">
+                      <div *ngFor="let notification of notifications; let i = index" >
+                        <div class="user-profile-header mb-2">
+                          
+                          <!-- Forma circular con color dinámico -->
+                          <div class="formaCircular text-center" [ngClass]="getCircularClass(i)">
+                            <i class="bi bi-emoji-smile" [ngClass]="getColorClass(i)"></i>
+                          </div>
+                          
+                          <!-- Información de la notificación -->
+                          <div class="user-info">
+                            <h3>{{ notification.title }}</h3>
+                            <p>{{ notification.message }}</p>
+                          </div>
+                  
+                        </div>
+                        <hr class="mt-3" style="height: 1px; background-color: rgb(136, 135, 135); border: none;">
+                      </div>
+                    </div>
+                  </div>
+                  
+                <img src="assets/img/user3.png" alt="User" class="user-img" (click)="toggleMenu()">
+                <div *ngIf="isMenuVisible" class="user-menu">
+                    <div class="user-profile-container">
+                        <div class="user-profile-header">
+                            <img src="assets/img/user3.png" alt="User" class="user2-img">
+                            <div class="user-info">
+                                <h3>Mathew Anderson</h3>
+                                <p>Voluntario</p>
+                                <a href="mailto:info@Flexy.com" class="user-email">
+                                    <i class="bi bi-envelope"></i> mathehgmail.com
+                                </a>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <ul class="user-menu-list">
+                            <li class="user-menu-item" (click)="goToProfile()">
+                                <i class="bi bi-person"></i>
+                                <div>
+                                    <span>Mi perfil</span>
+                                    <small>Ajustes de cuenta</small>
+                                </div>
+                            </li>
+
+                        </ul>
+
+
+
+                        <button class="logout-btn" (click)="logout()">Logout</button>
+                    </div>
+
+                </div>
             </div>
 
         </div>
