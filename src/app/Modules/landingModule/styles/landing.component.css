@@ -36,7 +36,7 @@ p {
 header {
   background-size: cover;
   padding-bottom: 200px;
-  background-image: url("/assets/img/background.svg");
+  background-image: url("/assets/img/Pantalla-Carga.svg");
   padding-right: 200px;
   padding-left: 200px;
   align-items: center;
@@ -54,7 +54,7 @@ header {
 #header h2 {
   font-family: "Qwitcher Grypen", cursive;
   font-weight: bold;
-  color: #efc940;
+  color: #fb9778;
   margin-top: 250px;
   font-size: 150px;
   line-height: 1.2;
@@ -147,21 +147,13 @@ header {
 
   
   .btn-secondary {
-    font-family: "Quicksand", sans-serif;
-    background-color: transparent;
-    border: 2px solid #FFD700; 
+    background-color: #fb9778;
+    border: none; 
     color: white; 
-    padding: 10px 20px;
+    padding: 12px 20px;
     font-size: 16px;
-    border-radius: 30px;
+    border-radius: 6px;
     transition: background-color 0.1s, color 0.3s, border-color 0.3s;
   }
   
-  .btn-secondary:hover {
-    background-color: #FFD700; 
-    color: #1E1E1E; 
-  }
   
-  .btn-secondary:focus {
-    outline: none;
-  }

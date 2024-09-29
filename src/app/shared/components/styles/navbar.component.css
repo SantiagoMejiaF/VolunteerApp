@@ -1,6 +1,6 @@
 .logo-img {
-    width: 75px;
-    height: 50px;
+    width: 55px;
+    height: 60px;
     transition: width 0.5s, height 0.5s;
 }
 nav{
@@ -25,8 +25,8 @@ nav{
     font-size: 20px!;
     font-weight: bold;
     font-family: "Quicksand", sans-serif;
-    background-color: #EFC940;
-    color: #2D2D2D;
+    background-color: #06c9d7;
+    color: white;
 }
 
 
