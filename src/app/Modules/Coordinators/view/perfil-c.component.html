@@ -32,39 +32,11 @@
                         <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content1'}"
                             (click)="showContent('content1')">Datos Personales</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content2'}"
-                            (click)="showContent('content2')">Misiones</a>
-                    </li>
+                    
                     
                 </ul>
 
-                <div *ngIf="currentContent === 'content2'" class="content">
-                    <div class="container mt-5">
-    
-  
-                        <!-- Mostrar el calendario si `showCalendar` es true -->
-                        <div *ngIf="showCalendar; else detalles">
-                            
-                          <div class="row">
-                            <div class="col-12">
-                              <full-calendar [options]="calendarOptions"></full-calendar>
-                            </div>
-                          </div>
-                        </div>
-                      
-                        <!-- Usar `ng-template` para mostrar el componente `app-detalles-a` cuando showCalendar sea false -->
-                        <ng-template #detalles>
-                          <app-detalles-c (back)="handleBack()"></app-detalles-c>
-                        </ng-template>
-                      </div>
-                    
-                    
-                    <ng-template #detalles>
-                        <app-detalles-c></app-detalles-c>
-                    </ng-template>
-                    
-                </div>
+               
 
                 <div *ngIf="currentContent === 'content1'" class="content">
                     <form [formGroup]="myForm">

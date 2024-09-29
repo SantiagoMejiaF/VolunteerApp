@@ -124,26 +124,21 @@ ng-multiselect-dropdown {
 
 .btn-secondary {
     font-family: "Quicksand", sans-serif;
-    background-color:#0ecc95;
+    background-color:#fb9778;
     border: 2px; 
     padding: 8px 15px;
     color: white;
     font-size: 14px;
-    border-radius: 30px;
+    border-radius: 8px;
     transition: background-color 0.1s, color 0.3s, border-color 0.3s;
     margin-top: 10px;
     margin-left: 12px;
     font-weight: 500;
   }
   
-  .btn-secondary:hover {
-    background-color: #09ad7f; 
-    color: white; 
-  }
+
   
-  .btn-secondary:focus {
-    outline: none;
-  }
+  
 
   .award-container {
     display: flex; /* Alinea los elementos en una fila */
