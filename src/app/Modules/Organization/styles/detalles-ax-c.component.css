@@ -208,3 +208,51 @@ hr {
   #datatableexample table tr:hover td h4 span {
     color: var(--white);
   }
+
+  .custom1{
+    background: #fb9778;
+    border: none !important;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 10px;
+  }
+  .custom2{
+    background: #06c9d7;
+    border: none !important;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 10px;
+  }
+
+  h4 {
+    font-family: "Quicksand", sans-serif;
+    font-size: 14px;
+}
+
+h5 {
+    font-family: "Quicksand", sans-serif;
+    font-size: 18px;
+}
+
+
+.qr-container {
+  width: 200px;  /* Ancho fijo */
+  height: 200px; /* Alto fijo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc; /* Para visualizar el contenedor */
+  margin: 0 auto;  /* Centrado horizontal */
+}
+
+.qr-container img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.btn-primary{
+  background: #06c9d7;
+  color: white;
+  border: none;
+}
+
+  

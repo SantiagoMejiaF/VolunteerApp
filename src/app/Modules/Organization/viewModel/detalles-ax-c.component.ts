@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-detalles-ax-c',
@@ -7,9 +8,15 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['../styles/detalles-ax-c.component.css'] // Ojo con la 's' en styles.
 })
 export class DetallesAxCComponent implements OnInit {
+
+  // MARTIN NECESITO EL STATUS DE LA ACTIVIDAD PARA COLOCAR LA IMAGEN SEGÚN ESO, TAMBIÉN 
+  //NECESITO EL ROL EN ESTA PANTALLA Y LLENAR LOS WR CON LOS SERVICIOS
   imagen: string = '';
   actividadId: number = 0;
   status: string = '';
+  role: string = '';
+  qrCodeUrlInicial: string = '';
+  qrCodeUrlFinal: string = '';
 
   public data: any[] = [
     {
@@ -49,14 +56,19 @@ export class DetallesAxCComponent implements OnInit {
     }
   ];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit() {
 
     // MARTIN NECESITO EL STATUS PARA COLOCAR LA IMAGEN SEGÚN ESO
     this.status = 'Activo'; 
-
+    this.qrCodeUrlInicial = 'assets/img/LOGO_VOLUNTEERE.png';
+    this.qrCodeUrlFinal = 'assets/img/LOGO_VOLUNTEERE.png';
     this.setImagenByStatus(this.status);
+    const roleStr = localStorage.getItem('role');
+    if (roleStr) {
+      this.role = roleStr;
+    }
   }
 
   setImagenByStatus(status: string) {
@@ -92,5 +104,29 @@ export class DetallesAxCComponent implements OnInit {
       default:
         return '';
     }
+  }
+  downloadQRInicial(): void {
+    this.http.get(this.qrCodeUrlInicial, { responseType: 'blob' }).subscribe((blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'qrInicial.png';  // Nombre del archivo que se descargará
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);  // Limpiar el objeto URL después de descargar
+    });
+  }
+  downloadQRFinal(): void {
+    this.http.get(this.qrCodeUrlInicial, { responseType: 'blob' }).subscribe((blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'qrFinal.png';  // Nombre del archivo que se descargará
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);  // Limpiar el objeto URL después de descargar
+    });
   }
 }
