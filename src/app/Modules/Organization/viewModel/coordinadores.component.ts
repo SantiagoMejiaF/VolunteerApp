@@ -1,45 +1,85 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { OrganizationService } from '../../Organization/model/services/organization.service';
+import { OauthService } from '../../authenticationModule/model/services/oauth.service';
+import { TokenDto } from '../../authenticationModule/model/token-dto';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-coordinadores',
   templateUrl: '../view/coordinadores.component.html',
-  styleUrl: '../styles/coordinadores.component.css'
+  styleUrls: ['../styles/coordinadores.component.css']
 })
-export class CoordinadoresComponent {
-  // Variable para controlar si mostrar botones sociales o campos de cédula y celular
+export class CoordinadoresComponent implements OnInit {
+  public data: any[] = [];
   public showSocialButtons: boolean = true;
 
- 
-  public data = [
-    {
-      firstName: 'Juan',
-      lastName: 'Pérez',
-      email: 'juan.perez@example.com',
-      cedula: '1234567890',
-      image: 'assets/img/user1.png'
-    },
-    {
-      firstName: 'Ana',
-      lastName: 'García',
-      email: 'ana.garcia@example.com',
-      cedula: '0987654321',
-      image: 'assets/img/ana.png'
-    },
-    {
-      firstName: 'Carlos',
-      lastName: 'Martínez',
-      email: 'carlos.martinez@example.com',
-      cedula: '1122334455',
-      image: ''
-    }
-  ];
-  ngAfterViewInit(): void {
-    this.initializeDataTable();
+  constructor(
+    private organizationService: OrganizationService,
+    private oauthService: OauthService
+  ) { }
+
+  ngOnInit(): void {
+    this.loadCoordinators();
   }
 
-   // Método para cambiar a la vista de los campos de cédula y celular
-   public onGoogleSignIn(): void {
-    this.showSocialButtons = false;
+  loadCoordinators(): void {
+    const orgId = localStorage.getItem('OrgId');
+    if (orgId) {
+      this.organizationService.getActivityCoordinators(orgId).subscribe(
+        (coordinators) => {
+          const userRequests = coordinators.map((coordinator: any) => {
+            return this.organizationService.getUserDetails(coordinator.userId);
+          });
+
+          forkJoin(userRequests).subscribe(
+            (userDetails: any[]) => {
+              this.data = coordinators.map((coordinator: any, index: number) => {
+                return {
+                  ...coordinator,
+                  firstName: userDetails[index].firstName,
+                  lastName: userDetails[index].lastName,
+                  email: userDetails[index].email,
+                  image: userDetails[index].image
+                };
+              });
+            },
+            (error) => {
+              console.error('Error loading user details:', error);
+            }
+          );
+        },
+        (error) => {
+          console.error('Error loading coordinators:', error);
+        }
+      );
+    }
+  }
+
+  onGoogleSignIn(): void {
+    const intervalId = setInterval(() => {
+      if (window.google && window.google.accounts && window.google.accounts.oauth2) {
+        clearInterval(intervalId);
+        window.google.accounts.oauth2.initTokenClient({
+          client_id: '142245667829-afpupoofnh363onmduragfrhduii4jj5.apps.googleusercontent.com',
+          scope: 'profile email',
+          callback: (response: any) => {
+            if (response && response.access_token) {
+              const tokenGoogle = new TokenDto(response.access_token);
+              console.log('Google Access Token:', response.access_token);
+              this.oauthService.google(tokenGoogle).subscribe(
+                (res) => {
+                  console.log('Response from backend (Google):', res);
+                  this.showSocialButtons = false;
+                },
+                (err) => {
+                  console.error('Error during Google sign in:', err);
+                }
+              );
+            }
+          }
+        }).requestAccessToken();
+      }
+    }, 100);
   }
 
   initializeDataTable(): void {

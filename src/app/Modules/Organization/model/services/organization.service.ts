@@ -45,4 +45,13 @@ export class OrganizationService {
   getOrganizationByUserId(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/organizations/user/${userId}`);
   }
+
+  getActivityCoordinators(orgId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/activity-coordinators/organization/${orgId}`, cabecera);
+  }
+
+  getUserDetails(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/users/${userId}`);
+  }
+
 }
