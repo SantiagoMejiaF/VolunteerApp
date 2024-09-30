@@ -46,8 +46,11 @@ export class DetallesCComponent  {
 
   
   initializeDataTable(): void {
+    if ($.fn.dataTable.isDataTable('#datatableDetallesC')) {
+      $('#datatableDetallesC').DataTable().destroy();
+    }
     setTimeout(() => {
-      $('#datatableexample').DataTable({
+      $('#datatableDetallesC').DataTable({
         pagingType: 'full_numbers',
         pageLength: 5,
         processing: true,

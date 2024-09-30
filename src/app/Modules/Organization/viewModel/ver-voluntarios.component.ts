@@ -54,8 +54,11 @@ export class VerVoluntariosComponent implements AfterViewInit {
   }
 
   initializeDataTable(): void {
+    if ($.fn.dataTable.isDataTable('#datatableVerVoluntarios')) {
+      $('#datatableVerVoluntarios').DataTable().destroy();
+    }
     setTimeout(() => {
-      $('#datatableexample').DataTable({
+      $('#datatableVerVoluntarios').DataTable({
         pagingType: 'full_numbers',
         pageLength: 5,
         processing: true,

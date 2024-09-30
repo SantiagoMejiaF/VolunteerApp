@@ -60,8 +60,11 @@ export class GestionUsuariosComponent implements OnInit {
   }
   // Inicializar DataTable
   initializeDataTable(): void {
+    if ($.fn.dataTable.isDataTable('#datatableGestionUser')) {
+      $('#datatableGestionUser').DataTable().destroy();
+    }
     setTimeout(() => {
-      $('#datatableexample').DataTable({
+      $('#datatableGestionUser').DataTable({
         pagingType: 'full_numbers',
         pageLength: 5,
         processing: true,

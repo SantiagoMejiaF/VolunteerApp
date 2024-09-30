@@ -58,8 +58,11 @@ export class ActividadesCComponent {
 
   // Inicializar DataTable
   initializeDataTable(): void {
+    if ($.fn.dataTable.isDataTable('#datatableActividadesC')) {
+      $('#datatableActividadesC').DataTable().destroy();
+    }
     setTimeout(() => {
-      $('#datatableexample').DataTable({
+      $('#datatableActividadesC').DataTable({
         pagingType: 'full_numbers',
         pageLength: 5,
         processing: true,

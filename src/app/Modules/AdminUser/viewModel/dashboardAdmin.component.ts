@@ -161,7 +161,10 @@ export class DashboardAdminComponent implements OnInit {
 
     setTimeout(() => {
       // Verifica si la tabla ya está inicializada antes de reinicializarla
-      const tableId = '#datatableexample';
+      const tableId = '#datatableDashAdmin';
+      if ($.fn.dataTable.isDataTable('#datatableDashAdmin')) {
+        $('#datatableDashAdmin').DataTable().destroy();
+      }
       if (!$.fn.DataTable.isDataTable(tableId)) {
         $(tableId).DataTable({
           pagingType: 'full_numbers',

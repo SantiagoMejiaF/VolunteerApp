@@ -43,8 +43,11 @@ export class CoordinadoresComponent {
   }
 
   initializeDataTable(): void {
+    if ($.fn.dataTable.isDataTable('#datatableCoordinadores')) {
+      $('#datatableCoordinadores').DataTable().destroy();
+    }
     setTimeout(() => {
-      $('#datatableexample').DataTable({
+      $('#datatableCoordinadores').DataTable({
         pagingType: 'full_numbers',
         pageLength: 5,
         processing: true,

@@ -63,7 +63,8 @@ export class MisionesComponent implements OnInit {
     }
 
     setTimeout(() => {
-      this.dataTable = $('#datatableexample').DataTable({
+      
+      this.dataTable = $('#datatableMisiones').DataTable({
         pagingType: 'full_numbers',
         pageLength: 5,  // Ajustar a tus necesidades
         processing: true,
