@@ -92,22 +92,13 @@ h3 {
 
 
 .btn-secondary {
-  font-family: "Quicksand", sans-serif;
-  background-color: transparent;
-  border: 2px solid #FFD700; 
-  color: #1E1E1E; 
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 30px;
-  transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+  background: #06c9d7;
+  color: white !important;
+  border: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  padding:10px;
+  border-radius:8px;
 }
 
-.btn-secondary:hover {
-  background-color: #FFD700; 
-  color: #1E1E1E; 
-}
 
-.btn-secondary:focus {
-  outline: none;
-}
 
