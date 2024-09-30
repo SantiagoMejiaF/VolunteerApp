@@ -11,7 +11,9 @@ header {
     background-image: url("/assets/img/Fondo.svg");
     height: 100vh;
 }
-
+.img-fluid{
+    width: 100px;
+}
 h2, p {
     font-family: "Quicksand", sans-serif;
     color: white;

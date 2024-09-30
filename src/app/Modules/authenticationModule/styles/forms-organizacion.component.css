@@ -14,7 +14,7 @@ body {
 
 #register{
 
-  color: #ED4B4B;
+  color: #06c9d7;
 }
 #thanksBackground {
     position: fixed;
@@ -31,7 +31,7 @@ body {
 #text-message h1 {
     font-family: "Qwitcher Grypen", cursive;
     font-weight: bold;
-    color: #efc940;
+    color: #06c9d7;
     font-size: 80px;
     line-height: 1.2;
   }
@@ -48,14 +48,14 @@ h3{
     font-family: "Quicksand", sans-serif;
     font-weight: regular;
     font-size: 24px;
-    color: #ED4B4B;
+    color: #06c9d7;
 }
 
 h4{
     font-family: "Quicksand", sans-serif;
     font-weight: regular;
     font-size: 24px;
-    color: #1E1450;
+    color: #06c9d7;
 }
 
 p{
@@ -80,7 +80,7 @@ p{
 
 .tab input:focus{
 
-  border:1px solid #ED4B4B !important;
+  border:1px solid #06c9d7 !important;
   outline: none;
 }
 
@@ -94,7 +94,7 @@ input.invalid {
 }
 
 button {
-    background-color: #EFC940;
+    background-color: #06c9d7;
     color: #ffffff;
     border: none;
     border-radius: 50%;
@@ -143,7 +143,7 @@ button:focus{
     justify-content: center;
     align-items: center;
     font-size: 15px;
-    color: #ED4B4B;
+    color: #06c9d7;
     opacity: 0.5;
 }
 
@@ -172,24 +172,14 @@ button:focus{
 }
 
 .btn-secondary {
-    font-family: "Quicksand", sans-serif;
-    background-color: transparent;
-    border: 2px solid #FFD700; 
-    color: white; 
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 30px;
-    transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+    background: #06c9d7;
+    color: white !important;
+    border: none;
+    border-radius: 8px !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
-  .btn-secondary:hover {
-    background-color: #FFD700; 
-    color: #1E1E1E; 
-  }
-  
-  .btn-secondary:focus {
-    outline: none;
-  }
+
 
   #termsBody {
     max-height: 400px; /* Limita la altura máxima del contenido del modal */

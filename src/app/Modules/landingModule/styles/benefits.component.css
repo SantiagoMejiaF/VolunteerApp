@@ -23,33 +23,14 @@ h3 {
   p {
     font-family: "Quicksand", sans-serif;
     font-weight: regular;
-    font-size: 20px;
+    font-size: 18px;
     padding-top: 2%;
   }
 #benefits {
     background-image: url("/assets/img/benefitsB.svg");
+    background-size: cover;
   }
-  #t2 {
-    color: #fb9778;
-    font-family: "Quicksand", sans-serif;
-    font-weight: regular;
-    font-size: 30px;
-  }
-  .bi-search {
-    color: black; 
-  }
-  .carousel-item .col-4 {
-    padding: 10px;
-  }
-  
-  .carousel-item .item-content {
-    background-color: white;
-    border-radius: 20px;
-    margin-right: 10px;
-    padding: 40px; 
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+
 
   @media (max-width: 1210px) {
     /* Ajusta el comportamiento del Carousel para mostrar un elemento a la vez */
@@ -68,4 +49,77 @@ h3 {
     }
 
     /* Añade ajustes adicionales según sea necesario */
+}
+@media (max-width: 768px) {
+  .custom-section {
+    padding: 10px!important;;
+  }
+  .custom-card {
+    padding: 5px!important;
+    border-radius: 8px!important;
+    margin: 0px!important;
+    margin-bottom: 10px!important;
+  }
+  .custom-card img{
+    width: 200px!important;;
+  }
+  .icon-list li {
+    display: block;
+    margin-right: 40px; /* Cambia inline-block a block para alinear verticalmente */
+}
+h2{
+  font-size: 30px;
+}
+}
+
+
+.custom-section {
+  padding: 40px;
+}
+
+.custom-card {
+  background-color: #06c9d7;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 30px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Agrega sombra */
+  transition: box-shadow 0.3s ease; /* Transición suave para cambios */
+}
+
+.custom-card:hover {
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3); /* Sombra más intensa al hacer hover */
+}
+
+.custom-card img{
+  width: 300px;
+}
+
+
+.icon-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.icon-list li {
+  display: flex;
+  align-items: center;
+  flex: 0 1 30%; /* Ocupa un 30% del ancho para crear un diseño de varias columnas */
+  margin-bottom: 20px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.icon-list li i {
+  font-size: 2rem; /* Ajusta el tamaño de los íconos */
+  margin-right: 10px;
+  color: #29421C; /* Color verde oscuro similar */
+}
+.content-area {
+  margin-top: 40px;
+}
+
+.content-icon {
+  width: 40px;
 }
