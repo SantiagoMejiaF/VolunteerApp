@@ -6,7 +6,9 @@ import { Router } from '@angular/router';
   styleUrls: ['../styles/sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-  role: string = '';
+  userName: string = '';
+  userEmail: string = '';
+  userRole: string = '';
   isSidebarExpanded: boolean = false; // Controla la expansión del sidebar
   isMobileSidebarVisible: boolean = false; // Controla si el sidebar es visible en móvil
 
@@ -18,12 +20,17 @@ export class SidebarComponent implements OnInit {
     // Puedes agregar más notificaciones aquí
   ];
   ngOnInit(): void {
-    const roleStr = localStorage.getItem('role');
-    if (roleStr) {
-      this.role = roleStr;
-    }
+    this.loadUserInfo();
   }
-  constructor(private router: Router) {}
+
+  loadUserInfo(): void {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+    this.userName = `${userInfo.firstName} ${userInfo.lastName}`;
+    this.userEmail = userInfo.email;
+    this.userRole = localStorage.getItem('role') || '';
+  }
+
+  constructor(private router: Router) { }
   // Alternar expansión del sidebar
   toggleSidebar(): void {
     if (window.innerWidth <= 768) { // Si es móvil, mostrar u ocultar el sidebar móvil
@@ -33,13 +40,16 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-   closeSidebar(): void {
+  closeSidebar(): void {
     this.isMobileSidebarVisible = false; // Ocultar el sidebar móvil
     this.isSidebarExpanded = false; // También ocultar el sidebar en vista de escritorio
   }
+
   logout(): void {
     localStorage.clear();
+    this.router.navigate(['/']);
   }
+
   isMenuVisible: boolean = false;
   isMenu2Visible: boolean = false;
   // Método para el primer toggle
@@ -67,25 +77,25 @@ export class SidebarComponent implements OnInit {
   }
 
   goToProfile() {
-    if (this.role === 'ORGANIZACION') {
+    if (this.userRole === 'ORGANIZACION') {
       this.router.navigate(['/perfilO']);
-    } else if (this.role === 'VOLUNTARIO') {
+    } else if (this.userRole === 'VOLUNTARIO') {
       this.router.navigate(['/perfil']);
-    } else if (this.role === 'COORDINADOR') {
+    } else if (this.userRole === 'COORDINADOR') {
       this.router.navigate(['/perfilC']);
     } else {
       console.error('Rol no reconocido');
     }
   }
 
-   // Método que devuelve la clase CSS para los colores según la posición
-   getCircularClass(index: number): string {
-    const colors = ['red-bg', 'blue-bg', 'pink-bg','green-bg','yellow-bg'];  // Definimos los colores en orden
+  // Método que devuelve la clase CSS para los colores según la posición
+  getCircularClass(index: number): string {
+    const colors = ['red-bg', 'blue-bg', 'pink-bg', 'green-bg', 'yellow-bg'];  // Definimos los colores en orden
     return colors[index % colors.length]; // Se repite el ciclo de colores
   }
   getColorClass(index: number): string {
-    const colors = ['red-bg-icon', 'blue-bg-icon', 'pink-bg-icon','green-bg-icon','yellow-bg-icon'];  // Definimos los colores en orden
+    const colors = ['red-bg-icon', 'blue-bg-icon', 'pink-bg-icon', 'green-bg-icon', 'yellow-bg-icon'];  // Definimos los colores en orden
     return colors[index % colors.length]; // Se repite el ciclo de colores
   }
-  
+
 }

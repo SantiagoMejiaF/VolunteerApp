@@ -24,11 +24,12 @@ export class GestionUsuariosComponent implements OnInit {
       this.data = users;
       console.log('Usuarios pendientes obtenidos:', this.data);
       this.populateUserRoles();
-      this.initializeDataTable();
+      setTimeout(() => {
+        this.initializeDataTable(); // Inicializar el DataTable después de cargar los datos
+      }, 0); // Usar setTimeout para asegurarse de que los datos se hayan cargado completamente
     });
   }
 
-  // Obtener los roles de los usuarios y cargar detalles adicionales
   populateUserRoles(): void {
     this.data.forEach((user) => {
       user.rol = user.role.roleType; // Utilizar directamente el rol desde el objeto usuario
@@ -55,14 +56,14 @@ export class GestionUsuariosComponent implements OnInit {
       }
     });
   }
-  ngAfterViewInit(): void {
-    this.initializeDataTable();
-  }
-  // Inicializar DataTable
+
   initializeDataTable(): void {
+    // Verificar si el DataTable ya está inicializado y destruirlo si es necesario
     if ($.fn.dataTable.isDataTable('#datatableGestionUser')) {
       $('#datatableGestionUser').DataTable().destroy();
     }
+
+    // Inicializar el DataTable con un ligero retraso para asegurarse de que los datos se hayan renderizado
     setTimeout(() => {
       $('#datatableGestionUser').DataTable({
         pagingType: 'full_numbers',
@@ -79,8 +80,9 @@ export class GestionUsuariosComponent implements OnInit {
           zeroRecords: '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
         },
       });
-    }, 1);
+    }, 100); // Ajustar el tiempo de retraso si es necesario
   }
+
 
   openModal(user: any) {
     this.selectedUser = user; // Cargar los datos del usuario seleccionado en el modal

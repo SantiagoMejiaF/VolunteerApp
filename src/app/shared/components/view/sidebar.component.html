@@ -10,40 +10,40 @@
         </div>
         <ul class="sidebar-nav">
             <!-- Para SUPER_ADMIN  -->
-            <li class="sidebar-item" *ngIf="role === 'SUPER_ADMIN'">
+            <li class="sidebar-item" *ngIf="userRole === 'SUPER_ADMIN'">
                 <a [routerLink]="'/dashAdmin'" class="sidebar-link" routerLinkActive="active">
                     <strong><i class="bi bi-columns-gap" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Tablero de Control</span>
                 </a>
             </li>
-            <!--*ngIf="role === 'SUPER_ADMIN'" -->
-            <li class="sidebar-item" *ngIf="role === 'SUPER_ADMIN'">
+            <!--*ngIf="userRole === 'SUPER_ADMIN'" -->
+            <li class="sidebar-item" *ngIf="userRole === 'SUPER_ADMIN'">
                 <a [routerLink]="'/gestion-users'" class="sidebar-link" routerLinkActive="active">
                     <i class="bi bi-clipboard2-heart" style="font-size: 1.2rem; color: #292C32;"></i>
                     <span>Gestión Usuarios</span>
                 </a>
             </li>
 
-            <!-- Para VOLUNTARIO *ngIf="role === 'VOLUNTARIO'"-->
-            <li class="sidebar-item" *ngIf="role === 'VOLUNTARIO'">
+            <!-- Para VOLUNTARIO *ngIf="userRole === 'VOLUNTARIO'"-->
+            <li class="sidebar-item" *ngIf="userRole === 'VOLUNTARIO'">
                 <a [routerLink]="'/homeV'" class="sidebar-link" title="Inicio" routerLinkActive="active">
                     <i class="bi bi-house" style="font-size: 1.3rem; color: #292C32;"></i>
                     <span>Inicio</span>
                 </a>
             </li>
-            <li class="sidebar-item" *ngIf="role === 'VOLUNTARIO'">
+            <li class="sidebar-item" *ngIf="userRole === 'VOLUNTARIO'">
                 <a [routerLink]="'/dashVolunteer'" class="sidebar-link" routerLinkActive="active">
                     <strong><i class="bi bi-columns-gap" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Tablero de Control</span>
                 </a>
             </li>
-            <li class="sidebar-item" *ngIf="role === 'VOLUNTARIO'">
+            <li class="sidebar-item" *ngIf="userRole === 'VOLUNTARIO'">
                 <a [routerLink]="'/misF'" class="sidebar-link" title="Tablero de Control" routerLinkActive="active">
                     <strong><i class="bi bi-diagram-3" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Mis fundaciones</span>
                 </a>
             </li>
-            <li class="sidebar-item" *ngIf="role === 'VOLUNTARIO'">
+            <li class="sidebar-item" *ngIf="userRole === 'VOLUNTARIO'">
                 <a [routerLink]="'/misA'" class="sidebar-link" title="Tablero de Control" routerLinkActive="active">
                     <strong><i class="bi bi-calendar" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Mis Actividades</span>
@@ -51,36 +51,36 @@
             </li>
 
 
-            <!-- Para ORGANIZACION *ngIf="role === 'ORGANIZACION'"-->
+            <!-- Para ORGANIZACION *ngIf="userRole === 'ORGANIZACION'"-->
 
-            <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
+            <li class="sidebar-item" *ngIf="userRole === 'ORGANIZACION'">
                 <a [routerLink]="'/dashOrganization'" class="sidebar-link" title="Tablero de Control"
                     routerLinkActive="active">
                     <strong><i class="bi bi-columns-gap" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Tablero de Control</span>
                 </a>
             </li>
-            <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
+            <li class="sidebar-item" *ngIf="userRole === 'ORGANIZACION'">
                 <a [routerLink]="'/verCoordinador'" class="sidebar-link" title="Coordinadores"
                     routerLinkActive="active">
                     <strong><i class="bi bi-people" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Coordinadores</span>
                 </a>
             </li>
-            <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
+            <li class="sidebar-item" *ngIf="userRole === 'ORGANIZACION'">
                 <a [routerLink]="'/verVoluntarios'" class="sidebar-link" title="Voluntarios" routerLinkActive="active">
                     <strong><i class="bi bi-person-hearts" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Voluntarios</span>
                 </a>
             </li>
-            <li class="sidebar-item" *ngIf="role === 'ORGANIZACION'">
+            <li class="sidebar-item" *ngIf="userRole === 'ORGANIZACION'">
                 <a [routerLink]="'/misiones'" class="sidebar-link" title="Misiones" routerLinkActive="active">
                     <strong><i class="bi bi-calendar" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Misiones</span>
                 </a>
             </li>
 
-            <!-- Para COORDINADOR *ngIf="role === 'COORDINADOR'"-->
+            <!-- Para COORDINADOR *ngIf="userRole === 'COORDINADOR'"-->
             <li class="sidebar-item">
                 <a [routerLink]="'/misAC'" class="sidebar-link" title="Misiones" routerLinkActive="active">
                     <strong><i class="bi bi-calendar" style="font-size: 1.2rem; color: #292C32;"></i></strong>
@@ -131,10 +131,10 @@
                         <div class="user-profile-header">
                             <img src="assets/img/user3.png" alt="User" class="user2-img">
                             <div class="user-info">
-                                <h3>Mathew Anderson</h3>
-                                <p>Voluntario</p>
-                                <a href="mailto:info@Flexy.com" class="user-email">
-                                    <i class="bi bi-envelope"></i> mathehgmail.com
+                                <h3>{{ userName }}</h3>
+                                <p>{{ userRole }}</p>
+                                <a href="mailto:{{ userEmail }}" class="user-email">
+                                    <i class="bi bi-envelope"></i> {{ userEmail }}
                                 </a>
                             </div>
                         </div>
