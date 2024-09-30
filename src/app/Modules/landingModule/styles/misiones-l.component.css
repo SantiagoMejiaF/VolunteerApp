@@ -7,7 +7,7 @@ h3 {
   h4 {
     font-family: "Quicksand", sans-serif;
     font-weight: bold;
-    color: #EFC940;
+    color: #fb9778;
   }
   h5 {
     font-family: "Quicksand", sans-serif;
@@ -23,7 +23,7 @@ h3 {
   p {
     font-family: "Quicksand", sans-serif;
     font-weight: regular;
-    font-size: 20px;
+    font-size: 14px;
     padding-top: 2%;
   }
 
@@ -68,4 +68,65 @@ h3 {
 
 .btn-secondary:focus {
     outline: none;
+}
+
+
+/*START:CARD*/
+.card p{
+  font-size: 14px;
+  color: black;
+}
+.custom-img {
+  height: 150px; 
+  object-fit: cover; 
+  width: 100%; 
+}
+.custom-card {
+  border-radius: 10px; 
+  overflow: hidden; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.custom-card:hover {
+  transform: translateY(-5px); 
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); 
+}
+
+.custom-gradient {
+  height: 150px;
+  width: 100%;
+  background: linear-gradient(90deg, #68c6b4, #00657a, #00657a);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-body {
+  padding: 20px; 
+  text-align: left; 
+}
+
+.card-title {
+  font-size: 1.5rem; 
+  font-weight: bold;
+  color: #1E1450; 
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #555; 
+  margin-bottom: 15px;
+}
+
+.btn-outline-primary {
+  background: #fb9778;
+  color: white !important;
+  border: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.btn-outline-primary1{
+  background: #06c9d7;
+  color: white !important;
+  border: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

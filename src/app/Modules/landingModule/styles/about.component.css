@@ -42,9 +42,9 @@ h3 {
   }
   #text2 {
     background-image: url("/assets/img/Mapa.png");
-    background-size: 70%; 
+    background-size: 90%; 
     background-repeat: no-repeat; 
-    background-position: right top; 
+    background-position: right; 
   }
   #about-us button {
     margin-left: 4%;

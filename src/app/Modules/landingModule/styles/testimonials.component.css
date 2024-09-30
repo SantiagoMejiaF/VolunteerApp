@@ -38,7 +38,8 @@ p {
 }
 
 #testimonials .container {
-  background-color: black;
+  background-color:#fffdf9;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); 
   padding: 20px; /* Ajuste del padding general */
   border-radius: 20px;
   margin: auto; /* Ajuste para centrar el contenedor */
@@ -48,7 +49,7 @@ p {
 #testimonials h5,
 #testimonials h3,
 #testimonials p {
-  color: white;
+  color: black;
 }
 
 /* Media queries para pantallas pequeñas */
