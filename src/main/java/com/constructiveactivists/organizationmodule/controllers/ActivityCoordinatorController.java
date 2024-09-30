@@ -37,13 +37,7 @@ public class ActivityCoordinatorController implements ActivityCoordinatorAPI {
 
     @Override
     public ResponseEntity<ActivityCoordinatorEntity> createActivityCoordinator(@Valid @RequestBody ActivityCoordinatorRequest request) {
-        UserEntity user = new UserEntity();
-        user.setFirstName(request.getNameActivityCoordinator());
-        user.setLastName(request.getLastNameActivityCoordinator());
-        user.setEmail(request.getEmailActivityCoordinator());
-        user.setImage(request.getImage());
-
-        ActivityCoordinatorEntity createdCoordinator = activityCoordinatorService.save(activityCoordinatorMapper.toDomain(request), user);
+        ActivityCoordinatorEntity createdCoordinator = activityCoordinatorService.save(activityCoordinatorMapper.toDomain(request), request.getUserId());
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCoordinator);
     }
 

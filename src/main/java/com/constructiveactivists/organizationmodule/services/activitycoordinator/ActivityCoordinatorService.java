@@ -1,5 +1,6 @@
 package com.constructiveactivists.organizationmodule.services.activitycoordinator;
 
+import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.CoordinatorAvailabilityModel;
@@ -7,13 +8,9 @@ import com.constructiveactivists.organizationmodule.repositories.ActivityCoordin
 import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.organizationmodule.services.organization.OrganizationService;
-import com.constructiveactivists.usermodule.entities.RoleEntity;
-import com.constructiveactivists.usermodule.entities.UserEntity;
-import com.constructiveactivists.usermodule.entities.enums.AuthorizationStatus;
-import com.constructiveactivists.usermodule.entities.enums.RoleType;
-import com.constructiveactivists.usermodule.repositories.RoleRepository;
 import com.constructiveactivists.usermodule.services.UserService;
 import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +18,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.USER_NOT_FOUND;
 
 @AllArgsConstructor
 @Service
@@ -30,32 +29,25 @@ public class ActivityCoordinatorService {
     private final UserService userService;
     private final ActivityService activityService;
     private final OrganizationService organizationService;
-    private final RoleRepository roleRepository;
 
-    public ActivityCoordinatorEntity save(ActivityCoordinatorEntity activityCoordinator, UserEntity user) {
-        Optional<UserEntity> existingUserOpt = userService.findByEmail(user.getEmail());
-        if (existingUserOpt.isPresent()) {
-            throw new EntityExistsException("El correo electrónico " + user.getEmail() + " ya está registrado.");
+    public ActivityCoordinatorEntity save(ActivityCoordinatorEntity activityCoordinator, Integer userId) {
+        if (!userService.getUserById(userId).isPresent()) {
+            throw new EntityNotFoundException(USER_NOT_FOUND);
         }
-        Optional<OrganizationEntity> organization = organizationService.getOrganizationById(activityCoordinator.getOrganizationId());
-        if (organization.isEmpty()) {
-            throw new EntityExistsException("La organización con id " + activityCoordinator.getOrganizationId() + " no existe.");
+        Optional<OrganizationEntity> organizationOpt = organizationService.getOrganizationById(activityCoordinator.getOrganizationId());
+        if (organizationOpt.isEmpty()) {
+            throw new BusinessException("La organización con ID " + activityCoordinator.getOrganizationId() + " no existe.");
         }
-        UserEntity newUser = configureNewUser(user);
-        userService.saveUser(newUser);
-        activityCoordinator.setUserId(newUser.getId());
+        OrganizationEntity organization = organizationOpt.get();
+        if (organization == null) {
+            throw new IllegalStateException("La organización no puede ser null");
+        }
+        activityCoordinator.setUserId(userId);
         return activityCoordinatorRepository.save(activityCoordinator);
     }
 
-    private UserEntity configureNewUser(UserEntity user) {
-        RoleEntity role = new RoleEntity();
-        role.setRoleType(RoleType.COORDINADOR_ACTIVIDAD);
-        role = roleRepository.save(role);
-        user.setRole(role);
-        user.setAuthorizationType(AuthorizationStatus.AUTORIZADO);
-        user.setRegistrationDate(LocalDate.now());
-        return user;
-    }
+
+
 
     public Optional<ActivityCoordinatorEntity> getById(Integer id){
      return activityCoordinatorRepository.findById(id);

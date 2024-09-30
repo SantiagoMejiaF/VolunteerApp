@@ -4,6 +4,7 @@ import com.constructiveactivists.externalservicesmodule.controllers.request.Auth
 import com.constructiveactivists.externalservicesmodule.controllers.response.AuthenticationResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,4 +23,14 @@ public interface AuthenticationAPI {
     })
     @PostMapping("/google")
     ResponseEntity<AuthenticationResponse> authenticationByGoogle(@RequestBody AuthenticationRequest tokenDto);
+
+    @Operation(summary = "Registrarse con Google como coordinador",
+            description = "Permite a los usuarios registrarse o iniciar sesión en la aplicación utilizando su cuenta de Google como coordinador.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Token de Google válido"),
+            @ApiResponse(responseCode = "400", description = "Token de Google inválido"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
+    @PostMapping("/google-coordinator")
+    ResponseEntity<AuthenticationResponse> authenticationByGoogleCoordinator(@Valid AuthenticationRequest authenticationRequest);
 }
