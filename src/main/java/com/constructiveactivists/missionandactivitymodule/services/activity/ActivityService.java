@@ -9,7 +9,6 @@ import com.constructiveactivists.missionandactivitymodule.services.volunteergrou
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.organizationmodule.repositories.ActivityCoordinatorRepository;
 import com.constructiveactivists.missionandactivitymodule.repositories.ActivityRepository;
-import com.constructiveactivists.missionandactivitymodule.services.mission.MissionService;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;

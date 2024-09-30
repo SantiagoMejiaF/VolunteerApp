@@ -6,7 +6,6 @@ import com.constructiveactivists.missionandactivitymodule.entities.activity.Revi
 import com.constructiveactivists.missionandactivitymodule.mappers.activity.ReviewMapper;
 import com.constructiveactivists.missionandactivitymodule.services.activity.ReviewService;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

@@ -4,7 +4,6 @@ import com.constructiveactivists.externalservicesmodule.controllers.request.Auth
 import com.constructiveactivists.externalservicesmodule.controllers.response.AuthenticationResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,5 +31,5 @@ public interface AuthenticationAPI {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @PostMapping("/google-coordinator")
-    ResponseEntity<AuthenticationResponse> authenticationByGoogleCoordinator(@Valid AuthenticationRequest authenticationRequest);
+    ResponseEntity<AuthenticationResponse> authenticationByGoogleCoordinator(@RequestBody AuthenticationRequest authenticationRequest);
 }

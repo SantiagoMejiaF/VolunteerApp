@@ -7,7 +7,6 @@ import com.constructiveactivists.organizationmodule.entities.activitycoordinator
 import com.constructiveactivists.organizationmodule.mappers.activitycoordinator.ActivityCoordinatorMapper;
 import com.constructiveactivists.organizationmodule.mappers.activitycoordinator.CoordinatorAvailabilityMapper;
 import com.constructiveactivists.organizationmodule.services.activitycoordinator.ActivityCoordinatorService;
-import com.constructiveactivists.usermodule.entities.UserEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
