@@ -83,7 +83,11 @@ public class AuthenticationService {
                 .orElseThrow(() -> new IllegalArgumentException("Rol no encontrado para el roleId proporcionado: " + roleId));
         UserEntity user = new UserEntity();
         user.setRole(role);
-        user.setAuthorizationType(AuthorizationStatus.PENDIENTE);
+        if (role.getRoleType() == RoleType.COORDINADOR_ACTIVIDAD) {
+            user.setAuthorizationType(AuthorizationStatus.AUTORIZADO);
+        } else {
+            user.setAuthorizationType(AuthorizationStatus.PENDIENTE);
+        }
         user.setFirstName((String) userInfo.get("given_name"));
         user.setLastName((String) userInfo.get("family_name"));
         user.setEmail((String) userInfo.get(CORREO));
@@ -91,5 +95,6 @@ public class AuthenticationService {
         user.setRegistrationDate(java.time.LocalDate.now());
         return user;
     }
+
 }
 
