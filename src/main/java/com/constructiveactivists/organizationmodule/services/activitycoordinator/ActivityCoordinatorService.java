@@ -8,6 +8,9 @@ import com.constructiveactivists.organizationmodule.repositories.ActivityCoordin
 import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.organizationmodule.services.organization.OrganizationService;
+import com.constructiveactivists.usermodule.entities.UserEntity;
+import com.constructiveactivists.usermodule.entities.enums.AuthorizationStatus;
+import com.constructiveactivists.usermodule.entities.enums.RoleType;
 import com.constructiveactivists.usermodule.services.UserService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,23 +27,22 @@ import static com.constructiveactivists.configurationmodule.constants.AppConstan
 @AllArgsConstructor
 @Service
 public class ActivityCoordinatorService {
-
+    private static final RoleType COORDINATOR_ROLE = RoleType.COORDINADOR_ACTIVIDAD;
     private final ActivityCoordinatorRepository activityCoordinatorRepository;
     private final UserService userService;
     private final ActivityService activityService;
     private final OrganizationService organizationService;
 
+
     public ActivityCoordinatorEntity save(ActivityCoordinatorEntity activityCoordinator, Integer userId) {
-        if (!userService.getUserById(userId).isPresent()) {
-            throw new EntityNotFoundException(USER_NOT_FOUND);
-        }
+        UserEntity user = userService.getUserById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND));
+        user.getRole().setRoleType(COORDINATOR_ROLE);
+        user.setAuthorizationType(AuthorizationStatus.AUTORIZADO);
+        userService.saveUser(user);
         Optional<OrganizationEntity> organizationOpt = organizationService.getOrganizationById(activityCoordinator.getOrganizationId());
-        if (organizationOpt.isEmpty()) {
+        if (organizationOpt.isEmpty() || organizationOpt.get() == null) {
             throw new BusinessException("La organización con ID " + activityCoordinator.getOrganizationId() + " no existe.");
-        }
-        OrganizationEntity organization = organizationOpt.get();
-        if (organization == null) {
-            throw new IllegalStateException("La organización no puede ser null");
         }
         activityCoordinator.setUserId(userId);
         return activityCoordinatorRepository.save(activityCoordinator);
