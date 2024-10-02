@@ -29,13 +29,4 @@ public class AuthenticationController implements AuthenticationAPI {
         AuthenticationResponse response = authenticationService.authenticationByGoogle(authenticationMapper.toDomain(authenticationRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-    @SneakyThrows
-    @Override
-    public ResponseEntity<AuthenticationResponse> authenticationByGoogleCoordinator(@Valid AuthenticationRequest authenticationRequest) {
-            AuthenticationResponse response = authenticationService.authenticationByGoogleCoordinador(authenticationMapper.toDomain(authenticationRequest));
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-}
-
-
-
 }

@@ -22,14 +22,4 @@ public interface AuthenticationAPI {
     })
     @PostMapping("/google")
     ResponseEntity<AuthenticationResponse> authenticationByGoogle(@RequestBody AuthenticationRequest tokenDto);
-
-    @Operation(summary = "Registrarse con Google como coordinador",
-            description = "Permite a los usuarios registrarse o iniciar sesión en la aplicación utilizando su cuenta de Google como coordinador.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Token de Google válido"),
-            @ApiResponse(responseCode = "400", description = "Token de Google inválido"),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
-    })
-    @PostMapping("/google-coordinator")
-    ResponseEntity<AuthenticationResponse> authenticationByGoogleCoordinator(@RequestBody AuthenticationRequest authenticationRequest);
 }
