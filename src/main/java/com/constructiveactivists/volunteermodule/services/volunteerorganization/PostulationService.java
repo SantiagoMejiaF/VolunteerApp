@@ -40,8 +40,18 @@ public class PostulationService {
     public void updateStatusAccept(Integer volunteerOrganizationId) {
         PostulationEntity postulation = postulationRepository.findById(volunteerOrganizationId)
                 .orElseThrow(() -> new EntityNotFoundException(POSTULATION_NOT_FOUND + volunteerOrganizationId));
-        postulation.setRegistrationDate(LocalDate.now());
+        ZonedDateTime bogotaDateTime = ZonedDateTime.now(ZoneId.of(ZONE_PLACE));
+        postulation.setRegistrationDate(bogotaDateTime.toLocalDate());
         postulation.setStatus(OrganizationStatusEnum.ACEPTADO);
+        postulationRepository.save(postulation);
+    }
+
+    public void updateStatusRefuse(Integer volunteerOrganizationId) {
+        PostulationEntity postulation = postulationRepository.findById(volunteerOrganizationId)
+                .orElseThrow(() -> new EntityNotFoundException(POSTULATION_NOT_FOUND + volunteerOrganizationId));
+        ZonedDateTime bogotaDateTime = ZonedDateTime.now(ZoneId.of(ZONE_PLACE));
+        postulation.setRegistrationDate(bogotaDateTime.toLocalDate());
+        postulation.setStatus(OrganizationStatusEnum.RECHAZADO);
         postulationRepository.save(postulation);
     }
 
@@ -54,6 +64,27 @@ public class PostulationService {
             return Collections.emptyList();
         }
         return postulationRepository.findByStatusAndVolunteerOrganizationIdIn(OrganizationStatusEnum.PENDIENTE, volunteerOrganizationIds);
+    }
+
+    public List<PostulationEntity> getAcceptedPostulationsByOrganizationId(Integer organizationId) {
+        List<VolunteerOrganizationEntity> volunteerOrganizations = volunteerOrganizationRepository.findByOrganizationId(organizationId);
+        List<Integer> volunteerOrganizationIds = volunteerOrganizations.stream()
+                .map(VolunteerOrganizationEntity::getId)
+                .toList();
+        if (volunteerOrganizationIds.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return postulationRepository.findByStatusAndVolunteerOrganizationIdIn(OrganizationStatusEnum.ACEPTADO, volunteerOrganizationIds);
+    }
+    public List<PostulationEntity> getRefusedPostulationsByOrganizationId(Integer organizationId) {
+        List<VolunteerOrganizationEntity> volunteerOrganizations = volunteerOrganizationRepository.findByOrganizationId(organizationId);
+        List<Integer> volunteerOrganizationIds = volunteerOrganizations.stream()
+                .map(VolunteerOrganizationEntity::getId)
+                .toList();
+        if (volunteerOrganizationIds.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return postulationRepository.findByStatusAndVolunteerOrganizationIdIn(OrganizationStatusEnum.RECHAZADO, volunteerOrganizationIds);
     }
 
     public PostulationEntity findById(Integer volunteerOrganizationId) {
