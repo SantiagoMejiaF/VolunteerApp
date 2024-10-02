@@ -18,6 +18,10 @@ export class OauthService {
     return this.httpClient.post<any>(`${environment.apiUrl}/authentications/google`, tokenDto, cabecera);
   }
 
+  public googleC(tokenDto: TokenDto): Observable<any> {
+    return this.httpClient.post<any>(`${environment.apiUrl}/authentications/google-coordinator`, tokenDto, cabecera);
+  }
+
   public facebook(tokenDto: TokenDto): Observable<any> {
     return this.httpClient.post<any>(`${environment.apiUrl}/authentications/facebook`, tokenDto, cabecera);
   }

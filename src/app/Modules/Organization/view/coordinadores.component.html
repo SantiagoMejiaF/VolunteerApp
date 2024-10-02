@@ -13,12 +13,12 @@
                 <table class="table table-sm" id="datatableCoordinadores">
                     <thead>
                         <tr>
-                            <th class="text-left">#</th>
-                            <th class="text-left">Perfil</th>
-                            <th class="text-left">Nombre</th>
-                            <th class="text-left">Email</th>
-                            <th class="text-left">Cédula</th>
-                            <th class="text-left">Acción</th>
+                            <th style="width: 5%;" class="text-left">#</th>
+                            <th style="width: 8%;" class="text-left">Perfil</th>
+                            <th style="width: 30%;" class="text-left">Nombre</th>
+                            <th style="width: 30%;" class="text-left">Email</th>
+                            <th style="width: 12%;" class="text-left">Cédula</th>
+                            <th style="width: 5%;" class="text-left">Acción</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,7 +35,7 @@
                                 {{ user.firstName }} {{ user.lastName }}
                             </td>
                             <td class="align-middle">{{ user.email }}</td>
-                            <td class="align-middle">{{ user.identificationCard }}</td>
+                            <td class="align-middle text-left">{{ user.identificationCard }}</td>
                             <td class="align-middle">
                                 <a [routerLink]="['/verPerfilC']" style="border: none; background: none;">
                                     <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
@@ -110,7 +110,8 @@
                         <label for="celular" class="form-label">Número de Celular</label>
                         <input type="text" class="form-control" id="celular" placeholder="Ingrese su número de celular">
                     </div>
-                    <button type="button" class="btn customBtn" style="width: 100%; background: #06c9d7;">Crear</button>
+                    <button type="button" class="btn customBtn" style="width: 100%; background: #06c9d7;"
+                        (click)="createCoordinator()">Crear</button>
                 </div>
             </div>
         </div>

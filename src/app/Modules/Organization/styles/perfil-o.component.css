@@ -15,27 +15,39 @@ textarea {
   font-family: "Quicksand", sans-serif;
 }
 
-h2  {
+h2 {
   font-weight: 600;
   font-size: 20px;
 }
-a{
-    font-weight: 400;
-    font-size: 16px;
-  }
+
+#misionimg {
+  width: 135px;
+  height: 135px;
+  border-radius: 50%;
+
+}
+
+a {
+  font-weight: 400;
+  font-size: 16px;
+}
+
 p {
   font-weight: 400;
   font-size: 14px;
 }
+
 h4 {
   font-weight: 500;
   font-size: 18px;
   color: #949494;
 }
-h6{
-    font-weight: 700;
-    font-size: 15px;
+
+h6 {
+  font-weight: 700;
+  font-size: 15px;
 }
+
 .column1 img {
   width: 120px;
   height: auto !important;
@@ -43,10 +55,14 @@ h6{
 
 .column1,
 .column2 {
-  background-color: white; /* Fondo blanco */
-  border-radius: 20px; /* Bordes redondeados */
-  padding: 20px; /* Espaciado interno */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  background-color: white;
+  /* Fondo blanco */
+  border-radius: 20px;
+  /* Bordes redondeados */
+  padding: 20px;
+  /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Sombra para darle profundidad */
   margin-bottom: 20px;
 }
 
@@ -62,7 +78,8 @@ h6{
 }
 
 /* Cuando el enlace está activo, cambia el color */
-.nav-link.active-link, .nav-link.active-link i {
+.nav-link.active-link,
+.nav-link.active-link i {
   color: #fb9778;
 }
 
@@ -80,12 +97,12 @@ h6{
 
 
 @media (max-width: 768px) {
- 
+
   .nav-text {
     display: none;
   }
 
- 
+
   .nav-link.active-link .nav-text {
     display: inline-block;
   }
@@ -95,80 +112,92 @@ h6{
 .nav-text {
   transition: opacity 0.3s ease;
 }
+
 /* End: Estilo para los enlaces de navegación */
 
 p {
-    font-family: "Quicksand", sans-serif;
-    font-weight: regular;
-    font-size: 20px;
-    color: #ffffff;
+  font-family: "Quicksand", sans-serif;
+  font-weight: regular;
+  font-size: 20px;
+  color: #ffffff;
 }
-.datos h6{
-    color: #b7c0c7;
-    font-weight: 500;
+
+.datos h6 {
+  color: #b7c0c7;
+  font-weight: 500;
 }
-.datos p{
-    color: #000;
-    font-size: 14px;
+
+.datos p {
+  color: #000;
+  font-size: 14px;
 }
 
 #nor {
-    padding: 10px;
-    width: 100%;
-    font-size: 17px;
-    font-family: "Quicksand", sans-serif;
-    border: 1px solid #c6c6c6;
-    border-radius: 10px;
-    -webkit-appearance: none;
-    transition: border-color 0.3s ease; /* Añade una transición suave */
+  padding: 10px;
+  width: 100%;
+  font-size: 17px;
+  font-family: "Quicksand", sans-serif;
+  border: 1px solid #c6c6c6;
+  border-radius: 10px;
+  -webkit-appearance: none;
+  transition: border-color 0.3s ease;
+  /* Añade una transición suave */
 }
 
 #nor:focus {
-    border-color: #186dde; 
-    outline: none; 
+  border-color: #186dde;
+  outline: none;
 }
 
 ng-multiselect-dropdown {
-    width: 100%;
-    font-size: 17px;
-    font-family: "Quicksand", sans-serif;
-    display: block;
+  width: 100%;
+  font-size: 17px;
+  font-family: "Quicksand", sans-serif;
+  display: block;
 }
 
 .btn-secondary {
-    background-color:#fb9778;
-    border: 2px; 
-    padding: 8px 15px;
-    color: white;
-    font-size: 14px;
-    border-radius: 4px;
-    transition: background-color 0.1s, color 0.3s, border-color 0.3s;
-    margin-top: 10px;
-    margin-left: 12px;
-    font-weight: 500;
-  }
-  
- 
-  
-  .award-container {
-    display: flex; /* Alinea los elementos en una fila */
-    align-items: center; /* Alinea verticalmente los elementos en el centro */
-    justify-content: center; /* Centra los elementos horizontalmente */
-    gap: 8px; /* Espacio entre el ícono y el número */
-    margin-top: 10px; /* Espacio encima del contenedor, ajusta según sea necesario */
-    transition: color 0.3s ease; /* Suaviza el cambio de color del texto e ícono */
+  background-color: #fb9778;
+  border: 2px;
+  padding: 8px 15px;
+  color: white;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+  margin-top: 10px;
+  margin-left: 12px;
+  font-weight: 500;
+}
+
+
+
+.award-container {
+  display: flex;
+  /* Alinea los elementos en una fila */
+  align-items: center;
+  /* Alinea verticalmente los elementos en el centro */
+  justify-content: center;
+  /* Centra los elementos horizontalmente */
+  gap: 8px;
+  /* Espacio entre el ícono y el número */
+  margin-top: 10px;
+  /* Espacio encima del contenedor, ajusta según sea necesario */
+  transition: color 0.3s ease;
+  /* Suaviza el cambio de color del texto e ícono */
 }
 
 .award-container:hover {
-    color: blue; /* Cambia el color del texto e ícono al pasar el mouse */
+  color: blue;
+  /* Cambia el color del texto e ícono al pasar el mouse */
 }
 
 .award-container i {
-    font-size: 24px; /* Tamaño del ícono */
+  font-size: 24px;
+  /* Tamaño del ícono */
 }
 
 .award-container h4 {
-    margin: 0; 
+  margin: 0;
 }
 
 
@@ -200,21 +229,25 @@ ng-multiselect-dropdown {
 .how-it-works.row .col-2 {
   align-self: stretch;
 }
+
 .how-it-works.row .col-2::after {
   content: "";
   position: absolute;
   border-left: 3px solid #06c9d7;
   z-index: 1;
 }
+
 .how-it-works.row .col-2.bottom::after {
   height: 50%;
   left: 50%;
   top: 50%;
 }
+
 .how-it-works.row .col-2.full::after {
   height: 100%;
   left: calc(50% - 3px);
 }
+
 .how-it-works.row .col-2.top::after {
   height: 50%;
   left: 50%;
@@ -226,46 +259,56 @@ ng-multiselect-dropdown {
   padding: 0;
   height: 40px;
 }
+
 .timeline hr {
   border-top: 3px solid #06c9d7;
   margin: 0;
   top: 17px;
   position: relative;
 }
+
 .timeline .col-2 {
   display: flex;
   overflow: hidden;
 }
+
 .timeline .corner {
   border: 3px solid #06c9d7;
   width: 100%;
   position: relative;
   border-radius: 15px;
 }
+
 .timeline .top-right {
   left: 50%;
   top: -50%;
 }
+
 .timeline .left-bottom {
   left: -50%;
   top: calc(50% - 3px);
 }
+
 .timeline .top-left {
   left: -50%;
   top: -50%;
 }
+
 .timeline .right-bottom {
   left: 50%;
   top: calc(50% - 3px);
 }
 
-#lindo h5,#lindo p {
+#lindo h5,
+#lindo p {
   color: black;
 }
-#lindo h5{
+
+#lindo h5 {
   font-size: 18px;
 }
-#lindo p{
+
+#lindo p {
   font-size: 14px;
 }
 

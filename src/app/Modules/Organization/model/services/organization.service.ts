@@ -54,4 +54,8 @@ export class OrganizationService {
     return this.http.get<any>(`${this.apiUrl}/users/${userId}`);
   }
 
+  createActivityCoordinator(coordinatorData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/activity-coordinators`, coordinatorData, cabecera);
+  }
+
 }

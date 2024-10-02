@@ -3,6 +3,7 @@ import { OrganizationService } from '../../Organization/model/services/organizat
 import { OauthService } from '../../authenticationModule/model/services/oauth.service';
 import { TokenDto } from '../../authenticationModule/model/token-dto';
 import { forkJoin } from 'rxjs';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-coordinadores',
@@ -42,6 +43,7 @@ export class CoordinadoresComponent implements OnInit {
                   image: userDetails[index].image
                 };
               });
+              this.initializeDataTable();
             },
             (error) => {
               console.error('Error loading user details:', error);
@@ -65,11 +67,16 @@ export class CoordinadoresComponent implements OnInit {
           callback: (response: any) => {
             if (response && response.access_token) {
               const tokenGoogle = new TokenDto(response.access_token);
-              console.log('Google Access Token:', response.access_token);
-              this.oauthService.google(tokenGoogle).subscribe(
+              this.oauthService.googleC(tokenGoogle).subscribe(
                 (res) => {
-                  console.log('Response from backend (Google):', res);
+                  const user = res.user;
+                  console.log('User from backend (Google):', user);
+
+                  // Ocultar botones sociales y mostrar formulario
                   this.showSocialButtons = false;
+
+                  // Guardar el userId para crear el coordinador más tarde
+                  localStorage.setItem('GoogleUserId', user.id.toString());
                 },
                 (err) => {
                   console.error('Error during Google sign in:', err);
@@ -80,6 +87,42 @@ export class CoordinadoresComponent implements OnInit {
         }).requestAccessToken();
       }
     }, 100);
+  }
+
+  createCoordinator(): void {
+    const orgId = localStorage.getItem('OrgId');
+    const userId = localStorage.getItem('GoogleUserId');
+    const identificationCard = (document.getElementById('cedula') as HTMLInputElement).value;
+    const phoneActivityCoordinator = (document.getElementById('celular') as HTMLInputElement).value;
+
+    if (orgId && userId && identificationCard && phoneActivityCoordinator) {
+      const coordinatorData = {
+        organizationId: orgId,
+        userId: +userId,
+        identificationCard: identificationCard,
+        phoneActivityCoordinator: phoneActivityCoordinator
+      };
+
+      this.organizationService.createActivityCoordinator(coordinatorData).subscribe(
+        (response) => {
+          console.log('Coordinator created:', response);
+          alert('Coordinador creado exitosamente.');
+
+          // Ocultar el modal usando Bootstrap
+          const modalElement = document.getElementById('VolunteerModal');
+          if (modalElement) {
+            const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+            modalInstance.hide();
+          }
+        },
+        (error) => {
+          console.error('Error creating coordinator:', error);
+          alert('Hubo un error al crear el coordinador.');
+        }
+      );
+    } else {
+      alert('Por favor complete todos los campos.');
+    }
   }
 
   initializeDataTable(): void {
