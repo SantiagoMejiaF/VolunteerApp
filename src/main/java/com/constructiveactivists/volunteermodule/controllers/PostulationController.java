@@ -23,4 +23,23 @@ public class PostulationController implements PostulationAPI {
         List<PostulationEntity> pendingPostulations = postulationService.getPendingPostulationsByOrganizationId(organizationId);
         return ResponseEntity.ok(pendingPostulations);
     }
+
+    @Override
+    public ResponseEntity<List<PostulationEntity>> getAcceptedPostulationsByOrganizationId(@PathVariable Integer organizationId) {
+        List<PostulationEntity> pendingPostulations = postulationService.getAcceptedPostulationsByOrganizationId(organizationId);
+        return ResponseEntity.ok(pendingPostulations);
+    }
+
+    @Override
+    public ResponseEntity<List<PostulationEntity>> getRefusedPostulationsByOrganizationId(@PathVariable Integer organizationId) {
+        List<PostulationEntity> pendingPostulations = postulationService.getRefusedPostulationsByOrganizationId(organizationId);
+        return ResponseEntity.ok(pendingPostulations);
+    }
+
+    @Override
+    public ResponseEntity<PostulationEntity> getPostulationById(@PathVariable Integer volunteerOrganizationId) {
+        PostulationEntity postulation = postulationService.findById(volunteerOrganizationId);
+        return ResponseEntity.ok(postulation);
+    }
+
 }

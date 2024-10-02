@@ -91,4 +91,8 @@ public class OrganizationService {
     public void approveVolunteer(Integer volunteerOrganizationId) {
         postulationService.updateStatusAccept(volunteerOrganizationId);
     }
+
+    public void rejectVolunteer(Integer volunteerOrganizationId) {
+        postulationService.updateStatusRefuse(volunteerOrganizationId);
+    }
 }

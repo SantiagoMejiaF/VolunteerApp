@@ -63,6 +63,7 @@ public class VolunteerApprovalService {
             organizationService.approveVolunteer(volunteerOrganizationInstance.getId());
             sendApprovalEmail(volunteerEmail, organizationName, volunteerName);
         } else {
+            organizationService.rejectVolunteer(volunteerOrganizationInstance.getId());
             sendRejectionEmail(volunteerEmail, organizationName, volunteerName);
         }
     }
