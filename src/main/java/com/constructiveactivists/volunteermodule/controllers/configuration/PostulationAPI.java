@@ -19,25 +19,4 @@ public interface PostulationAPI {
     })
     @GetMapping("/pending/{organizationId}")
     ResponseEntity<List<PostulationEntity>> getPendingPostulationsByOrganizationId(@PathVariable Integer organizationId);
-
-    @Operation(summary = "Obtener postulaciones aceptadas por ID de organización")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Operación exitosa")
-    })
-    @GetMapping("/accepted/{organizationId}")
-    ResponseEntity<List<PostulationEntity>> getAcceptedPostulationsByOrganizationId(@PathVariable Integer organizationId);
-
-    @Operation(summary = "Obtener postulaciones rechazadas por ID de organización")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Operación exitosa")
-    })
-    @GetMapping("/refused/{organizationId}")
-    ResponseEntity<List<PostulationEntity>> getRefusedPostulationsByOrganizationId(@PathVariable Integer organizationId);
-
-    @Operation(summary = "Obtener postulación por ID de organización")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Operación exitosa")
-    })
-    @GetMapping("/{volunteerOrganizationId}")
-    ResponseEntity<PostulationEntity> getPostulationById(@PathVariable Integer volunteerOrganizationId);
 }

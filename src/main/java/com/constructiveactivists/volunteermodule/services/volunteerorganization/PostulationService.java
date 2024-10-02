@@ -76,6 +76,7 @@ public class PostulationService {
         }
         return postulationRepository.findByStatusAndVolunteerOrganizationIdIn(OrganizationStatusEnum.ACEPTADO, volunteerOrganizationIds);
     }
+
     public List<PostulationEntity> getRefusedPostulationsByOrganizationId(Integer organizationId) {
         List<VolunteerOrganizationEntity> volunteerOrganizations = volunteerOrganizationRepository.findByOrganizationId(organizationId);
         List<Integer> volunteerOrganizationIds = volunteerOrganizations.stream()

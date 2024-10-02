@@ -2,13 +2,24 @@ package com.constructiveactivists.volunteermodule.services.volunteerorganization
 
 import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.organizationmodule.repositories.OrganizationRepository;
+import com.constructiveactivists.usermodule.entities.UserEntity;
+import com.constructiveactivists.usermodule.repositories.UserRepository;
+import com.constructiveactivists.volunteermodule.controllers.response.StatusVolunteerOrganizationResponse;
+import com.constructiveactivists.volunteermodule.controllers.response.VolunteerOrganizationResponse;
+import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.OrganizationStatusEnum;
+import com.constructiveactivists.volunteermodule.entities.volunteerorganization.DataShareVolunteerOrganizationEntity;
+import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
+import com.constructiveactivists.volunteermodule.repositories.DataShareVolunteerOrganizationRepository;
+import com.constructiveactivists.volunteermodule.repositories.PostulationRepository;
 import com.constructiveactivists.volunteermodule.repositories.VolunteerOrganizationRepository;
 import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -20,6 +31,9 @@ public class VolunteerOrganizationService {
     private final DataShareVolunteerOrganizationService dataShareVolunteerOrganizationService;
     private final VolunteerRepository volunteerRepository;
     private final OrganizationRepository organizationRepository;
+    private final PostulationRepository postulationRepository;
+    private final DataShareVolunteerOrganizationRepository dataShareRepository;
+    private final UserRepository userRepository;
 
     public List<VolunteerOrganizationEntity> getOrganizationsByVolunteerId(Integer volunteerId) {
         return volunteerOrganizationRepository.findByVolunteerId(volunteerId);
@@ -69,6 +83,90 @@ public class VolunteerOrganizationService {
 
     public boolean existsByVolunteerIdAndOrganizationId(Integer volunteerId, Integer organizationId) {
         return volunteerOrganizationRepository.existsByVolunteerIdAndOrganizationId(volunteerId, organizationId);
+    }
+
+    public VolunteerOrganizationResponse getVolunteerOrganizationDetails(Integer volunteerOrganizationId) {
+        VolunteerOrganizationEntity volunteerOrganization = volunteerOrganizationRepository
+                .findById(volunteerOrganizationId)
+                .orElseThrow(() -> new BusinessException("VolunteerOrganization not found"));
+
+        PostulationEntity postulation = postulationRepository
+                .findById(volunteerOrganizationId)
+                .orElseThrow(() -> new BusinessException("Postulation not found"));
+
+        DataShareVolunteerOrganizationEntity dataShare = dataShareRepository
+                .findById(volunteerOrganizationId)
+                .orElseThrow(() -> new BusinessException("DataShare not found"));
+
+        VolunteerEntity volunteer = volunteerRepository
+                .findById(volunteerOrganization.getVolunteerId())
+                .orElseThrow(() -> new BusinessException("Volunteer not found"));
+
+        VolunteerOrganizationResponse detailsDTO = new VolunteerOrganizationResponse();
+        detailsDTO.setId(volunteerOrganization.getId());
+        detailsDTO.setVolunteerId(volunteerOrganization.getVolunteerId());
+        detailsDTO.setOrganizationId(volunteerOrganization.getOrganizationId());
+        detailsDTO.setStatus(postulation.getStatus());
+        detailsDTO.setRegistrationDate(postulation.getRegistrationDate());
+        detailsDTO.setHoursDone(dataShare.getHoursDone());
+        detailsDTO.setHoursCertified(dataShare.getHoursCertified());
+        detailsDTO.setMonthlyHours(dataShare.getMonthlyHours());
+        detailsDTO.setUserId(volunteer.getUserId());
+        detailsDTO.setVisibility(volunteer.getVisibility());
+        detailsDTO.setPersonalInformation(volunteer.getPersonalInformation());
+        detailsDTO.setVolunteeringInformation(volunteer.getVolunteeringInformation());
+        detailsDTO.setEmergencyInformation(volunteer.getEmergencyInformation());
+
+        return detailsDTO;
+    }
+
+    public List<StatusVolunteerOrganizationResponse> getPendingVolunteersByOrganizationId(Integer organizationId) {
+        return getVolunteersByOrganizationIdAndStatus(organizationId, OrganizationStatusEnum.PENDIENTE);
+    }
+
+    public List<StatusVolunteerOrganizationResponse> getAcceptedVolunteersByOrganizationId(Integer organizationId) {
+        return getVolunteersByOrganizationIdAndStatus(organizationId, OrganizationStatusEnum.ACEPTADO);
+    }
+
+    public List<StatusVolunteerOrganizationResponse> getRejectedVolunteersByOrganizationId(Integer organizationId) {
+        return getVolunteersByOrganizationIdAndStatus(organizationId, OrganizationStatusEnum.RECHAZADO);
+    }
+
+    private List<StatusVolunteerOrganizationResponse> getVolunteersByOrganizationIdAndStatus(Integer organizationId, OrganizationStatusEnum status) {
+        List<Integer> volunteerOrganizationIds = volunteerOrganizationRepository.findByOrganizationId(organizationId)
+                .stream()
+                .map(VolunteerOrganizationEntity::getId)
+                .toList();
+
+        if (volunteerOrganizationIds.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<PostulationEntity> postulations = postulationRepository.findByStatusAndVolunteerOrganizationIdIn(status, volunteerOrganizationIds);
+
+        return postulations.stream()
+                .map(postulation -> {
+                    VolunteerEntity volunteer = volunteerRepository
+                            .findById(getVolunteerIdByOrganization(postulation.getVolunteerOrganizationId()))
+                            .orElseThrow(() -> new BusinessException("Volunteer not found"));
+
+                    UserEntity user = userRepository
+                            .findById(volunteer.getUserId())
+                            .orElseThrow(() -> new BusinessException("User not found"));
+
+                    return new StatusVolunteerOrganizationResponse(
+                            user.getFirstName() + " " + user.getLastName(),
+                            user.getEmail(),
+                            volunteer.getPersonalInformation().getIdentificationCard(),
+                            postulation.getStatus()
+                    );
+                })
+                .toList();
+    }
+
+    private Integer getVolunteerIdByOrganization(Integer volunteerOrganizationId) {
+        return volunteerOrganizationRepository.findById(volunteerOrganizationId)
+                .orElseThrow(() -> new BusinessException("VolunteerOrganization not found"))
+                .getVolunteerId();
     }
 
 }

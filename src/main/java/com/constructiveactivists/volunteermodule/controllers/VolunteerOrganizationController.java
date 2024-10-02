@@ -2,6 +2,8 @@ package com.constructiveactivists.volunteermodule.controllers;
 
 import com.constructiveactivists.volunteermodule.controllers.configuration.VolunteerOrganizationAPI;
 import com.constructiveactivists.volunteermodule.controllers.request.volunteerorganization.VolunteerOrganizationRequest;
+import com.constructiveactivists.volunteermodule.controllers.response.StatusVolunteerOrganizationResponse;
+import com.constructiveactivists.volunteermodule.controllers.response.VolunteerOrganizationResponse;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermodule.mappers.volunteerorganization.VolunteerOrganizationMapper;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.VolunteerOrganizationService;
@@ -35,6 +37,28 @@ public class VolunteerOrganizationController implements VolunteerOrganizationAPI
     public ResponseEntity<VolunteerOrganizationEntity> addVolunteerOrganizationPending(@RequestBody VolunteerOrganizationRequest volunteerOrganizationRequest) {
         VolunteerOrganizationEntity volunteerOrganizationEntity = volunteerOrganizationService.addVolunteerOrganizationPending(volunteerOrganizationMapper.toEntity(volunteerOrganizationRequest));
         return ResponseEntity.ok(volunteerOrganizationEntity);
+    }
+    @Override
+    public ResponseEntity<VolunteerOrganizationResponse> getVolunteerOrganizationDetails(@PathVariable Integer volunteerOrganizationId) {
+        VolunteerOrganizationResponse details = volunteerOrganizationService.getVolunteerOrganizationDetails(volunteerOrganizationId);
+        return ResponseEntity.ok(details);
+    }
+    @Override
+    public ResponseEntity<List<StatusVolunteerOrganizationResponse>> getPendingVolunteersByOrganizationId(@PathVariable Integer organizationId) {
+        List<StatusVolunteerOrganizationResponse> pendingVolunteers = volunteerOrganizationService.getPendingVolunteersByOrganizationId(organizationId);
+        return ResponseEntity.ok(pendingVolunteers);
+    }
+
+    @Override
+    public ResponseEntity<List<StatusVolunteerOrganizationResponse>> getAcceptedVolunteersByOrganizationId(@PathVariable Integer organizationId) {
+        List<StatusVolunteerOrganizationResponse> acceptedVolunteers = volunteerOrganizationService.getAcceptedVolunteersByOrganizationId(organizationId);
+        return ResponseEntity.ok(acceptedVolunteers);
+    }
+
+    @Override
+    public ResponseEntity<List<StatusVolunteerOrganizationResponse>> getRejectedVolunteersByOrganizationId(@PathVariable Integer organizationId) {
+        List<StatusVolunteerOrganizationResponse> rejectedVolunteers = volunteerOrganizationService.getRejectedVolunteersByOrganizationId(organizationId);
+        return ResponseEntity.ok(rejectedVolunteers);
     }
 
 }
