@@ -1,6 +1,7 @@
 package com.constructiveactivists.missionandactivitymodule.controllers.configuration.mission;
 
 import com.constructiveactivists.missionandactivitymodule.controllers.request.mission.MissionRequest;
+import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionTypeEnum;
@@ -94,4 +95,11 @@ public interface MissionAPI {
     })
     @DeleteMapping("/{id}")
     ResponseEntity<Void> cancelMission(@PathVariable Integer id);
+
+    @Operation(summary = "Obtener todas las actividades de una organización.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/organization/{organizationId}/activities")
+    ResponseEntity<List<ActivityEntity>> getAllActivitiesByOrganizationId(@PathVariable Integer organizationId);
 }

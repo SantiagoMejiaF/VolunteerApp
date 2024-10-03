@@ -2,6 +2,7 @@ package com.constructiveactivists.missionandactivitymodule.controllers;
 
 import com.constructiveactivists.missionandactivitymodule.controllers.configuration.mission.MissionAPI;
 import com.constructiveactivists.missionandactivitymodule.controllers.request.mission.MissionRequest;
+import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionTypeEnum;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,6 +89,16 @@ public class MissionController implements MissionAPI {
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @Override
+    public ResponseEntity<List<ActivityEntity>> getAllActivitiesByOrganizationId(@PathVariable Integer organizationId) {
+        try {
+            List<ActivityEntity> activities = missionService.getAllActivitiesByOrganizationId(organizationId);
+            return ResponseEntity.ok(activities);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
