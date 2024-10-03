@@ -82,6 +82,17 @@ public class MissionService {
         }
     }
 
+    public List<ActivityEntity> getActivitiesByMissionId(Integer missionId) {
+        Optional<MissionEntity> mission = missionRepository.findById(missionId);
+        if (mission.isEmpty()) {
+            throw new EntityNotFoundException("Mission with ID " + missionId + " not found");
+        }
+        return activityService.getActivitiesByMissionId(missionId);
+    }
 
-
+    public List<ActivityEntity> getAllActivitiesByOrganizationId(Integer organizationId) {
+        return missionRepository.findByOrganizationId(organizationId).stream()
+                .flatMap(mission -> activityService.getActivitiesByMissionId(mission.getId()).stream())
+                .toList();
+    }
 }
