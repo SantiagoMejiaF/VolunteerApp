@@ -1,5 +1,6 @@
 package com.constructiveactivists.dashboardsandresportsmodule.controllers.configuration;
 
+import com.constructiveactivists.dashboardsandresportsmodule.controllers.response.CardsOrganizationVolunteerResponse;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.InterestEnum;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
 import java.util.Map;
 
 @Tag(name = "Módulo de Tableros de Control y Reportes", description = "Servicios relacionados con los tableros de control que tiene" +
@@ -68,4 +70,11 @@ public interface DashboardVolunteerAPI {
     })
     @GetMapping("/next-activity/{volunteerId}")
     ResponseEntity<ActivityEntity> getNextActivityForVolunteer(@PathVariable Integer volunteerId);
+
+    @Operation(summary = "Obtener las cards de fundaciones a las que pertenece un voluntario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+    })
+    @GetMapping("/foundations/{volunteerId}")
+    ResponseEntity<List<CardsOrganizationVolunteerResponse>> getFoundationsByVolunteerId(@PathVariable Integer volunteerId);
 }

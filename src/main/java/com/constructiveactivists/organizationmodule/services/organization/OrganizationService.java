@@ -78,6 +78,7 @@ public class OrganizationService {
         existingOrganization.setVolunteeringTypeEnum(updateRequest.getVolunteeringTypeEnum());
         existingOrganization.setAddress(updateRequest.getAddress());
         existingOrganization.setRequiredCertificationHours(updateRequest.getRequiredCertificationHours());
+        existingOrganization.setDescription(updateRequest.getDescription());
         return organizationRepository.save(existingOrganization);
     }
 

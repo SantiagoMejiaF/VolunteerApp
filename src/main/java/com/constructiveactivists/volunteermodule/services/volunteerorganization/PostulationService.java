@@ -111,4 +111,8 @@ public class PostulationService {
         postulationRepository.save(postulation);
     }
 
+    public long countAuthorizedVolunteersByOrganizationIds(List<Integer> organizationIds) {
+        return postulationRepository.countByVolunteerOrganizationIdInAndStatus(organizationIds, OrganizationStatusEnum.ACEPTADO);
+    }
+
 }

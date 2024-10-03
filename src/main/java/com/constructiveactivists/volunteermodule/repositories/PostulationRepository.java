@@ -11,5 +11,5 @@ public interface PostulationRepository extends JpaRepository<PostulationEntity, 
     List<PostulationEntity> findByStatusAndVolunteerOrganizationIdIn(OrganizationStatusEnum status, List<Integer> volunteerOrganizationIds);
     List<PostulationEntity> findByVolunteerOrganizationId(Integer volunteerOrganizationId);
     List<PostulationEntity> findAllByRegistrationDateBetween(LocalDate startDate, LocalDate endDate);
-
+    long countByVolunteerOrganizationIdInAndStatus(List<Integer> organizationIds, OrganizationStatusEnum status);
 }

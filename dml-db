@@ -63,10 +63,12 @@ VALUES
 (19, 'AUTORIZADO', 'Dana', 'White', 'danawhite@example.com', 'https://randomuser.me/api/portraits/women/19.jpg', CURRENT_DATE),
 (20, 'AUTORIZADO', 'Eve', 'Black', 'eveblack@example.com', 'https://randomuser.me/api/portraits/women/20.jpg', CURRENT_DATE);
 
-INSERT INTO modulo_gestion_organizaciones.ORGANIZACION (USUARIO_ID, CEDULA_RESPONSABLE, TELEFONO_RESPONSABLE, NOMBRE_ORGANIZACION, TIPO_ORGANIZACION, SECTOR, TIPO_VOLUNTARIADO, NIT, DIRECCION_ORGANIZACION, HORAS_REQUERIDAS_CERTIFICACION)
+-- Inserción de datos en la tabla ORGANIZACION
+INSERT INTO modulo_gestion_organizaciones.ORGANIZACION
+(USUARIO_ID, CEDULA_RESPONSABLE, TELEFONO_RESPONSABLE, NOMBRE_ORGANIZACION, TIPO_ORGANIZACION, SECTOR, TIPO_VOLUNTARIADO, NIT, DIRECCION_ORGANIZACION, HORAS_REQUERIDAS_CERTIFICACION, DESCRIPCION)
 VALUES
-(1, '1234567890', '0987654321', 'Org1', 'ONG', 'SALUD', 'ADJUNTA', '1111111111', 'Calle 1 #123',150),
-(2, '0987654321', '1234567890', 'Org2', 'FUNDACION', 'EDUCACION', 'ADJUNTA', '2222222222', 'Calle 2 #456',200);
+(1, '1234567890', '0987654321', 'Org1', 'ONG', 'SALUD', 'ADJUNTA', '1111111111', 'Calle 1 #123', 150, 'Descripción de la organización 1'),
+(2, '0987654321', '1234567890', 'Org2', 'FUNDACION', 'EDUCACION', 'ADJUNTA', '2222222222', 'Calle 2 #456', 200, 'Descripción de la organización 2');
 
 INSERT INTO modulo_gestion_voluntarios.INFORMACION_PERSONAL (CEDULA, DIRECCION, AGE, BORN_DATE, TELEFONO, DESCRIPCION_PERSONAL)
 VALUES
@@ -121,16 +123,16 @@ INSERT INTO modulo_gestion_voluntarios.VOLUNTARIO (USUARIO_ID, ORGANIZACION_ID, 
 VALUES
 (3,NULL, 1, 1, 1, 1),
 (4,NULL, 1, 2, 2, 2),
-(5,NULL, 0, 3, 3, 3),
+(5,NULL, 2, 3, 3, 3),
 (6,null, 1, 4, 4, 4),
-(7,null, 0, 5, 5, 5),
+(7,null, 2, 5, 5, 5),
 (8,null, 1, 6, 6, 6),
 (9,null, 1, 7, 7, 7),
 (10,null, 1, 8, 8, 8),
 (11,null, 1, 9, 9, 9),
 (12,null, 1, 10, 10, 10),
 (13,null, 1, 11, 11, 11),
-(14,null, 0, 12, 12, 12),
+(14,null, 2, 12, 12, 12),
 (15,null, 1, 13, 13, 13);
 
 
@@ -297,6 +299,7 @@ VALUES
 (3, 3, 'Grupo Cuidado Animal', 10, 0),
 (4, 4, 'Grupo Taller de Reciclaje', 25, 0),
 (5, 5, 'Grupo Fumigación Soacha', 5, 0);
+
 
 
 
