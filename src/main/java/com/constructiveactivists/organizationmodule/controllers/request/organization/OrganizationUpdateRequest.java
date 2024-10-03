@@ -49,4 +49,8 @@ public class OrganizationUpdateRequest {
     @NotNull
     @Schema(description = "Horas requeridas para la certificación", example = "100")
     private Integer requiredCertificationHours;
+
+    @NotNull
+    @Schema(description = "Descripción de la organización", example = "Organización sin ánimo de lucro")
+    private String description;
 }

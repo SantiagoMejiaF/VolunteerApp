@@ -1,6 +1,11 @@
 package com.constructiveactivists.dashboardsandresportsmodule.services;
 
+import com.constructiveactivists.dashboardsandresportsmodule.controllers.response.CardsOrganizationVolunteerResponse;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
+import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
+import com.constructiveactivists.organizationmodule.repositories.OrganizationRepository;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.OrganizationStatusEnum;
+import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupEntity;
 import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
@@ -12,6 +17,7 @@ import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEnt
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.InterestEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
+import com.constructiveactivists.volunteermodule.services.volunteerorganization.PostulationService;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.VolunteerOrganizationService;
 import com.constructiveactivists.volunteermodule.services.volunteer.VolunteerService;
 import jakarta.persistence.EntityNotFoundException;
@@ -38,6 +44,8 @@ public class DashboardVolunteerService {
     private final ActivityService activityService;
 
     private final VolunteerOrganizationService volunteerOrganizationService;
+    private final OrganizationRepository organizationRepository;
+    private final PostulationService postulationService;
 
     public Map<String, Long> getAgeRanges() {
 
@@ -141,5 +149,55 @@ public class DashboardVolunteerService {
                 .min(Comparator.comparing(activity -> LocalDateTime.of(activity.getDate(), activity.getStartTime())))
                 .orElse(null);
     }
+
+    // Método para obtener las fundaciones con todos los datos necesarios
+    public List<CardsOrganizationVolunteerResponse> getFoundationsByVolunteerId(Integer volunteerId) {
+        // Paso 1: Obtener las organizaciones a las que pertenece el voluntario
+        List<VolunteerOrganizationEntity> volunteerOrganizations = volunteerOrganizationService.getOrganizationsByVolunteerId(volunteerId);
+
+        // Paso 2: Recorrer las organizaciones y filtrar solo aquellas que están aceptadas
+        return volunteerOrganizations.stream()
+                .map(volunteerOrg -> {
+                    // Obtener la organización
+                    Optional<OrganizationEntity> organization = organizationRepository.findById(volunteerOrg.getOrganizationId());
+
+                    // Verificar si la organización está presente
+                    if (organization.isPresent()) {
+                        // Obtener el usuario asociado a la organización
+                        Optional<UserEntity> userEntity = userService.getUserById(organization.get().getUserId());
+                        String organizationPhoto = userEntity.map(UserEntity::getImage).orElse(null);
+
+                        // Obtener el estado de postulación
+                        Optional<PostulationEntity> postulation = Optional.ofNullable(postulationService.findById(volunteerOrg.getId()));
+
+                        // Verificar si la postulación está aceptada
+                        if (postulation.map(PostulationEntity::getStatus).orElse(null) == OrganizationStatusEnum.ACEPTADO) {
+                            long authorizedVolunteers = this.countAuthorizedVolunteersByVolunteerId(volunteerId);
+
+                            // Retornar la respuesta
+                            return new CardsOrganizationVolunteerResponse(
+                                    organization.get().getId(),
+                                    organization.get().getOrganizationName(),
+                                    organization.get().getDescription(),
+                                    organization.get().getOrganizationTypeEnum(),
+                                    organizationPhoto,
+                                    authorizedVolunteers
+                            );
+                        }
+                    }
+                    return null; // Retornar null si la organización no está presente o no está aceptada
+                })
+                .filter(Objects::nonNull) // Filtrar los resultados nulos
+                .toList(); // Convertir a lista
+    }
+
+
+    public long countAuthorizedVolunteersByVolunteerId(Integer volunteerId) {
+        List<Integer> organizationIds = volunteerOrganizationService.getOrganizationIdsByVolunteerId(volunteerId);
+        return postulationService.countAuthorizedVolunteersByOrganizationIds(organizationIds);
+    }
+
+
+
 
 }

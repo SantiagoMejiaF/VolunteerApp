@@ -50,4 +50,7 @@ public class OrganizationEntity {
 
     @Column(name = "HORAS_REQUERIDAS_CERTIFICACION", columnDefinition = "INTEGER", nullable = false)
     private Integer requiredCertificationHours;
+
+    @Column(name = "Descripcion", length = 100, nullable = false)
+    private String description;
 }

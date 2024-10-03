@@ -169,4 +169,11 @@ public class VolunteerOrganizationService {
                 .getVolunteerId();
     }
 
+    public List<Integer> getOrganizationIdsByVolunteerId(Integer volunteerId) {
+        List<VolunteerOrganizationEntity> volunteerOrganizations = volunteerOrganizationRepository.findByVolunteerId(volunteerId);
+        return volunteerOrganizations.stream()
+                .map(VolunteerOrganizationEntity::getOrganizationId)
+                .toList();
+    }
+
 }

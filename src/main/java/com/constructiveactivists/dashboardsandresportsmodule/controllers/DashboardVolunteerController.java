@@ -1,6 +1,7 @@
 package com.constructiveactivists.dashboardsandresportsmodule.controllers;
 
 import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.dashboardsandresportsmodule.controllers.response.CardsOrganizationVolunteerResponse;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.dashboardsandresportsmodule.controllers.configuration.DashboardVolunteerAPI;
 import com.constructiveactivists.dashboardsandresportsmodule.services.DashboardVolunteerService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -67,5 +69,11 @@ public class DashboardVolunteerController implements DashboardVolunteerAPI {
         } catch (BusinessException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @Override
+    public ResponseEntity<List<CardsOrganizationVolunteerResponse>> getFoundationsByVolunteerId(@PathVariable Integer volunteerId) {
+        List<CardsOrganizationVolunteerResponse> foundations = dashboardService.getFoundationsByVolunteerId(volunteerId);
+        return ResponseEntity.ok(foundations);
     }
 }
