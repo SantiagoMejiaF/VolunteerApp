@@ -126,8 +126,8 @@ h5{
 }
 
 .editar1 {
-    background-color: #06c9d7;
-    box-shadow: 0 0 0 2px #06c9d7;
+    background-color: #03A3AE;
+    box-shadow: 0 0 0 2px #03A3AE;
     border: none;
     border-radius: 3px;
 }
@@ -192,7 +192,7 @@ h5{
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background: linear-gradient(135deg, #06c9d7, #a6eff2);
+  background: linear-gradient(135deg, #03A3AE, #a6eff2);
   color: #000;
 }
 .custom-card:hover {

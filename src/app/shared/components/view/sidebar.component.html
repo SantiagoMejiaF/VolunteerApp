@@ -17,12 +17,26 @@
                 </a>
             </li>
             <!--*ngIf="userRole === 'SUPER_ADMIN'" -->
-            <li class="sidebar-item" *ngIf="userRole === 'SUPER_ADMIN'">
-                <a [routerLink]="'/gestion-users'" class="sidebar-link" routerLinkActive="active">
+            <li class="sidebar-item" >
+                <a class="sidebar-link" (click)="toggleMenu4()">
                     <i class="bi bi-clipboard2-heart" style="font-size: 1.2rem; color: #292C32;"></i>
                     <span>Gestión Usuarios</span>
                 </a>
+                <ul *ngIf="menuOpen" class="submenu">
+                    <li>
+                        <a [routerLink]="'/gestion-users'" class="sidebar-link" routerLinkActive="active">
+                            <i class="bi bi-shield-lock" style="font-size: 1rem;"></i> Gestionar Permisos
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="'/active-users'" class="sidebar-link" routerLinkActive="active">
+                            <i class="bi bi-people" style="font-size: 1rem;"></i> Usuarios Activos
+                        </a>
+                    </li>
+                </ul>
             </li>
+            
+            
 
             <!-- Para VOLUNTARIO *ngIf="userRole === 'VOLUNTARIO'"-->
             <li class="sidebar-item" *ngIf="userRole === 'VOLUNTARIO'">

@@ -102,7 +102,7 @@ h5 {
 }
 
 .custom-button {
-  background-color: #06c9d7;
+  background-color: #03A3AE;
   color: white !important;
   font-weight: 600;
 }
@@ -126,7 +126,7 @@ h5 {
 
 .status-activo {
   background-color: rgba(229, 250, 251, 255);
-  color: #03c9d7;
+  color: #03A3AE;
   padding: 5px 10px 0px 10px;
   border-radius: 20px;
   display: inline-block;
