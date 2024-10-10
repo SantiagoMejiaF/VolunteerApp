@@ -17,7 +17,9 @@ export class GestionUsuariosComponent implements OnInit {
     private volunteerService: VolunteerService,
     private organizationService: OrganizationService
   ) { }
-
+  ngAfterViewInit(): void {
+    this.initializeDataTable();
+  }
   ngOnInit(): void {
     // Obtener los usuarios pendientes
     this.adminService.getPendingUsers().subscribe((users) => {

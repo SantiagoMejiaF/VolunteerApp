@@ -97,5 +97,9 @@ export class SidebarComponent implements OnInit {
     const colors = ['red-bg-icon', 'blue-bg-icon', 'pink-bg-icon', 'green-bg-icon', 'yellow-bg-icon'];  // Definimos los colores en orden
     return colors[index % colors.length]; // Se repite el ciclo de colores
   }
+  menuOpen = false;
 
+  toggleMenu4() {
+    this.menuOpen = !this.menuOpen;
+  }
 }

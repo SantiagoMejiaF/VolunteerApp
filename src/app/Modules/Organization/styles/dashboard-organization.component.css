@@ -41,7 +41,7 @@ p {
 }
 
 #Users .card-container {
-  background: #06C9D7;
+  background: #03A3AE;
   background-size: cover; /* Llena todo el contenedor */
   background-repeat: no-repeat;
   background-position: center;
@@ -150,7 +150,7 @@ margin-bottom:20px;
 
 #card .col.bg-primary {
   color: #fff;
-  background-color: #06C9D7!important;
+  background-color: #03A3AE!important;
   border-radius: 50%; 
 }
 
@@ -177,11 +177,11 @@ margin-bottom:20px;
   background:none;
 }
 .card-header button{
-  background: #06C9D7 important;
+  background: #03A3AE important;
 }
 
 .custom-btn {
-  background-color: #06C9D7; /* Fondo azul */
+  background-color: #03A3AE; /* Fondo azul */
   color: white; /* Ícono blanco */
   border: none; /* Quitar el borde */
 }

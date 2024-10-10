@@ -8,9 +8,9 @@
         </button>
         <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
             <div class="navbar-nav mx-auto ">
-                <a class="nav-link px-4" href="#">Home</a>
-                <a class="nav-link px-4" href="#">Misiones</a>
-                <a class="nav-link px-4" href="#">Nosotros</a>
+                <a class="nav-link px-4" [routerLink]="['/landing']" fragment="inicio-section" >Inicio</a>
+                <a class="nav-link px-4" [routerLink]="['/landing']" fragment="misiones-section">Misiones</a>
+                <a class="nav-link px-4" [routerLink]="['/landing']" fragment="about-section">Nosotros</a>
             </div>
         </div>
         <button type="button" [routerLink]="'login'" class="btn custom-btn px-5 py-2">Ingresa</button>

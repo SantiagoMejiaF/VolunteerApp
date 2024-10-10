@@ -191,7 +191,7 @@ ng-multiselect-dropdown {
 .circle {
   padding: 13px 20px;
   border-radius: 50%;
-  background-color: #06c9d7;
+  background-color: #03A3AE;
   color: #fff;
   max-height: 50px;
   z-index: 2;
@@ -203,7 +203,7 @@ ng-multiselect-dropdown {
 .how-it-works.row .col-2::after {
   content: "";
   position: absolute;
-  border-left: 3px solid #06c9d7;
+  border-left: 3px solid #03A3AE;
   z-index: 1;
 }
 .how-it-works.row .col-2.bottom::after {
@@ -227,7 +227,7 @@ ng-multiselect-dropdown {
   height: 40px;
 }
 .timeline hr {
-  border-top: 3px solid #06c9d7;
+  border-top: 3px solid #03A3AE;
   margin: 0;
   top: 17px;
   position: relative;
@@ -237,7 +237,7 @@ ng-multiselect-dropdown {
   overflow: hidden;
 }
 .timeline .corner {
-  border: 3px solid #06c9d7;
+  border: 3px solid #03A3AE;
   width: 100%;
   position: relative;
   border-radius: 15px;
@@ -319,7 +319,7 @@ ng-multiselect-dropdown {
   /*OPCIONALES*/
   .Aceptar{
     border: none;
-    background: #03C9D7;
+    background: #03A3AE;
     color: white;
     font-weight: 500;
     border-radius: 5px;

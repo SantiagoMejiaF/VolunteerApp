@@ -30,6 +30,7 @@ import { MisFundacionesComponent } from './Modules/Volunteer/viewModel/mis-funda
 import { ActividadesVComponent } from './Modules/Volunteer/viewModel/actividades-v.component';
 import { DetallesAxCComponent } from './Modules/Organization/viewModel/detalles-ax-c.component';
 import { ActividadesCComponent } from './Modules/Coordinators/viewModel/actividades-c.component';
+import { UsuariosActivosComponent } from './Modules/AdminUser/viewModel/usuarios-activos.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -51,6 +52,10 @@ const routes: Routes = [
       {
         path: 'dashAdmin',
         component: DashboardAdminComponent,
+      },
+      {
+        path: 'active-users',
+        component: UsuariosActivosComponent,
       },
       
     

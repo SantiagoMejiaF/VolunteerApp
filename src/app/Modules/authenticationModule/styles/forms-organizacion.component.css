@@ -14,7 +14,7 @@ body {
 
 #register{
 
-  color: #06c9d7;
+  color: #03A3AE;
 }
 #thanksBackground {
     position: fixed;
@@ -31,7 +31,7 @@ body {
 #text-message h1 {
     font-family: "Qwitcher Grypen", cursive;
     font-weight: bold;
-    color: #06c9d7;
+    color: #03A3AE;
     font-size: 80px;
     line-height: 1.2;
   }
@@ -48,14 +48,14 @@ h3{
     font-family: "Quicksand", sans-serif;
     font-weight: regular;
     font-size: 24px;
-    color: #06c9d7;
+    color: #03A3AE;
 }
 
 h4{
     font-family: "Quicksand", sans-serif;
     font-weight: regular;
     font-size: 24px;
-    color: #06c9d7;
+    color: #03A3AE;
 }
 
 p{
@@ -80,7 +80,7 @@ p{
 
 .tab input:focus{
 
-  border:1px solid #06c9d7 !important;
+  border:1px solid #03A3AE !important;
   outline: none;
 }
 
@@ -94,7 +94,7 @@ input.invalid {
 }
 
 button {
-    background-color: #06c9d7;
+    background-color: #03A3AE;
     color: #ffffff;
     border: none;
     border-radius: 50%;
@@ -143,7 +143,7 @@ button:focus{
     justify-content: center;
     align-items: center;
     font-size: 15px;
-    color: #06c9d7;
+    color: #03A3AE;
     opacity: 0.5;
 }
 
@@ -172,7 +172,7 @@ button:focus{
 }
 
 .btn-secondary {
-    background: #06c9d7;
+    background: #03A3AE;
     color: white !important;
     border: none;
     border-radius: 8px !important;

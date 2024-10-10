@@ -134,7 +134,7 @@ a.sidebar-link:hover {
 /* Efecto cuando el enlace está activo */
 a.sidebar-link.active,
 a.sidebar-link:active {
-  background-color: #06c9d7;
+  background-color: #03A3AE;
   color: white;
   border-radius: 30px;
 }
@@ -471,7 +471,7 @@ a.sidebar-link.router-link-active span {
 }
 
 .blue-bg-icon {
-  color: #06c9d7;
+  color: #03A3AE;
 }
 
 .pink-bg-icon {
@@ -484,3 +484,25 @@ a.sidebar-link.router-link-active span {
 .yellow-bg-icon {
   color: #fed549;
 }
+
+
+/* Cuando el sidebar está colapsado, los submenús se muestran en un dropdown */
+/* Submenu dropdown en sidebar colapsado */
+#sidebar:not(.expand) .submenu {
+  position: absolute;
+  left: 70px;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  z-index: 10;
+}
+
+#sidebar:not(.expand) .sidebar-item:hover .submenu,
+#sidebar:not(.expand) .submenu:hover {
+  opacity: 1;
+  visibility: visible;
+}
+

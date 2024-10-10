@@ -133,7 +133,7 @@ hr {
 
 .status-activo {
     background-color: rgba(229,250,251,255);
-    color: #03c9d7;
+    color: #03A3AE;
     padding: 5px 10px 0px 10px;
     border-radius: 20px;
     display: inline-block;
@@ -217,7 +217,7 @@ hr {
     padding: 5px 10px;
   }
   .custom2{
-    background: #06c9d7;
+    background: #03A3AE;
     border: none !important;
     border-radius: 5px;
     color: white;
@@ -250,7 +250,7 @@ h5 {
   max-height: 100%;
 }
 .btn-primary{
-  background: #06c9d7;
+  background: #03A3AE;
   color: white;
   border: none;
 }

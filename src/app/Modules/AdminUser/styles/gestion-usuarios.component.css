@@ -51,40 +51,40 @@ button:hover i.fa {
   color: #007bff; /* Color azul al pasar el mouse */
 }
 .modal-footer .aceptar {
-  font-family: "Quicksand", sans-serif;
-  background-color: transparent;
-  border: 2px solid #1E1450;
-  color: #1e1e1e;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 30px;
-  transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+  background: #7BA5B3;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 8px 8px 8px;
+  border-radius: 10px;
+  border: none !important;
 }
 
-.modal-footer .aceptar:hover {
-  background-color: #1E1450;
-  color: white;
-}
+
 
 .modal-footer .rechazar {
-    font-family: "Quicksand", sans-serif;
-    background-color: transparent;
-    border: 2px solid #ED4B4B;
-    color: #1e1e1e;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 30px;
-    transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+  background: #FB9778;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 8px 8px 8px;
+  border-radius: 10px;
+  border: none !important;
   }
   
-  .modal-footer .rechazar:hover {
-    background-color: #ED4B4B;
-    color: white;
-  }
 
  
   @media (max-width: 770px) {
     #img2 {
       display: none;
     }
+}
+h4 {
+  font-family: "Quicksand", sans-serif;
+  font-size: 14px;
+}
+
+h5 {
+  font-family: "Quicksand", sans-serif;
+  font-size: 18px;
 }

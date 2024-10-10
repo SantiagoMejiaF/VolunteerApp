@@ -1,0 +1,126 @@
+<div class="container ">
+    <div class="row">
+        <div class="col ">
+            <div class="tittle">
+                <h2>Usuarios Activos</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="table  table-sm  hover" id="datatableGestionUser">
+            <thead>
+                <tr>
+                    <th class="text-left">#</th>
+                    <th class="text-left">Nombre</th>
+                    <th class="text-left">Perfil</th>
+                    <th class="text-left">Rol</th>
+                    <th class="text-left">Email</th>
+                    <th class="text-left">Cedula</th>
+                    <th class="text-left">Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of data">
+                    <td class="text-left">{{ user.id }}</td>
+                    <td width="60px">
+                        <div class="d-flex align-items-center">
+                            <img [src]="user.image || 'assets/img/user2.png'" alt="Perfil"
+                                (error)="user.image='assets/img/user3.png'"
+                                style="width:50px; height:50px; border-radius:50%;">
+                        </div>
+                    </td>
+                    <td class="text-left">{{ user.firstName + ' ' + user.lastName }}</td>
+                    <td class="text-left">{{ user.rol }}</td>
+                    <td class="text-left">{{ user.email }}</td>
+                    <td class="text-left">{{ user.Cedula }}</td>
+                    <td>
+                        <button style="border: none; background: none;" data-bs-toggle="modal"
+                            data-bs-target="#VolunteerModal" (click)="openModal(user)"
+                            *ngIf="user.rol === 'VOLUNTARIO'">
+                            <i class="fa fa-search" style="font-size: 1rem; color: #80777c;"
+                                onmouseover="this.style.color='#186dde';" onmouseout="this.style.color='#80777c';"></i>
+                        </button>
+                        <button style="border: none; background: none;" data-bs-toggle="modal"
+                            data-bs-target="#organizationModal" (click)="openModal(user)"
+                            *ngIf="user.rol === 'ORGANIZACION'">
+                            <i class="fa fa-search" style="font-size: 1rem; color: #80777c;"
+                                onmouseover="this.style.color='#186dde';" onmouseout="this.style.color='#80777c';"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- Modal Voluntario -->
+<div class="modal fade" id="VolunteerModal" tabindex="-1" aria-labelledby="VolunteerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h4>Detalles</h4>
+                    <h5>Voluntario</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>Nombre: {{ selectedUser?.firstName }}</h6>
+                <h6>Apellido: {{ selectedUser?.lastName }}</h6>
+                <h6>Cédula: {{ selectedUser?.personalInformation?.identificationCard }}</h6>
+                <h6>Correo: {{ selectedUser?.email }}</h6>
+                <h6>Celular: {{ selectedUser?.personalInformation?.phoneNumber }}</h6>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Organización-->
+<div class="modal fade" id="organizationModal" tabindex="-1" aria-labelledby="organizationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h4>Detalles</h4>
+                    <h5>Organización</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>Nombre: {{ selectedUser?.firstName }}</h6>
+                <h6>Apellido: {{ selectedUser?.lastName }}</h6>
+                <h6>Cédula: {{ selectedUser?.responsiblePersonId }}</h6>
+                <h6>Correo: {{ selectedUser?.email }}</h6>
+                <h6>Celular: {{ selectedUser?.responsiblePersonPhoneNumber }}</h6>
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                aria-controls="flush-collapseOne">
+                                Datos de la organización
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse"
+                            data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <h6>Nombre: {{ selectedUser?.organizationName }}</h6>
+                                <h6>NIT: {{ selectedUser?.nit }}</h6>
+                                <h6>Tipo de Organización: {{ selectedUser?.organizationTypeEnum }}</h6>
+                                <h6>Sector: {{ selectedUser?.sectorTypeEnum }}</h6>
+                                <h6>Tipo de Voluntariado: {{ selectedUser?.volunteeringTypeEnum }}</h6>
+                                <h6>Dirección: {{ selectedUser?.address }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
