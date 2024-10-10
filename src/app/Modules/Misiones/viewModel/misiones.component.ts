@@ -29,19 +29,36 @@ export class MisionesComponent implements OnInit {
   };
 
   constructor(private router: Router, private missionsService: MissionsService) { }
+
   ngAfterViewInit(): void {
     this.initializeDataTable();
   }
+
   ngOnInit(): void {
     const orgId = localStorage.getItem('OrgId');
     if (orgId) {
-      this.loadMissions(parseInt(orgId));  // Cargar misiones al iniciar
-      this.loadMissionTypes();  // Cargar tipos de misión
-      this.loadVolunteerRequirements();  // Cargar requisitos de voluntarios
-      this.loadRequiredSkills();  // Cargar habilidades requeridas
+      this.loadMissions(parseInt(orgId));
+      this.loadMissionTypes();
+      this.loadVolunteerRequirements();
+      this.loadRequiredSkills();
     } else {
       console.error('OrgId no encontrado en el localStorage');
     }
+
+    // Agrega aquí el MutationObserver para monitorear cuando se agregue un backdrop al DOM
+    const observer = new MutationObserver(function (mutationsList) {
+      for (let mutation of mutationsList) {
+        // Asegúrate de que el nodo sea un HTMLElement
+        mutation.addedNodes.forEach((node) => {
+          if (node instanceof HTMLElement && node.classList.contains('modal-backdrop')) {
+            console.log('Se ha añadido un modal-backdrop');
+          }
+        });
+      }
+    });
+
+    // Observar el body por cambios en el DOM
+    observer.observe(document.body, { childList: true, subtree: true });
   }
 
   // Método para cargar las misiones de la organización
@@ -49,7 +66,7 @@ export class MisionesComponent implements OnInit {
     this.missionsService.getMissionsByOrganization(orgId).subscribe(
       (missions) => {
         this.data = missions;
-        this.initializeDataTable();  // Inicializar la tabla después de obtener los datos
+        this.initializeDataTable();
       },
       (error) => {
         console.error('Error al cargar misiones:', error);
@@ -63,7 +80,7 @@ export class MisionesComponent implements OnInit {
     }
 
     setTimeout(() => {
-      
+
       this.dataTable = $('#datatableMisiones').DataTable({
         pagingType: 'full_numbers',
         pageLength: 5,  // Ajustar a tus necesidades
@@ -127,8 +144,6 @@ export class MisionesComponent implements OnInit {
     }, 1);
   }
 
-
-
   // Cargar tipos de misión
   loadMissionTypes(): void {
     this.missionsService.getMissionTypes().subscribe(
@@ -181,8 +196,8 @@ export class MisionesComponent implements OnInit {
 
     this.missionsService.createMission(mission).subscribe(
       (response) => {
-        this.showToast();  // Mostrar el toast
-        this.closeModal();  // Cerrar el modal
+        this.showToast();
+        this.closeModal();
         this.loadMissions(mission.organizationId);
       },
       (error) => {
@@ -191,36 +206,53 @@ export class MisionesComponent implements OnInit {
     );
   }
 
-
   showToast(): void {
     const toastElement = document.getElementById('missionCreatedToast');
     if (toastElement) {
-      toastElement.classList.add('show');  // Mostrar el toast
+      toastElement.classList.add('show');
       setTimeout(() => {
-        toastElement.classList.remove('show');  // Ocultar el toast después de 3 segundos
+        toastElement.classList.remove('show');
       }, 3000);
     }
   }
 
-  closeModal(): void {
-    const modalElement = document.getElementById('VolunteerModal');
+  openModal(event: Event): void {
+    event.preventDefault();
+
+    // Abrir el modal de manera personalizada
+    const modalElement = document.getElementById('MissionModal');
     if (modalElement) {
-      modalElement.classList.remove('show');
-      modalElement.setAttribute('aria-hidden', 'true');
-      modalElement.style.display = 'none';
+      modalElement.style.display = 'block';  // Mostrar el modal
+      modalElement.classList.add('show');  // Agregar la clase que lo hace visible
+      document.body.classList.add('modal-open');  // Asegurarse de que el body esté en modo modal
 
-      // Eliminar el fondo oscuro del modal si está presente
-      const modalBackdrop = document.querySelector('.modal-backdrop');
-      if (modalBackdrop) {
-        modalBackdrop.remove();
-      }
-
-      // Restaurar el scroll de la página si fue bloqueado por el modal
-      document.body.style.overflow = '';  // Permitir el scroll normal en el cuerpo
+      // Esperar un breve momento para asegurar que el backdrop se haya generado
+      setTimeout(() => {
+        // Eliminar cualquier backdrop adicional que haya sido generado
+        const backdrops = document.querySelectorAll('.modal-backdrop');
+        if (backdrops.length > 1) {
+          backdrops.forEach((backdrop, index) => {
+            if (index > 0) backdrop.remove();  // Eliminar los backdrops adicionales, dejando solo el primero
+          });
+        }
+      }, 50);  // 50ms debería ser suficiente para esperar a que el backdrop aparezca
     }
   }
 
+  closeModal(): void {
+    const modalElement = document.getElementById('MissionModal');
+    if (modalElement) {
+      modalElement.style.display = 'none';  // Ocultar el modal
+      modalElement.classList.remove('show');  // Remover la clase que lo muestra
+      document.body.classList.remove('modal-open');  // Restaurar el estado del body
 
+      // Eliminar cualquier backdrop adicional
+      const backdrops = document.querySelectorAll('.modal-backdrop');
+      backdrops.forEach((backdrop) => {
+        backdrop.remove();
+      });
+    }
+  }
 
   // Restaurar la función 'details'
   details(missionId: number) {
@@ -239,5 +271,4 @@ export class MisionesComponent implements OnInit {
         return '';
     }
   }
-
 }

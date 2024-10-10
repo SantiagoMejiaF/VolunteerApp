@@ -9,4 +9,5 @@ export interface Organization {
     nit: string;
     address: string;
     requiredCertificationHours: number;
+    description: string;
 }

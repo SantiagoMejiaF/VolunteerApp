@@ -1,17 +1,13 @@
 <div class="container ">
     <div class="row">
-        <div class="col d-flex justify-content-between align-items-center  " id="tittle">
+        <div class="col d-flex justify-content-between align-items-center" id="tittle">
             <h2>Mis actividades programadas</h2>
-            
         </div>
     </div>
     <div class="row">
-
         <div class="col" id="tittle1">
-            
             <div class="table-container">
-
-                <table class="table  table-sm  hover" id="datatableActividadesC">
+                <table class="table table-sm hover" id="datatableActividadesC">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -20,27 +16,26 @@
                             <th>Dirección</th>
                             <th># voluntarios</th>
                             <th>Status</th>
-                            <th>Accion</th>
+                            <th>Acción</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let mision of data">
-                            <td class="text-left">{{ mision.id }}</td>
-                            <td>{{ mision.title }}</td>
-                            <td class="text-left">{{ mision.startDate }}</td>
-                            <td>{{ mision.address }}</td>
-                            <td class="text-left">{{ mision.noVolunteers }}</td>
+                        <tr *ngFor="let activity of data">
+                            <td class="text-left">{{ activity.id }}</td>
+                            <td>{{ activity.title }}</td>
+                            <td class="text-left">{{ activity.startDate }}</td>
+                            <td>{{ activity.address }}</td>
+                            <td class="text-left">{{ activity.noVolunteers }}</td>
                             <td>
-                                <span [ngClass]="getStatusClass(mision.status)">{{ mision.status }}</span>
-                              </td>
+                                <span [ngClass]="getStatusClass(activity.status)">{{ activity.status }}</span>
+                            </td>
                             <td>
-                                <a [routerLink]="['/verDetallesAxC']" [queryParams]="{ id: mision.id }"
+                                <a [routerLink]="['/verDetallesAxC']" [queryParams]="{ id: activity.id }"
                                     style="border: none; background: none;">
                                     <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
                                         onmouseover="this.style.color='#186dde';"
                                         onmouseout="this.style.color='#80777c';"></i>
                                 </a>
-                                
                             </td>
                         </tr>
                     </tbody>
@@ -49,6 +44,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Modal para Crear una nueva Misión -->
 <div class="modal fade" id="VolunteerModal" tabindex="-1" aria-labelledby="VolunteerModalLabel" aria-hidden="true">
