@@ -67,7 +67,7 @@ export class CoordinadoresComponent implements OnInit {
           callback: (response: any) => {
             if (response && response.access_token) {
               const tokenGoogle = new TokenDto(response.access_token);
-              this.oauthService.googleC(tokenGoogle).subscribe(
+              this.oauthService.google(tokenGoogle).subscribe(
                 (res) => {
                   const user = res.user;
                   console.log('User from backend (Google):', user);

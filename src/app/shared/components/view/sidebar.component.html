@@ -17,7 +17,7 @@
                 </a>
             </li>
             <!--*ngIf="userRole === 'SUPER_ADMIN'" -->
-            <li class="sidebar-item" *ngIf="userRole === 'SUPER_ADMIN'" >
+            <li class="sidebar-item" *ngIf="userRole === 'SUPER_ADMIN'">
                 <a class="sidebar-link" (click)="toggleMenu4()" *ngIf="userRole === 'SUPER_ADMIN'">
                     <i class="bi bi-clipboard2-heart" style="font-size: 1.2rem; color: #292C32;"></i>
                     <span>Gestión Usuarios</span>
@@ -35,8 +35,8 @@
                     </li>
                 </ul>
             </li>
-            
-            
+
+
 
             <!-- Para VOLUNTARIO *ngIf="userRole === 'VOLUNTARIO'"-->
             <li class="sidebar-item" *ngIf="userRole === 'VOLUNTARIO'">
@@ -95,7 +95,7 @@
             </li>
 
             <!-- Para COORDINADOR *ngIf="userRole === 'COORDINADOR'"-->
-            <li class="sidebar-item" *ngIf="userRole === 'COORDINADOR'">
+            <li class="sidebar-item" *ngIf="userRole === 'COORDINADOR_ACTIVIDAD'">
                 <a [routerLink]="'/misAC'" class="sidebar-link" title="Misiones" routerLinkActive="active">
                     <strong><i class="bi bi-calendar" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Actividades</span>

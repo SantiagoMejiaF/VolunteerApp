@@ -254,10 +254,15 @@ export class MisionesComponent implements OnInit {
     }
   }
 
-  // Restaurar la función 'details'
   details(missionId: number) {
+    // Guardar el missionId en el localStorage
+    console.log('Guardando missionId en localStorage:', missionId); // Agregar este log para verificar
+    localStorage.setItem('missionId', missionId.toString());
+
+    // Navegar a la pantalla de detalles de la misión
     this.router.navigate(['/detallesM'], { queryParams: { id: missionId } });
   }
+
 
   getStatusClass(status: string): string {
     switch (status) {

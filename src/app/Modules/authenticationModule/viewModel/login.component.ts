@@ -137,6 +137,9 @@ export class LoginComponent implements OnInit {
           );
         }
         break;
+      case 'COORDINADOR_ACTIVIDAD':
+        this.router.navigate(['/misAC']);
+        break;
       default:
         console.error('Unknown role type:', roleType);
     }
