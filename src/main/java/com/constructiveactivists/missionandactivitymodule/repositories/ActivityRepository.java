@@ -10,4 +10,5 @@ import java.util.List;
 public interface ActivityRepository extends JpaRepository<ActivityEntity, Integer> {
     List<ActivityEntity> findAllByActivityCoordinator(Integer coordinatorId);
     List<ActivityEntity> findByMissionId(Integer missionId);
+    List<ActivityEntity> findByIdIn(List<Integer> ids);
 }

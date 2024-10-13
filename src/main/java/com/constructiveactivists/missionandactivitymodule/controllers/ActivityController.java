@@ -82,5 +82,11 @@ public class ActivityController implements ActivityAPI {
         }
     }
 
+    @Override
+    public ResponseEntity<List<ActivityEntity>> getVolunteerActivities(@PathVariable Integer volunteerId) {
+        List<ActivityEntity> activities = activityService.getActivitiesByVolunteerId(volunteerId);
+        return ResponseEntity.ok(activities);
+    }
+
 
 }

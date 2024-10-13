@@ -4,7 +4,10 @@ import com.constructiveactivists.missionandactivitymodule.entities.activity.Acti
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupEntity;
+import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupMembershipEntity;
 import com.constructiveactivists.missionandactivitymodule.repositories.MissionRepository;
+import com.constructiveactivists.missionandactivitymodule.repositories.VolunteerGroupMembershipRepository;
+import com.constructiveactivists.missionandactivitymodule.repositories.VolunteerGroupRepository;
 import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupService;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.organizationmodule.repositories.ActivityCoordinatorRepository;
@@ -30,6 +33,8 @@ public class ActivityService {
     private final ActivityCoordinatorRepository activityCoordinatorRepository;
     private final QRCodeService qrCodeService;
     private final ReviewEmailService reviewEmailService;
+    private final VolunteerGroupMembershipRepository membershipRepository;
+    private final VolunteerGroupRepository groupRepository;
 
     public ActivityEntity save(ActivityEntity activity) {
 
@@ -104,6 +109,18 @@ public class ActivityService {
         } else {
             throw new EntityNotFoundException("Activity with id " + id + " not found");
         }
+    }
+
+    public List<ActivityEntity> getActivitiesByVolunteerId(Integer volunteerId) {
+        List<VolunteerGroupMembershipEntity> memberships = membershipRepository.findByVolunteerId(volunteerId);
+        List<Integer> groupIds = memberships.stream()
+                .map(VolunteerGroupMembershipEntity::getGroupId)
+                .toList();
+        List<VolunteerGroupEntity> groups = groupRepository.findByIdIn(groupIds);
+        List<Integer> activityIds = groups.stream()
+                .map(VolunteerGroupEntity::getActivity)
+                .toList();
+        return activityRepository.findByIdIn(activityIds);
     }
 
 

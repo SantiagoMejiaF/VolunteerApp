@@ -21,4 +21,5 @@ public class VolunteerGroupMembershipService {
         membership.setVolunteerId(volunteerId);
         volunteerGroupMembershipRepository.save(membership);
     }
+    
 }
