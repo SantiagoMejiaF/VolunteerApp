@@ -1,6 +1,7 @@
 package com.constructiveactivists.dashboardsandresportsmodule.controllers.response;
 
 import com.constructiveactivists.organizationmodule.entities.organization.enums.OrganizationTypeEnum;
+import com.constructiveactivists.organizationmodule.entities.organization.enums.SectorTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,4 +18,5 @@ public class CardsOrganizationVolunteerResponse {
     private OrganizationTypeEnum organizationType;
     private String photoUrl;
     private long authorizedVolunteersCount;
+    private SectorTypeEnum sector;
 }

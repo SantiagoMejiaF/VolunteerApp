@@ -181,7 +181,8 @@ public class DashboardVolunteerService {
                                     organization.get().getDescription(),
                                     organization.get().getOrganizationTypeEnum(),
                                     organizationPhoto,
-                                    authorizedVolunteers
+                                    authorizedVolunteers,
+                                    organization.get().getSectorTypeEnum()
                             );
                         }
                     }
