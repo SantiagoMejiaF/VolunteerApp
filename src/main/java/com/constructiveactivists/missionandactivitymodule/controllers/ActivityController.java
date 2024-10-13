@@ -88,5 +88,11 @@ public class ActivityController implements ActivityAPI {
         return ResponseEntity.ok(activities);
     }
 
+    @Override
+    public ResponseEntity<List<ActivityEntity>> getActivitiesByCoordinator(@PathVariable Integer coordinatorId) {
+        List<ActivityEntity> activities = activityService.findAllByActivityCoordinator(coordinatorId);
+        return ResponseEntity.ok(activities);
+    }
+
 
 }
