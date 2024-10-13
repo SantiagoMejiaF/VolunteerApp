@@ -75,4 +75,11 @@ public interface ActivityAPI {
     })
     @GetMapping("/volunteer/{volunteerId}")
     ResponseEntity<List<ActivityEntity>> getVolunteerActivities(@PathVariable Integer volunteerId);
+
+    @Operation(summary = "Obtener todas las actividades de un coordinador")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/coordinator/{coordinatorId}")
+    ResponseEntity<List<ActivityEntity>> getActivitiesByCoordinator(@PathVariable Integer coordinatorId);
 }
