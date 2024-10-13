@@ -13,4 +13,6 @@ public interface VolunteerGroupRepository extends JpaRepository<VolunteerGroupEn
     List<VolunteerGroupEntity> findByOrganizationId(Integer organizationId);
 
     Optional<VolunteerGroupEntity> findByActivity(Integer activity);
+
+    List<VolunteerGroupEntity> findByIdIn(List<Integer> ids);
 }

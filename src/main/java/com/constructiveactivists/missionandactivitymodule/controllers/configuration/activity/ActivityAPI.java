@@ -68,4 +68,11 @@ public interface ActivityAPI {
     })
     @DeleteMapping("/{id}")
     ResponseEntity<String> deleteActivity(@PathVariable Integer id);
+
+    @Operation(summary = "Obtener todas las actividades de un voluntario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/volunteer/{volunteerId}")
+    ResponseEntity<List<ActivityEntity>> getVolunteerActivities(@PathVariable Integer volunteerId);
 }
