@@ -39,5 +39,4 @@ public class VolunteerGroupController implements VolunteerGroupAPI {
         List<VolunteerGroupEntity> volunteerGroups = volunteerGroupService.getVolunteerGroupByOrganizationId(organizationId);
         return ResponseEntity.ok(volunteerGroups);
     }
-
 }

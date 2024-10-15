@@ -68,6 +68,4 @@ public class AuthenticationService {
         user.setRegistrationDate(java.time.LocalDate.now());
         return user;
     }
-
 }
-

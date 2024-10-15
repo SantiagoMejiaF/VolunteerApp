@@ -12,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @AllArgsConstructor
 @RequestMapping("${request-mapping.controller.review}")
@@ -29,7 +28,6 @@ public class ReviewController implements ReviewAPI {
         try {
             ReviewEntity createdReview = reviewService.createReviewForActivity(activityId, reviewMapper.toDomain(reviewRequest));
 
-            // Construir el HTML para el éxito
             String htmlResponse = buildSuccessHtml(createdReview);
 
             return ResponseEntity.status(HttpStatus.CREATED)
@@ -37,14 +35,12 @@ public class ReviewController implements ReviewAPI {
                     .body(htmlResponse);
 
         } catch (EntityNotFoundException e) {
-            // Construir el HTML para el caso en que la actividad no sea encontrada
             String errorHtml = buildErrorHtml("Actividad no encontrada", "La actividad con ID " + activityId + " no fue encontrada.");
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .contentType(MediaType.TEXT_HTML)
                     .body(errorHtml);
 
         } catch (IllegalStateException e) {
-            // Construir el HTML para el caso de error de reseña duplicada
             String errorHtml = buildErrorHtml("Reseña ya existente", "Esta actividad ya tiene una reseña.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .contentType(MediaType.TEXT_HTML)
@@ -134,8 +130,4 @@ public class ReviewController implements ReviewAPI {
                 "</body>" +
                 "</html>";
     }
-
-
-
-
 }

@@ -38,5 +38,4 @@ public class QRCodeService {
         String data = BASE_URL + "/attendances/google/auth/checkout?activityId=" + activityId;
         return generateQrCode(data);
     }
-
 }

@@ -60,8 +60,4 @@ public class ReviewService {
         review.setLikes(0);
         return reviewRepository.save(review);
     }
-
-
-
-
 }

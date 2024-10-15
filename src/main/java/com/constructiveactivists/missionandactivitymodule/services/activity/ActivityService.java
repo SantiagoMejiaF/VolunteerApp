@@ -99,13 +99,13 @@ public class ActivityService {
         });
     }
 
-    public ActivityEntity updateActivityStatus(Integer id, ActivityStatusEnum newStatus) {
+    public void updateActivityStatus(Integer id, ActivityStatusEnum newStatus) {
         Optional<ActivityEntity> activityOptional = activityRepository.findById(id);
 
         if (activityOptional.isPresent()) {
             ActivityEntity activity = activityOptional.get();
             activity.setActivityStatus(newStatus);
-            return activityRepository.save(activity);
+            activityRepository.save(activity);
         } else {
             throw new EntityNotFoundException("Activity with id " + id + " not found");
         }
@@ -122,7 +122,4 @@ public class ActivityService {
                 .toList();
         return activityRepository.findByIdIn(activityIds);
     }
-
-
-
 }
