@@ -37,12 +37,12 @@ public class VolunteerApprovalService {
     public void sendVolunteerApprovalResponse(Integer volunteerId, Integer organizationId, boolean approved) {
 
         VolunteerEntity volunteer = volunteerRepository.findById(volunteerId)
-                .orElseThrow(() -> new EntityNotFoundException("El voluntario con ID " + volunteerId + " " + AppConstants.NOT_FOUND_MESSAGE));
+                .orElseThrow(() -> new EntityNotFoundException("El voluntario con ID " + volunteerId + AppConstants.NOT_FOUND_MESSAGE));
         OrganizationEntity organization = organizationService.getOrganizationById(organizationId)
-                .orElseThrow(() -> new EntityNotFoundException("La organización con ID " + organizationId + " " + AppConstants.NOT_FOUND_MESSAGE));
+                .orElseThrow(() -> new EntityNotFoundException("La organización con ID " + organizationId +  AppConstants.NOT_FOUND_MESSAGE));
 
         UserEntity volunteerUser = userService.getUserById(volunteer.getUserId())
-                .orElseThrow(() -> new EntityNotFoundException("El usuario con ID " + volunteer.getUserId() + " " + AppConstants.NOT_FOUND_MESSAGE));
+                .orElseThrow(() -> new EntityNotFoundException("El usuario con ID " + volunteer.getUserId() +  AppConstants.NOT_FOUND_MESSAGE));
 
         VolunteerOrganizationEntity volunteerOrganizationInstance = volunteerOrganizationService.findByVolunteerIdAndOrganizationId(volunteerId, organizationId);
 
@@ -91,7 +91,7 @@ public class VolunteerApprovalService {
         );
     }
 
-    private void sendHtmlEmail(String to, String subject, String htmlContent, String imageName) {
+    void sendHtmlEmail(String to, String subject, String htmlContent, String imageName) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -107,8 +107,7 @@ public class VolunteerApprovalService {
 
             mailSender.send(message);
         } catch (MessagingException e) {
-            throw new BusinessException("Fallo al enviar el correo electrónico.", e);
+            throw new BusinessException("Error al enviar el correo electrónico", e);
         }
     }
 }
-

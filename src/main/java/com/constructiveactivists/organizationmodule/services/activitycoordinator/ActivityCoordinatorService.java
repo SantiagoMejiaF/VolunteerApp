@@ -27,12 +27,12 @@ import static com.constructiveactivists.configurationmodule.constants.AppConstan
 @AllArgsConstructor
 @Service
 public class ActivityCoordinatorService {
+
     private static final RoleType COORDINATOR_ROLE = RoleType.COORDINADOR_ACTIVIDAD;
     private final ActivityCoordinatorRepository activityCoordinatorRepository;
     private final UserService userService;
     private final ActivityService activityService;
     private final OrganizationService organizationService;
-
 
     public ActivityCoordinatorEntity save(ActivityCoordinatorEntity activityCoordinator, Integer userId) {
         UserEntity user = userService.getUserById(userId)
@@ -41,15 +41,14 @@ public class ActivityCoordinatorService {
         user.setAuthorizationType(AuthorizationStatus.AUTORIZADO);
         userService.saveUser(user);
         Optional<OrganizationEntity> organizationOpt = organizationService.getOrganizationById(activityCoordinator.getOrganizationId());
-        if (organizationOpt.isEmpty() || organizationOpt.get() == null) {
+        if (organizationOpt.isEmpty()) {
             throw new BusinessException("La organización con ID " + activityCoordinator.getOrganizationId() + " no existe.");
+        } else {
+            organizationOpt.get();
         }
         activityCoordinator.setUserId(userId);
         return activityCoordinatorRepository.save(activityCoordinator);
     }
-
-
-
 
     public Optional<ActivityCoordinatorEntity> getById(Integer id){
      return activityCoordinatorRepository.findById(id);
@@ -84,7 +83,7 @@ public class ActivityCoordinatorService {
                 .noneMatch(activity -> isTimeOverlap(activity, startTime, endTime));
     }
 
-    private boolean isTimeOverlap(ActivityEntity activity, LocalTime startTime, LocalTime endTime) {
+    boolean isTimeOverlap(ActivityEntity activity, LocalTime startTime, LocalTime endTime) {
         return activity.getStartTime().isBefore(endTime) && activity.getEndTime().isAfter(startTime);
     }
 
@@ -95,5 +94,4 @@ public class ActivityCoordinatorService {
     public Optional<ActivityCoordinatorEntity> getCoordinatorById(Integer id) {
         return activityCoordinatorRepository.findById(id);
     }
-
 }

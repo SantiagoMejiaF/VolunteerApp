@@ -1,6 +1,5 @@
 package com.constructiveactivists.externalservicesmodule.services;
 
-
 import com.constructiveactivists.externalservicesmodule.models.CityModel;
 import com.constructiveactivists.externalservicesmodule.models.DepartmentModel;
 import com.constructiveactivists.externalservicesmodule.models.LocalityModel;
@@ -15,7 +14,6 @@ import reactor.core.publisher.Mono;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-
 
 @Service
 public class LocationService {

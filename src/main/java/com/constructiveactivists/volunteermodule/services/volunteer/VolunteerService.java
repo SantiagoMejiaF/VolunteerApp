@@ -172,7 +172,7 @@ public class VolunteerService {
         volunteerGroupService.save(volunteerGroup);
     }
 
-    private void validateUserExists(Integer userId) {
+    void validateUserExists(Integer userId) {
         Optional<UserEntity> user = userService.getUserById(userId);
         if (user.isEmpty()) {
             throw new EntityNotFoundException("El usuario con ID " + userId + " no existe en la bd");

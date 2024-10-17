@@ -86,8 +86,4 @@ public class GoogleService {
 
         return (String) tokenResponse.get("access_token");
     }
-
-
-
-
 }

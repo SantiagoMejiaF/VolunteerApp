@@ -25,7 +25,6 @@ import java.util.Optional;
 
 import static com.constructiveactivists.configurationmodule.constants.AppConstants.*;
 
-
 @Service
 @AllArgsConstructor
 public class AttendanceService {
@@ -100,10 +99,6 @@ public class AttendanceService {
 
         volunteerService.addVolunteerHours(volunteerEntity.getId(), activityEntity.getRequiredHours());
         volunteerService.addVolunteerActivity(volunteerEntity.getId());
-
-        //verificar si el voluntario ya cumplió con las horas requeridas de la organizacion
-
-
     }
 
     private void registerCheckOut(String email, Integer activityId) {
@@ -124,10 +119,8 @@ public class AttendanceService {
             throw new AttendanceException("Check-out esta registrado");
         }
 
-        // Validar el tiempo de check-out
         checkOutTimeValidity(activityId);
 
-        // Obtener la hora actual en la zona horaria de Bogotá, Colombia
         ZoneId colombiaZoneId = ZoneId.of(ZONE_PLACE);
         ZonedDateTime nowInColombia = ZonedDateTime.now(colombiaZoneId);
         LocalTime checkOutTime = nowInColombia.toLocalTime();
@@ -187,6 +180,4 @@ public class AttendanceService {
             throw new AttendanceException("Check-out time not within allowed range.");
         }
     }
-
 }
-

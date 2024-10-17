@@ -1,9 +1,9 @@
 package com.constructiveactivists.missionandactivitymodule.entities.volunteergroup;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.Entity;
-
 
 @Entity
 @Getter
