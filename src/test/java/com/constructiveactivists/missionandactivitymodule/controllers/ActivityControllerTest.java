@@ -194,4 +194,60 @@ class ActivityControllerTest {
 
         verify(activityService, times(1)).deleteActivityById(1);
     }
+
+    @Test
+    void testGetCheckOutQrCode() {
+        byte[] mockQrCode = new byte[]{1, 2, 3};
+        when(activityService.getCheckOutQrCode(anyInt())).thenReturn(mockQrCode);
+
+        ResponseEntity<byte[]> response = activityController.getCheckOutQrCode(1);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertArrayEquals(mockQrCode, response.getBody());
+        assertEquals(MediaType.IMAGE_PNG, response.getHeaders().getContentType());
+
+        verify(activityService, times(1)).getCheckOutQrCode(1);
+    }
+
+    @Test
+    void testGetActivitiesByMissionId() {
+        when(activityService.getActivitiesByMissionId(anyInt())).thenReturn(List.of(mockActivity));
+
+        ResponseEntity<List<ActivityEntity>> response = activityController.getActivitiesByMissionId(1);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(1, response.getBody().size());
+        assertEquals("Plantación de árboles", response.getBody().get(0).getTitle());
+
+        verify(activityService, times(1)).getActivitiesByMissionId(1);
+    }
+
+    @Test
+    void testGetVolunteerActivities() {
+        when(activityService.getActivitiesByVolunteerId(anyInt())).thenReturn(List.of(mockActivity));
+
+        ResponseEntity<List<ActivityEntity>> response = activityController.getVolunteerActivities(101);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(1, response.getBody().size());
+        assertEquals("Plantación de árboles", response.getBody().get(0).getTitle());
+
+        verify(activityService, times(1)).getActivitiesByVolunteerId(101);
+    }
+
+    @Test
+    void testGetActivitiesByCoordinator() {
+        when(activityService.findAllByActivityCoordinator(anyInt())).thenReturn(List.of(mockActivity));
+
+        ResponseEntity<List<ActivityEntity>> response = activityController.getActivitiesByCoordinator(1);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(1, response.getBody().size());
+        assertEquals("Plantación de árboles", response.getBody().get(0).getTitle());
+
+        verify(activityService, times(1)).findAllByActivityCoordinator(1);
+    }
 }

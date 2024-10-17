@@ -132,7 +132,7 @@ public class VolunteerOrganizationService {
         return getVolunteersByOrganizationIdAndStatus(organizationId, OrganizationStatusEnum.RECHAZADO);
     }
 
-    private List<StatusVolunteerOrganizationResponse> getVolunteersByOrganizationIdAndStatus(Integer organizationId, OrganizationStatusEnum status) {
+    List<StatusVolunteerOrganizationResponse> getVolunteersByOrganizationIdAndStatus(Integer organizationId, OrganizationStatusEnum status) {
         List<Integer> volunteerOrganizationIds = volunteerOrganizationRepository.findByOrganizationId(organizationId)
                 .stream()
                 .map(VolunteerOrganizationEntity::getId)

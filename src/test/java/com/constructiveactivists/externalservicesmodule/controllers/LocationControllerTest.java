@@ -159,4 +159,76 @@ class LocationControllerTest {
 
         verify(locationService, times(1)).getLocalitiesByCity("Unknown");
     }
+
+    @Test
+    void testGetDepartmentIdByName_EmptyName() {
+        Mono<Optional<Integer>> result = locationController.getDepartmentIdByName("");
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, result::block);
+        assertTrue(exception.getMessage().contains("El nombre del departamento no puede estar vacío"));
+
+        verify(locationService, times(0)).getDepartmentIdByName(anyString());
+    }
+
+    @Test
+    void testGetCitiesByDepartment_NullDepartmentId() {
+        Mono<List<CityModel>> result = locationController.getCitiesByDepartment(null);
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, result::block);
+        assertTrue(exception.getMessage().contains("ID del departamento no válido"));
+
+        verify(locationService, times(0)).getCitiesByDepartment(any());
+    }
+
+    @Test
+    void testGetLocalitiesByCity_EmptyCityName() {
+        Mono<List<LocalityModel>> result = locationController.getLocalitiesByCity("");
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, result::block);
+        assertTrue(exception.getMessage().contains("El nombre de la ciudad no puede estar vacío"));
+
+        verify(locationService, times(0)).getLocalitiesByCity(anyString());
+    }
+
+    @Test
+    void testGetCitiesByDepartment_ZeroDepartmentId() {
+        Mono<List<CityModel>> result = locationController.getCitiesByDepartment(0);
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, result::block);
+        assertTrue(exception.getMessage().contains("ID del departamento no válido"));
+
+        verify(locationService, times(0)).getCitiesByDepartment(anyInt());
+    }
+
+    @Test
+    void testGetDepartmentIdByName_NullName() {
+        Mono<Optional<Integer>> result = locationController.getDepartmentIdByName(null);
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, result::block);
+        assertTrue(exception.getMessage().contains("El nombre del departamento no puede estar vacío"));
+
+        verify(locationService, times(0)).getDepartmentIdByName(anyString());
+    }
+
+    @Test
+    void testGetLocalitiesByCity_NullCityName() {
+        Mono<List<LocalityModel>> result = locationController.getLocalitiesByCity(null);
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, result::block);
+        assertTrue(exception.getMessage().contains("El nombre de la ciudad no puede estar vacío"));
+
+        verify(locationService, times(0)).getLocalitiesByCity(anyString());
+    }
+
+    @Test
+    void testGetCitiesByDepartment_ServiceError() {
+        when(locationService.getCitiesByDepartment(1)).thenReturn(Mono.error(new RuntimeException("Error en el servicio")));
+
+        Mono<List<CityModel>> result = locationController.getCitiesByDepartment(1);
+
+        BusinessException exception = assertThrows(BusinessException.class, result::block);
+        assertTrue(exception.getMessage().contains("Error al obtener las ciudades: Error en el servicio"));
+
+        verify(locationService, times(1)).getCitiesByDepartment(1);
+    }
 }

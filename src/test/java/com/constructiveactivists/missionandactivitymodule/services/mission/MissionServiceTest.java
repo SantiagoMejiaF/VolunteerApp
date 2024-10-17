@@ -3,10 +3,14 @@ package com.constructiveactivists.missionandactivitymodule.services.mission;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionStatusEnum;
+import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionTypeEnum;
+import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VisibilityEnum;
+import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VolunteerMissionRequirementsEnum;
 import com.constructiveactivists.missionandactivitymodule.repositories.MissionRepository;
 import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.organizationmodule.services.organization.OrganizationService;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -157,5 +161,92 @@ class MissionServiceTest {
 
         assertEquals(2, result.size());
         verify(missionRepository, times(1)).findByOrganizationId(1);
+    }
+
+    @Test
+    void testGetMissionTypes() {
+        List<MissionTypeEnum> missionTypes = missionService.getMissionTypes();
+
+        assertEquals(Arrays.asList(MissionTypeEnum.values()), missionTypes);
+    }
+
+    @Test
+    void testGetVisibilityOptions() {
+        List<VisibilityEnum> visibilityOptions = missionService.getVisibilityOptions();
+
+        assertEquals(Arrays.asList(VisibilityEnum.values()), visibilityOptions);
+    }
+
+    @Test
+    void testGetMissionStatusOptions() {
+        List<MissionStatusEnum> missionStatusOptions = missionService.getMissionStatusOptions();
+
+        assertEquals(Arrays.asList(MissionStatusEnum.values()), missionStatusOptions);
+    }
+
+    @Test
+    void testGetVolunteerRequirements() {
+        List<VolunteerMissionRequirementsEnum> volunteerRequirements = missionService.getVolunteerRequirements();
+
+        assertEquals(Arrays.asList(VolunteerMissionRequirementsEnum.values()), volunteerRequirements);
+    }
+
+    @Test
+    void testGetRequiredSkills() {
+        List<SkillEnum> requiredSkills = missionService.getRequiredSkills();
+
+        assertEquals(Arrays.asList(SkillEnum.values()), requiredSkills);
+    }
+
+    @Test
+    void testGetActivitiesByMissionId_Success() {
+        MissionEntity mission = new MissionEntity();
+        mission.setId(1);
+        ActivityEntity activity1 = new ActivityEntity();
+        activity1.setId(1);
+        ActivityEntity activity2 = new ActivityEntity();
+        activity2.setId(2);
+
+        when(missionRepository.findById(1)).thenReturn(Optional.of(mission));
+        when(activityService.getActivitiesByMissionId(1)).thenReturn(Arrays.asList(activity1, activity2));
+
+        List<ActivityEntity> activities = missionService.getActivitiesByMissionId(1);
+
+        assertEquals(2, activities.size());
+        verify(activityService, times(1)).getActivitiesByMissionId(1);
+    }
+
+    @Test
+    void testGetActivitiesByMissionId_NotFound() {
+        when(missionRepository.findById(999)).thenReturn(Optional.empty());
+
+        EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, () -> {
+            missionService.getActivitiesByMissionId(999);
+        });
+
+        assertEquals("Mission with ID 999 not found", thrown.getMessage());
+    }
+
+    @Test
+    void testGetAllActivitiesByOrganizationId() {
+        MissionEntity mission1 = new MissionEntity();
+        mission1.setId(1);
+        MissionEntity mission2 = new MissionEntity();
+        mission2.setId(2);
+
+        ActivityEntity activity1 = new ActivityEntity();
+        activity1.setId(1);
+        ActivityEntity activity2 = new ActivityEntity();
+        activity2.setId(2);
+
+        when(missionRepository.findByOrganizationId(1)).thenReturn(Arrays.asList(mission1, mission2));
+        when(activityService.getActivitiesByMissionId(1)).thenReturn(List.of(activity1));
+        when(activityService.getActivitiesByMissionId(2)).thenReturn(List.of(activity2));
+
+        List<ActivityEntity> activities = missionService.getAllActivitiesByOrganizationId(1);
+
+        assertEquals(2, activities.size());
+        verify(activityService, times(1)).getActivitiesByMissionId(1);
+        verify(activityService, times(1)).getActivitiesByMissionId(2);
     }
 }

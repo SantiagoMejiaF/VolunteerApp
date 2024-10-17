@@ -5,6 +5,7 @@ import com.constructiveactivists.missionandactivitymodule.entities.activity.Pers
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupEntity;
+import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupMembershipEntity;
 import com.constructiveactivists.missionandactivitymodule.repositories.*;
 import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupService;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
@@ -16,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,6 +34,15 @@ class ActivityServiceTest {
 
     @Mock
     private ActivityRepository activityRepository;
+
+    @Mock
+    private VolunteerGroupRepository groupRepository;
+
+    @Mock
+    private VolunteerGroupMembershipRepository membershipRepository;
+
+    @Mock
+    private QRCodeService qrCodeService;
 
     @Mock
     private ActivityCoordinatorRepository activityCoordinatorRepository;
@@ -189,5 +200,97 @@ class ActivityServiceTest {
 
         assertEquals("Activity with id 999 not found", thrown.getMessage());
         verify(activityRepository, times(1)).findById(999);
+    }
+
+    @Test
+    void testGetAllActivities() {
+        ActivityEntity activity1 = new ActivityEntity();
+        activity1.setId(1);
+        ActivityEntity activity2 = new ActivityEntity();
+        activity2.setId(2);
+
+        when(activityRepository.findAll()).thenReturn(List.of(activity1, activity2));
+
+        List<ActivityEntity> activities = activityService.getAll();
+
+        assertNotNull(activities);
+        assertEquals(2, activities.size());
+        verify(activityRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testFindAllByActivityCoordinator() {
+        ActivityEntity activity1 = new ActivityEntity();
+        activity1.setId(1);
+
+        when(activityRepository.findAllByActivityCoordinator(1)).thenReturn(List.of(activity1));
+
+        List<ActivityEntity> activities = activityService.findAllByActivityCoordinator(1);
+
+        assertNotNull(activities);
+        assertEquals(1, activities.size());
+        verify(activityRepository, times(1)).findAllByActivityCoordinator(1);
+    }
+
+    @Test
+    void testGetCheckInQrCode() {
+        byte[] qrCode = new byte[]{1, 2, 3};
+        when(qrCodeService.generateCheckInQrCode(1)).thenReturn(qrCode);
+
+        byte[] result = activityService.getCheckInQrCode(1);
+
+        assertNotNull(result);
+        assertArrayEquals(qrCode, result);
+        verify(qrCodeService, times(1)).generateCheckInQrCode(1);
+    }
+
+    @Test
+    void testGetCheckOutQrCode() {
+        byte[] qrCode = new byte[]{4, 5, 6};
+        when(qrCodeService.generateCheckOutQrCode(1)).thenReturn(qrCode);
+
+        byte[] result = activityService.getCheckOutQrCode(1);
+
+        assertNotNull(result);
+        assertArrayEquals(qrCode, result);
+        verify(qrCodeService, times(1)).generateCheckOutQrCode(1);
+    }
+
+    @Test
+    void testGetActivitiesByMissionId() {
+        ActivityEntity activity1 = new ActivityEntity();
+        activity1.setId(1);
+
+        when(activityRepository.findByMissionId(1)).thenReturn(List.of(activity1));
+
+        List<ActivityEntity> activities = activityService.getActivitiesByMissionId(1);
+
+        assertNotNull(activities);
+        assertEquals(1, activities.size());
+        verify(activityRepository, times(1)).findByMissionId(1);
+    }
+
+    @Test
+    void testGetActivitiesByVolunteerId() {
+        VolunteerGroupMembershipEntity membership = new VolunteerGroupMembershipEntity();
+        membership.setGroupId(1);
+
+        VolunteerGroupEntity group = new VolunteerGroupEntity();
+        group.setActivity(1);
+
+        ActivityEntity activity = new ActivityEntity();
+        activity.setId(1);
+
+        when(membershipRepository.findByVolunteerId(1)).thenReturn(List.of(membership));
+        when(groupRepository.findByIdIn(List.of(1))).thenReturn(List.of(group));
+        when(activityRepository.findByIdIn(List.of(1))).thenReturn(List.of(activity));
+
+        List<ActivityEntity> activities = activityService.getActivitiesByVolunteerId(1);
+
+        assertNotNull(activities);
+        assertEquals(1, activities.size());
+        verify(membershipRepository, times(1)).findByVolunteerId(1);
+        verify(groupRepository, times(1)).findByIdIn(List.of(1));
+        verify(activityRepository, times(1)).findByIdIn(List.of(1));
     }
 }

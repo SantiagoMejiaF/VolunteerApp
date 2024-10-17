@@ -23,5 +23,4 @@ public class PostulationController implements PostulationAPI {
         List<PostulationEntity> pendingPostulations = postulationService.getPendingPostulationsByOrganizationId(organizationId);
         return ResponseEntity.ok(pendingPostulations);
     }
-
 }

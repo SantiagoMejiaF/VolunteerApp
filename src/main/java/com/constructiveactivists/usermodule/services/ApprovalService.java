@@ -68,7 +68,7 @@ public class ApprovalService {
         sendHtmlEmail(user.getEmail(), subject, htmlMessage, "request-accepted.png");
     }
 
-    private void rejectUser(Integer userId, UserEntity user, StringBuilder userInfo) {
+    void rejectUser(Integer userId, UserEntity user, StringBuilder userInfo) {
         deleteUserData(userId);
 
         String subject = "Rechazo de Acceso a VolunteerApp";
@@ -99,7 +99,7 @@ public class ApprovalService {
         );
     }
 
-    private void sendHtmlEmail(String to, String subject, String htmlContent, String imageName) {
+    void sendHtmlEmail(String to, String subject, String htmlContent, String imageName) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -120,7 +120,7 @@ public class ApprovalService {
         }
     }
 
-    private void deleteUserData(Integer userId) {
+    void deleteUserData(Integer userId) {
         if (isVolunteer(userId)) {
             volunteerService.getVolunteerByUserId(userId)
                     .ifPresent(volunteer -> volunteerService.deleteVolunteer(volunteer.getId()));
@@ -132,11 +132,11 @@ public class ApprovalService {
         }
     }
 
-    private boolean isVolunteer(Integer userId) {
+    boolean isVolunteer(Integer userId) {
         return volunteerService.getVolunteerByUserId(userId).isPresent();
     }
 
-    private boolean isOrganization(Integer userId) {
+    boolean isOrganization(Integer userId) {
         return organizationService.getOrganizationByUserId(userId).isPresent();
     }
 }

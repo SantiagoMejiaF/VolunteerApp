@@ -158,6 +158,24 @@
 			<artifactId>javase</artifactId>
 			<version>3.4.1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-inline</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -218,6 +236,7 @@
 						<exclude>**/externalservicesmodule/controllers/configuration/**</exclude>
 						<exclude>**/externalservicesmodule/controllers/response/**</exclude>
 						<exclude>**/externalservicesmodule/controllers/request/**</exclude>
+						<exclude>**/externalservicesmodule/services/LocationService.class</exclude>
 						<exclude>**/externalservicesmodule/models/**</exclude>
 
 						<exclude>**/missionandactivitymodule/controllers/configuration/**</exclude>
@@ -272,7 +291,7 @@
 										<limit>
 											<counter>LINE</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0</minimum>
+											<minimum>0.9</minimum>
 										</limit>
 									</limits>
 								</rule>

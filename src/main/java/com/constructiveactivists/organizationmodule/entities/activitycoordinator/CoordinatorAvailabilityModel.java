@@ -10,10 +10,11 @@ import java.time.LocalTime;
 @Setter
 public class CoordinatorAvailabilityModel {
 
-
     private Integer organizationId;
-    private LocalDate date;
-    private LocalTime startTime;
-    private LocalTime endTime;
 
+    private LocalDate date;
+
+    private LocalTime startTime;
+
+    private LocalTime endTime;
 }

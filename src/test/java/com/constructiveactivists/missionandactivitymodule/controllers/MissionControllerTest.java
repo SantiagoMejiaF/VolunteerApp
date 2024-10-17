@@ -207,4 +207,28 @@ class MissionControllerTest {
         assertEquals(2, Objects.requireNonNull(response.getBody()).size());
         verify(missionService, times(1)).getAllActivitiesByOrganizationId(1);
     }
+
+    @Test
+    void testGetAllActivitiesByOrganizationId_InternalServerError() {
+
+        when(missionService.getAllActivitiesByOrganizationId(1)).thenThrow(new RuntimeException("Error inesperado"));
+
+        ResponseEntity<List<ActivityEntity>> response = missionController.getAllActivitiesByOrganizationId(1);
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+
+        verify(missionService, times(1)).getAllActivitiesByOrganizationId(1);
+    }
+
+    @Test
+    void testCancelMission_InternalServerError() {
+
+        doThrow(new RuntimeException("Error inesperado")).when(missionService).cancelMissionById(1);
+
+        ResponseEntity<Void> response = missionController.cancelMission(1);
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+
+        verify(missionService, times(1)).cancelMissionById(1);
+    }
 }
