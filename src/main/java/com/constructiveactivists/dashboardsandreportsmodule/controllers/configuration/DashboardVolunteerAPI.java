@@ -2,6 +2,7 @@ package com.constructiveactivists.dashboardsandreportsmodule.controllers.configu
 
 import com.constructiveactivists.dashboardsandreportsmodule.controllers.response.CardsOrganizationVolunteerResponse;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
+import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.InterestEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.Month;
 import java.util.List;
 import java.util.Map;
 
@@ -77,4 +79,18 @@ public interface DashboardVolunteerAPI {
     })
     @GetMapping("/foundations/{volunteerId}")
     ResponseEntity<List<CardsOrganizationVolunteerResponse>> getFoundationsByVolunteerId(@PathVariable Integer volunteerId);
+
+    @Operation(summary = "Obtener los 10 voluntarios más recientes")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+    })
+    @GetMapping("/recent-volunteers")
+    ResponseEntity<List<VolunteerEntity>> getTenRecentVolunteers();
+
+    @Operation(summary = "Obtener la cantidad de voluntarios por mes en un año")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+    })
+    @GetMapping("/volunteers-count-by-month/{year}")
+    ResponseEntity<Map<Month, Long>> getVolunteersCountByMonth(@PathVariable int year);
 }

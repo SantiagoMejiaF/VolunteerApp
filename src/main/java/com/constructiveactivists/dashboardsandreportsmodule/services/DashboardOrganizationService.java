@@ -18,10 +18,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.YearMonth;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.constructiveactivists.configurationmodule.constants.AppConstants.NOT_FOUND_MESSAGE;
@@ -92,5 +92,24 @@ public class DashboardOrganizationService {
         return volunteerOrganizations.stream()
                 .filter(volunteerOrg -> postulatedVolunteerIds.contains(volunteerOrg.getId()))
                 .toList();
+    }
+
+    public List<OrganizationEntity> getTenRecentOrganizations() {
+        return organizationService.getTenRecentOrganizations();
+    }
+
+    public Map<Month, Long> getOrganizationsCountByMonth(int year) {
+        LocalDateTime startDateTime = LocalDateTime.of(year, Month.JANUARY, 1, 0, 0);
+        LocalDateTime endDateTime = LocalDateTime.of(year, Month.DECEMBER, 31, 23, 59, 59);
+        List<OrganizationEntity> organizations = organizationService.getOrganizationsByDateRange(startDateTime, endDateTime);
+        Map<Month, Long> organizationsByMonth = new EnumMap<>(Month.class);
+        for (Month month : Month.values()) {
+            organizationsByMonth.put(month, 0L);
+        }
+        organizations.forEach(o -> {
+            Month month = o.getRegistrationDate().getMonth();
+            organizationsByMonth.merge(month, 1L, Long::sum);
+        });
+        return organizationsByMonth;
     }
 }

@@ -1,12 +1,13 @@
 package com.constructiveactivists.dashboardsandreportsmodule.controllers.configuration;
 
-import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
+import com.constructiveactivists.usermodule.entities.UserEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+
 
 import java.util.List;
 import java.util.Map;
@@ -37,11 +38,11 @@ public interface DashboardSuperAdminAPI {
     @GetMapping("/average-monthly-hours/all")
     ResponseEntity<Double> getAverageMonthlyHoursAllVolunteers();
 
-    @Operation(summary = "Obtener los voluntarios más recientes por semana")
+    @Operation(summary = "Obtener los 10 usuarios autorizados más recientes")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa"),
-            @ApiResponse(responseCode = "204", description = "No se encontraron voluntarios")
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    @GetMapping("/recent-volunteers/week")
-    ResponseEntity<List<PostulationEntity>> getRecentVolunteersByWeek();
+    @GetMapping("/recent-authorized-users")
+    ResponseEntity<List<UserEntity>> getTenRecentAuthorizedUsers();
 }
