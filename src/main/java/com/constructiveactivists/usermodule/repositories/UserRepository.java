@@ -15,6 +15,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     Optional<UserEntity> findByEmail(String email);
 
+    List<UserEntity> findTop10ByAuthorizationTypeOrderByRegistrationDateDesc(AuthorizationStatus authorizationType);
+
     @Query("SELECT u FROM UserEntity u WHERE u.authorizationType = :authorizationStatus")
     List<UserEntity> findByAuthorizationStatus(@Param("authorizationStatus") AuthorizationStatus authorizationStatus);
 }

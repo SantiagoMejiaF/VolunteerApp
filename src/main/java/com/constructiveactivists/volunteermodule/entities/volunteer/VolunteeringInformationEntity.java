@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -51,4 +52,7 @@ public class VolunteeringInformationEntity {
             schema = "MODULO_GESTION_VOLUNTARIOS")
     @Column(name = "HABILIDADES")
     private List<SkillEnum> skillsList;
+
+    @Column(name = "FECHA_REGISTRO", nullable = false)
+    private LocalDateTime registrationDate;
 }

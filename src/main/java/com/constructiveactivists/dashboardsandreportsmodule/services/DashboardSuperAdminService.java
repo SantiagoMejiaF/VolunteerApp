@@ -2,16 +2,16 @@ package com.constructiveactivists.dashboardsandreportsmodule.services;
 
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
-import com.constructiveactivists.volunteermodule.entities.volunteer.enums.OrganizationStatusEnum;
+import com.constructiveactivists.usermodule.entities.UserEntity;
+import com.constructiveactivists.usermodule.entities.enums.AuthorizationStatus;
+import com.constructiveactivists.usermodule.repositories.UserRepository;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.DataShareVolunteerOrganizationEntity;
-import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
+import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.DataShareVolunteerOrganizationService;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.PostulationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.DayOfWeek;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,6 +23,8 @@ public class DashboardSuperAdminService {
     private final ActivityService activityService;
     private final DataShareVolunteerOrganizationService dataShareVolunteerOrganizationService;
     private final PostulationService postulationService;
+    private final VolunteerRepository volunteerRepository;
+    private final UserRepository userRepository;
 
     public Map<String, Long> getActivityLocalitiesWithFrequency() {
         List<ActivityEntity> activities = activityService.getAll();
@@ -45,15 +47,7 @@ public class DashboardSuperAdminService {
                 .collect(Collectors.averagingDouble(DataShareVolunteerOrganizationEntity::getMonthlyHours));
     }
 
-    public List<PostulationEntity> getRecentVolunteersByWeek() {
-        List<PostulationEntity> postulationEntities = postulationService.findAll();
-        return postulationEntities.stream()
-                .filter(entity -> OrganizationStatusEnum.ACEPTADO.equals(entity.getStatus()))
-                .collect(Collectors.groupingBy(entity -> entity.getRegistrationDate().with(DayOfWeek.MONDAY)))
-                .entrySet().stream()
-                .flatMap(entry -> entry.getValue().stream()
-                        .sorted(Comparator.comparing(PostulationEntity::getRegistrationDate).reversed())
-                        .limit(1))
-                .toList();
+    public List<UserEntity> getTenRecentAuthorizedUsers() {
+        return userRepository.findTop10ByAuthorizationTypeOrderByRegistrationDateDesc(AuthorizationStatus.AUTORIZADO);
     }
 }

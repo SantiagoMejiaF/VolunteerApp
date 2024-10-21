@@ -24,7 +24,9 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -197,4 +199,31 @@ public class DashboardVolunteerService {
         List<Integer> organizationIds = volunteerOrganizationService.getOrganizationIdsByVolunteerId(volunteerId);
         return postulationService.countAuthorizedVolunteersByOrganizationIds(organizationIds);
     }
+
+    public List<VolunteerEntity> getTenRecentVolunteers() {
+        List<VolunteerEntity> volunteerEntities = volunteerService.getAllVolunteers();
+        return volunteerEntities.stream()
+                .sorted(Comparator.comparing(v -> v.getVolunteeringInformation().getRegistrationDate(), Comparator.reverseOrder()))
+                .limit(10)
+                .toList();
+    }
+
+    public Map<Month, Long> getVolunteersCountByMonth(int year) {
+        LocalDateTime startDateTime = LocalDateTime.of(year, Month.JANUARY, 1, 0, 0);
+        LocalDateTime endDateTime = LocalDateTime.of(year, Month.DECEMBER, 31, 23, 59, 59);
+        List<VolunteerEntity> volunteers = volunteerService.getVolunteersByDateRange(startDateTime, endDateTime);
+        Map<Month, Long> volunteersByMonth = new EnumMap<>(Month.class);
+        for (Month month : Month.values()) {
+            volunteersByMonth.put(month, 0L);
+        }
+        volunteers.forEach(v -> {
+            Month month = v.getVolunteeringInformation().getRegistrationDate().getMonth();
+            volunteersByMonth.merge(month, 1L, Long::sum);
+        });
+
+        return volunteersByMonth;
+    }
+
+
+
 }

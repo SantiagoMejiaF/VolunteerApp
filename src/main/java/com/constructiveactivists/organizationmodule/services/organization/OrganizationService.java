@@ -15,6 +15,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -65,6 +66,7 @@ public class OrganizationService {
                     " ya tiene un rol asignado");
         }
         userService.updateUserRoleType(organizationEntity.getUserId(), RoleType.ORGANIZACION);
+        organizationEntity.setRegistrationDate(LocalDateTime.now());
         return organizationRepository.save(organizationEntity);
     }
 
@@ -96,4 +98,13 @@ public class OrganizationService {
     public void rejectVolunteer(Integer volunteerOrganizationId) {
         postulationService.updateStatusRefuse(volunteerOrganizationId);
     }
+
+    public List<OrganizationEntity> getTenRecentOrganizations() {
+        return organizationRepository.findTop10ByOrderByRegistrationDateDesc();
+    }
+
+    public List<OrganizationEntity> getOrganizationsByDateRange(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        return organizationRepository.findByRegistrationYear(startDateTime, endDateTime);
+    }
+
 }

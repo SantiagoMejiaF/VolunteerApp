@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -53,4 +55,7 @@ public class OrganizationEntity {
 
     @Column(name = "Descripcion", length = 100, nullable = false)
     private String description;
+
+    @Column(name = "FECHA_REGISTRO", nullable = false)
+    private LocalDateTime registrationDate;
 }

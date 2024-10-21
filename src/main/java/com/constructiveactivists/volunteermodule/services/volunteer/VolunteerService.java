@@ -24,6 +24,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.*;
 
@@ -63,6 +64,7 @@ public class VolunteerService {
         int age = calculateAge(volunteerEntity.getPersonalInformation().getBornDate());
         volunteerEntity.getPersonalInformation().setAge(age);
         volunteerEntity.getVolunteeringInformation().setVolunteeredTotalHours(0);
+        volunteerEntity.getVolunteeringInformation().setRegistrationDate(LocalDateTime.now());
         userService.updateUserRoleType(volunteerEntity.getUserId(), RoleType.VOLUNTARIO);
         volunteerEntity.getVolunteeringInformation().setVolunteerType(VolunteerType.valueOf("VOLUNTARIO"));
         return volunteerRepository.save(volunteerEntity);
@@ -211,4 +213,9 @@ public class VolunteerService {
             throw new BusinessException("La edad del voluntario no puede exceder los " + MAXIMUM_AGE + " años.");
         }
     }
+
+    public List<VolunteerEntity> getVolunteersByDateRange(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        return volunteerRepository.findByRegistrationYear(startDateTime, endDateTime);
+    }
+
 }

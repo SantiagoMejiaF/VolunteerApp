@@ -5,6 +5,7 @@ import com.constructiveactivists.dashboardsandreportsmodule.controllers.response
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.dashboardsandreportsmodule.controllers.configuration.DashboardVolunteerAPI;
 import com.constructiveactivists.dashboardsandreportsmodule.services.DashboardVolunteerService;
+import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.InterestEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Month;
 import java.util.List;
 import java.util.Map;
 
@@ -75,5 +77,21 @@ public class DashboardVolunteerController implements DashboardVolunteerAPI {
     public ResponseEntity<List<CardsOrganizationVolunteerResponse>> getFoundationsByVolunteerId(@PathVariable Integer volunteerId) {
         List<CardsOrganizationVolunteerResponse> foundations = dashboardService.getFoundationsByVolunteerId(volunteerId);
         return ResponseEntity.ok(foundations);
+    }
+
+    @Override
+    public ResponseEntity<List<VolunteerEntity>> getTenRecentVolunteers() {
+        try {
+            List<VolunteerEntity> recentVolunteers = dashboardService.getTenRecentVolunteers();
+            return ResponseEntity.ok(recentVolunteers);
+        } catch (BusinessException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @Override
+    public ResponseEntity<Map<Month, Long>> getVolunteersCountByMonth(@PathVariable int year) {
+        Map<Month, Long> volunteersByMonth = dashboardService.getVolunteersCountByMonth(year);
+        return ResponseEntity.ok(volunteersByMonth);
     }
 }

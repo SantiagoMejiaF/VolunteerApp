@@ -2,7 +2,7 @@ package com.constructiveactivists.dashboardsandreportsmodule.controllers;
 
 import com.constructiveactivists.dashboardsandreportsmodule.controllers.configuration.DashboardSuperAdminAPI;
 import com.constructiveactivists.dashboardsandreportsmodule.services.DashboardSuperAdminService;
-import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
+import com.constructiveactivists.usermodule.entities.UserEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,11 +41,14 @@ public class DashboardSuperAdminController implements DashboardSuperAdminAPI {
     }
 
     @Override
-    public ResponseEntity<List<PostulationEntity>> getRecentVolunteersByWeek() {
-        List<PostulationEntity> recentVolunteersByWeek = dashboardSuperAdminService.getRecentVolunteersByWeek();
-        if (recentVolunteersByWeek.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<List<UserEntity>> getTenRecentAuthorizedUsers() {
+        try {
+            List<UserEntity> recentUsers = dashboardSuperAdminService.getTenRecentAuthorizedUsers();
+            return ResponseEntity.ok(recentUsers);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        return new ResponseEntity<>(recentVolunteersByWeek, HttpStatus.OK);
     }
+
+
 }
