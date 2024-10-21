@@ -3,7 +3,7 @@ package com.constructiveactivists.configurationmodule.constants;
 public final class AppConstants {
 
     public static final String ORGANIZATION_MESSAGE_ID = "La organización con el ID ";
-    public static final String VOLUNTEER_MESSAGE_ID = "La organización con el ID ";
+    public static final String VOLUNTEER_MESSAGE_ID = "El voluntario con el ID ";
     public static final String COORDINATOR_MESSAGE_ID = "El coordinador con el ID ";
     public static final String MISSION_MEESAGE_ID = "La misión con el ID: ";
     public static final String NOT_FOUND_MESSAGE = " no existe en la base de datos.";

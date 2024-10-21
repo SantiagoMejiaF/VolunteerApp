@@ -3,6 +3,7 @@ package com.constructiveactivists.dashboardsandreportsmodule.services;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.services.mission.MissionService;
+import com.constructiveactivists.organizationmodule.controllers.OrganizationController;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.organizationmodule.services.organization.OrganizationService;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.DataShareVolunteerOrganizationEntity;
@@ -23,8 +24,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.*;
 
 import static com.constructiveactivists.configurationmodule.constants.AppConstants.NOT_FOUND_MESSAGE;
 import static com.constructiveactivists.configurationmodule.constants.AppConstants.ORGANIZATION_MESSAGE_ID;
@@ -54,7 +56,6 @@ class DashboardOrganizationServiceTest {
 
     @Mock
     private DataShareVolunteerOrganizationService dataShareVolunteerOrganizationService;
-
     private OrganizationEntity organization;
     private UserEntity user;
 
@@ -188,5 +189,44 @@ class DashboardOrganizationServiceTest {
 
         assertEquals(ORGANIZATION_MESSAGE_ID + organizationId + NOT_FOUND_MESSAGE, exception.getMessage());
         verify(organizationService, times(1)).getOrganizationById(organizationId);
+    }
+
+    @Test
+    void testGetTenRecentOrganizations() {
+        // Arrange
+        List<OrganizationEntity> expectedOrganizations = Arrays.asList(
+                new OrganizationEntity(), new OrganizationEntity(), new OrganizationEntity(),
+                new OrganizationEntity(), new OrganizationEntity(), new OrganizationEntity(),
+                new OrganizationEntity(), new OrganizationEntity(), new OrganizationEntity(),
+                new OrganizationEntity()
+        );
+        when(organizationService.getTenRecentOrganizations()).thenReturn(expectedOrganizations);
+        List<OrganizationEntity> actualOrganizations = dashboardOrganizationService.getTenRecentOrganizations();
+        assertEquals(expectedOrganizations, actualOrganizations);
+        verify(organizationService, times(1)).getTenRecentOrganizations(); }
+
+    @Test
+    void testGetOrganizationsCountByMonth() {
+        int year = 2024;
+        LocalDateTime startDateTime = LocalDateTime.of(year, Month.JANUARY, 1, 0, 0);
+        LocalDateTime endDateTime = LocalDateTime.of(year, Month.DECEMBER, 31, 23, 59, 59);
+        OrganizationEntity org1 = new OrganizationEntity();
+        org1.setRegistrationDate(LocalDateTime.of(year, Month.JANUARY, 15, 0, 0)); // Enero
+        OrganizationEntity org2 = new OrganizationEntity();
+        org2.setRegistrationDate(LocalDateTime.of(year, Month.FEBRUARY, 5, 0, 0)); // Febrero
+        OrganizationEntity org3 = new OrganizationEntity();
+        org3.setRegistrationDate(LocalDateTime.of(year, Month.JANUARY, 20, 0, 0)); // Enero
+        List<OrganizationEntity> organizations = Arrays.asList(org1, org2, org3);
+        Map<Month, Long> expectedCounts = new EnumMap<>(Month.class);
+        for (Month month : Month.values()) {
+            expectedCounts.put(month, 0L);
+        }
+        expectedCounts.put(Month.JANUARY, 2L);
+        expectedCounts.put(Month.FEBRUARY, 1L);
+        when(organizationService.getOrganizationsByDateRange(startDateTime, endDateTime))
+                .thenReturn(organizations);
+        Map<Month, Long> actualCounts = dashboardOrganizationService.getOrganizationsCountByMonth(year);
+        assertEquals(expectedCounts, actualCounts);
+        verify(organizationService, times(1)).getOrganizationsByDateRange(startDateTime, endDateTime);
     }
 }
