@@ -24,7 +24,6 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.*;
@@ -121,7 +120,7 @@ public class DashboardVolunteerService {
 
     public ActivityEntity getNextActivityForVolunteer(Integer volunteerId) {
         Optional <VolunteerEntity> volunteer = volunteerService.getVolunteerById(volunteerId);
-        if (volunteer.isPresent()) {
+        if (volunteer.isEmpty()) {
             throw new EntityNotFoundException(VOLUNTEER_MESSAGE_ID + volunteerId + NOT_FOUND_MESSAGE);
         }
 
@@ -152,31 +151,19 @@ public class DashboardVolunteerService {
                 .orElse(null);
     }
 
-    // Método para obtener las fundaciones con todos los datos necesarios
     public List<CardsOrganizationVolunteerResponse> getFoundationsByVolunteerId(Integer volunteerId) {
-        // Paso 1: Obtener las organizaciones a las que pertenece el voluntario
         List<VolunteerOrganizationEntity> volunteerOrganizations = volunteerOrganizationService.getOrganizationsByVolunteerId(volunteerId);
-
-        // Paso 2: Recorrer las organizaciones y filtrar solo aquellas que están aceptadas
         return volunteerOrganizations.stream()
                 .map(volunteerOrg -> {
-                    // Obtener la organización
                     Optional<OrganizationEntity> organization = organizationRepository.findById(volunteerOrg.getOrganizationId());
 
-                    // Verificar si la organización está presente
                     if (organization.isPresent()) {
-                        // Obtener el usuario asociado a la organización
                         Optional<UserEntity> userEntity = userService.getUserById(organization.get().getUserId());
                         String organizationPhoto = userEntity.map(UserEntity::getImage).orElse(null);
 
-                        // Obtener el estado de postulación
                         Optional<PostulationEntity> postulation = Optional.ofNullable(postulationService.findById(volunteerOrg.getId()));
-
-                        // Verificar si la postulación está aceptada
                         if (postulation.map(PostulationEntity::getStatus).orElse(null) == OrganizationStatusEnum.ACEPTADO) {
                             long authorizedVolunteers = this.countAuthorizedVolunteersByVolunteerId(volunteerId);
-
-                            // Retornar la respuesta
                             return new CardsOrganizationVolunteerResponse(
                                     organization.get().getId(),
                                     organization.get().getOrganizationName(),
@@ -188,10 +175,10 @@ public class DashboardVolunteerService {
                             );
                         }
                     }
-                    return null; // Retornar null si la organización no está presente o no está aceptada
+                    return null;
                 })
-                .filter(Objects::nonNull) // Filtrar los resultados nulos
-                .toList(); // Convertir a lista
+                .filter(Objects::nonNull)
+                .toList();
     }
 
 
@@ -220,10 +207,7 @@ public class DashboardVolunteerService {
             Month month = v.getVolunteeringInformation().getRegistrationDate().getMonth();
             volunteersByMonth.merge(month, 1L, Long::sum);
         });
-
         return volunteersByMonth;
     }
-
-
 
 }

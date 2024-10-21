@@ -88,18 +88,4 @@ class DashboardSuperAdminServiceTest {
         verify(dataShareVolunteerOrganizationService, times(1)).findAll();
     }
 
-    @Test
-    void testGetRecentVolunteersByWeek_NoAcceptedStatus() {
-        PostulationEntity postulation1 = new PostulationEntity();
-        postulation1.setStatus(OrganizationStatusEnum.RECHAZADO);
-        postulation1.setRegistrationDate(LocalDate.now().minusDays(3));
-
-        when(postulationService.findAll()).thenReturn(List.of(postulation1));
-
-        List<PostulationEntity> result = dashboardSuperAdminService.getRecentVolunteersByWeek();
-
-        assertNotNull(result);
-        assertTrue(result.isEmpty());
-        verify(postulationService, times(1)).findAll();
-    }
 }

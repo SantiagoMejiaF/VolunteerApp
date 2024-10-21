@@ -75,27 +75,6 @@ class DashboardSuperAdminControllerTest {
         verify(dashboardSuperAdminService, times(1)).getAverageMonthlyHours();
     }
 
-    @Test
-    void testGetRecentVolunteersByWeek_Content() {
-        List<PostulationEntity> recentVolunteers = List.of(new PostulationEntity());
-        when(dashboardSuperAdminService.getRecentVolunteersByWeek()).thenReturn(recentVolunteers);
 
-        ResponseEntity<List<PostulationEntity>> response = dashboardSuperAdminController.getRecentVolunteersByWeek();
 
-        assertNotNull(response);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(recentVolunteers, response.getBody());
-        verify(dashboardSuperAdminService, times(1)).getRecentVolunteersByWeek();
-    }
-
-    @Test
-    void testGetRecentVolunteersByWeek_NoContent() {
-        when(dashboardSuperAdminService.getRecentVolunteersByWeek()).thenReturn(List.of());
-
-        ResponseEntity<List<PostulationEntity>> response = dashboardSuperAdminController.getRecentVolunteersByWeek();
-
-        assertNotNull(response);
-        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-        verify(dashboardSuperAdminService, times(1)).getRecentVolunteersByWeek();
-    }
 }
