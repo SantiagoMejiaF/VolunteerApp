@@ -3,6 +3,7 @@ package com.constructiveactivists.missionandactivitymodule.controllers.request.m
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionTypeEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VisibilityEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VolunteerMissionRequirementsEnum;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.InterestEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -59,4 +60,8 @@ public class MissionRequest {
     @NotNull
     @Schema(description = "Lista de habilidades requeridas para la misión", example = "[\"TRABAJO_EN_EQUIPO\", \"COMUNICACION\", \"LIDERAZGO\"]")
     private List<SkillEnum> requiredSkillsList;
+
+    @NotNull
+    @Schema(description = "Lista de intereses requeridos para la misión", example = "[\"MEDIO_AMBIENTE\", \"SALUD\", \"EDUCACION\"]")
+    private List<InterestEnum> requiredInterestsList;
 }

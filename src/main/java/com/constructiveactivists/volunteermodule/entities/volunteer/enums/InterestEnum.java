@@ -13,5 +13,6 @@ public enum InterestEnum {
     ADULTOS_MAYORES,
     DISCAPACIDAD,
     EMERGENCIA,
+    TECNOLOGIA,
     OTRO
 }

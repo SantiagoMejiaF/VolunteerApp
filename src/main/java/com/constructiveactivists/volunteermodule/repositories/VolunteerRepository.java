@@ -12,7 +12,9 @@ import java.util.Optional;
 
 @Repository
 public interface VolunteerRepository extends JpaRepository<VolunteerEntity, Integer> {
+
     @Query("SELECT v FROM VolunteerEntity v WHERE v.volunteeringInformation.registrationDate >= :startDate AND v.volunteeringInformation.registrationDate < :endDate")
     List<VolunteerEntity> findByRegistrationYear(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+
     Optional<VolunteerEntity> findByUserId(Integer userId);
 }

@@ -2,6 +2,7 @@ package com.constructiveactivists.volunteermodule.controllers.configuration;
 
 import com.constructiveactivists.volunteermodule.controllers.request.volunteer.VolunteerRequest;
 import com.constructiveactivists.volunteermodule.controllers.request.volunteer.VolunteerUpdateRequest;
+import com.constructiveactivists.volunteermodule.controllers.response.RankedOrganizationResponse;
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.InterestEnum;
@@ -130,4 +131,13 @@ public interface VolunteerAPI {
     })
     @PostMapping("/{volunteerId}/activities/{activityId}/signup")
     ResponseEntity<Void> signUpForActivity(@PathVariable("volunteerId") Integer volunteerId, @PathVariable("activityId") Integer activityId);
+
+    @Operation(summary = "Realizar un match entre un voluntario y las organizaciones basadas en intereses y habilidades")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "404", description = "Voluntario no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
+    @GetMapping("/{volunteerId}/match-organizations")
+    ResponseEntity<List<RankedOrganizationResponse>> matchVolunteerWithOrganizations(@PathVariable("volunteerId") Integer volunteerId);
 }

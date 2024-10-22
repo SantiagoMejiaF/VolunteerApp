@@ -34,7 +34,6 @@ public class ReviewEntity {
     @Comment("URL de imágenes asociadas a la reseña")
     private List<String> imageUrls;
 
-
     @Comment("Fecha de creación de la reseña")
     @Column(name = "FECHA_CREACION", nullable = false)
     private LocalDate creationDate;
@@ -46,5 +45,4 @@ public class ReviewEntity {
     @Column(name = "CALIFICACION", columnDefinition = "INTEGER", nullable = false)
     @Comment("Calificación de la reseña")
     private Integer rating;
-
 }

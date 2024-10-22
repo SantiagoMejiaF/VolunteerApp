@@ -4,6 +4,7 @@ import com.constructiveactivists.missionandactivitymodule.entities.mission.enums
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionTypeEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VisibilityEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VolunteerMissionRequirementsEnum;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.InterestEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class MissionEntity {
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 
-    @Column(name = "CREATED_AT", columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
+    @Column(name = "FECHA DE CREACION", columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
     @Comment("Fecha de creación de la misión")
     private LocalDateTime createdAt;
 
@@ -81,6 +82,13 @@ public class MissionEntity {
             schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
     @Column(name = "HABILIDADES")
     private List<SkillEnum> requiredSkillsList;
+
+    @ElementCollection(targetClass = InterestEnum.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "INTERESES_REQUERIDOS", joinColumns = @JoinColumn(name = "MISSION_ID"),
+            schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
+    @Column(name = "INTERESES")
+    private List<InterestEnum> requiredInterestsList;
 
     @PrePersist
     protected void onCreate() {

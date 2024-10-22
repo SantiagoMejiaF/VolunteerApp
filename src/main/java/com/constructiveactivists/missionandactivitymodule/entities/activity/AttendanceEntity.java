@@ -32,5 +32,4 @@ public class AttendanceEntity {
     @Column(name = "HORA_FIN_ASISTENCIA", columnDefinition = "TIME")
     @Comment("Hora en que el voluntario registró su asistencia de fin")
     private LocalTime checkOutTime;
-
 }

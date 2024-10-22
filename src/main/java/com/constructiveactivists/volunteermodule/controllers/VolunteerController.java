@@ -3,14 +3,17 @@ package com.constructiveactivists.volunteermodule.controllers;
 import com.constructiveactivists.volunteermodule.controllers.configuration.VolunteerAPI;
 import com.constructiveactivists.volunteermodule.controllers.request.volunteer.VolunteerRequest;
 import com.constructiveactivists.volunteermodule.controllers.request.volunteer.VolunteerUpdateRequest;
+import com.constructiveactivists.volunteermodule.controllers.response.RankedOrganizationResponse;
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.InterestEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.RelationshipEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
+import com.constructiveactivists.volunteermodule.mappers.volunteer.RankedOrganizationMapper;
 import com.constructiveactivists.volunteermodule.mappers.volunteer.VolunteerMapper;
 import com.constructiveactivists.volunteermodule.mappers.volunteer.VolunteerUpdateMapper;
 import com.constructiveactivists.volunteermodule.services.volunteer.VolunteerService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,6 +31,7 @@ public class VolunteerController implements VolunteerAPI {
     private final VolunteerService volunteerService;
     private final VolunteerUpdateMapper volunteerUpdateMapper;
     private final VolunteerMapper volunteerMapper;
+    private final RankedOrganizationMapper rankedOrganizationMapper;
 
     @Override
     public List<VolunteerEntity> getAllVolunteers() {
@@ -98,5 +102,17 @@ public class VolunteerController implements VolunteerAPI {
     public ResponseEntity<Void> signUpForActivity(Integer volunteerId,Integer activityId) {
         volunteerService.signUpForActivity(volunteerId, activityId);
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<List<RankedOrganizationResponse>> matchVolunteerWithOrganizations(@PathVariable Integer volunteerId) {
+        try {
+            List<RankedOrganizationResponse> rankedOrganizations = rankedOrganizationMapper.toResponses(volunteerService.matchVolunteerWithMissions(volunteerId));
+            return ResponseEntity.ok(rankedOrganizations);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
