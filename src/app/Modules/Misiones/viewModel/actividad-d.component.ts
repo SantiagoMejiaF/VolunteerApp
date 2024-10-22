@@ -10,6 +10,7 @@ export class ActividadDComponent implements OnInit {
   imagen: string = '';
   btnClass: string = '';
   actividadId: number = 0;
+  public mostrarBotonUnirse: boolean = true;
 
   constructor(private route: ActivatedRoute) {}
 
@@ -18,6 +19,7 @@ export class ActividadDComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.actividadId = +params['id'];
       this.imagen = 'assets/img/' + params['image'];
+      this.mostrarBotonUnirse = params['fromMisActividades'] !== 'true';
     });
   }
 

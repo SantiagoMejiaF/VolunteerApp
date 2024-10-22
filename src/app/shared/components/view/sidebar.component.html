@@ -59,8 +59,15 @@
             </li>
             <li class="sidebar-item" *ngIf="userRole === 'VOLUNTARIO'">
                 <a [routerLink]="'/misA'" class="sidebar-link" title="Tablero de Control" routerLinkActive="active">
-                    <strong><i class="bi bi-calendar" style="font-size: 1.2rem; color: #292C32;"></i></strong>
+                    <strong>
+                        <i class="bi bi-list-stars" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Mis Actividades</span>
+                </a>
+            </li>
+            <li class="sidebar-item" *ngIf="userRole === 'VOLUNTARIO'" >
+                <a [routerLink]="'/miC'" class="sidebar-link" title="Tablero de Control" routerLinkActive="active">
+                    <strong><i class="bi bi-calendar" style="font-size: 1.2rem; color: #292C32;"></i></strong>
+                    <span>Calendario</span>
                 </a>
             </li>
 

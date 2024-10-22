@@ -1,0 +1,221 @@
+<div class="container mt-5">
+
+    <!-- Mostrar el calendario si `showCalendar` es true -->
+    <div *ngIf="showCalendar; else detalles">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Mis actividades</h2>
+            <button data-bs-toggle="modal" data-bs-target="#VolunteerModal" id="Crear">
+                <i class="bi bi-plus-circle mr-2"></i> Crear Actividad
+            </button>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <div class="col tittle" id="recentCustomers">
+                    <div class="table-container">
+                        <table class="table table-sm hover" id="datatableActividadesO">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre Actividad</th>
+                                    <th>Fecha inicio</th>
+                                    <th>Dirección</th>
+                                    <th># voluntarios</th>
+                                    <th>Status</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let activity of data">
+                                    <td class="text-left">{{ activity.id }}</td>
+                                    <td>{{ activity.title }}</td>
+                                    <td class="text-left">{{ activity.startDate }}</td>
+                                    <td>{{ activity.address }}</td>
+                                    <td class="text-left">{{ activity.noVolunteers }}</td>
+                                    <td>
+                                        <span [ngClass]="getStatusClass(activity.status)">{{ activity.status }}</span>
+                                    </td>
+                                    <td>
+                                        <a (click)="mostrar()"
+                                            style="border: none; background: none;">
+                                            <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
+                                                onmouseover="this.style.color='#186dde';"
+                                                onmouseout="this.style.color='#80777c';"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Usar `ng-template` para mostrar el componente `app-detalles-a` cuando showCalendar sea false -->
+    <ng-template #detalles>
+        <app-detalles-a (back)="handleBack2()" [iconType]="'back'"></app-detalles-a>
+    </ng-template>
+</div>
+
+<!-- Modal para crear una nueva actividad -->
+<div class="modal fade" id="VolunteerModal" tabindex="-1" aria-labelledby="VolunteerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h4>Empecemos</h4>
+                    <h5>Crea una nueva actividad</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="missionForm" (ngSubmit)="submitForm()">
+
+                    <!-- Paso 1: Datos de la Actividad -->
+                    <div *ngIf="currentStep === 1" style="text-align: left;">
+
+                        <h5>Datos de la Actividad</h5>
+                        <!-- Título -->
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Título</label>
+                            <input type="text" id="title" class="form-control custom-input" formControlName="title"
+                                placeholder="Escribe el título de la actividad">
+                        </div>
+
+                        <!-- Descripción -->
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Descripción</label>
+                            <textarea id="description" class="form-control custom-input" formControlName="description"
+                                rows="3" placeholder="Describe la actividad"></textarea>
+                        </div>
+
+                        <!-- Coordinador de la Actividad -->
+                        <div class="mb-3">
+                            <label for="activityCoordinator" class="form-label">Coordinador de la Actividad</label>
+                            <select id="activityCoordinator" class="form-select custom-select"
+                                formControlName="activityCoordinator" required>
+                                <option value="">Selecciona un Coordinador</option>
+                                <option *ngFor="let coordinator of coordinators" [value]="coordinator.id">
+                                    {{ coordinator.name }} <!-- Mostrar el nombre completo del coordinador -->
+                                </option>
+                            </select>
+                        </div>
+
+
+
+                        <!-- Fechas (Inicio y Fin) -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="startDate" class="form-label">Fecha de Inicio</label>
+                                <input type="date" id="startDate" class="form-control custom-input"
+                                    formControlName="startDate" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="startTime" class="form-label">Hora de Inicio</label>
+                                <input type="time" id="startTime" class="form-control custom-input"
+                                    formControlName="startTime" required>
+                            </div>
+                        </div>
+
+                        <!-- Hora de Fin -->
+                        <div class="mb-3">
+                            <label for="endTime" class="form-label">Hora de Fin</label>
+                            <input type="time" id="endTime" class="form-control custom-input" formControlName="endTime"
+                                required>
+                        </div>
+
+                        <!-- Ciudad -->
+                        <div class="mb-3">
+                            <label for="city" class="form-label">Ciudad</label>
+                            <input type="text" id="city" class="form-control custom-input" formControlName="city"
+                                placeholder="Ingresa la ciudad" required>
+                        </div>
+
+                        <!-- Localidad -->
+                        <div class="mb-3">
+                            <label for="locality" class="form-label">Localidad</label>
+                            <input type="text" id="locality" class="form-control custom-input"
+                                formControlName="locality" placeholder="Ingresa la localidad">
+                        </div>
+
+                        <!-- Dirección -->
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Dirección</label>
+                            <input type="text" id="address" class="form-control custom-input" formControlName="address"
+                                placeholder="Ingresa la dirección" required>
+                        </div>
+
+                        <!-- Número de Voluntarios Requeridos -->
+                        <div class="mb-3">
+                            <label for="numberOfVolunteersRequired" class="form-label">Número de Voluntarios
+                                Requeridos</label>
+                            <input type="number" id="numberOfVolunteersRequired" class="form-control custom-input"
+                                formControlName="numberOfVolunteersRequired" required>
+                        </div>
+
+                        <!-- Horas Requeridas -->
+                        <div class="mb-3">
+                            <label for="requiredHours" class="form-label">Horas Requeridas</label>
+                            <input type="number" id="requiredHours" class="form-control custom-input"
+                                formControlName="requiredHours" required>
+                        </div>
+
+                        <!-- Número de Beneficiarios -->
+                        <div class="mb-3">
+                            <label for="numberOfBeneficiaries" class="form-label">Número de Beneficiarios</label>
+                            <input type="number" id="numberOfBeneficiaries" class="form-control custom-input"
+                                formControlName="numberOfBeneficiaries" required>
+                        </div>
+
+                        <!-- Observaciones -->
+                        <div class="mb-3">
+                            <label for="observations" class="form-label">Observaciones</label>
+                            <textarea id="observations" class="form-control custom-input" formControlName="observations"
+                                rows="2"></textarea>
+                        </div>
+
+                        <!-- Visibilidad -->
+                        <div class="form-check mb-3 ml-2">
+                            <input class="form-check-input" type="checkbox" id="visibility" formControlName="visibility"
+                                checked>
+                            <label class="form-check-label" for="visibility">Visible al público</label>
+                        </div>
+
+                        <button type="button" class="btn btn-primary mt-3" (click)="nextStep()">Siguiente</button>
+                    </div>
+
+                    <!-- Paso 2: Datos del Líder de la Actividad -->
+                    <div *ngIf="currentStep === 2" style="text-align: left;">
+                        <h5>Datos del Líder de la Actividad</h5>
+
+                        <div class="mb-3">
+                            <label for="nameCommunityLeader" class="form-label">Nombre del Líder</label>
+                            <input type="text" id="nameCommunityLeader" class="form-control"
+                                formControlName="nameCommunityLeader">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="emailCommunityLeader" class="form-label">Email del Líder</label>
+                            <input type="email" id="emailCommunityLeader" class="form-control"
+                                formControlName="emailCommunityLeader">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phoneCommunityLeader" class="form-label">Teléfono del Líder</label>
+                            <input type="tel" id="phoneCommunityLeader" class="form-control"
+                                formControlName="phoneCommunityLeader">
+                        </div>
+
+                        <div style="text-align: left;">
+                            <button type="button" class="btn btn-primary mt-3 mr-2"
+                                (click)="previousStep()">Anterior</button>
+                            <button type="submit" class="btn btn-success mt-3">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

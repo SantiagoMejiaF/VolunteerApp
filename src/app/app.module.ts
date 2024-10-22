@@ -57,6 +57,8 @@ import { DetallesAxCComponent } from './Modules/Organization/viewModel/detalles-
 import { ActividadesCComponent } from './Modules/Coordinators/viewModel/actividades-c.component';
 import { MisionesLComponent } from './Modules/landingModule/viewModel/misiones-l.component';
 import { UsuariosActivosComponent } from './Modules/AdminUser/viewModel/usuarios-activos.component';
+import { ActividadesOComponent } from './Modules/Organization/viewModel/actividades-o.component';
+import { MisActividadesComponent } from './Modules/Volunteer/viewModel/mis-actividades.component';
 
 
 
@@ -103,7 +105,9 @@ registerLocaleData(localeEs, 'es');
     DetallesAxCComponent,
     ActividadesCComponent,
     MisionesLComponent,
-    UsuariosActivosComponent
+    UsuariosActivosComponent,
+    ActividadesOComponent,
+    MisActividadesComponent
   ],
   imports: [
     BrowserModule,

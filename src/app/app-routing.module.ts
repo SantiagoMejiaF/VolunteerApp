@@ -31,6 +31,8 @@ import { ActividadesVComponent } from './Modules/Volunteer/viewModel/actividades
 import { DetallesAxCComponent } from './Modules/Organization/viewModel/detalles-ax-c.component';
 import { ActividadesCComponent } from './Modules/Coordinators/viewModel/actividades-c.component';
 import { UsuariosActivosComponent } from './Modules/AdminUser/viewModel/usuarios-activos.component';
+import { ActividadesOComponent } from './Modules/Organization/viewModel/actividades-o.component';
+import { MisActividadesComponent } from './Modules/Volunteer/viewModel/mis-actividades.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -86,6 +88,10 @@ const routes: Routes = [
         path: 'verDetallesAxC',
         component:DetallesAxCComponent,
       },
+      {
+        path: 'ActividadesO',
+        component:ActividadesOComponent,
+      },
     
 
 
@@ -129,7 +135,7 @@ const routes: Routes = [
         component:MisFundacionesComponent,
       },
       {
-        path: 'misA',
+        path: 'miC',
         component:ActividadesVComponent,
       },
       {
@@ -139,6 +145,10 @@ const routes: Routes = [
       {
         path: 'perfil',
         component: PerfilComponent,
+      },
+      {
+        path: 'misA',
+        component:MisActividadesComponent
       },
 
       //COORDINADOR

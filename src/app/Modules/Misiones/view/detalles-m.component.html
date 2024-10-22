@@ -22,7 +22,15 @@
                         <button class="list-group-item list-group-item-action"
                             [ngClass]="{'active': selectedSection === 'actividades'}"
                             (click)="selectSection('actividades')">
-                            <i class="bi bi-calendar-check mr-2"></i>Actividades
+                            <i class="bi bi-list-stars mr-2"></i>
+                            Actividades
+                        </button>
+                    </li>
+                    <li>
+                        <button class="list-group-item list-group-item-action"
+                            [ngClass]="{'active': selectedSection === 'calendar'}"
+                            (click)="selectSection('calendar')">
+                            <i class="bi bi-calendar-check mr-2"></i>Calendario
                         </button>
                     </li>
                 </ul>
@@ -81,9 +89,13 @@
 
                 <!-- Actividades -->
                 <div *ngIf="selectedSection === 'actividades'">
-                    <app-calendar-a></app-calendar-a>
+                    <app-actividades-o></app-actividades-o>
+                    
                 </div>
                 <!-- Añade más tareas -->
+                <div *ngIf="selectedSection === 'calendar'">
+                    <app-calendar-a></app-calendar-a>
+                </div>
             </main>
 
         </div>

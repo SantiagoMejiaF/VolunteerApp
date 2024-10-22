@@ -5,14 +5,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import interactionPlugin from '@fullcalendar/interaction';
 import { ActivityService } from '../../Coordinators/model/services/activity.service';
 import { ActivatedRoute } from '@angular/router';
-import { OrganizationService } from '../../Organization/model/services/organization.service';
+import { OrganizationService } from '../model/services/organization.service';
 
 @Component({
-  selector: 'app-calendar-a',
-  templateUrl: '../view/calendar-a.component.html',
-  styleUrls: ['../styles/calendar-a.component.css']
+  selector: 'app-actividades-o',
+  templateUrl: '../view/actividades-o.component.html',
+  styleUrl: '../styles/actividades-o.component.css'
 })
-export class CalendarAComponent implements AfterViewInit, OnInit {
+export class ActividadesOComponent implements AfterViewInit, OnInit {
   currentStep: number = 1;
   showCalendar: boolean = true;
   missionForm: FormGroup;
@@ -20,6 +20,58 @@ export class CalendarAComponent implements AfterViewInit, OnInit {
   isEditing = false;
   missionId: number | null = null; // Id de la misión obtenido
   coordinators: any[] = []; // Lista de coordinadores
+  public data = [
+    {
+      id: 1,
+      title: 'Recogida de Basura',
+      startDate: '2024-10-25',
+      address: 'Calle 123, Ciudad Verde',
+      noVolunteers: 10,
+      status: 'DISPONIBLE',
+    },
+    {
+      id: 2,
+      title: 'Donación de Ropa',
+      startDate: '2024-11-01',
+      address: 'Av. Libertador, Plaza Mayor',
+      noVolunteers: 5,
+      status: 'COMPLETADO',
+    },
+    {
+      id: 3,
+      title: 'Convivencia en el Parque',
+      startDate: '2024-11-10',
+      address: 'Parque Central, Sector 4',
+      noVolunteers: 20,
+      status: 'APLAZADO',
+    },
+    {
+      id: 4,
+      title: 'Taller de Reciclaje',
+      startDate: '2024-11-15',
+      address: 'Centro Comunitario, Calle 45',
+      noVolunteers: 8,
+      status: 'PENDIENTE',
+    },
+    {
+      id: 5,
+      title: 'Plantación de Árboles',
+      startDate: '2024-11-20',
+      address: 'Calle Ecológica, Sector 3',
+      noVolunteers: 15,
+      status: 'COMPLETADO',
+    },
+    {
+      id: 6,
+      title: 'Campaña de Vacunación',
+      startDate: '2024-11-25',
+      address: 'Hospital Local, Av. San Martín',
+      noVolunteers: 12,
+      status: 'COMPLETADO',
+    },
+  ];
+  
+  
 
   constructor(
     private fb: FormBuilder,
@@ -27,8 +79,7 @@ export class CalendarAComponent implements AfterViewInit, OnInit {
     private route: ActivatedRoute,
     private organizationService: OrganizationService
   ) {
-    this.setCalendarOptions();
-    window.addEventListener('resize', this.setCalendarOptions.bind(this));
+   
 
     // Inicializamos el formulario sin valores predefinidos
     this.missionForm = this.fb.group({
@@ -54,106 +105,17 @@ export class CalendarAComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     
-    // Obtener missionId desde query params
-    this.route.queryParams.subscribe(params => {
-      this.missionId = +params['id']; // Convertir el parámetro en número
-      if (this.missionId) {
-        console.log('MissionId obtenido de queryParams:', this.missionId);
-        this.loadActivities(); // Cargar actividades relacionadas a la misión
-        this.loadCoordinators(); // Cargar coordinadores relacionados a la misión
-      } else {
-        console.error('MissionId no encontrado en los queryParams.');
-      }
-    });
+  
+    
   }
+  
 
-  ngAfterViewInit() {
-    this.loadActivities(); // Cargar actividades al iniciar el componente
+  
+  ngAfterViewInit(): void {
+    this.initializeDataTable();
   }
-
-  setCalendarOptions() {
-    const isMobile = window.innerWidth <= 768;
-    this.calendarOptions = {
-      initialView: 'dayGridMonth',
-      eventClick: this.handleEventClick.bind(this),
-      plugins: [dayGridPlugin, interactionPlugin],
-      editable: true,
-      selectable: true,
-      locale: 'es',
-      events: this.calendarEvents,
-      headerToolbar: {
-        left: 'prev,next',
-        center: 'title',
-        right: ''
-      },
-      views: {
-        dayGridMonth: {
-          buttonText: 'Mes',
-          dayHeaderFormat: isMobile ? { weekday: 'narrow' } : { weekday: 'short' }
-        }
-      },
-      height: 'auto'
-    };
-  }
-
-  // Lista de eventos del calendario
-  calendarEvents: EventInput[] = [];
-
-  // Cargar las actividades desde el servicio y agregarlas al calendario
-  loadActivities() {
-    if (this.missionId) {
-      this.activityService.getActivitiesByMissionId(this.missionId).subscribe(
-        activities => {
-          const events = activities.map(activity => ({
-            title: activity.title,
-            start: `${activity.date}T${activity.startTime}`,
-            end: `${activity.date}T${activity.endTime}`,
-            description: activity.description,
-            extendedProps: {
-              city: activity.city,
-              address: activity.address
-            }
-          }));
-          this.calendarEvents = events; // Asignar los eventos al calendario
-          this.calendarOptions.events = this.calendarEvents; // Actualizar las opciones del calendario
-        },
-        error => {
-          console.error('Error al cargar actividades:', error);
-        }
-      );
-    }
-  }
-
-  // Cargar los coordinadores de la organización
-  loadCoordinators(): void {
-    const orgId = localStorage.getItem('OrgId'); // Obtener el ID de la organización desde localStorage
-    if (orgId) {
-      this.activityService.getCoordinatorsByOrganizationId(+orgId).subscribe(
-        (coordinators) => {
-          this.coordinators = []; // Limpiamos la lista de coordinadores
-          coordinators.forEach((coordinator) => {
-            // Por cada coordinador, obtenemos los detalles del usuario
-            this.organizationService.getUserDetails(coordinator.userId).subscribe(
-              (userDetails) => {
-                this.coordinators.push({
-                  id: coordinator.id,
-                  name: `${userDetails.firstName} ${userDetails.lastName}`, // Combina el nombre y apellido del usuario
-                });
-              },
-              (error) => {
-                console.error('Error al obtener los detalles del usuario:', error);
-              }
-            );
-          });
-        },
-        (error) => {
-          console.error('Error al cargar los coordinadores:', error);
-        }
-      );
-    } else {
-      console.error('OrgId no encontrado en el localStorage');
-    }
-  }
+ 
+  
 
   submitForm() {
     if (this.missionForm.valid) {
@@ -197,8 +159,7 @@ export class CalendarAComponent implements AfterViewInit, OnInit {
             }
           };
 
-          const currentEvents = this.calendarOptions.events as any[];
-          this.calendarOptions.events = [...currentEvents, newEvent];
+        
 
           this.closeModal();
         },
@@ -219,8 +180,7 @@ export class CalendarAComponent implements AfterViewInit, OnInit {
     }
   }
 
-  handleEventClick(info: any) {
-    console.log('Evento seleccionado:', info.event);
+  mostrar() {
     this.showCalendar = false;
   }
 
@@ -228,7 +188,7 @@ export class CalendarAComponent implements AfterViewInit, OnInit {
     this.isEditing = !this.isEditing;
   }
 
-  handleBack() {
+  handleBack2() {
     this.showCalendar = true;
   }
 
@@ -240,4 +200,43 @@ export class CalendarAComponent implements AfterViewInit, OnInit {
   previousStep() {
     this.currentStep--;
   }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'DISPONIBLE':
+        return 'status-activo';
+      case 'PENDIENTE':
+        return 'status-pendiente';
+      case 'COMPLETADO':
+        return 'status-completado';
+      case 'APLAZADO':
+        return 'status-aplazado';
+      default:
+        return '';
+    }
+  }
+  initializeDataTable(): void {
+    if ($.fn.dataTable.isDataTable('#datatableActividadesO')) {
+      $('#datatableActividadesO').DataTable().destroy();
+    }
+    setTimeout(() => {
+      $('#datatableActividadesO').DataTable({
+        pagingType: 'full_numbers',
+        pageLength: 5,
+        processing: true,
+        lengthMenu: [5, 10, 25],
+        scrollX: true,
+        language: {
+          info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
+          search: '<span style="font-size: 0.875rem;">Buscar</span>',
+          infoEmpty: '<span style="font-size: 0.875rem;">No hay registros</span>',
+          infoFiltered: '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
+          lengthMenu: '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
+          zeroRecords: '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
+        }
+      });
+    }, 1);
+  }
+  
 }
+

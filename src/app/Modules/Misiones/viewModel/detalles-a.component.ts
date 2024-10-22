@@ -1,4 +1,4 @@
-import { Component, ViewChild, EventEmitter, Output } from "@angular/core";
+import { Component, ViewChild, EventEmitter, Output, Input  } from "@angular/core";
 
 
 import {
@@ -38,6 +38,7 @@ export class DetallesAComponent {
   currentContent: string = 'content1';
   selectedSection: string = 'descripcion';
   isEditing = false;
+  @Input() iconType: 'calendar' | 'back' = 'calendar';
   public data: any[] = [
     {
       firstName: 'Juan',
