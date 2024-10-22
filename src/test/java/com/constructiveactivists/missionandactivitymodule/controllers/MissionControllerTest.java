@@ -231,4 +231,32 @@ class MissionControllerTest {
 
         verify(missionService, times(1)).cancelMissionById(1);
     }
+
+    @Test
+    void testGetLastThreeMissions_Success() {
+        MissionEntity mission1 = new MissionEntity();
+        mission1.setId(1);
+        mission1.setTitle("Misión 1");
+
+        MissionEntity mission2 = new MissionEntity();
+        mission2.setId(2);
+        mission2.setTitle("Misión 2");
+
+        MissionEntity mission3 = new MissionEntity();
+        mission3.setId(3);
+        mission3.setTitle("Misión 3");
+
+        when(missionService.getLastThreeMissions()).thenReturn(List.of(mission1, mission2, mission3));
+
+        ResponseEntity<List<MissionEntity>> response = missionController.getLastThreeMissions();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(3, response.getBody().size());
+        assertEquals(1, response.getBody().get(0).getId());
+        assertEquals(2, response.getBody().get(1).getId());
+        assertEquals(3, response.getBody().get(2).getId());
+
+        verify(missionService, times(1)).getLastThreeMissions();
+    }
 }

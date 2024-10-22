@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Comment;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -23,6 +24,10 @@ public class MissionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
+
+    @Column(name = "CREATED_AT", columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
+    @Comment("Fecha de creación de la misión")
+    private LocalDateTime createdAt;
 
     @Column(name = "ORGANIZACION_ID")
     @Comment("ID de la organización que publica la misión")
@@ -76,4 +81,9 @@ public class MissionEntity {
             schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES")
     @Column(name = "HABILIDADES")
     private List<SkillEnum> requiredSkillsList;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

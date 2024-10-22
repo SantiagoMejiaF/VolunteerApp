@@ -30,7 +30,7 @@ public class MissionService {
     private final ActivityService activityService;
 
     public MissionEntity save(MissionEntity mission) {
-        if (!organizationService.getOrganizationById(mission.getOrganizationId()).isPresent()) {
+        if (organizationService.getOrganizationById(mission.getOrganizationId()).isEmpty()) {
             throw new EntityNotFoundException(ORGANIZATION_MESSAGE_ID + mission.getOrganizationId() + NOT_FOUND_MESSAGE);
         }
         mission.setMissionStatus(MissionStatusEnum.DISPONIBLE);
@@ -94,5 +94,9 @@ public class MissionService {
         return missionRepository.findByOrganizationId(organizationId).stream()
                 .flatMap(mission -> activityService.getActivitiesByMissionId(mission.getId()).stream())
                 .toList();
+    }
+
+    public List<MissionEntity> getLastThreeMissions() {
+        return missionRepository.findTop3ByOrderByCreatedAtDesc();
     }
 }
