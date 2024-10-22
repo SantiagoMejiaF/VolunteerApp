@@ -245,13 +245,13 @@ VALUES
 
 -- Inserción de Misiones
 INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.MISION
-(ORGANIZACION_ID, TIPO_MISION, TITULO, DESCRIPCION, FECHA_INICIO, FECHA_FIN, DEPARTAMENTO, VISIBILIDAD, ESTADO)
+(ORGANIZACION_ID, TIPO_MISION, TITULO, DESCRIPCION, FECHA_INICIO, FECHA_FIN, DEPARTAMENTO, VISIBILIDAD, ESTADO, FECHA_CREACION)
 VALUES
-(1, 'SOCIAL', 'Voluntariado en Amazonas', 'Apoyo a comunidades indígenas con educación y salud.', '2024-10-01', '2024-10-15', 'Amazonas', 'PUBLICA', 'DISPONIBLE'),
-(2, 'MEDIO_AMBIENTE', 'Voluntariado de Reforestación en Antioquia', 'Plantación de árboles y restauración de áreas verdes.', '2024-09-15', '2024-09-30', 'Antioquia', 'PUBLICA', 'DISPONIBLE'),
-(1, 'SOCIAL', 'Voluntariado Educativo en Boyacá', 'Apoyo en escuelas rurales con actividades de alfabetización.', '2024-11-01', '2024-11-10', 'Boyacá', 'PRIVADA', 'DISPONIBLE'),
-(2, 'SALUD', 'Voluntariado en Brigadas de Salud en Bolívar', 'Jornadas médicas para comunidades rurales en Bolívar.', '2024-10-10', '2024-10-20', 'Bolívar', 'PUBLICA', 'DISPONIBLE'),
-(1, 'EDUCACION', 'Voluntariado Tecnológico en Cundinamarca', 'Capacitación tecnológica para jóvenes en zonas rurales.', '2024-09-01', '2024-09-15', 'Cundinamarca', 'PUBLICA', 'DISPONIBLE');
+(1, 'SOCIAL', 'Voluntariado en Amazonas', 'Apoyo a comunidades indígenas con educación y salud.', '2024-10-01', '2024-10-15', 'Amazonas', 'PUBLICA', 'DISPONIBLE', '2024-08-01 10:00:00'),
+(2, 'MEDIO_AMBIENTE', 'Voluntariado de Reforestación en Antioquia', 'Plantación de árboles y restauración de áreas verdes.', '2024-09-15', '2024-09-30', 'Antioquia', 'PUBLICA', 'DISPONIBLE', '2024-08-05 09:30:00'),
+(1, 'SOCIAL', 'Voluntariado Educativo en Boyacá', 'Apoyo en escuelas rurales con actividades de alfabetización.', '2024-11-01', '2024-11-10', 'Boyacá', 'PRIVADA', 'DISPONIBLE', '2024-08-10 14:45:00'),
+(2, 'SALUD', 'Voluntariado en Brigadas de Salud en Bolívar', 'Jornadas médicas para comunidades rurales en Bolívar.', '2024-10-10', '2024-10-20', 'Bolívar', 'PUBLICA', 'DISPONIBLE', '2024-08-15 16:20:00'),
+(1, 'EDUCACION', 'Voluntariado Tecnológico en Cundinamarca', 'Capacitación tecnológica para jóvenes en zonas rurales.', '2024-09-01', '2024-09-15', 'Cundinamarca', 'PUBLICA', 'DISPONIBLE', '2024-08-20 11:10:00');
 
 INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.LIDER_COMUNIDAD (NOMBRE, correo , celular)
 VALUES

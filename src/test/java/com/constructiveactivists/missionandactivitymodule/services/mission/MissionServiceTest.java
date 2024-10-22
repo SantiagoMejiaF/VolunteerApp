@@ -249,4 +249,30 @@ class MissionServiceTest {
         verify(activityService, times(1)).getActivitiesByMissionId(1);
         verify(activityService, times(1)).getActivitiesByMissionId(2);
     }
+
+    @Test
+    void testGetLastThreeMissions_Success() {
+        MissionEntity mission1 = new MissionEntity();
+        mission1.setId(1);
+        mission1.setTitle("Misión 1");
+
+        MissionEntity mission2 = new MissionEntity();
+        mission2.setId(2);
+        mission2.setTitle("Misión 2");
+
+        MissionEntity mission3 = new MissionEntity();
+        mission3.setId(3);
+        mission3.setTitle("Misión 3");
+
+        when(missionRepository.findTop3ByOrderByCreatedAtDesc()).thenReturn(Arrays.asList(mission1, mission2, mission3));
+
+        List<MissionEntity> lastThreeMissions = missionService.getLastThreeMissions();
+
+        assertEquals(3, lastThreeMissions.size());
+        assertEquals(1, lastThreeMissions.get(0).getId());
+        assertEquals(2, lastThreeMissions.get(1).getId());
+        assertEquals(3, lastThreeMissions.get(2).getId());
+
+        verify(missionRepository, times(1)).findTop3ByOrderByCreatedAtDesc();
+    }
 }

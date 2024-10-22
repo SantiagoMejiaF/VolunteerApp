@@ -9,6 +9,8 @@ import com.constructiveactivists.missionandactivitymodule.entities.mission.enums
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VolunteerMissionRequirementsEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -102,4 +104,14 @@ public interface MissionAPI {
     })
     @GetMapping("/organization/{organizationId}/activities")
     ResponseEntity<List<ActivityEntity>> getAllActivitiesByOrganizationId(@PathVariable Integer organizationId);
+
+    @Operation(summary = "Obtener las 3 misiones más recientes.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Operación exitosa",
+                    content = @Content (schema = @Schema(implementation = MissionEntity.class)))
+    })
+    @GetMapping("/recent")
+    ResponseEntity<List<MissionEntity>> getLastThreeMissions();
 }
