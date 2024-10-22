@@ -2,14 +2,17 @@ package com.constructiveactivists.volunteermodule.controllers;
 
 import com.constructiveactivists.volunteermodule.controllers.request.volunteer.VolunteerRequest;
 import com.constructiveactivists.volunteermodule.controllers.request.volunteer.VolunteerUpdateRequest;
+import com.constructiveactivists.volunteermodule.controllers.response.RankedOrganizationResponse;
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.InterestEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.RelationshipEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
+import com.constructiveactivists.volunteermodule.mappers.volunteer.RankedOrganizationMapper;
 import com.constructiveactivists.volunteermodule.mappers.volunteer.VolunteerMapper;
 import com.constructiveactivists.volunteermodule.mappers.volunteer.VolunteerUpdateMapper;
 import com.constructiveactivists.volunteermodule.services.volunteer.VolunteerService;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,8 +21,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -34,6 +36,9 @@ class VolunteerControllerTest {
 
     @Mock
     private VolunteerMapper volunteerMapper;
+
+    @Mock
+    private RankedOrganizationMapper rankedOrganizationMapper;
 
     @InjectMocks
     private VolunteerController volunteerController;
@@ -180,5 +185,55 @@ class VolunteerControllerTest {
         ResponseEntity<Void> response = volunteerController.signUpForActivity(1, 100);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(volunteerService, times(1)).signUpForActivity(1, 100);
+    }
+
+    @Test
+    void testMatchVolunteerWithOrganizations_VolunteerNotFound() {
+        Integer volunteerId = 999;
+
+        when(volunteerService.matchVolunteerWithMissions(volunteerId))
+                .thenThrow(new EntityNotFoundException("El voluntario con ID " + volunteerId + " no existe."));
+
+        ResponseEntity<List<RankedOrganizationResponse>> response = volunteerController.matchVolunteerWithOrganizations(volunteerId);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
+
+        verify(volunteerService, times(1)).matchVolunteerWithMissions(volunteerId);
+        verify(rankedOrganizationMapper, never()).toResponses(anyList());
+    }
+
+    @Test
+    void testMatchVolunteerWithOrganizations_InternalServerError() {
+        Integer volunteerId = 1;
+
+        when(volunteerService.matchVolunteerWithMissions(volunteerId))
+                .thenThrow(new RuntimeException("Error inesperado"));
+
+        ResponseEntity<List<RankedOrganizationResponse>> response = volunteerController.matchVolunteerWithOrganizations(volunteerId);
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertNull(response.getBody());
+
+        verify(volunteerService, times(1)).matchVolunteerWithMissions(volunteerId);
+        verify(rankedOrganizationMapper, never()).toResponses(anyList());
+    }
+
+    @Test
+    void testMatchVolunteerWithOrganizations_Success() {
+        Integer volunteerId = 1;
+        List<RankedOrganizationResponse> rankedOrganizations = List.of(new RankedOrganizationResponse());
+
+        when(volunteerService.matchVolunteerWithMissions(volunteerId)).thenReturn(new ArrayList<>());
+        when(rankedOrganizationMapper.toResponses(anyList())).thenReturn(rankedOrganizations);
+
+        ResponseEntity<List<RankedOrganizationResponse>> response = volunteerController.matchVolunteerWithOrganizations(volunteerId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(1, response.getBody().size());
+
+        verify(volunteerService, times(1)).matchVolunteerWithMissions(volunteerId);
+        verify(rankedOrganizationMapper, times(1)).toResponses(anyList());
     }
 }

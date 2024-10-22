@@ -5,10 +5,13 @@ import com.constructiveactivists.missionandactivitymodule.entities.activity.Acti
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VisibilityEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupEntity;
+import com.constructiveactivists.missionandactivitymodule.repositories.MissionRepository;
 import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
 import com.constructiveactivists.missionandactivitymodule.services.mission.MissionService;
 import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupMembershipService;
 import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupService;
+import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
+import com.constructiveactivists.organizationmodule.repositories.OrganizationRepository;
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.entities.enums.RoleType;
 import com.constructiveactivists.usermodule.services.UserService;
@@ -17,6 +20,7 @@ import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEnt
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteeringInformationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.*;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
+import com.constructiveactivists.volunteermodule.models.RankedOrganization;
 import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.VolunteerOrganizationService;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,6 +31,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -39,6 +44,8 @@ public class VolunteerService {
     private final VolunteerOrganizationService volunteerOrganizationService;
     private final MissionService missionService;
     private final ActivityService activityService;
+    private final MissionRepository missionRepository;
+    private final OrganizationRepository organizationRepository;
 
     private static final int MINIMUM_AGE = 16;
     private static final int MAXIMUM_AGE = 140;
@@ -204,7 +211,6 @@ public class VolunteerService {
         volunteerRepository.save(volunteer);
     }
 
-
     private void validateAge(LocalDate birthDate) {
         int age = calculateAge(birthDate);
         if (age < MINIMUM_AGE) {
@@ -218,4 +224,86 @@ public class VolunteerService {
         return volunteerRepository.findByRegistrationYear(startDateTime, endDateTime);
     }
 
+    public List<RankedOrganization> matchVolunteerWithMissions(Integer volunteerId) {
+
+        VolunteerEntity volunteer = volunteerRepository.findById(volunteerId)
+                .orElseThrow(() -> new EntityNotFoundException("El voluntario con ID " + volunteerId + " no existe."));
+
+        List<InterestEnum> volunteerInterests = volunteer.getVolunteeringInformation().getInterestsList();
+        List<SkillEnum> volunteerSkills = volunteer.getVolunteeringInformation().getSkillsList();
+
+        List<MissionEntity> matchingMissions = missionRepository.findMissionsByInterestsAndSkills(volunteerInterests, volunteerSkills);
+
+        if (matchingMissions.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        Map<MissionEntity, Integer> missionMatchScores = calculateMissionMatchScores(volunteerInterests, volunteerSkills, matchingMissions);
+
+        Map<OrganizationEntity, Integer> organizationScores = new HashMap<>();
+
+        for (Map.Entry<MissionEntity, Integer> entry : missionMatchScores.entrySet()) {
+            MissionEntity mission = entry.getKey();
+            Integer score = entry.getValue();
+
+            OrganizationEntity organization = organizationRepository.findById(mission.getOrganizationId())
+                    .orElseThrow(() -> new EntityNotFoundException("Organización no encontrada con ID: " + mission.getOrganizationId()));
+
+            organizationScores.merge(organization, score, Integer::sum);
+        }
+
+        List<RankedOrganization> rankedOrganizations = organizationScores.entrySet().stream()
+                .map(entry -> new RankedOrganization(entry.getKey(), entry.getValue()))
+                .sorted(Comparator.comparingInt(RankedOrganization::getScore).reversed())
+                .toList();
+
+        rankedOrganizations = breakTiesRandomly(rankedOrganizations);
+
+        return rankedOrganizations;
+    }
+
+    Map<MissionEntity, Integer> calculateMissionMatchScores(List<InterestEnum> volunteerInterests,
+                                                            List<SkillEnum> volunteerSkills,
+                                                            List<MissionEntity> missions) {
+        Map<MissionEntity, Integer> missionMatchScores = new HashMap<>();
+
+        for (MissionEntity mission : missions) {
+            int score = 0;
+
+            for (InterestEnum interest : volunteerInterests) {
+                if (mission.getRequiredInterestsList().contains(interest)) {
+                    score += 3;
+                }
+            }
+
+            for (SkillEnum skill : volunteerSkills) {
+                if (mission.getRequiredSkillsList().contains(skill)) {
+                    score += 2;
+                }
+            }
+
+            missionMatchScores.put(mission, score);
+        }
+
+        return missionMatchScores;
+    }
+
+    List<RankedOrganization> breakTiesRandomly(List<RankedOrganization> rankedOrganizations) {
+        Map<Integer, List<RankedOrganization>> groupedByScore = rankedOrganizations.stream()
+                .collect(Collectors.groupingBy(RankedOrganization::getScore));
+
+        List<RankedOrganization> finalRanking = new ArrayList<>();
+
+        List<Integer> sortedScores = groupedByScore.keySet().stream()
+                .sorted(Comparator.reverseOrder())
+                .toList();
+
+        for (Integer score : sortedScores) {
+            List<RankedOrganization> organizationsWithSameScore = groupedByScore.get(score);
+            Collections.shuffle(organizationsWithSameScore);
+            finalRanking.addAll(organizationsWithSameScore);
+        }
+
+        return finalRanking;
+    }
 }

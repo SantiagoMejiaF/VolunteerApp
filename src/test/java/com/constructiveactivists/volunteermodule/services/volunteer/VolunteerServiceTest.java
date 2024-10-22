@@ -5,10 +5,13 @@ import com.constructiveactivists.missionandactivitymodule.entities.activity.Acti
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VisibilityEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupEntity;
+import com.constructiveactivists.missionandactivitymodule.repositories.MissionRepository;
 import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
 import com.constructiveactivists.missionandactivitymodule.services.mission.MissionService;
 import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupMembershipService;
 import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupService;
+import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
+import com.constructiveactivists.organizationmodule.repositories.OrganizationRepository;
 import com.constructiveactivists.usermodule.entities.RoleEntity;
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.entities.enums.RoleType;
@@ -18,6 +21,7 @@ import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEnt
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteeringInformationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.*;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
+import com.constructiveactivists.volunteermodule.models.RankedOrganization;
 import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.VolunteerOrganizationService;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,9 +32,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -57,6 +59,12 @@ class VolunteerServiceTest {
 
     @Mock
     private VolunteerOrganizationService volunteerOrganizationService;
+
+    @Mock
+    private OrganizationRepository organizationRepository;
+
+    @Mock
+    private MissionRepository missionRepository;
 
     @InjectMocks
     private VolunteerService volunteerService;
@@ -580,5 +588,105 @@ class VolunteerServiceTest {
 
         verify(userService, times(1)).deleteUser(1);
         verify(volunteerRepository, times(1)).delete(volunteer);
+    }
+
+    @Test
+    void testBreakTiesRandomly() {
+        RankedOrganization org1 = new RankedOrganization(new OrganizationEntity(), 5);
+        RankedOrganization org2 = new RankedOrganization(new OrganizationEntity(), 5);
+        RankedOrganization org3 = new RankedOrganization(new OrganizationEntity(), 3);
+
+        List<RankedOrganization> rankedOrganizations = List.of(org1, org2, org3);
+
+        List<RankedOrganization> result = volunteerService.breakTiesRandomly(rankedOrganizations);
+
+        assertEquals(3, result.get(2).getScore());
+
+        assertTrue(result.get(0).getScore() == 5 && result.get(1).getScore() == 5);
+    }
+
+    @Test
+    void testCalculateMissionMatchScores() {
+        List<InterestEnum> volunteerInterests = List.of(InterestEnum.EDUCACION, InterestEnum.MEDIO_AMBIENTE);
+        List<SkillEnum> volunteerSkills = List.of(SkillEnum.COMUNICACION, SkillEnum.ORGANIZACION);
+
+        MissionEntity mission1 = new MissionEntity();
+        mission1.setRequiredInterestsList(List.of(InterestEnum.EDUCACION, InterestEnum.SALUD));
+        mission1.setRequiredSkillsList(List.of(SkillEnum.COMUNICACION));
+
+        MissionEntity mission2 = new MissionEntity();
+        mission2.setRequiredInterestsList(List.of(InterestEnum.MEDIO_AMBIENTE));
+        mission2.setRequiredSkillsList(List.of(SkillEnum.ORGANIZACION));
+
+        List<MissionEntity> missions = List.of(mission1, mission2);
+
+        Map<MissionEntity, Integer> result = volunteerService.calculateMissionMatchScores(volunteerInterests, volunteerSkills, missions);
+
+        assertEquals(5, result.get(mission1));
+        assertEquals(5, result.get(mission2));
+    }
+
+    @Test
+    void testMatchVolunteerWithMissions_Success() {
+        Integer volunteerId = 1;
+
+        VolunteerEntity volunteer = new VolunteerEntity();
+        VolunteeringInformationEntity volunteeringInfo = new VolunteeringInformationEntity();
+        volunteeringInfo.setInterestsList(List.of(InterestEnum.EDUCACION));
+        volunteeringInfo.setSkillsList(List.of(SkillEnum.COMUNICACION));
+        volunteer.setVolunteeringInformation(volunteeringInfo);
+
+        MissionEntity mission = new MissionEntity();
+        mission.setRequiredInterestsList(List.of(InterestEnum.EDUCACION));
+        mission.setRequiredSkillsList(List.of(SkillEnum.COMUNICACION));
+        mission.setOrganizationId(100);
+
+        OrganizationEntity organization = new OrganizationEntity();
+        organization.setId(100);
+
+        when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.of(volunteer));
+        when(missionRepository.findMissionsByInterestsAndSkills(anyList(), anyList())).thenReturn(List.of(mission));
+        when(organizationRepository.findById(100)).thenReturn(Optional.of(organization));
+
+        List<RankedOrganization> result = volunteerService.matchVolunteerWithMissions(volunteerId);
+
+        assertEquals(1, result.size());
+        assertEquals(100, result.get(0).getOrganization().getId());
+        verify(volunteerRepository, times(1)).findById(volunteerId);
+        verify(missionRepository, times(1)).findMissionsByInterestsAndSkills(anyList(), anyList());
+    }
+
+    @Test
+    void testMatchVolunteerWithMissions_VolunteerNotFound() {
+        Integer volunteerId = 1;
+
+        when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.empty());
+
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
+            volunteerService.matchVolunteerWithMissions(volunteerId);
+        });
+
+        assertEquals("El voluntario con ID " + volunteerId + " no existe.", exception.getMessage());
+        verify(volunteerRepository, times(1)).findById(volunteerId);
+    }
+
+    @Test
+    void testMatchVolunteerWithMissions_NoMissionsFound() {
+        Integer volunteerId = 1;
+
+        VolunteerEntity volunteer = new VolunteerEntity();
+        VolunteeringInformationEntity volunteeringInfo = new VolunteeringInformationEntity();
+        volunteeringInfo.setInterestsList(List.of(InterestEnum.EDUCACION));
+        volunteeringInfo.setSkillsList(List.of(SkillEnum.COMUNICACION));
+        volunteer.setVolunteeringInformation(volunteeringInfo);
+
+        when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.of(volunteer));
+        when(missionRepository.findMissionsByInterestsAndSkills(anyList(), anyList())).thenReturn(Collections.emptyList());
+
+        List<RankedOrganization> result = volunteerService.matchVolunteerWithMissions(volunteerId);
+
+        assertTrue(result.isEmpty());
+        verify(volunteerRepository, times(1)).findById(volunteerId);
+        verify(missionRepository, times(1)).findMissionsByInterestsAndSkills(anyList(), anyList());
     }
 }

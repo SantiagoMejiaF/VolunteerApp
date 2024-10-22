@@ -261,6 +261,7 @@
 						<exclude>**/volunteermodule/controllers/response/**</exclude>
 						<exclude>**/volunteermodule/entities/**</exclude>
 						<exclude>**/volunteermodule/repositories/**</exclude>
+						<exclude>**/volunteermodule/models/**</exclude>
 
 						<exclude>com/constructiveactivists/VolunteerAppBackendApplication.class</exclude>
 					</excludes>
