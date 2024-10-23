@@ -293,4 +293,19 @@ class ActivityServiceTest {
         verify(groupRepository, times(1)).findByIdIn(List.of(1));
         verify(activityRepository, times(1)).findByIdIn(List.of(1));
     }
+
+    @Test
+    void testGetAvailableActivitiesByCoordinator_Success() {
+        Integer coordinatorId = 1;
+        List<ActivityEntity> mockActivities = List.of(new ActivityEntity());
+
+        when(activityRepository.findAllByActivityCoordinatorAndActivityStatus(coordinatorId, ActivityStatusEnum.DISPONIBLE))
+                .thenReturn(mockActivities);
+
+        List<ActivityEntity> result = activityService.getAvailableActivitiesByCoordinator(coordinatorId);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        verify(activityRepository, times(1)).findAllByActivityCoordinatorAndActivityStatus(coordinatorId, ActivityStatusEnum.DISPONIBLE);
+    }
 }
