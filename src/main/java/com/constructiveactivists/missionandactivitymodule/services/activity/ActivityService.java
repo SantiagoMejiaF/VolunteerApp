@@ -122,4 +122,8 @@ public class ActivityService {
                 .toList();
         return activityRepository.findByIdIn(activityIds);
     }
+
+    public List<ActivityEntity> getAvailableActivitiesByCoordinator(Integer coordinatorId) {
+        return activityRepository.findAllByActivityCoordinatorAndActivityStatus(coordinatorId, ActivityStatusEnum.DISPONIBLE);
+    }
 }

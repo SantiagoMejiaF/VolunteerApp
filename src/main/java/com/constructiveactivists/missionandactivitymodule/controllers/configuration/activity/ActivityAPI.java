@@ -3,6 +3,8 @@ package com.constructiveactivists.missionandactivitymodule.controllers.configura
 import com.constructiveactivists.missionandactivitymodule.controllers.request.activity.ActivityRequest;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -82,4 +84,14 @@ public interface ActivityAPI {
     })
     @GetMapping("/coordinator/{coordinatorId}")
     ResponseEntity<List<ActivityEntity>> getActivitiesByCoordinator(@PathVariable Integer coordinatorId);
+
+    @Operation(summary = "Obtener todas las actividades programadas (disponibles) de un coordinador")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Operación exitosa",
+                    content = @Content (schema = @Schema(implementation = ActivityEntity.class))),
+    })
+    @GetMapping("/coordinator/{coordinatorId}/available")
+    ResponseEntity<List<ActivityEntity>> getAvailableActivitiesByCoordinator(@PathVariable Integer coordinatorId);
 }
