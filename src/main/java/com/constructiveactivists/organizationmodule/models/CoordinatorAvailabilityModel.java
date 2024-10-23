@@ -1,4 +1,4 @@
-package com.constructiveactivists.organizationmodule.entities.activitycoordinator;
+package com.constructiveactivists.organizationmodule.models;
 
 import lombok.Getter;
 import lombok.Setter;

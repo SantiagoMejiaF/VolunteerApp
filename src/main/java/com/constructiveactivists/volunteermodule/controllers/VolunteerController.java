@@ -115,4 +115,9 @@ public class VolunteerController implements VolunteerAPI {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    public ResponseEntity<List<VolunteerEntity>> getLastFiveVolunteers() {
+        List<VolunteerEntity> lastFiveVolunteers = volunteerService.getLastFiveVolunteers();
+        return ResponseEntity.ok(lastFiveVolunteers);
+    }
 }

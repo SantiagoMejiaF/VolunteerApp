@@ -249,6 +249,7 @@
 						<exclude>**/organizationmodule/controllers/request/**</exclude>
 						<exclude>**/organizationmodule/entities/**</exclude>
 						<exclude>**/organizationmodule/repositories/**</exclude>
+						<exclude>**/organizationmodule/models/**</exclude>
 
 						<exclude>**/usermodule/controllers/configuration/**</exclude>
 						<exclude>**/usermodule/controllers/configuration/**</exclude>

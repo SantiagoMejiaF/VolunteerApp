@@ -25,8 +25,10 @@ import com.constructiveactivists.volunteermodule.repositories.VolunteerRepositor
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.VolunteerOrganizationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Pageable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -305,5 +307,10 @@ public class VolunteerService {
         }
 
         return finalRanking;
+    }
+
+    public List<VolunteerEntity> getLastFiveVolunteers() {
+        Pageable topFive = PageRequest.of(0, 5);
+        return volunteerRepository.findTop5ByOrderByRegistrationDateDesc(topFive);
     }
 }
