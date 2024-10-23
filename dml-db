@@ -300,11 +300,11 @@ VALUES
 -- Inserción de actividades
 INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.ACTIVIDAD (MISION_ID, lider_comunidad_id, coordinador_actividad_id, TITULO, DESCRIPCION, FECHA, HORA_INICIO, HORA_FIN, CIUDAD, LOCALIDAD, DIRECCION, NUMERO_VOLUNTARIOS_REQUERIDOS, HORAS_REQUERIDAS, VISIBILIDAD, numero_personas_beneficiadas, OBSERVACIONES, grupo_voluntario_id, estado)
 VALUES
-(1, 1, 16, 'Plantación de árboles', 'Plantación de 100 árboles en el parque central.', '2024-09-03', '08:00', '12:00', 'Bogotá', 'Usaquén', 'Parque Central, Calle 123', 20, 4, 'PUBLICA', 100, 'Llevar agua y protector solar.', 1, 'DISPONIBLE'),
-(2, 2, 17, 'Limpieza de Parque', 'Recolección de basura en el parque central.', '2024-09-10', '09:00', '13:00', 'Antioquia', 'Medellín', 'Parque Arví, Calle 45', 15, 4, 'PUBLICA', 50, 'Traer bolsas y guantes.', 2, 'DISPONIBLE'),
-(3, 3, 18, 'Cuidado Animal', 'Cuidado y alimentación de animales en el refugio.', '2024-09-15', '10:00', '14:00', 'Boyacá', 'Tunja', 'Refugio de Animales, Calle 10', 10, 5, 'PUBLICA', 30, 'Llevar comida y agua.', 3, 'DISPONIBLE'),
-(4, 4, 19, 'Taller de Reciclaje', 'Educación sobre reciclaje y recolección de materiales reciclables.', '2024-09-20', '14:00', '17:00', 'Bolívar', 'Cartagena', 'Centro Cultural, Calle 12', 25, 3, 'PUBLICA', 100, 'Proveer materiales reciclables.', 4, 'DISPONIBLE'),
-(5, 5, 20, 'Fumigación de Plagas', 'Control de plagas en áreas rurales.', '2024-09-25', '08:00', '12:00', 'Cundinamarca', 'Soacha', 'Granja de Ejemplo, Calle 5', 5, 6, 'PUBLICA', 20, 'Uso de mascarillas necesario.', 5, 'DISPONIBLE');
+(1, 1, 1, 'Plantación de árboles', 'Plantación de 100 árboles en el parque central.', '2024-09-03', '08:00', '12:00', 'Bogotá', 'Usaquén', 'Parque Central, Calle 123', 20, 4, 'PUBLICA', 100, 'Llevar agua y protector solar.', 1, 'COMPLETADA'),
+(2, 2, 2, 'Limpieza de Parque', 'Recolección de basura en el parque central.', '2024-09-10', '09:00', '13:00', 'Antioquia', 'Medellín', 'Parque Arví, Calle 45', 15, 4, 'PUBLICA', 50, 'Traer bolsas y guantes.', 2, 'COMPLETADA'),
+(3, 3, 2, 'Cuidado Animal', 'Cuidado y alimentación de animales en el refugio.', '2024-09-15', '10:00', '14:00', 'Boyacá', 'Tunja', 'Refugio de Animales, Calle 10', 10, 5, 'PUBLICA', 30, 'Llevar comida y agua.', 3, 'COMPLETADA'),
+(4, 4, 3, 'Taller de Reciclaje', 'Educación sobre reciclaje y recolección de materiales reciclables.', '2024-09-20', '14:00', '17:00', 'Bolívar', 'Cartagena', 'Centro Cultural, Calle 12', 25, 3, 'PUBLICA', 100, 'Proveer materiales reciclables.', 4, 'COMPLETADA'),
+(5, 5, 1, 'Fumigación de Plagas', 'Control de plagas en áreas rurales.', '2024-09-25', '08:00', '12:00', 'Cundinamarca', 'Soacha', 'Granja de Ejemplo, Calle 5', 5, 6, 'PUBLICA', 20, 'Uso de mascarillas necesario.', 5, 'COMPLETADA');
 
 -- Inserción de grupos de voluntarios
 INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.GRUPO_VOLUNTARIO
