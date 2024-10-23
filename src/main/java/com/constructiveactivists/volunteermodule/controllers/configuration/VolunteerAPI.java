@@ -9,6 +9,8 @@ import com.constructiveactivists.volunteermodule.entities.volunteer.enums.Intere
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.RelationshipEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -115,6 +117,7 @@ public interface VolunteerAPI {
     @PutMapping("/{id}")
     ResponseEntity<VolunteerEntity> updateVolunteer(@PathVariable("id") Integer id, @RequestBody VolunteerUpdateRequest volunteerUpdateRequest);
 
+
     @Operation(summary = "Promover un voluntario a líder")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Voluntario promovido a líder"),
@@ -122,6 +125,7 @@ public interface VolunteerAPI {
     })
     @PutMapping("/{id}/promote")
     ResponseEntity<VolunteerEntity> promoteVolunteerToLeader(@PathVariable("id") Integer id);
+
 
     @Operation(summary = "Inscribir un voluntario en una actividad")
     @ApiResponses(value = {
@@ -132,12 +136,21 @@ public interface VolunteerAPI {
     @PostMapping("/{volunteerId}/activities/{activityId}/signup")
     ResponseEntity<Void> signUpForActivity(@PathVariable("volunteerId") Integer volunteerId, @PathVariable("activityId") Integer activityId);
 
+
     @Operation(summary = "Realizar un match entre un voluntario y las organizaciones basadas en intereses y habilidades")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "200", description = "Operación exitosa", content = @Content(schema = @Schema(implementation = RankedOrganizationResponse.class))),
             @ApiResponse(responseCode = "404", description = "Voluntario no encontrado"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @GetMapping("/{volunteerId}/match-organizations")
     ResponseEntity<List<RankedOrganizationResponse>> matchVolunteerWithOrganizations(@PathVariable("volunteerId") Integer volunteerId);
+
+
+    @Operation(summary = "Obtener los últimos 5 voluntarios registrados en la aplicación")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa", content = @Content(schema = @Schema(implementation = VolunteerEntity.class))),
+    })
+    @GetMapping("/last-five")
+    ResponseEntity<List<VolunteerEntity>> getLastFiveVolunteers();
 }

@@ -30,7 +30,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.PageRequest;
 
+import org.springframework.data.domain.Pageable;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -688,5 +690,33 @@ class VolunteerServiceTest {
         assertTrue(result.isEmpty());
         verify(volunteerRepository, times(1)).findById(volunteerId);
         verify(missionRepository, times(1)).findMissionsByInterestsAndSkills(anyList(), anyList());
+    }
+
+    @Test
+    void testGetLastFiveVolunteers() {
+        VolunteerEntity volunteer1 = new VolunteerEntity();
+        volunteer1.setId(1);
+        VolunteerEntity volunteer2 = new VolunteerEntity();
+        volunteer2.setId(2);
+        VolunteerEntity volunteer3 = new VolunteerEntity();
+        volunteer3.setId(3);
+        VolunteerEntity volunteer4 = new VolunteerEntity();
+        volunteer4.setId(4);
+        VolunteerEntity volunteer5 = new VolunteerEntity();
+        volunteer5.setId(5);
+
+        List<VolunteerEntity> volunteers = Arrays.asList(volunteer1, volunteer2, volunteer3, volunteer4, volunteer5);
+
+        Pageable topFive = PageRequest.of(0, 5);
+
+        when(volunteerRepository.findTop5ByOrderByRegistrationDateDesc(topFive)).thenReturn(volunteers);
+
+        List<VolunteerEntity> result = volunteerService.getLastFiveVolunteers();
+
+        assertEquals(5, result.size());
+        assertEquals(1, result.get(0).getId());
+        assertEquals(5, result.get(4).getId());
+
+        verify(volunteerRepository, times(1)).findTop5ByOrderByRegistrationDateDesc(topFive);
     }
 }
