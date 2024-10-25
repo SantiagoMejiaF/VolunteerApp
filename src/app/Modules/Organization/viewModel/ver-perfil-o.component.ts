@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-ver-perfil-o',
   templateUrl: '../view/ver-perfil-o.component.html',
@@ -12,6 +12,7 @@ export class VerPerfilOComponent {
   email: string = '';
   volunteerId: number = 0;
   organizationData: any;
+  fromPage: string = 'misF';
   timelineData = [
     {
       id: 1,
@@ -75,8 +76,10 @@ export class VerPerfilOComponent {
     }
   ];
 
-  constructor(private router: Router ) {
-    
+  constructor(private route: ActivatedRoute, private router: Router ) {
+    this.route.queryParams.subscribe(params => {
+      this.fromPage = params['from'] || 'misF';
+    });
 
     this.organizationData = {
       userId: 0,
@@ -107,9 +110,13 @@ export class VerPerfilOComponent {
     // Asegurarse de que la imagenId esté en el rango adecuado (1-3)
     const imagenId = (validIndex % 6) + 1;
   
+    // Obtener el parámetro 'origen' del queryParams de la ruta actual
+    const from = this.route.snapshot.queryParams['from'] || 'misF'; // Usar 'fundaciones' por defecto si no hay parámetro
+  
     // Navegar a la ruta con los parámetros calculados
-    this.router.navigate(['/actividad', validIndex, `card${imagenId}.svg`]);
+    this.router.navigate(['/actividad', validIndex, `card${imagenId}.svg`], { queryParams: { from } });
   }
+  
   
 
   // Función para mostrar el mensaje de alerta
@@ -123,5 +130,8 @@ export class VerPerfilOComponent {
   unirseF(event: Event) {
     event.preventDefault(); // Prevenir el comportamiento predeterminado del enlace
     alert(`Se ha enviado tu solicitud de forma exitosa`);
+  }
+  goBack() {
+    this.router.navigate([`/${this.fromPage}`]);
   }
 }

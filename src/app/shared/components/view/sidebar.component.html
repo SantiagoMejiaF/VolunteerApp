@@ -39,32 +39,32 @@
 
 
             <!-- Para VOLUNTARIO *ngIf="userRole === 'VOLUNTARIO'"-->
-            <li class="sidebar-item" *ngIf="userRole === 'VOLUNTARIO'">
+            <li class="sidebar-item">
                 <a [routerLink]="'/homeV'" class="sidebar-link" title="Inicio" routerLinkActive="active">
                     <i class="bi bi-house" style="font-size: 1.3rem; color: #292C32;"></i>
                     <span>Inicio</span>
                 </a>
             </li>
-            <li class="sidebar-item" *ngIf="userRole === 'VOLUNTARIO'">
+            <li class="sidebar-item" >
                 <a [routerLink]="'/dashVolunteer'" class="sidebar-link" routerLinkActive="active">
                     <strong><i class="bi bi-columns-gap" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Tablero de Control</span>
                 </a>
             </li>
-            <li class="sidebar-item" *ngIf="userRole === 'VOLUNTARIO'">
+            <li class="sidebar-item">
                 <a [routerLink]="'/misF'" class="sidebar-link" title="Tablero de Control" routerLinkActive="active">
                     <strong><i class="bi bi-diagram-3" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Mis fundaciones</span>
                 </a>
             </li>
-            <li class="sidebar-item" *ngIf="userRole === 'VOLUNTARIO'">
+            <li class="sidebar-item" >
                 <a [routerLink]="'/misA'" class="sidebar-link" title="Tablero de Control" routerLinkActive="active">
                     <strong>
                         <i class="bi bi-list-stars" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Mis Actividades</span>
                 </a>
             </li>
-            <li class="sidebar-item" *ngIf="userRole === 'VOLUNTARIO'" >
+            <li class="sidebar-item" >
                 <a [routerLink]="'/miC'" class="sidebar-link" title="Tablero de Control" routerLinkActive="active">
                     <strong><i class="bi bi-calendar" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Calendario</span>

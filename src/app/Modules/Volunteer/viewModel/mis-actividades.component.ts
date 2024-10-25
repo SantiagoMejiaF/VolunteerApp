@@ -103,7 +103,8 @@ export class MisActividadesComponent {
     const imagenId = (validIndex % 6) + 1;
     
     // Navegar a la ruta con el parámetro que indica el origen
-    this.router.navigate(['/actividad', validIndex, `card${imagenId}.svg`, { fromMisActividades: true }]);
+    this.router.navigate(['/actividad', validIndex, `card${imagenId}.svg`, { fromMisActividades: true }], { queryParams: { from: 'misA' } });
   }
-  
+
+   
 }

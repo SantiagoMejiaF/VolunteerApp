@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home-voluntarios',
   templateUrl: '../view/home-voluntarios.component.html',
@@ -15,7 +15,7 @@ export class HomeVoluntariosComponent {
   ];
 
   imagenes = ['assets/img/card1.svg', 'assets/img/card2.svg', 'assets/img/card3.svg', 'assets/img/card4.svg', 'assets/img/card5.svg', 'assets/img/card6.svg'];
-
+  constructor(private router: Router) {}
   // Función para obtener la imagen correspondiente, repitiendo cada 3
   getImage(index: number): string {
     return this.imagenes[index % this.imagenes.length];
@@ -33,5 +33,10 @@ export class HomeVoluntariosComponent {
       default:
         return '#ffffff'; // Color por defecto (si es necesario)
     }
+  }
+
+  verDetalles() {
+    this.router.navigate(['/verPerfilO'], { queryParams: { from: 'homeV' } });
+
   }
 }
