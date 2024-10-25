@@ -29,7 +29,6 @@ export type ChartOptions2 = {
   title: ApexTitleSubtitle;
   plotOptions: ApexPlotOptions;
   legend: ApexLegend;
-  colors: string[];
 };
 
 
@@ -71,6 +70,7 @@ export class DashboardOrganizationComponent implements AfterViewInit {
         {
           name: 'actividades completadas',
           data: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110],
+          color: "#FF5733"
         },
       ],
       chart: {
@@ -103,7 +103,7 @@ export class DashboardOrganizationComponent implements AfterViewInit {
             return val;
           },
         },
-      },
+      }
     };
     this.chartOptions2 = {
       series: [
@@ -112,15 +112,18 @@ export class DashboardOrganizationComponent implements AfterViewInit {
           data: [
             {
               x: "ABC",
-              y: 10
+              y: 10,
+              fillColor: "#06C9D7"
             },
             {
               x: "DEF",
-              y: 60
+              y: 60,
+              fillColor: "#06C9D7"
             },
             {
               x: "XYZ",
-              y: 41
+              y: 41,
+              fillColor: "#06C9D7"
             }
           ]
         },
@@ -129,27 +132,33 @@ export class DashboardOrganizationComponent implements AfterViewInit {
           data: [
             {
               x: "ABCD",
-              y: 10
+              y: 10,
+              fillColor: "#fb9778"
             },
             {
               x: "DEFG",
-              y: 20
+              y: 20,
+              fillColor: "#fb9778"
             },
             {
               x: "WXYZ",
-              y: 51
+              y: 51,
+              fillColor: "#fb9778"
             },
             {
               x: "PQR",
-              y: 30
+              y: 30,
+              fillColor: "#fb9778"
             },
             {
               x: "MNO",
-              y: 20
+              y: 20,
+              fillColor: "#fb9778"
             },
             {
               x: "CDE",
-              y: 30
+              y: 30,
+              fillColor: "#fb9778"
             }
           ]
         }
@@ -173,8 +182,7 @@ export class DashboardOrganizationComponent implements AfterViewInit {
           enableShades: true,
           distributed: false
         }
-      },
-      colors: ["#FF4560", "#00E396", "#008FFB"]
+      }
     };
     this.chartOptions3 = {
       series: [76, 67, 61, 90, 45],

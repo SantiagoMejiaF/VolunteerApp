@@ -55,10 +55,12 @@ export class DashboardAdminComponent implements OnInit {
         {
           name: 'Voluntarios',
           data: [44, 55, 41, 37, 22, 43, 21],
+          color: "#fb9778"
         },
         {
           name: 'Organizaciones',
           data: [53, 32, 33, 52, 13, 43, 32],
+          color: "#06C9D7"
         },
       ],
       chart: {
@@ -177,7 +179,7 @@ export class DashboardAdminComponent implements OnInit {
 
   initializeDataTable(): void {
     setTimeout(() => {
-      const tableId = '#datatableGestionUser';  // Cambia por el ID correspondiente
+      const tableId = '#datatableDashAdmin';  // Cambia por el ID correspondiente
 
       if ($.fn.dataTable.isDataTable(tableId)) {
         $(tableId).DataTable().destroy();
@@ -198,11 +200,9 @@ export class DashboardAdminComponent implements OnInit {
           { title: "Email", data: "email" },
           { title: "Cédula", data: "cedula" }
         ],
-        pagingType: 'full_numbers',
-        pageLength: 7,
         processing: true,
-        lengthMenu: [5, 10, 25, 50],
         scrollX: true,
+        paging: false,
         language: {
           info: '<span style="font-size: 0.875rem;">Mostrando página _PAGE_ de _PAGES_</span>',
           search: '<span style="font-size: 0.875rem;">Buscar</span>',
@@ -210,14 +210,12 @@ export class DashboardAdminComponent implements OnInit {
           infoFiltered: '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros totales)</span>',
           lengthMenu: '<span style="font-size: 0.875rem;">Mostrar _MENU_ registros por página</span>',
           zeroRecords: '<span style="font-size: 0.875rem;">No se encontraron resultados</span>',
-          paginate: {
-            first: 'Primero',
-            last: 'Último',
-            next: 'Siguiente',
-            previous: 'Anterior'
-          }
+          
         },
       });
     }, 1000);
+  }
+  ngAfterViewInit(): void {
+    this.initializeDataTable();
   }
 }
