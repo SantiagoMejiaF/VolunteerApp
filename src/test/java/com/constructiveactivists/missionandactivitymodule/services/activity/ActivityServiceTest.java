@@ -2,14 +2,20 @@ package com.constructiveactivists.missionandactivitymodule.services.activity;
 
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.PersonalDataCommunityLeaderEntity;
+import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupMembershipEntity;
 import com.constructiveactivists.missionandactivitymodule.repositories.*;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupService;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.organizationmodule.repositories.ActivityCoordinatorRepository;
+import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
+import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteeringInformationEntity;
+import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
+import com.constructiveactivists.volunteermodule.services.volunteer.VolunteerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,9 +23,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.VOLUNTEER_NOT_ACTIVITIES;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
@@ -30,10 +40,19 @@ class ActivityServiceTest {
     private VolunteerGroupService volunteerGroupService;
 
     @Mock
+    private VolunteerService volunteerService;
+
+    @Mock
     private MissionRepository missionRepository;
 
     @Mock
+    private VolunteerRepository volunteerRepository;
+
+    @Mock
     private ActivityRepository activityRepository;
+
+    @Mock
+    private ReviewRepository reviewRepository;
 
     @Mock
     private VolunteerGroupRepository groupRepository;
@@ -308,4 +327,132 @@ class ActivityServiceTest {
         assertEquals(1, result.size());
         verify(activityRepository, times(1)).findAllByActivityCoordinatorAndActivityStatus(coordinatorId, ActivityStatusEnum.DISPONIBLE);
     }
+
+    @Test
+     void testGetActivitiesByVolunteerAndDate() {
+        ActivityEntity activity1 = new ActivityEntity();
+        activity1.setId(1);
+        activity1.setDate(LocalDate.of(2024, 10, 5));
+        ActivityEntity activity2 = new ActivityEntity();
+        activity2.setId(2);
+        activity2.setDate(LocalDate.of(2024, 10, 15));
+        ActivityEntity activity3 = new ActivityEntity();
+        activity3.setId(3);
+        activity3.setDate(LocalDate.of(2024, 9, 20));
+        List<ActivityEntity> volunteerActivities = Arrays.asList(activity1, activity2, activity3);
+        when(activityRepository.findByIdIn(any())).thenReturn(volunteerActivities);
+        List<ActivityEntity> activitiesInOctober = activityService.getActivitiesByVolunteerAndDate(1, 10, 2024);
+        assertEquals(2, activitiesInOctober.size());
+        assertEquals(Arrays.asList(activity1, activity2), activitiesInOctober);
+    }
+
+    @Test
+     void testGetActivitiesByVolunteerAndDate_NoActivities() {
+        when(activityRepository.findByIdIn(any())).thenReturn(Collections.emptyList());
+        List<ActivityEntity> activities = activityService.getActivitiesByVolunteerAndDate(1, 10, 2024);
+        assertEquals(Collections.emptyList(), activities);
+    }
+
+    @Test
+     void testGetTotalBeneficiariesImpactedByVolunteer_ActivitiesCompleted() {
+        Integer volunteerId = 1;
+        VolunteerEntity volunteer = new VolunteerEntity();
+        VolunteeringInformationEntity volunteeringInfo = new VolunteeringInformationEntity();
+        volunteeringInfo.setActivitiesCompleted(Arrays.asList(1, 2, 3));
+        volunteer.setVolunteeringInformation(volunteeringInfo);
+        ActivityEntity activity1 = new ActivityEntity();
+        activity1.setNumberOfBeneficiaries(5);
+        ActivityEntity activity2 = new ActivityEntity();
+        activity2.setNumberOfBeneficiaries(10);
+        ActivityEntity activity3 = new ActivityEntity();
+        activity3.setNumberOfBeneficiaries(15);
+        when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.of(volunteer));
+        when(activityRepository.findById(1)).thenReturn(Optional.of(activity1));
+        when(activityRepository.findById(2)).thenReturn(Optional.of(activity2));
+        when(activityRepository.findById(3)).thenReturn(Optional.of(activity3));
+        int totalBeneficiaries = activityService.getTotalBeneficiariesImpactedByVolunteer(volunteerId);
+        assertEquals(30, totalBeneficiaries);
+    }
+
+    @Test
+     void testGetTotalBeneficiariesImpactedByVolunteer_NoActivitiesCompleted() {
+        Integer volunteerId = 1;
+        VolunteerEntity volunteer = new VolunteerEntity();
+        VolunteeringInformationEntity volunteeringInfo = new VolunteeringInformationEntity();
+        volunteeringInfo.setActivitiesCompleted(Collections.emptyList());
+        volunteer.setVolunteeringInformation(volunteeringInfo);
+        when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.of(volunteer));
+        int totalBeneficiaries = activityService.getTotalBeneficiariesImpactedByVolunteer(volunteerId);
+        assertEquals(0, totalBeneficiaries);
+    }
+
+    @Test
+     void testGetTotalBeneficiariesImpactedByVolunteer_VolunteerNotFound() {
+        Integer volunteerId = 1;
+        when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.empty());
+        int totalBeneficiaries = activityService.getTotalBeneficiariesImpactedByVolunteer(volunteerId);
+
+        assertEquals(0, totalBeneficiaries);
+    }
+
+    @Test
+     void testGetCompletedActivitiesCountVolunteer_VolunteerExistsWithCompletedActivities() {
+        Integer volunteerId = 1;
+        VolunteerEntity volunteer = new VolunteerEntity();
+        VolunteeringInformationEntity volunteeringInformation = new VolunteeringInformationEntity();
+        volunteeringInformation.setActivitiesCompleted(Collections.singletonList(1));
+
+        volunteer.setVolunteeringInformation(volunteeringInformation);
+
+        when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.of(volunteer));
+
+        int result = activityService.getCompletedActivitiesCountVolunteer(volunteerId);
+
+        assertEquals(1, result);
+    }
+
+    @Test
+        void testGetCompletedActivitiesCountVolunteer_VolunteerExistsWithNoCompletedActivities() {
+            Integer volunteerId = 1;
+            VolunteerEntity volunteer = new VolunteerEntity();
+            VolunteeringInformationEntity volunteeringInformation = new VolunteeringInformationEntity();
+            volunteeringInformation.setActivitiesCompleted(Collections.emptyList());
+
+            volunteer.setVolunteeringInformation(volunteeringInformation);
+
+            when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.of(volunteer));
+
+            int result = activityService.getCompletedActivitiesCountVolunteer(volunteerId);
+
+            assertEquals(0, result);
+        }
+
+    @Test
+    void testGetCompletedActivitiesCountVolunteer_VolunteerDoesNotExist() {
+        Integer volunteerId = 1;
+        when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.empty());
+        int result = activityService.getCompletedActivitiesCountVolunteer(volunteerId);
+        assertEquals(0, result);
+    }
+
+    @Test
+    void testgetCompletedActivitiesVolunteerList_NoVolunteers() {
+        when(volunteerRepository.findAll()).thenReturn(Collections.emptyList());
+        List<ActivityEntity> result = activityService.getCompletedActivitiesVolunteerList(1);
+        assertEquals(Collections.emptyList(), result);
+    }
+
+    @Test
+    void testgetCompletedActivitiesVolunteerList_NoCompletedActivities() {
+        VolunteerEntity volunteer1 = new VolunteerEntity();
+        volunteer1.setId(1);
+        VolunteerEntity volunteer2 = new VolunteerEntity();
+        volunteer2.setId(2);
+        List<VolunteerEntity> volunteers = Arrays.asList(volunteer1, volunteer2);
+        when(volunteerRepository.findAll()).thenReturn(volunteers);
+        when(activityRepository.findByIdIn(any())).thenReturn(Collections.emptyList());
+        List<ActivityEntity> result = activityService.getCompletedActivitiesVolunteerList(1);
+        assertEquals(Collections.emptyList(), result);
+    }
+
 }
