@@ -1,9 +1,9 @@
-package com.constructiveactivists.configurationmodule.configuration;
+package com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.configuration;
 
-import com.constructiveactivists.configurationmodule.security.model.JWTAuthenticationFilter;
-import com.constructiveactivists.configurationmodule.security.service.CustomUserDetailsService;
-import com.constructiveactivists.configurationmodule.security.model.JwtAuthEntryPoint;
-import com.constructiveactivists.configurationmodule.security.model.JwtUtil;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.security.model.JWTAuthenticationFilter;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.security.service.CustomUserDetailsService;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.security.model.JwtAuthEntryPoint;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.security.model.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;

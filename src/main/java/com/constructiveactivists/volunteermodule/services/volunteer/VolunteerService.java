@@ -1,6 +1,6 @@
 package com.constructiveactivists.volunteermodule.services.volunteer;
 
-import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VisibilityEnum;
@@ -203,15 +203,20 @@ public class VolunteerService {
         volunteerRepository.save(volunteer);
     }
 
-    public void addVolunteerActivity(Integer volunteerId) {
+    public void addVolunteerActivity(Integer volunteerId, Integer activityId) {
         VolunteerEntity volunteer = volunteerRepository.findById(volunteerId)
                 .orElseThrow(() -> new EntityNotFoundException("Volunteer not found with ID: " + volunteerId));
 
         VolunteeringInformationEntity volunteeringInfo = volunteer.getVolunteeringInformation();
-        int updatedActivities = volunteeringInfo.getActivitiesCompleted() + 1;
-        volunteeringInfo.setActivitiesCompleted(updatedActivities);
+        List<Integer> activitiesCompleted = volunteeringInfo.getActivitiesCompleted();
+        if (activitiesCompleted == null) {
+            activitiesCompleted = new ArrayList<>();
+        }
+        activitiesCompleted.add(activityId);
+        volunteeringInfo.setActivitiesCompleted(activitiesCompleted);
         volunteerRepository.save(volunteer);
     }
+
 
     private void validateAge(LocalDate birthDate) {
         int age = calculateAge(birthDate);

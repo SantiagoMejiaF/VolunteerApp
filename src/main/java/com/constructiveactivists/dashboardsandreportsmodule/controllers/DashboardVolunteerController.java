@@ -1,6 +1,6 @@
 package com.constructiveactivists.dashboardsandreportsmodule.controllers;
 
-import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.dashboardsandreportsmodule.controllers.response.CardsOrganizationVolunteerResponse;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.dashboardsandreportsmodule.controllers.configuration.DashboardVolunteerAPI;

@@ -1,5 +1,6 @@
 package com.constructiveactivists.missionandactivitymodule.controllers;
 
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.controllers.configuration.activity.ActivityAPI;
 import com.constructiveactivists.missionandactivitymodule.controllers.request.activity.ActivityRequest;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
@@ -12,10 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -99,4 +97,37 @@ public class ActivityController implements ActivityAPI {
         List<ActivityEntity> availableActivities = activityService.getAvailableActivitiesByCoordinator(coordinatorId);
         return ResponseEntity.ok(availableActivities);
     }
+
+    @Override
+    public ResponseEntity<Integer> getCompletedActivitiesCountVolunteer(@PathVariable Integer volunteerId) {
+        int count = activityService.getCompletedActivitiesCountVolunteer(volunteerId);
+        return ResponseEntity.ok(count);
+    }
+
+    @Override
+    public ResponseEntity<Integer> getTotalBeneficiariesImpacted(@PathVariable Integer volunteerId) {
+        int totalBeneficiaries = activityService.getTotalBeneficiariesImpactedByVolunteer(volunteerId);
+        return ResponseEntity.ok(totalBeneficiaries);
+    }
+
+    @Override
+    public ResponseEntity<List<ActivityEntity>> getActivitiesByVolunteerAndDate(
+            @PathVariable Integer volunteerId,
+            @RequestParam int month,
+            @RequestParam int year) {
+        List<ActivityEntity> activities = activityService.getActivitiesByVolunteerAndDate(volunteerId, month, year);
+        return ResponseEntity.ok(activities);
+    }
+
+    @Override
+    public ResponseEntity<Double> getAverageRating(@PathVariable Integer volunteerId) {
+        try {
+            double averageRating = activityService.getAverageRatingByVolunteer(volunteerId);
+            return new ResponseEntity<>(averageRating, HttpStatus.OK);
+        } catch (BusinessException e) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+
 }

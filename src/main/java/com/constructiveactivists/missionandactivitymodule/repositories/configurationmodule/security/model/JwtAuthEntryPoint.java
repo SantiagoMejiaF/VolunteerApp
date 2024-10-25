@@ -1,4 +1,4 @@
-package com.constructiveactivists.configurationmodule.security.model;
+package com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.security.model;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

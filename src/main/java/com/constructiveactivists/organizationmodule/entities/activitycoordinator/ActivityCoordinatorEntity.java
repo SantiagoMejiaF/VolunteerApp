@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -26,4 +28,13 @@ public class ActivityCoordinatorEntity {
 
         @Column(name = "CELULAR", length = 200, nullable = false)
         private String phoneActivityCoordinator;
+
+        @ElementCollection
+        @CollectionTable(
+                name = "ACTIVIDADES_COMPLETADAS_COORDINADOR",
+                schema = "MODULO_GESTION_MISIONES_Y_ACTIVIDADES",
+                joinColumns = @JoinColumn(name = "COORDINADOR_ACTIVIDAD_ID")
+        )
+        @Column(name = "ACTIVIDAD_ID", columnDefinition = "INTEGER")
+        private List<Integer> completedActivities;
 }

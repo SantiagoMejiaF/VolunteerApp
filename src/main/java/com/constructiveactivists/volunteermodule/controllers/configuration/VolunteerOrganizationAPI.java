@@ -1,5 +1,6 @@
 package com.constructiveactivists.volunteermodule.controllers.configuration;
 
+import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.volunteermodule.controllers.request.volunteerorganization.VolunteerOrganizationRequest;
 import com.constructiveactivists.volunteermodule.controllers.response.StatusVolunteerOrganizationResponse;
 import com.constructiveactivists.volunteermodule.controllers.response.VolunteerOrganizationResponse;
@@ -65,4 +66,11 @@ public interface VolunteerOrganizationAPI {
     })
     @GetMapping("/rejected/{organizationId}")
     ResponseEntity<List<StatusVolunteerOrganizationResponse>> getRejectedVolunteersByOrganizationId(@PathVariable Integer organizationId);
+
+    @Operation(summary = "Obtener las últimas cinco organizaciones en las que esta un voluntario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/recent/{volunteerId}")
+    ResponseEntity<List<OrganizationEntity>> getRecentfiveOrganizationsByVolunteerId(@PathVariable Integer volunteerId);
 }

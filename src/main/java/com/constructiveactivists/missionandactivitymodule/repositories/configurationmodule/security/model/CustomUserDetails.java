@@ -1,4 +1,4 @@
-package com.constructiveactivists.configurationmodule.security.model;
+package com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.security.model;
 
 import com.constructiveactivists.usermodule.entities.RoleEntity;
 import com.constructiveactivists.usermodule.entities.UserEntity;
