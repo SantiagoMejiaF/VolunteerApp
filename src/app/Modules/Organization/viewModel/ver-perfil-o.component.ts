@@ -119,4 +119,9 @@ export class VerPerfilOComponent {
     const btnClass = 'btn-outline-primary' + imagenId;
     this.router.navigate(['/actividad', validIndex, `card${imagenId}.jpg`]);
   }
+
+  unirseF(event: Event) {
+    event.preventDefault(); // Prevenir el comportamiento predeterminado del enlace
+    alert(`Se ha enviado tu solicitud de forma exitosa`);
+  }
 }
