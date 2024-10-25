@@ -3,6 +3,8 @@ package com.constructiveactivists.dashboardsandreportsmodule.controllers;
 import com.constructiveactivists.dashboardsandreportsmodule.controllers.configuration.DashboardOrganizationAPI;
 import com.constructiveactivists.dashboardsandreportsmodule.services.DashboardOrganizationService;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -68,4 +70,31 @@ public class DashboardOrganizationController implements DashboardOrganizationAPI
         Map<Month, Long> organizationsByMonth = dashboardOrganizationService.getOrganizationsCountByMonth(year);
         return ResponseEntity.ok(organizationsByMonth);
     }
+
+    @Override
+    public ResponseEntity<Long> getCompletedMissionsCountByOrganization(@PathVariable Integer organizationId) {
+        long completedMissionsCount = dashboardOrganizationService.countCompleteMissionsByOrganization(organizationId);
+        return ResponseEntity.ok(completedMissionsCount);
+    }
+
+    @Override
+    public ResponseEntity<Map<SkillEnum, Integer>> getSkillCountsByOrganization(@PathVariable Integer organizationId) {
+        Map<SkillEnum, Integer> skillCounts = dashboardOrganizationService.getSkillCountsByOrganization(organizationId);
+        return ResponseEntity.ok(skillCounts);
+    }
+
+    @Override
+    public ResponseEntity<Map<AvailabilityEnum, Long>> getVolunteerAvailabilityCountByOrganization(
+            @PathVariable Integer organizationId) {
+        Map<AvailabilityEnum, Long> availabilityCountMap =
+                dashboardOrganizationService.getVolunteerAvailabilityCountByOrganization(organizationId);
+        return ResponseEntity.ok(availabilityCountMap);
+    }
+
+    @Override
+    public ResponseEntity<Integer> getTotalBeneficiariesImpactedByOrganization(@PathVariable Integer organizationId) {
+        int totalBeneficiaries = dashboardOrganizationService.getTotalBeneficiariesImpactedByOrganization(organizationId);
+        return ResponseEntity.ok(totalBeneficiaries);
+    }
+
 }

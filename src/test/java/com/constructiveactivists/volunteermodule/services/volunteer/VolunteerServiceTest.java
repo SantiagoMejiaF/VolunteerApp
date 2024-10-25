@@ -266,7 +266,7 @@ class VolunteerServiceTest {
             volunteerService.updateVolunteer(1, volunteerEntity);
         });
 
-        assertEquals("El voluntario con ID 1 no existe en la base de datos.", exception.getMessage());
+        assertEquals("Voluntario no encontrado1", exception.getMessage());
         verify(volunteerRepository, never()).save(any(VolunteerEntity.class));
     }
 

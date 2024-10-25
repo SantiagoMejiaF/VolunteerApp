@@ -1,6 +1,7 @@
 package com.constructiveactivists.dashboardsandreportsmodule.controllers;
 
 import com.constructiveactivists.dashboardsandreportsmodule.services.DashboardSuperAdminService;
+import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -75,6 +76,30 @@ class DashboardSuperAdminControllerTest {
         verify(dashboardSuperAdminService, times(1)).getAverageMonthlyHours();
     }
 
+    @Test
+    void testGetTenRecentAuthorizedUsers_Success() {
+        UserEntity user1 = new UserEntity();
+        user1.setId(1);
+
+        UserEntity user2 = new UserEntity();
+        user2.setId(2);
+        List<UserEntity> recentUsers = List.of(user1, user2);
+        when(dashboardSuperAdminService.getTenRecentAuthorizedUsers()).thenReturn(recentUsers);
+        ResponseEntity<List<UserEntity>> response = dashboardSuperAdminController.getTenRecentAuthorizedUsers();
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(recentUsers, response.getBody());
+        verify(dashboardSuperAdminService, times(1)).getTenRecentAuthorizedUsers();
+    }
+
+    @Test
+    void testGetTenRecentAuthorizedUsers_Error() {
+        when(dashboardSuperAdminService.getTenRecentAuthorizedUsers()).thenThrow(new RuntimeException("Error fetching users"));
+        ResponseEntity<List<UserEntity>> response = dashboardSuperAdminController.getTenRecentAuthorizedUsers();
+        assertNotNull(response);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        verify(dashboardSuperAdminService, times(1)).getTenRecentAuthorizedUsers();
+    }
 
 
 }

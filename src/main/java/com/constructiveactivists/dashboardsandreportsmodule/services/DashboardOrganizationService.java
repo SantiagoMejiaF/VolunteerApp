@@ -1,12 +1,22 @@
 package com.constructiveactivists.dashboardsandreportsmodule.services;
 
+import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
+import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
+import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionStatusEnum;
+import com.constructiveactivists.missionandactivitymodule.repositories.ActivityRepository;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.services.mission.MissionService;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.organizationmodule.services.organization.OrganizationService;
+import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.DataShareVolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
+import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
+import com.constructiveactivists.volunteermodule.services.volunteer.VolunteerService;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.DataShareVolunteerOrganizationService;
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.entities.enums.AuthorizationStatus;
@@ -24,8 +34,7 @@ import java.time.YearMonth;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.NOT_FOUND_MESSAGE;
-import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.ORGANIZATION_MESSAGE_ID;
+import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.*;
 
 @Service
 @AllArgsConstructor
@@ -37,6 +46,12 @@ public class DashboardOrganizationService {
     private final PostulationService postulationService;
     private final VolunteerOrganizationService volunteerOrganizationService;
     private final DataShareVolunteerOrganizationService dataShareVolunteerOrganizationService;
+
+    private final VolunteerService volunteerService;
+
+    private final VolunteerRepository volunteerRepository;
+
+    private final ActivityRepository activityRepository;
 
     private void getOrganizationById(Integer organizationId) {
         Optional<OrganizationEntity> organization = organizationService.getOrganizationById(organizationId);
@@ -62,6 +77,13 @@ public class DashboardOrganizationService {
     public long countCompleteMissions() {
         return missionService.getAllMisions().stream()
                 .filter(mission -> mission.getMissionStatus() == MissionStatusEnum.COMPLETADA)
+                .count();
+    }
+
+    public long countCompleteMissionsByOrganization(Integer organizationId) {
+        return missionService.getAllMisions().stream()
+                .filter(mission -> mission.getMissionStatus() == MissionStatusEnum.COMPLETADA
+                        && mission.getOrganizationId().equals(organizationId))
                 .count();
     }
 
@@ -112,4 +134,57 @@ public class DashboardOrganizationService {
         });
         return organizationsByMonth;
     }
+
+    public Map<SkillEnum, Integer> getSkillCountsByOrganization(Integer organizationId) {
+        Map<SkillEnum, Integer> skillCountMap = new EnumMap<>(SkillEnum.class);
+        List<VolunteerOrganizationEntity> acceptedVolunteerOrganizations = volunteerOrganizationService.findAcceptedVolunteerOrganizationsByOrganizationId(organizationId);
+        acceptedVolunteerOrganizations.forEach(volunteerOrgEntity -> {
+            VolunteerEntity volunteer = volunteerService.getVolunteerById(volunteerOrgEntity.getVolunteerId())
+                    .orElseThrow(() -> new BusinessException(VOLUNTEER_NOT_FOUND));
+            volunteer.getVolunteeringInformation().getSkillsList().forEach(skill ->
+                    skillCountMap.merge(skill, 1, Integer::sum)
+            );
+        });
+        for (SkillEnum skill : SkillEnum.values()) {
+            skillCountMap.putIfAbsent(skill, 0);
+        }
+        return skillCountMap;
+    }
+
+    public Map<AvailabilityEnum, Long> getVolunteerAvailabilityCountByOrganization(Integer organizationId) {
+        Map<AvailabilityEnum, Long> availabilityCountMap = new EnumMap<>(AvailabilityEnum.class);
+        Arrays.stream(AvailabilityEnum.values())
+                .forEach(day -> availabilityCountMap.put(day, 0L));
+        List<VolunteerOrganizationEntity> acceptedVolunteerOrganizations = volunteerOrganizationService
+                .findAcceptedVolunteerOrganizationsByOrganizationId(organizationId);
+        List<Integer> acceptedVolunteerIds = acceptedVolunteerOrganizations.stream()
+                .map(VolunteerOrganizationEntity::getVolunteerId)
+                .filter(Objects::nonNull)
+                .toList();
+        List<VolunteerEntity> acceptedVolunteers = acceptedVolunteerIds.stream()
+                .map(volunteerService::getVolunteerById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
+        acceptedVolunteers.stream()
+                .flatMap(volunteer -> volunteer.getVolunteeringInformation().getAvailabilityDaysList().stream())
+                .forEach(day -> availabilityCountMap.merge(day, 1L, Long::sum));
+        return availabilityCountMap;
+    }
+
+    public int getTotalBeneficiariesImpactedByOrganization(Integer organizationId) {
+        List<MissionEntity> missions = missionService.getMissionsByOrganizationId(organizationId);
+        Set<Integer> uniqueBeneficiaries = new HashSet<>();
+        missions.stream()
+                .flatMap(mission -> missionService.getActivitiesByMissionId(mission.getId()).stream())
+                .filter(activity -> ActivityStatusEnum.COMPLETADA.equals(activity.getActivityStatus()))
+                .map(ActivityEntity::getNumberOfBeneficiaries)
+                .forEach(uniqueBeneficiaries::add);
+        return uniqueBeneficiaries.stream().mapToInt(Integer::intValue).sum();
+    }
+
+
+
+
+
 }

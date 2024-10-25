@@ -1,3 +1,22 @@
+-- 1. Se insertan 20 roles en la tabla ROL, incluyendo múltiples instancias de "ORGANIZACION"
+-- y "VOLUNTARIO", así como varios "COORDINADOR_ACTIVIDAD".
+-- 2. Usuarios (20 Usuarios)
+-- Se insertan 20 usuarios en la tabla USUARIO, todos con el estado de autorización 'AUTORIZADO'.
+-- Cada usuario tiene un nombre, apellido, correo electrónico y una imagen de perfil.
+-- 3. Organizaciones (2 Organizaciones).
+-- Se registran 2 organizaciones en la tabla ORGANIZACION, cada una asociada a un usuario
+-- con información sobre el responsable, tipo de organización y dirección.
+-- 4. Información Personal de Voluntarios (13 Registros)
+-- Se insertan 13 registros de información personal de voluntarios, incluyendo cédula,
+-- dirección, edad y una breve descripción personal.
+-- 5. Misiones (5 misiones)
+-- Se insertan 5 registros
+-- 6. Lider de comunidad y Coordinador
+-- Se insertan 5 registros
+-- 7. Actividades y Grupos de voluntarios
+-- Se insertan 5 registros
+
+
 -- Inserción de roles en la tabla ROL
 INSERT INTO modulo_gestion_usuarios.ROL (TIPO_ROL)
 VALUES
@@ -239,23 +258,17 @@ VALUES
 
 -- Inserción de misiones
 INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.MISION
-(ORGANIZACION_ID, TIPO_MISION, TITULO, DESCRIPCION, FECHA_INICIO, FECHA_FIN, DEPARTAMENTO, VISIBILIDAD, ESTADO, "fecha de creacion")
+(ORGANIZACION_ID, TIPO_MISION, TITULO, DESCRIPCION, FECHA_INICIO, FECHA_FIN, DEPARTAMENTO, VISIBILIDAD, ESTADO, FECHA_DE_CREACION)
 VALUES
-(1, 'SOCIAL', 'Voluntariado en Amazonas', 'Apoyo a comunidades indígenas con educación y salud.', '2024-10-01', '2024-10-15', 'Amazonas', 'PUBLICA', 'DISPONIBLE', '2024-08-01 10:00:00'),
-(2, 'MEDIO_AMBIENTE', 'Voluntariado de Reforestación en Antioquia', 'Plantación de árboles y restauración de áreas verdes.', '2024-09-15', '2024-09-30', 'Antioquia', 'PUBLICA', 'DISPONIBLE', '2024-08-05 09:30:00'),
-(1, 'SOCIAL', 'Voluntariado Educativo en Boyacá', 'Apoyo en escuelas rurales con actividades de alfabetización.', '2024-11-01', '2024-11-10', 'Boyacá', 'PRIVADA', 'DISPONIBLE', '2024-08-10 14:45:00'),
-(2, 'SALUD', 'Voluntariado en Brigadas de Salud en Bolívar', 'Jornadas médicas para comunidades rurales en Bolívar.', '2024-10-10', '2024-10-20', 'Bolívar', 'PUBLICA', 'DISPONIBLE', '2024-08-15 16:20:00'),
-(1, 'EDUCACION', 'Voluntariado Tecnológico en Cundinamarca', 'Capacitación tecnológica para jóvenes en zonas rurales.', '2024-09-01', '2024-09-15', 'Cundinamarca', 'PUBLICA', 'DISPONIBLE', '2024-08-20 11:10:00');
+(1, 'SOCIAL', 'Voluntariado en Amazonas', 'Apoyo a comunidades indígenas con educación y salud.', '2024-10-01', '2024-10-24', 'Amazonas', 'PUBLICA', 'DISPONIBLE', '2024-08-01 10:00:00'),
+(2, 'MEDIO_AMBIENTE', 'Voluntariado de Reforestación en Antioquia', 'Plantación de árboles y restauración de áreas verdes.', '2024-09-15', '2024-09-30', 'Antioquia', 'PUBLICA', 'COMPLETADA', '2024-08-05 09:30:00');
 
 -- Inserción de intereses requeridos en las misiones
 INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.INTERESES_REQUERIDOS (MISSION_ID, INTERESES)
 VALUES
 (1, 'SALUD'),            -- Misión de Apoyo a comunidades indígenas en Amazonas
 (1, 'EDUCACION'),        -- Misión de Apoyo a comunidades indígenas en Amazonas
-(2, 'MEDIO_AMBIENTE'),   -- Misión de Reforestación en Antioquia
-(3, 'EDUCACION'),        -- Misión de Alfabetización en Boyacá
-(4, 'SALUD'),            -- Misión de Brigadas de Salud en Bolívar
-(5, 'TECNOLOGIA');       -- Misión de Capacitación tecnológica en Cundinamarca
+(2, 'MEDIO_AMBIENTE');   -- Misión de Reforestación en Antioquia
 
 -- Inserción de requisitos para las misiones
 INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.REQUISITOS_REQUERIDOS (MISSION_ID, REQUISITOS)
@@ -263,12 +276,7 @@ VALUES
 (1, 'RESIDENCIA_LEGAL'),
 (1, 'CERTIFICADO_MEDICO'),
 (2, 'EXPERIENCIA_PREVIA'),
-(2, 'DISPONIBILIDAD_MINIMA'),
-(3, 'CAPACITACION_COMPLETA'),
-(3, 'DOMINIO_IDIOMA'),
-(4, 'ANTECEDENTES_APROBADOS'),
-(4, 'PERIODO_COMPROMISO'),
-(5, 'NO_APLICA');
+(2, 'DISPONIBILIDAD_MINIMA');
 
 -- Inserción de habilidades requeridas para las misiones
 INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.HABILIDADES_REQUERIDAS (MISSION_ID, HABILIDADES)
@@ -276,13 +284,7 @@ VALUES
 (1, 'COMUNICACION'),
 (1, 'TRABAJO_EN_EQUIPO'),
 (2, 'GESTION_DE_PROYECTOS'),
-(2, 'EDUCACION'),
-(3, 'LIDERAZGO'),
-(3, 'PRIMEROS_AUXILIOS'),
-(4, 'ORGANIZACION'),
-(4, 'MARKETING'),
-(5, 'TECNOLOGIA'),
-(5, 'IDIOMAS');
+(2, 'EDUCACION');
 
 
 -- Inserción de lideres de comunidad
@@ -298,13 +300,48 @@ VALUES
 -- Inserción de actividades
 INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.ACTIVIDAD (MISION_ID, lider_comunidad_id, coordinador_actividad_id, TITULO, DESCRIPCION, FECHA, HORA_INICIO, HORA_FIN, CIUDAD, LOCALIDAD, DIRECCION, NUMERO_VOLUNTARIOS_REQUERIDOS, HORAS_REQUERIDAS, VISIBILIDAD, numero_personas_beneficiadas, OBSERVACIONES, grupo_voluntario_id, estado)
 VALUES
-(1, 1, 1, 'Plantación de árboles', 'Plantación de 100 árboles en el parque central.', '2024-24-10', '20:40', '22:00', 'Bogotá', 'Usaquén', 'Parque Central, Calle 123', 20, 4, 'PUBLICA', 100, 'Llevar agua y protector solar.', 1, 'DISPONIBLE'),
-(2, 2, 2, 'Limpieza de Parque', 'Recolección de basura en el parque central.', '2024-09-10', '09:00', '13:00', 'Antioquia', 'Medellín', 'Parque Arví, Calle 45', 15, 4, 'PUBLICA', 50, 'Traer bolsas y guantes.', 2, 'COMPLETADA');
+(1, 1, 1, 'Plantación de árboles', 'Plantación de 100 árboles en el parque central.', '2024-10-24', '20:40', '22:00', 'Bogotá', 'Usaquén', 'Parque Central, Calle 123', 20, 4, 'PUBLICA', 100, 'Llevar agua y protector solar.', 1, 'DISPONIBLE'),
+(2, 2, 2, 'Limpieza de Parque', 'Recolección de basura en el parque central.', '2024-09-10', '09:00', '13:00', 'Antioquia', 'Medellín', 'Parque Arví, Calle 45', 10, 4, 'PUBLICA', 50, 'Traer bolsas y guantes.', 2, 'COMPLETADA');
 
 
 -- Inserción de grupos de voluntarios
 INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.GRUPO_VOLUNTARIO
 (ORGANIZACION_ID, ACTIVIDAD_ID, NOMBRE, CANTIDAD_VOLUNTARIOS_REQUERIDOS, CANTIDAD_DE_VOLUNTARIOS_ACTUAL)
 VALUES
-(1, 1, 'Grupo Árboles Bogotá', 20, 0),
-(2, 2, 'Grupo Limpieza Medellín', 15, 0);
+(1, 1, 'Grupo Árboles Bogotá', 20, 2),
+(2, 2, 'Grupo Limpieza Medellín', 15, 7);
+
+
+-- Inserción de miembros en grupos de voluntarios
+INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.MIEMBROS_GRUPO_VOLUNTARIO (GRUPO_ID, VOLUNTARIO_ID)
+VALUES
+(1, 1),
+(1, 2),
+(2, 1),
+(2, 2),
+(2, 3),
+(2, 4),
+(2, 5),
+(2, 6),
+(2, 7);
+
+INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.RESENA
+(ACTIVIDAD_ID, DESCRIPCION, FECHA_CREACION, LIKES, CALIFICACION)
+VALUES
+(2, 'Una experiencia increíble, aprendí mucho sobre el trabajo comunitario.', '2024-10-24', 10, 5);
+
+INSERT INTO MODULO_GESTION_VOLUNTARIOS.ACTIVIDADES_COMPLETADAS_VOLUNTARIO
+(INFORMACION_VOLUNTARIADO_ID, ACTIVIDAD_COMPLETADA)
+VALUES
+(1, 2),
+(2, 2),
+(3, 2),
+(4, 2),
+(5, 2),
+(6, 2),
+(7, 2);
+
+INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.ACTIVIDADES_COMPLETADAS_COORDINADOR
+(COORDINADOR_ACTIVIDAD_ID, ACTIVIDAD_ID)
+VALUES
+(2, 2);
