@@ -42,7 +42,7 @@ export class ActividadDComponent implements OnInit {
     if (this.origen === 'misF' ||this.origen === 'homeV') {
       this.router.navigate(['/verPerfilO'], { queryParams: { from: this.origen } });
     } else {
-      this.router.navigate(['/misA'], { queryParams: { from: this.origen } }); // Navegar a Detalles de Fundación
+      this.router.navigate(['/misA']); // Navegar a Detalles de Fundación
     }
   }
   
