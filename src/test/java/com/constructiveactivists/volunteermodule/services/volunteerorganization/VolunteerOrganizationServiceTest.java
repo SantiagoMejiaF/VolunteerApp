@@ -1,6 +1,7 @@
 package com.constructiveactivists.volunteermodule.services.volunteerorganization;
 
 import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.organizationmodule.repositories.OrganizationRepository;
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.repositories.UserRepository;
@@ -20,6 +21,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -417,4 +421,29 @@ class VolunteerOrganizationServiceTest {
         assertTrue(result.isEmpty());
         verify(volunteerOrganizationRepository, times(1)).findByOrganizationId(1);
     }
+
+    @Test
+    public void testGetRecentOrganizationsByVolunteerId_NoVolunteerOrganizations() {
+        Integer volunteerId = 1;
+        when(volunteerOrganizationRepository.findByVolunteerId(volunteerId))
+                .thenReturn(Collections.emptyList());
+        List<OrganizationEntity> recentOrganizations = volunteerOrganizationService.getRecentOrganizationsByVolunteerId(volunteerId);
+        assertTrue(recentOrganizations.isEmpty());
+    }
+
+    @Test
+    public void testGetRecentOrganizationsByVolunteerId_NoRecentPostulations() {
+        Integer volunteerId = 1;
+        VolunteerOrganizationEntity volunteerOrganization = new VolunteerOrganizationEntity();
+        volunteerOrganization.setId(101);
+        when(volunteerOrganizationRepository.findByVolunteerId(volunteerId))
+                .thenReturn(Arrays.asList(volunteerOrganization));
+        when(postulationRepository.findByVolunteerOrganizationIdIn(Collections.singletonList(101)))
+                .thenReturn(Collections.emptyList());
+        List<OrganizationEntity> recentOrganizations = volunteerOrganizationService.getRecentOrganizationsByVolunteerId(volunteerId);
+        assertTrue(recentOrganizations.isEmpty());
+    }
+
+
+
 }

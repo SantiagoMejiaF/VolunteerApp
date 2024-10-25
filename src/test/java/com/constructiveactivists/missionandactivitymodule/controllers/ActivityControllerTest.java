@@ -7,6 +7,7 @@ import com.constructiveactivists.missionandactivitymodule.entities.activity.Atte
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VisibilityEnum;
 import com.constructiveactivists.missionandactivitymodule.mappers.activity.ActivityMapper;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -74,7 +75,6 @@ class ActivityControllerTest {
         mockActivity.setVisibility(VisibilityEnum.PUBLICA);
         mockActivity.setNumberOfBeneficiaries(100);
         mockActivity.setActivityStatus(ActivityStatusEnum.EN_CURSO);
-        mockActivity.setReview(mockReview);
         mockActivity.setAttendances(List.of(mockAttendance));
 
         mockActivityRequest = new ActivityRequest();
@@ -249,5 +249,100 @@ class ActivityControllerTest {
         assertEquals("Plantación de árboles", response.getBody().get(0).getTitle());
 
         verify(activityService, times(1)).findAllByActivityCoordinator(1);
+    }
+
+    @Test
+    void testGetActivitiesByVolunteerAndDate() {
+        int volunteerId = 1;
+        int month = 9; // Septiembre
+        int year = 2024;
+
+        when(activityService.getActivitiesByVolunteerAndDate(volunteerId, month, year)).thenReturn(List.of(mockActivity));
+
+        ResponseEntity<List<ActivityEntity>> response = activityController.getActivitiesByVolunteerAndDate(volunteerId, month, year);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(1, response.getBody().size());
+        assertEquals("Plantación de árboles", response.getBody().get(0).getTitle());
+
+        verify(activityService, times(1)).getActivitiesByVolunteerAndDate(volunteerId, month, year);
+    }
+
+    @Test
+    void testGetAverageRating_Success() {
+        int volunteerId = 1;
+        double averageRating = 4.5;
+
+        when(activityService.getAverageRatingByVolunteer(volunteerId)).thenReturn(averageRating);
+
+        ResponseEntity<Double> response = activityController.getAverageRating(volunteerId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(averageRating, response.getBody(), 0.01);
+
+        verify(activityService, times(1)).getAverageRatingByVolunteer(volunteerId);
+    }
+
+    @Test
+    void testGetAverageRating_NoContent() {
+        int volunteerId = 1;
+
+        when(activityService.getAverageRatingByVolunteer(volunteerId)).thenThrow(new BusinessException());
+
+        ResponseEntity<Double> response = activityController.getAverageRating(volunteerId);
+
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        assertNull(response.getBody());
+
+        verify(activityService, times(1)).getAverageRatingByVolunteer(volunteerId);
+    }
+
+    @Test
+    void testGetAvailableActivitiesByCoordinator() {
+        int coordinatorId = 1;
+
+        when(activityService.getAvailableActivitiesByCoordinator(coordinatorId)).thenReturn(List.of(mockActivity));
+
+        ResponseEntity<List<ActivityEntity>> response = activityController.getAvailableActivitiesByCoordinator(coordinatorId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(1, response.getBody().size());
+        assertEquals("Plantación de árboles", response.getBody().get(0).getTitle());
+
+        verify(activityService, times(1)).getAvailableActivitiesByCoordinator(coordinatorId);
+    }
+
+    @Test
+    void testGetCompletedActivitiesCountVolunteer() {
+        int volunteerId = 1;
+        int completedCount = 5;
+
+        when(activityService.getCompletedActivitiesCountVolunteer(volunteerId)).thenReturn(completedCount);
+
+        ResponseEntity<Integer> response = activityController.getCompletedActivitiesCountVolunteer(volunteerId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(completedCount, response.getBody());
+
+        verify(activityService, times(1)).getCompletedActivitiesCountVolunteer(volunteerId);
+    }
+    @Test
+    void testGetTotalBeneficiariesImpacted() {
+        int volunteerId = 1;
+        int totalBeneficiaries = 20;
+
+        when(activityService.getTotalBeneficiariesImpactedByVolunteer(volunteerId)).thenReturn(totalBeneficiaries);
+
+        ResponseEntity<Integer> response = activityController.getTotalBeneficiariesImpacted(volunteerId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(totalBeneficiaries, response.getBody());
+
+        verify(activityService, times(1)).getTotalBeneficiariesImpactedByVolunteer(volunteerId);
     }
 }

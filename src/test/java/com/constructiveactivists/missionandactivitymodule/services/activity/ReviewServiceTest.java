@@ -4,6 +4,9 @@ import com.constructiveactivists.missionandactivitymodule.entities.activity.Acti
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.missionandactivitymodule.repositories.ActivityRepository;
 import com.constructiveactivists.missionandactivitymodule.repositories.ReviewRepository;
+import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
+import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteeringInformationEntity;
+import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +17,8 @@ import org.mockito.MockitoAnnotations;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.ZONE_PLACE;
@@ -28,8 +33,12 @@ class ReviewServiceTest {
     @Mock
     private ActivityRepository activityRepository;
 
+    @Mock
+    private VolunteerRepository volunteeringRepository;
+
     @InjectMocks
     private ReviewService reviewService;
+
 
     @BeforeEach
     void setUp() {
@@ -163,18 +172,56 @@ class ReviewServiceTest {
     @Test
     void testCreateReviewForActivity_AlreadyHasReview() {
         Integer activityId = 1;
-        ReviewEntity existingReview = new ReviewEntity();
+        ReviewEntity reviewRequest = new ReviewEntity();
         ActivityEntity activity = new ActivityEntity();
         activity.setId(activityId);
-        activity.setReview(existingReview);
-
         when(activityRepository.findById(activityId)).thenReturn(Optional.of(activity));
-
-        assertThrows(IllegalStateException.class, () -> {
-            reviewService.createReviewForActivity(activityId, new ReviewEntity());
+        when(reviewRepository.findByActivity(activity)).thenReturn(Optional.of(new ReviewEntity()));
+        IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
+            reviewService.createReviewForActivity(activityId, reviewRequest);
         });
-
+        assertEquals("Activity already has a review", thrown.getMessage());
         verify(activityRepository, times(1)).findById(activityId);
+        verify(reviewRepository, times(1)).findByActivity(activity);
         verify(reviewRepository, never()).save(any(ReviewEntity.class));
     }
+
+    @Test
+     void testGetReviewsByVolunteerId_WithCompletedActivities() {
+        Integer volunteerId = 1;
+        VolunteerEntity volunteer = new VolunteerEntity();
+        volunteer.setId(volunteerId);
+        VolunteeringInformationEntity volunteeringInfo = new VolunteeringInformationEntity();
+        volunteeringInfo.setActivitiesCompleted(Arrays.asList(101, 102));
+        volunteer.setVolunteeringInformation(volunteeringInfo);
+
+        when(volunteeringRepository.findById(volunteerId)).thenReturn(Optional.of(volunteer));
+
+        ActivityEntity activity1 = new ActivityEntity();
+        activity1.setId(101);
+
+        ActivityEntity activity2 = new ActivityEntity();
+        activity2.setId(102);
+
+        when(activityRepository.findById(101)).thenReturn(Optional.of(activity1));
+        when(activityRepository.findById(102)).thenReturn(Optional.of(activity2));
+
+        ReviewEntity review1 = new ReviewEntity();
+        review1.setActivity(activity1);
+        review1.setDescription("Great activity!");
+
+        ReviewEntity review2 = new ReviewEntity();
+        review2.setActivity(activity2);
+        review2.setDescription("Loved it!");
+
+        when(reviewRepository.findByActivity(activity1)).thenReturn(Optional.of(review1));
+        when(reviewRepository.findByActivity(activity2)).thenReturn(Optional.of(review2));
+
+        List<ReviewEntity> reviews = reviewService.getReviewsByVolunteerId(volunteerId);
+
+        assertEquals(2, reviews.size());
+        assertTrue(reviews.contains(review1));
+        assertTrue(reviews.contains(review2));
+    }
+
 }
