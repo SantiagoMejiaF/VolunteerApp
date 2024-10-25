@@ -2,6 +2,9 @@ package com.constructiveactivists.dashboardsandreportsmodule.services;
 
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
+import com.constructiveactivists.usermodule.entities.UserEntity;
+import com.constructiveactivists.usermodule.entities.enums.AuthorizationStatus;
+import com.constructiveactivists.usermodule.repositories.UserRepository;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.OrganizationStatusEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.DataShareVolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
@@ -13,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +38,9 @@ class DashboardSuperAdminServiceTest {
 
     @Mock
     private PostulationService postulationService;
+
+    @Mock
+    private UserRepository userRepository;
 
     @Test
     void testGetActivityLocalitiesWithFrequency() {
@@ -86,6 +93,32 @@ class DashboardSuperAdminServiceTest {
         assertNotNull(averageMonthlyHours);
         assertEquals(15.0, averageMonthlyHours);
         verify(dataShareVolunteerOrganizationService, times(1)).findAll();
+    }
+
+    @Test
+    void testGetTenRecentAuthorizedUsers() {
+        UserEntity user1 = new UserEntity();
+        user1.setId(1);
+        user1.setRegistrationDate(LocalDate.from(LocalDateTime.now().minusDays(1)));
+        UserEntity user2 = new UserEntity();
+        user2.setId(2);
+        user2.setRegistrationDate(LocalDate.from(LocalDateTime.now().minusDays(2)));
+
+        UserEntity user3 = new UserEntity();
+        user3.setId(3);
+        user3.setRegistrationDate(LocalDate.from(LocalDateTime.now().minusDays(3)));
+
+        when(userRepository.findTop10ByAuthorizationTypeOrderByRegistrationDateDesc(AuthorizationStatus.AUTORIZADO))
+                .thenReturn(List.of(user1, user2, user3));
+
+        List<UserEntity> recentAuthorizedUsers = dashboardSuperAdminService.getTenRecentAuthorizedUsers();
+
+        assertNotNull(recentAuthorizedUsers);
+        assertEquals(3, recentAuthorizedUsers.size());
+        assertEquals(user1, recentAuthorizedUsers.get(0));
+        assertEquals(user2, recentAuthorizedUsers.get(1));
+        assertEquals(user3, recentAuthorizedUsers.get(2));
+        verify(userRepository, times(1)).findTop10ByAuthorizationTypeOrderByRegistrationDateDesc(AuthorizationStatus.AUTORIZADO);
     }
 
 }

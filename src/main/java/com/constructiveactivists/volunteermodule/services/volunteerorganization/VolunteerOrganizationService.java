@@ -204,4 +204,22 @@ public class VolunteerOrganizationService {
         return organizationRepository.findAllById(organizationIds);
     }
 
+    public List<VolunteerOrganizationEntity> findAcceptedVolunteerOrganizationsByOrganizationId(Integer organizationId) {
+        List<Integer> volunteerOrganizationIds = volunteerOrganizationRepository.findByOrganizationId(organizationId)
+                .stream()
+                .map(VolunteerOrganizationEntity::getId)
+                .toList();
+        if (volunteerOrganizationIds.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<PostulationEntity> acceptedPostulations = postulationRepository.findByStatusAndVolunteerOrganizationIdIn(
+                OrganizationStatusEnum.ACEPTADO, volunteerOrganizationIds);
+        return acceptedPostulations.stream()
+                .map(postulation -> volunteerOrganizationRepository
+                        .findById(postulation.getVolunteerOrganizationId())
+                        .orElseThrow(() -> new BusinessException("Volunteer organization not found")))
+                .toList();
+    }
+
+
 }

@@ -35,6 +35,8 @@ import java.time.Period;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.VOLUNTEER_NOT_FOUND;
+
 @Service
 @AllArgsConstructor
 public class VolunteerService {
@@ -110,7 +112,7 @@ public class VolunteerService {
 
     public VolunteerEntity updateVolunteer(Integer id, VolunteerEntity entity) {
         VolunteerEntity volunteer = volunteerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("El voluntario con ID " + id + " no existe en la base de datos."));
+                .orElseThrow(() -> new EntityNotFoundException(VOLUNTEER_NOT_FOUND + id ));
 
         PersonalInformationEntity personalInfo = volunteer.getPersonalInformation();
         PersonalInformationEntity newPersonalInfo = entity.getPersonalInformation();

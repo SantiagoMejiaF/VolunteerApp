@@ -1,6 +1,8 @@
 package com.constructiveactivists.dashboardsandreportsmodule.controllers.configuration;
 
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -71,4 +73,33 @@ public interface DashboardOrganizationAPI {
     })
     @GetMapping("/organizations-count-by-month/{year}")
     ResponseEntity<Map<Month, Long>> getOrganizationsCountByMonth(@PathVariable int year);
+
+    @Operation(summary = "Obtener el número de misiones completadas por una organización")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+    })
+    @GetMapping("/completed-missions-count-by-organization/{organizationId}")
+    ResponseEntity<Long> getCompletedMissionsCountByOrganization(@PathVariable Integer organizationId);
+
+    @Operation(summary = "Obtener el número de skills de todos los voluntarios aceptados por una organización")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+    })
+    @GetMapping("/skill-counts-by-organization/{organizationId}")
+    ResponseEntity<Map<SkillEnum, Integer>> getSkillCountsByOrganization(@PathVariable Integer organizationId);
+
+    @Operation(summary = "Obtener el número de voluntarios por disponibilidad aceptados por una organización")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+    })
+    @GetMapping("/volunteer-availability-count-by-organization/{organizationId}")
+    ResponseEntity<Map<AvailabilityEnum, Long>> getVolunteerAvailabilityCountByOrganization(
+            @PathVariable Integer organizationId);
+
+    @Operation(summary = "Obtener el número total de beneficiarios impactados por una organización")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+    })
+    @GetMapping("/total-beneficiaries-impacted-by-organization/{organizationId}")
+    ResponseEntity<Integer> getTotalBeneficiariesImpactedByOrganization(@PathVariable Integer organizationId);
 }
