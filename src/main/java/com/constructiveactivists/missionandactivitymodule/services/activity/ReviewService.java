@@ -4,6 +4,9 @@ import com.constructiveactivists.missionandactivitymodule.entities.activity.Acti
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.missionandactivitymodule.repositories.ActivityRepository;
 import com.constructiveactivists.missionandactivitymodule.repositories.ReviewRepository;
+import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
+import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteeringInformationEntity;
+import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +14,12 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.VOLUNTEER_NOT_FOUND;
 import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.ZONE_PLACE;
 
 @Service
@@ -20,6 +28,8 @@ public class ReviewService {
 
     private ReviewRepository reviewRepository;
     private ActivityRepository activityRepository;
+
+    private VolunteerRepository volunteeringnRepository;
 
     public ReviewEntity addLike(Integer reviewId) {
         ReviewEntity review = reviewRepository.findById(reviewId)
@@ -43,11 +53,9 @@ public class ReviewService {
     public ReviewEntity createReviewForActivity(Integer activityId, ReviewEntity reviewRequest) {
         ActivityEntity activity = activityRepository.findById(activityId)
                 .orElseThrow(() -> new EntityNotFoundException("Activity not found"));
-
-        if (activity.getReview() != null) {
-            throw new IllegalStateException("This activity already has a review");
+        if (reviewRepository.findByActivity(activity).isPresent()) {
+            throw new IllegalStateException("Activity already has a review");
         }
-
         ReviewEntity review = new ReviewEntity();
         review.setActivity(activity);
         review.setDescription(reviewRequest.getDescription());
@@ -59,5 +67,24 @@ public class ReviewService {
         review.setCreationDate(currentDateInColombia);
         review.setLikes(0);
         return reviewRepository.save(review);
+    }
+
+    public List<ReviewEntity> getReviewsByVolunteerId(Integer volunteerId) {
+        VolunteerEntity volunteer = volunteeringnRepository.findById(volunteerId)
+                .orElseThrow(() -> new RuntimeException(VOLUNTEER_NOT_FOUND + volunteerId));
+        VolunteeringInformationEntity volunteeringInfo = volunteer.getVolunteeringInformation();
+        if (volunteeringInfo == null || volunteeringInfo.getActivitiesCompleted().isEmpty()) {
+            return List.of();
+        }
+        Set<Integer> uniqueActivityIds = new HashSet<>(volunteeringInfo.getActivitiesCompleted());
+        List<ReviewEntity> reviews = new ArrayList<>();
+        for (Integer activityId : uniqueActivityIds) {
+            ActivityEntity activity = activityRepository.findById(activityId)
+                    .orElse(null);
+            if (activity != null) {
+                reviewRepository.findByActivity(activity).ifPresent(reviews::add);
+            }
+        }
+        return reviews;
     }
 }
