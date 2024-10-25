@@ -1,6 +1,6 @@
 package com.constructiveactivists.missionandactivitymodule.services.activity;
 
-import com.constructiveactivists.configurationmodule.exceptions.AttendanceException;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.AttendanceException;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.AttendanceEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
@@ -23,7 +23,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 
-import static com.constructiveactivists.configurationmodule.constants.AppConstants.*;
+import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.*;
 
 @Service
 @AllArgsConstructor
@@ -98,7 +98,7 @@ public class AttendanceService {
         attendanceRepository.save(attendance);
 
         volunteerService.addVolunteerHours(volunteerEntity.getId(), activityEntity.getRequiredHours());
-        volunteerService.addVolunteerActivity(volunteerEntity.getId());
+        volunteerService.addVolunteerActivity(volunteerEntity.getId(), activityEntity.getId());
     }
 
     private void registerCheckOut(String email, Integer activityId) {

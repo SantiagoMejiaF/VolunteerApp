@@ -25,8 +25,14 @@ public class VolunteeringInformationEntity {
     @Column(name = "HORAS_VOLUNTARIADAS_TOTALES", nullable = false)
     private int volunteeredTotalHours;
 
-    @Column(name = "ACTIVIDADES_COMPLETADAS", nullable = false)
-    private int activitiesCompleted;
+    @ElementCollection
+    @CollectionTable(
+            name = "ACTIVIDADES_COMPLETADAS_VOLUNTARIO",
+            joinColumns = @JoinColumn(name = "INFORMACION_VOLUNTARIADO_ID"),
+            schema = "MODULO_GESTION_VOLUNTARIOS"
+    )
+    @Column(name = "ACTIVIDAD_COMPLETADA", nullable = false)
+    private List<Integer> activitiesCompleted;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "TIPO_VOLUNTARIO", length = 10, nullable = false)

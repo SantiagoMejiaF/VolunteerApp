@@ -29,8 +29,8 @@ import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.constructiveactivists.configurationmodule.constants.AppConstants.NOT_FOUND_MESSAGE;
-import static com.constructiveactivists.configurationmodule.constants.AppConstants.VOLUNTEER_MESSAGE_ID;
+import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.NOT_FOUND_MESSAGE;
+import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.VOLUNTEER_MESSAGE_ID;
 
 @Service
 @AllArgsConstructor

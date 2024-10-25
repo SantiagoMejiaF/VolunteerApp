@@ -1,6 +1,7 @@
 package com.constructiveactivists.volunteermodule.services.volunteerorganization;
 
-import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.organizationmodule.repositories.OrganizationRepository;
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.repositories.UserRepository;
@@ -20,7 +21,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -174,6 +177,31 @@ public class VolunteerOrganizationService {
         return volunteerOrganizations.stream()
                 .map(VolunteerOrganizationEntity::getOrganizationId)
                 .toList();
+    }
+
+    public List<OrganizationEntity> getRecentOrganizationsByVolunteerId(Integer volunteerId) {
+        List<VolunteerOrganizationEntity> volunteerOrganizations = volunteerOrganizationRepository.findByVolunteerId(volunteerId);
+        if (volunteerOrganizations.isEmpty()) {
+            return List.of();
+        }
+        List<Integer> volunteerOrganizationIds = volunteerOrganizations.stream()
+                .map(VolunteerOrganizationEntity::getId)
+                .toList();
+        List<PostulationEntity> recentPostulations = postulationRepository.findByVolunteerOrganizationIdIn(volunteerOrganizationIds);
+        if (recentPostulations.isEmpty()) {
+            return List.of();
+        }
+        List<Integer> organizationIds = recentPostulations.stream()
+                .sorted(Comparator.comparing(PostulationEntity::getRegistrationDate).reversed())
+                .limit(5)
+                .map(PostulationEntity::getVolunteerOrganizationId)
+                .map(volunteerOrganizationId -> volunteerOrganizationRepository.findById(volunteerOrganizationId)
+                        .map(VolunteerOrganizationEntity::getOrganizationId)
+                        .orElse(null))
+                .filter(Objects::nonNull)
+                .distinct()
+                .toList();
+        return organizationRepository.findAllById(organizationIds);
     }
 
 }

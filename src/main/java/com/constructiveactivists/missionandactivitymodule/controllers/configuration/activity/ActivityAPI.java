@@ -94,4 +94,34 @@ public interface ActivityAPI {
     })
     @GetMapping("/coordinator/{coordinatorId}/available")
     ResponseEntity<List<ActivityEntity>> getAvailableActivitiesByCoordinator(@PathVariable Integer coordinatorId);
+
+    @Operation(summary = "Obtener todas las actividades completadas de un voluntario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/volunteer/{volunteerId}/completed")
+    ResponseEntity<Integer> getCompletedActivitiesCountVolunteer(@PathVariable Integer volunteerId);
+    @Operation(summary = "Obtener el total de beneficiarios impactados por un voluntario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/volunteer/{volunteerId}/beneficiaries")
+    ResponseEntity<Integer> getTotalBeneficiariesImpacted(@PathVariable Integer volunteerId);
+
+    @Operation(summary = "Obtener todas las actividades de un voluntario en un mes y año específico")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/volunteer/{volunteerId}/activities")
+    ResponseEntity<List<ActivityEntity>> getActivitiesByVolunteerAndDate(
+            @PathVariable Integer volunteerId,
+            @RequestParam int month,
+            @RequestParam int year);
+
+    @Operation(summary = "Obtener el promedio de calificación de un voluntario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/volunteer/{volunteerId}/rating")
+    ResponseEntity<Double> getAverageRating(@PathVariable Integer volunteerId);
 }

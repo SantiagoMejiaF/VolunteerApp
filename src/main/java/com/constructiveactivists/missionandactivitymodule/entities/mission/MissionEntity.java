@@ -26,7 +26,7 @@ public class MissionEntity {
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 
-    @Column(name = "FECHA DE CREACION", columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
+    @Column(name = "FECHA_DE_CREACION", columnDefinition = "TIMESTAMP", nullable = false)
     @Comment("Fecha de creación de la misión")
     private LocalDateTime createdAt;
 

@@ -1,5 +1,6 @@
 package com.constructiveactivists.volunteermodule.controllers;
 
+import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.volunteermodule.controllers.configuration.VolunteerOrganizationAPI;
 import com.constructiveactivists.volunteermodule.controllers.request.volunteerorganization.VolunteerOrganizationRequest;
 import com.constructiveactivists.volunteermodule.controllers.response.StatusVolunteerOrganizationResponse;
@@ -59,6 +60,15 @@ public class VolunteerOrganizationController implements VolunteerOrganizationAPI
     public ResponseEntity<List<StatusVolunteerOrganizationResponse>> getRejectedVolunteersByOrganizationId(@PathVariable Integer organizationId) {
         List<StatusVolunteerOrganizationResponse> rejectedVolunteers = volunteerOrganizationService.getRejectedVolunteersByOrganizationId(organizationId);
         return ResponseEntity.ok(rejectedVolunteers);
+    }
+
+    @Override
+    public ResponseEntity<List<OrganizationEntity>> getRecentfiveOrganizationsByVolunteerId(@PathVariable Integer volunteerId) {
+        List<OrganizationEntity> organizations = volunteerOrganizationService.getRecentOrganizationsByVolunteerId(volunteerId);
+        if (organizations.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(organizations);
     }
 
 }

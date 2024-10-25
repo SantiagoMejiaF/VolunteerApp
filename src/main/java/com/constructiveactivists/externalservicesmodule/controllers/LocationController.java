@@ -1,7 +1,7 @@
 package com.constructiveactivists.externalservicesmodule.controllers;
 
 
-import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.externalservicesmodule.controllers.configuration.LocationAPI;
 import com.constructiveactivists.externalservicesmodule.models.CityModel;
 import com.constructiveactivists.externalservicesmodule.models.DepartmentModel;

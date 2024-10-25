@@ -70,26 +70,24 @@ VALUES
 ('1213141516', 'Avenida La Playa 700', 31, '1993-10-20', '0876543210', 'Focalizado en salud pública.'),
 ('1314151617', 'Calle Las Américas 950', 23, '2001-02-14', '0865432109', 'Interesado en desarrollo urbano.');
 
--- Inserción de información de voluntariado
 INSERT INTO modulo_gestion_voluntarios.INFORMACION_VOLUNTARIADO (
     HORAS_VOLUNTARIADAS_TOTALES,
     TIPO_VOLUNTARIO,
-    ACTIVIDADES_COMPLETADAS,
     FECHA_REGISTRO
 ) VALUES
-(50, 'VOLUNTARIO', 10, '2023-09-01 10:30:00'),
-(120, 'VOLUNTARIO', 20, '2023-09-02 11:45:00'),
-(30, 'VOLUNTARIO', 5, '2023-09-03 09:00:00'),
-(200, 'VOLUNTARIO', 40, '2023-09-04 12:15:00'),
-(80, 'VOLUNTARIO', 15, '2023-09-05 14:20:00'),
-(150, 'VOLUNTARIO', 35, '2023-09-06 08:50:00'),
-(45, 'VOLUNTARIO', 8, '2023-09-07 16:00:00'),
-(180, 'VOLUNTARIO', 25, '2023-09-08 10:00:00'),
-(220, 'VOLUNTARIO', 50, '2023-09-09 18:30:00'),
-(60, 'VOLUNTARIO', 12, '2023-09-10 19:00:00'),
-(90, 'VOLUNTARIO', 18, '2023-09-11 07:45:00'),
-(130, 'VOLUNTARIO', 27, '2023-09-12 13:15:00'),
-(70, 'VOLUNTARIO', 14, '2023-09-13 17:30:00');
+(50, 'VOLUNTARIO', '2023-09-01 10:30:00'),
+(120, 'VOLUNTARIO', '2023-09-02 11:45:00'),
+(30, 'VOLUNTARIO', '2023-09-03 09:00:00'),
+(200, 'VOLUNTARIO', '2023-09-04 12:15:00'),
+(80, 'VOLUNTARIO', '2023-09-05 14:20:00'),
+(150, 'VOLUNTARIO', '2023-09-06 08:50:00'),
+(45, 'VOLUNTARIO', '2023-09-07 16:00:00'),
+(180, 'VOLUNTARIO', '2023-09-08 10:00:00'),
+(220, 'VOLUNTARIO', '2023-09-09 18:30:00'),
+(60, 'VOLUNTARIO', '2023-09-10 19:00:00'),
+(90, 'VOLUNTARIO', '2023-09-11 07:45:00'),
+(130, 'VOLUNTARIO', '2023-09-12 13:15:00'),
+(70, 'VOLUNTARIO', '2023-09-13 17:30:00');
 
 -- Inserción de información de emergencia
 INSERT INTO modulo_gestion_voluntarios.INFORMACION_EMERGENCIA (NOMBRE, APELLIDO, TELEFONO, CORREO, PARENTESCO)
@@ -216,19 +214,19 @@ VALUES
 -- Inserción de datos compartidos de voluntarios y organizaciones
 INSERT INTO MODULO_GESTION_VOLUNTARIOS.DATOS_COMPARTIDOS_VOLUNTARIO_ORGANIZACION (ID, HORAS_HECHAS, HORAS_CERTIFICADAS, HORAS_MENSUALES)
 VALUES
-(1, 10, 0, 1),
-(2, 20, 0, 2),
-(3, 15, 0, 1),
-(4, 30, 0, 3),
-(5, 40, 0, 4),
-(6, 25, 0, 2),
-(7, 35, 0, 3),
-(8, 45, 0, 4),
-(9, 50, 0, 5),
-(10, 60, 0, 6),
-(11, 55, 0, 5),
-(12, 65, 0, 6),
-(13, 70, 0, 7);
+(1, 10, 0, 0),
+(2, 20, 0, 0),
+(3, 15, 0, 0),
+(4, 30, 0, 0),
+(5, 40, 0, 0),
+(6, 25, 0, 0),
+(7, 35, 0, 0),
+(8, 45, 0, 0),
+(9, 50, 0, 0),
+(10, 60, 0, 0),
+(11, 55, 0, 0),
+(12, 65, 0, 0),
+(13, 70, 0, 0);
 
 -- Inserciones en la tabla de coordinadores de actividades
 INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.COORDINADOR_ACTIVIDAD (USUARIO_ID, ORGANIZACION_ID, CEDULA, CELULAR)
@@ -300,18 +298,13 @@ VALUES
 -- Inserción de actividades
 INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.ACTIVIDAD (MISION_ID, lider_comunidad_id, coordinador_actividad_id, TITULO, DESCRIPCION, FECHA, HORA_INICIO, HORA_FIN, CIUDAD, LOCALIDAD, DIRECCION, NUMERO_VOLUNTARIOS_REQUERIDOS, HORAS_REQUERIDAS, VISIBILIDAD, numero_personas_beneficiadas, OBSERVACIONES, grupo_voluntario_id, estado)
 VALUES
-(1, 1, 1, 'Plantación de árboles', 'Plantación de 100 árboles en el parque central.', '2024-09-03', '08:00', '12:00', 'Bogotá', 'Usaquén', 'Parque Central, Calle 123', 20, 4, 'PUBLICA', 100, 'Llevar agua y protector solar.', 1, 'COMPLETADA'),
-(2, 2, 2, 'Limpieza de Parque', 'Recolección de basura en el parque central.', '2024-09-10', '09:00', '13:00', 'Antioquia', 'Medellín', 'Parque Arví, Calle 45', 15, 4, 'PUBLICA', 50, 'Traer bolsas y guantes.', 2, 'COMPLETADA'),
-(3, 3, 2, 'Cuidado Animal', 'Cuidado y alimentación de animales en el refugio.', '2024-09-15', '10:00', '14:00', 'Boyacá', 'Tunja', 'Refugio de Animales, Calle 10', 10, 5, 'PUBLICA', 30, 'Llevar comida y agua.', 3, 'COMPLETADA'),
-(4, 4, 3, 'Taller de Reciclaje', 'Educación sobre reciclaje y recolección de materiales reciclables.', '2024-09-20', '14:00', '17:00', 'Bolívar', 'Cartagena', 'Centro Cultural, Calle 12', 25, 3, 'PUBLICA', 100, 'Proveer materiales reciclables.', 4, 'COMPLETADA'),
-(5, 5, 1, 'Fumigación de Plagas', 'Control de plagas en áreas rurales.', '2024-09-25', '08:00', '12:00', 'Cundinamarca', 'Soacha', 'Granja de Ejemplo, Calle 5', 5, 6, 'PUBLICA', 20, 'Uso de mascarillas necesario.', 5, 'COMPLETADA');
+(1, 1, 1, 'Plantación de árboles', 'Plantación de 100 árboles en el parque central.', '2024-24-10', '20:40', '22:00', 'Bogotá', 'Usaquén', 'Parque Central, Calle 123', 20, 4, 'PUBLICA', 100, 'Llevar agua y protector solar.', 1, 'DISPONIBLE'),
+(2, 2, 2, 'Limpieza de Parque', 'Recolección de basura en el parque central.', '2024-09-10', '09:00', '13:00', 'Antioquia', 'Medellín', 'Parque Arví, Calle 45', 15, 4, 'PUBLICA', 50, 'Traer bolsas y guantes.', 2, 'COMPLETADA');
+
 
 -- Inserción de grupos de voluntarios
 INSERT INTO MODULO_GESTION_MISIONES_Y_ACTIVIDADES.GRUPO_VOLUNTARIO
 (ORGANIZACION_ID, ACTIVIDAD_ID, NOMBRE, CANTIDAD_VOLUNTARIOS_REQUERIDOS, CANTIDAD_DE_VOLUNTARIOS_ACTUAL)
 VALUES
 (1, 1, 'Grupo Árboles Bogotá', 20, 0),
-(2, 2, 'Grupo Limpieza Medellín', 15, 0),
-(3, 3, 'Grupo Cuidado Animal', 10, 0),
-(4, 4, 'Grupo Taller de Reciclaje', 25, 0),
-(5, 5, 'Grupo Fumigación Soacha', 5, 0);
+(2, 2, 'Grupo Limpieza Medellín', 15, 0);

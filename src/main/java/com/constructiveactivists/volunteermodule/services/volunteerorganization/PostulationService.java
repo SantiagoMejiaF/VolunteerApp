@@ -17,8 +17,8 @@ import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 
-import static com.constructiveactivists.configurationmodule.constants.AppConstants.POSTULATION_NOT_FOUND;
-import static com.constructiveactivists.configurationmodule.constants.AppConstants.ZONE_PLACE;
+import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.POSTULATION_NOT_FOUND;
+import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.ZONE_PLACE;
 
 @Service
 @AllArgsConstructor

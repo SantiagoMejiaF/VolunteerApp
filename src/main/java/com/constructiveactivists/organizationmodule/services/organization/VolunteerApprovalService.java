@@ -1,7 +1,7 @@
 package com.constructiveactivists.organizationmodule.services.organization;
 
-import com.constructiveactivists.configurationmodule.constants.AppConstants;
-import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.services.UserService;

@@ -1,6 +1,7 @@
 package com.constructiveactivists.configurationmodule.security.service;
 
-import com.constructiveactivists.configurationmodule.security.model.CustomUserDetails;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.security.model.CustomUserDetails;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.security.service.CustomUserDetailsService;
 import com.constructiveactivists.usermodule.entities.RoleEntity;
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.entities.enums.AuthorizationStatus;

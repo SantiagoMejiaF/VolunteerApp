@@ -1,27 +1,30 @@
 package com.constructiveactivists.missionandactivitymodule.services.activity;
 
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
+import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupMembershipEntity;
-import com.constructiveactivists.missionandactivitymodule.repositories.MissionRepository;
-import com.constructiveactivists.missionandactivitymodule.repositories.VolunteerGroupMembershipRepository;
-import com.constructiveactivists.missionandactivitymodule.repositories.VolunteerGroupRepository;
+import com.constructiveactivists.missionandactivitymodule.repositories.*;
 import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupService;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.organizationmodule.repositories.ActivityCoordinatorRepository;
-import com.constructiveactivists.missionandactivitymodule.repositories.ActivityRepository;
 
+import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
+import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static com.constructiveactivists.configurationmodule.constants.AppConstants.*;
+import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.*;
 
 @AllArgsConstructor
 @Service
@@ -35,6 +38,8 @@ public class ActivityService {
     private final ReviewEmailService reviewEmailService;
     private final VolunteerGroupMembershipRepository membershipRepository;
     private final VolunteerGroupRepository groupRepository;
+    private final ReviewRepository reviewRepository;
+    private final VolunteerRepository volunteerRepository;
 
     public ActivityEntity save(ActivityEntity activity) {
 
@@ -122,6 +127,74 @@ public class ActivityService {
                 .toList();
         return activityRepository.findByIdIn(activityIds);
     }
+
+    public List<ActivityEntity> getActivitiesByVolunteerAndDate(Integer volunteerId, int month, int year) {
+        List<ActivityEntity> activities = this.getActivitiesByVolunteerId(volunteerId);
+        return activities.stream()
+                .filter(activity -> {
+                    LocalDate date = activity.getDate();
+                    return date.getMonthValue() == month && date.getYear() == year;
+                })
+                .toList();
+    }
+
+    public int getCompletedActivitiesCountVolunteer(Integer volunteerId) {
+        return volunteerRepository.findById(volunteerId)
+                .map(volunteer -> Optional.ofNullable(volunteer.getVolunteeringInformation())
+                        .map(volunteeringInfo -> Optional.ofNullable(volunteeringInfo.getActivitiesCompleted())
+                                .map(List::size)
+                                .orElse(0))
+                        .orElse(0))
+                .orElse(0);
+    }
+
+    public int getTotalBeneficiariesImpactedByVolunteer(Integer volunteerId) {
+        return volunteerRepository.findById(volunteerId)
+                .map(VolunteerEntity::getVolunteeringInformation)
+                .map(volunteeringInfo -> {
+                    List<Integer> activitiesCompleted = volunteeringInfo.getActivitiesCompleted();
+                    if (activitiesCompleted == null || activitiesCompleted.isEmpty()) {
+                        return 0;
+                    }
+                    return activitiesCompleted.stream()
+                            .map(activityRepository::findById)
+                            .filter(Optional::isPresent)
+                            .map(Optional::get)
+                            .mapToInt(ActivityEntity::getNumberOfBeneficiaries)
+                            .sum();
+                })
+                .orElse(0);
+    }
+
+    public Double getAverageRatingByVolunteer(Integer volunteerId) {
+        List<ActivityEntity> completedActivities = this.getCompletedActivitiesVolunteerList(volunteerId);
+        if (completedActivities.isEmpty()) {
+            throw new BusinessException(VOLUNTEER_NOT_ACTIVITIES);
+        }
+        List<ReviewEntity> reviews = reviewRepository.findByActivityIn(completedActivities);
+        if (reviews.isEmpty()) {
+            throw new BusinessException(VOLUNTEER_NOT_AVAIBLE_REVIEWS);
+        }
+        return reviews.stream()
+                .mapToInt(ReviewEntity::getRating)
+                .average()
+                .orElse(0.0);
+    }
+
+
+    public List<ActivityEntity> getCompletedActivitiesVolunteerList(Integer volunteerId) {
+        return volunteerRepository.findById(volunteerId)
+                .map(volunteer -> {
+                    List<Integer> activityIds = Optional.ofNullable(volunteer.getVolunteeringInformation())
+                            .map(volunteeringInfo -> Optional.ofNullable(volunteeringInfo.getActivitiesCompleted())
+                                    .orElse(Collections.emptyList()))
+                            .orElse(Collections.emptyList());
+                    return activityRepository.findAllById(activityIds);
+                })
+                .orElse(Collections.emptyList());
+    }
+
+
 
     public List<ActivityEntity> getAvailableActivitiesByCoordinator(Integer coordinatorId) {
         return activityRepository.findAllByActivityCoordinatorAndActivityStatus(coordinatorId, ActivityStatusEnum.DISPONIBLE);

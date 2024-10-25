@@ -1,4 +1,4 @@
-package com.constructiveactivists.configurationmodule.constants;
+package com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants;
 
 public final class AppConstants {
 
@@ -25,6 +25,8 @@ public final class AppConstants {
     public static final String CHECK_IN_SUCCESS = "Check-in registrado exitosamente.";
     public static final String CHECK_OUT_SUCCESS = "Check-out registrado exitosamente.";
     public static final String ZONE_PLACE = "America/Bogota";
+    public static final String VOLUNTEER_NOT_ACTIVITIES = "El voluntario no tiene actividades completadas.";
+    public static final String VOLUNTEER_NOT_AVAIBLE_REVIEWS = "El voluntario tiene actividades completadas, pero no hay reseñas disponibles.";
 
     public static final String EMAIL_TEMPLATE = "<html>" +
             "<body style='font-family: Inter, sans-serif; color: #000000;'>" +

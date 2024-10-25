@@ -1,6 +1,6 @@
 package com.constructiveactivists.volunteermodule.services.volunteer;
 
-import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VisibilityEnum;
@@ -283,13 +283,17 @@ class VolunteerServiceTest {
 
     @Test
     void testAddVolunteerActivity() {
+        VolunteeringInformationEntity volunteeringInfo = new VolunteeringInformationEntity();
+        volunteeringInfo.setActivitiesCompleted(new ArrayList<>());
+        VolunteerEntity volunteerEntity = new VolunteerEntity();
+        volunteerEntity.setVolunteeringInformation(volunteeringInfo);
         when(volunteerRepository.findById(1)).thenReturn(Optional.of(volunteerEntity));
-
-        volunteerService.addVolunteerActivity(1);
-
-        assertEquals(1, volunteerEntity.getVolunteeringInformation().getActivitiesCompleted());
+        volunteerService.addVolunteerActivity(1, 101);
+        assertEquals(1, volunteerEntity.getVolunteeringInformation().getActivitiesCompleted().size());
+        assertTrue(volunteerEntity.getVolunteeringInformation().getActivitiesCompleted().contains(101));
         verify(volunteerRepository, times(1)).save(volunteerEntity);
     }
+
 
     @Test
     void testSignUpForActivity_PrivateActivity_VolunteerNotInOrganization() {
@@ -419,7 +423,7 @@ class VolunteerServiceTest {
         when(volunteerRepository.findById(1)).thenReturn(Optional.empty());
 
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
-            volunteerService.addVolunteerActivity(1);
+            volunteerService.addVolunteerActivity(1,1);
         });
 
         assertEquals("Volunteer not found with ID: 1", exception.getMessage());
