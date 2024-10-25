@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("${request-mapping.controller.review}")
@@ -129,5 +131,15 @@ public class ReviewController implements ReviewAPI {
                 "   </div>" +
                 "</body>" +
                 "</html>";
+    }
+
+    @Override
+    public ResponseEntity<List<ReviewEntity>> getReviewsByVolunteerId(@PathVariable Integer volunteerId) {
+        List<ReviewEntity> reviews = reviewService.getReviewsByVolunteerId(volunteerId);
+
+        if (reviews.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(reviews);
     }
 }

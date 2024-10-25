@@ -97,8 +97,4 @@ public class ActivityEntity {
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AttendanceEntity> attendances;
-
-    @OneToOne(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Comment("Reseña asociada a la actividad")
-    private ReviewEntity review;
 }
