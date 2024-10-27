@@ -1,4 +1,4 @@
-package com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants;
+package com.constructiveactivists.configurationmodule.constants;
 
 public final class AppConstants {
 

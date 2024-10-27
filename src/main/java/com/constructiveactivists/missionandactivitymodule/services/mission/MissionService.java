@@ -18,8 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.NOT_FOUND_MESSAGE;
-import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.ORGANIZATION_MESSAGE_ID;
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.NOT_FOUND_MESSAGE;
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.ORGANIZATION_MESSAGE_ID;
 
 @AllArgsConstructor
 @Service

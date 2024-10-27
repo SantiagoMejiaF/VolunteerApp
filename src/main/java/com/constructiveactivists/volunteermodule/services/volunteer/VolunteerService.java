@@ -1,6 +1,6 @@
 package com.constructiveactivists.volunteermodule.services.volunteer;
 
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VisibilityEnum;
@@ -37,7 +37,7 @@ import java.time.Period;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.VOLUNTEER_NOT_FOUND;
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.VOLUNTEER_NOT_FOUND;
 
 @Service
 @AllArgsConstructor

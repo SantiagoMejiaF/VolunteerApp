@@ -70,3 +70,4 @@ request-mapping:
     postulation: postulations
     attendace: attendances
     review: reviews
+    notification: notifications

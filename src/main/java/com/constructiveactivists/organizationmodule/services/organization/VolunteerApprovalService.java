@@ -1,7 +1,8 @@
 package com.constructiveactivists.organizationmodule.services.organization;
 
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants;
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.configurationmodule.constants.AppConstants;
+import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.notificationsmodule.services.NotificationService;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.services.UserService;
@@ -31,8 +32,8 @@ public class VolunteerApprovalService {
     private final OrganizationService organizationService;
     private final UserService userService;
     private final VolunteerOrganizationService volunteerOrganizationService;
-    private final DataShareVolunteerOrganizationService dataShareVolunteerOrganizationService;
     private final PostulationService postulationService;
+    private final NotificationService notificationService;
 
     public void sendVolunteerApprovalResponse(Integer volunteerId, Integer organizationId, boolean approved) {
 
@@ -62,9 +63,13 @@ public class VolunteerApprovalService {
         if (approved) {
             organizationService.approveVolunteer(volunteerOrganizationInstance.getId());
             sendApprovalEmail(volunteerEmail, organizationName, volunteerName);
+            notificationService.createNotification(volunteerUser.getId(), "Aprobación de Voluntario",
+                    String.format("¡Felicidades, %s! Has sido aprobado por la organización %s.", volunteerName, organizationName));
         } else {
             organizationService.rejectVolunteer(volunteerOrganizationInstance.getId());
             sendRejectionEmail(volunteerEmail, organizationName, volunteerName);
+            notificationService.createNotification(volunteerUser.getId(), "Rechazo de Voluntario",
+                    String.format("Lo sentimos, %s. Has sido rechazado por la organización %s.", volunteerName, organizationName));
         }
     }
 

@@ -1,7 +1,7 @@
 package com.constructiveactivists.externalservicesmodule.services;
 
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.security.model.JwtUtil;
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.security.service.CustomUserDetailsService;
+import com.constructiveactivists.configurationmodule.security.model.JwtUtil;
+import com.constructiveactivists.configurationmodule.security.service.CustomUserDetailsService;
 import com.constructiveactivists.externalservicesmodule.controllers.response.AuthenticationResponse;
 import com.constructiveactivists.externalservicesmodule.models.TokenModel;
 import com.constructiveactivists.usermodule.entities.RoleEntity;

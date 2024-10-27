@@ -19,8 +19,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.VOLUNTEER_NOT_FOUND;
-import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.ZONE_PLACE;
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.VOLUNTEER_NOT_FOUND;
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.ZONE_PLACE;
 
 @Service
 @AllArgsConstructor

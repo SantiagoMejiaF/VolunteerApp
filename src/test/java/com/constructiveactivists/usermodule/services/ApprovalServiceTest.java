@@ -1,6 +1,6 @@
 package com.constructiveactivists.usermodule.services;
 
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.organizationmodule.services.organization.OrganizationService;
 import com.constructiveactivists.usermodule.entities.RoleEntity;

@@ -1,7 +1,6 @@
 package com.constructiveactivists.organizationmodule.services.activitycoordinator;
 
-import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.organizationmodule.models.CoordinatorAvailabilityModel;
@@ -23,7 +22,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
-import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.USER_NOT_FOUND;
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.USER_NOT_FOUND;
 
 @AllArgsConstructor
 @Service

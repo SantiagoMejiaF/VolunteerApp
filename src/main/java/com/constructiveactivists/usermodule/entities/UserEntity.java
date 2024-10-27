@@ -1,5 +1,6 @@
 package com.constructiveactivists.usermodule.entities;
 
+import com.constructiveactivists.notificationsmodule.entities.NotificationEntity;
 import com.constructiveactivists.usermodule.entities.enums.AuthorizationStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Comment;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -48,4 +50,9 @@ public class UserEntity {
     @Column(name = "FECHA_REGISTRO", columnDefinition = "DATE", nullable = false)
     @Comment("Fecha de registro del usuario")
     private LocalDate registrationDate;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "USUARIO_ID", referencedColumnName = "ID")
+    private List<NotificationEntity> notifications;
+
 }

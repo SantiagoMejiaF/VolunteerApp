@@ -1,4 +1,4 @@
-package com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.security.model;
+package com.constructiveactivists.configurationmodule.security.model;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
