@@ -1,13 +1,18 @@
 package com.constructiveactivists.dashboardsandreportsmodule.services;
 
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
+import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.repositories.ActivityRepository;
+import com.constructiveactivists.missionandactivitymodule.repositories.MissionRepository;
+import com.constructiveactivists.missionandactivitymodule.repositories.ReviewRepository;
 import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.services.mission.MissionService;
+import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
+import com.constructiveactivists.organizationmodule.repositories.ActivityCoordinatorRepository;
 import com.constructiveactivists.organizationmodule.services.organization.OrganizationService;
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
@@ -52,6 +57,12 @@ public class DashboardOrganizationService {
     private final VolunteerRepository volunteerRepository;
 
     private final ActivityRepository activityRepository;
+
+    private final MissionRepository missionRepository;
+
+    private final ReviewRepository reviewRepository;
+
+    private final ActivityCoordinatorRepository activityCoordinatorRepository;
 
     private void getOrganizationById(Integer organizationId) {
         Optional<OrganizationEntity> organization = organizationService.getOrganizationById(organizationId);
@@ -183,8 +194,22 @@ public class DashboardOrganizationService {
         return uniqueBeneficiaries.stream().mapToInt(Integer::intValue).sum();
     }
 
+    public List<ReviewEntity> getReviewsByOrganization(Integer organizationId) {
+        return missionRepository.findByOrganizationId(organizationId).stream()
+                .flatMap(mission -> activityRepository.findByMissionId(mission.getId()).stream())
+                .flatMap(activity -> reviewRepository.findByActivity(activity).stream())
+                .toList();
+    }
 
-
+    public List<ReviewEntity> getCoordinatorReviewHistory(Integer userId) {
+        return activityCoordinatorRepository.findById(userId)
+                .map(ActivityCoordinatorEntity::getCompletedActivities)
+                .map(completedActivityIds -> {
+                    List<ActivityEntity> activities = activityRepository.findByIdIn(completedActivityIds);
+                    return reviewRepository.findByActivityIn(activities);
+                })
+                .orElse(Collections.emptyList());
+    }
 
 
 }

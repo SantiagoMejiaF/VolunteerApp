@@ -1,5 +1,6 @@
 package com.constructiveactivists.organizationmodule.services.activitycoordinator;
 
+import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
@@ -94,4 +95,6 @@ public class ActivityCoordinatorService {
     public Optional<ActivityCoordinatorEntity> getCoordinatorById(Integer id) {
         return activityCoordinatorRepository.findById(id);
     }
+
+
 }

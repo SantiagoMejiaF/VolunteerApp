@@ -2,6 +2,7 @@ package com.constructiveactivists.dashboardsandreportsmodule.controllers;
 
 import com.constructiveactivists.dashboardsandreportsmodule.controllers.configuration.DashboardOrganizationAPI;
 import com.constructiveactivists.dashboardsandreportsmodule.services.DashboardOrganizationService;
+import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
@@ -95,6 +96,18 @@ public class DashboardOrganizationController implements DashboardOrganizationAPI
     public ResponseEntity<Integer> getTotalBeneficiariesImpactedByOrganization(@PathVariable Integer organizationId) {
         int totalBeneficiaries = dashboardOrganizationService.getTotalBeneficiariesImpactedByOrganization(organizationId);
         return ResponseEntity.ok(totalBeneficiaries);
+    }
+
+    @Override
+    public ResponseEntity<List<ReviewEntity>> getHistoryByOrganization(@PathVariable Integer organizationId) {
+        List<ReviewEntity> reviews = dashboardOrganizationService.getReviewsByOrganization(organizationId);
+        return ResponseEntity.ok(reviews);
+    }
+
+    @Override
+    public ResponseEntity<List<ReviewEntity>> getCoordinatorReviewHistory(@PathVariable Integer userId) {
+        List<ReviewEntity> reviews = dashboardOrganizationService.getCoordinatorReviewHistory(userId);
+        return ResponseEntity.ok(reviews);
     }
 
 }
