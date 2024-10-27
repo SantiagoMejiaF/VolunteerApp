@@ -2,13 +2,11 @@ package com.constructiveactivists.missionandactivitymodule.services.activity;
 
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.PersonalDataCommunityLeaderEntity;
-import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupMembershipEntity;
 import com.constructiveactivists.missionandactivitymodule.repositories.*;
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupService;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.organizationmodule.repositories.ActivityCoordinatorRepository;
@@ -29,7 +27,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.VOLUNTEER_NOT_ACTIVITIES;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;

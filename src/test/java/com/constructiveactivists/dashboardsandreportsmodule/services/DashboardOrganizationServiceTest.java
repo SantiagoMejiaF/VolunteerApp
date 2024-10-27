@@ -28,16 +28,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.*;
 
-import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.NOT_FOUND_MESSAGE;
-import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.ORGANIZATION_MESSAGE_ID;
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.NOT_FOUND_MESSAGE;
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.ORGANIZATION_MESSAGE_ID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -373,6 +371,8 @@ class DashboardOrganizationServiceTest {
         verify(missionService, times(1)).getActivitiesByMissionId(mission1.getId());
         verify(missionService, times(1)).getActivitiesByMissionId(mission2.getId());
     }
+
+
 
 
 }

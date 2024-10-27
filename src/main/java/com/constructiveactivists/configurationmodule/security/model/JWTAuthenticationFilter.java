@@ -1,6 +1,6 @@
-package com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.security.model;
+package com.constructiveactivists.configurationmodule.security.model;
 
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.security.service.CustomUserDetailsService;
+import com.constructiveactivists.configurationmodule.security.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

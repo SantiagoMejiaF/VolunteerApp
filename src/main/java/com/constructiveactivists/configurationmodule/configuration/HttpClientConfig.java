@@ -1,4 +1,4 @@
-package com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.configuration;
+package com.constructiveactivists.configurationmodule.configuration;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;

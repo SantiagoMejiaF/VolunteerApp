@@ -1,6 +1,6 @@
 package com.constructiveactivists.missionandactivitymodule.services.activity;
 
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.repositories.ActivityRepository;
 import jakarta.mail.MessagingException;

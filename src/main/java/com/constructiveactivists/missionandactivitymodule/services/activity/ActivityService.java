@@ -1,6 +1,6 @@
 package com.constructiveactivists.missionandactivitymodule.services.activity;
 
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.*;
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.*;
 
 @AllArgsConstructor
 @Service

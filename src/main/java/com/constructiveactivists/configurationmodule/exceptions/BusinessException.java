@@ -1,4 +1,4 @@
-package com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions;
+package com.constructiveactivists.configurationmodule.exceptions;
 
 public class BusinessException extends RuntimeException {
 

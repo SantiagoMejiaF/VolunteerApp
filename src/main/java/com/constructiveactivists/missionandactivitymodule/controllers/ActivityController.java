@@ -1,6 +1,6 @@
 package com.constructiveactivists.missionandactivitymodule.controllers;
 
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.controllers.configuration.activity.ActivityAPI;
 import com.constructiveactivists.missionandactivitymodule.controllers.request.activity.ActivityRequest;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;

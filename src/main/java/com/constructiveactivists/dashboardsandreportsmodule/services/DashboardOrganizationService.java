@@ -8,7 +8,7 @@ import com.constructiveactivists.missionandactivitymodule.entities.mission.enums
 import com.constructiveactivists.missionandactivitymodule.repositories.ActivityRepository;
 import com.constructiveactivists.missionandactivitymodule.repositories.MissionRepository;
 import com.constructiveactivists.missionandactivitymodule.repositories.ReviewRepository;
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.services.mission.MissionService;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
@@ -39,7 +39,7 @@ import java.time.YearMonth;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.constants.AppConstants.*;
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.*;
 
 @Service
 @AllArgsConstructor

@@ -1,4 +1,4 @@
-package com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions;
+package com.constructiveactivists.configurationmodule.exceptions;
 
 public class AttendanceException extends RuntimeException{
     public AttendanceException(String message) {

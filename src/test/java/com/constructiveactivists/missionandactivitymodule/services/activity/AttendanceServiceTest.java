@@ -11,7 +11,7 @@ import com.constructiveactivists.volunteermodule.services.volunteer.VolunteerSer
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.VolunteerOrganizationService;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.PostulationService;
 import com.constructiveactivists.usermodule.entities.UserEntity;
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.AttendanceException;
+import com.constructiveactivists.configurationmodule.exceptions.AttendanceException;
 import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupMembershipService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

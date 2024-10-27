@@ -1,6 +1,6 @@
 package com.constructiveactivists.missionandactivitymodule.services.activity;
 
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

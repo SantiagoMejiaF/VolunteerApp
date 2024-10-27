@@ -1,6 +1,6 @@
-package com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.security.service;
+package com.constructiveactivists.configurationmodule.security.service;
 
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.security.model.CustomUserDetails;
+import com.constructiveactivists.configurationmodule.security.model.CustomUserDetails;
 import com.constructiveactivists.usermodule.entities.RoleEntity;
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.services.RoleService;

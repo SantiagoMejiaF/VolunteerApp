@@ -1,6 +1,6 @@
 package com.constructiveactivists.missionandactivitymodule.controllers;
 
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.AttendanceException;
+import com.constructiveactivists.configurationmodule.exceptions.AttendanceException;
 import com.constructiveactivists.externalservicesmodule.services.GoogleService;
 import com.constructiveactivists.missionandactivitymodule.controllers.configuration.activity.AttendanceAPI;
 import com.constructiveactivists.missionandactivitymodule.services.activity.AttendanceService;

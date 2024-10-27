@@ -1,4 +1,4 @@
-package com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions;
+package com.constructiveactivists.configurationmodule.exceptions;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;

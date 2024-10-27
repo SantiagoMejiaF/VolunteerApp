@@ -1,6 +1,6 @@
 package com.constructiveactivists.volunteermodule.services.volunteerorganization;
 
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.organizationmodule.repositories.OrganizationRepository;
 import com.constructiveactivists.usermodule.entities.UserEntity;
@@ -21,8 +21,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

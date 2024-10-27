@@ -1,6 +1,6 @@
 package com.constructiveactivists.organizationmodule.services.activitycoordinator;
 
-import com.constructiveactivists.missionandactivitymodule.repositories.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
