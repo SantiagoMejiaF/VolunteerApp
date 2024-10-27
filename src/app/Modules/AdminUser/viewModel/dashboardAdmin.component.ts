@@ -210,7 +210,7 @@ export class DashboardAdminComponent implements OnInit {
           infoFiltered: '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros totales)</span>',
           lengthMenu: '<span style="font-size: 0.875rem;">Mostrar _MENU_ registros por página</span>',
           zeroRecords: '<span style="font-size: 0.875rem;">No se encontraron resultados</span>',
-          
+
         },
       });
     }, 1000);
