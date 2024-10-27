@@ -144,7 +144,9 @@ public interface VolunteerAPI {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @GetMapping("/{volunteerId}/match-organizations")
-    ResponseEntity<List<RankedOrganizationResponse>> matchVolunteerWithOrganizations(@PathVariable("volunteerId") Integer volunteerId);
+    ResponseEntity<List<RankedOrganizationResponse>> matchVolunteerWithOrganizations(
+            @PathVariable("volunteerId") Integer volunteerId,
+            @RequestParam(name = "numberOfMatches") int numberOfMatches);
 
 
     @Operation(summary = "Obtener los últimos 5 voluntarios registrados en la aplicación")

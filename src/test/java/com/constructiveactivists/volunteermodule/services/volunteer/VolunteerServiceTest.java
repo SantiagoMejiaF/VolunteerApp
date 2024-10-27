@@ -22,7 +22,9 @@ import com.constructiveactivists.volunteermodule.entities.volunteer.Volunteering
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.*;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermodule.models.RankedOrganization;
+import com.constructiveactivists.volunteermodule.repositories.VolunteerOrganizationRepository;
 import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
+import com.constructiveactivists.volunteermodule.services.volunteerorganization.PostulationService;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.VolunteerOrganizationService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,6 +59,10 @@ class VolunteerServiceTest {
     private ActivityService activityService;
 
     @Mock
+    private VolunteerOrganizationRepository volunteerOrganizationRepository;
+
+
+    @Mock
     private MissionService missionService;
 
     @Mock
@@ -67,6 +73,9 @@ class VolunteerServiceTest {
 
     @Mock
     private MissionRepository missionRepository;
+
+    @Mock
+    private PostulationService postulationService;
 
     @InjectMocks
     private VolunteerService volunteerService;
@@ -598,18 +607,25 @@ class VolunteerServiceTest {
 
     @Test
     void testBreakTiesRandomly() {
-        RankedOrganization org1 = new RankedOrganization(new OrganizationEntity(), 5);
-        RankedOrganization org2 = new RankedOrganization(new OrganizationEntity(), 5);
-        RankedOrganization org3 = new RankedOrganization(new OrganizationEntity(), 3);
+        OrganizationEntity org1 = new OrganizationEntity();
+        org1.setId(1);
+        OrganizationEntity org2 = new OrganizationEntity();
+        org2.setId(2);
+        OrganizationEntity org3 = new OrganizationEntity();
+        org3.setId(3);
 
-        List<RankedOrganization> rankedOrganizations = List.of(org1, org2, org3);
+        RankedOrganization rankedOrg1 = new RankedOrganization(org1, 5, "http://example.com/photo1.jpg", 3);
+        RankedOrganization rankedOrg2 = new RankedOrganization(org2, 5, "http://example.com/photo2.jpg", 5);
+        RankedOrganization rankedOrg3 = new RankedOrganization(org3, 3, "http://example.com/photo3.jpg", 2);
+
+        List<RankedOrganization> rankedOrganizations = List.of(rankedOrg1, rankedOrg2, rankedOrg3);
 
         List<RankedOrganization> result = volunteerService.breakTiesRandomly(rankedOrganizations);
 
         assertEquals(3, result.get(2).getScore());
-
         assertTrue(result.get(0).getScore() == 5 && result.get(1).getScore() == 5);
     }
+
 
     @Test
     void testCalculateMissionMatchScores() {
@@ -649,17 +665,33 @@ class VolunteerServiceTest {
 
         OrganizationEntity organization = new OrganizationEntity();
         organization.setId(100);
+        organization.setUserId(10);
+
+        UserEntity user = new UserEntity();
+        user.setImage("http://example.com/photo.jpg");
+
+        VolunteerOrganizationEntity volunteerOrganization = new VolunteerOrganizationEntity();
+        volunteerOrganization.setOrganizationId(200);
 
         when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.of(volunteer));
         when(missionRepository.findMissionsByInterestsAndSkills(anyList(), anyList())).thenReturn(List.of(mission));
         when(organizationRepository.findById(100)).thenReturn(Optional.of(organization));
+        when(userService.getUserById(10)).thenReturn(Optional.of(user));
+        when(postulationService.countAuthorizedVolunteersByOrganizationIds(List.of(100))).thenReturn(5L);
+        when(volunteerOrganizationRepository.findByVolunteerId(volunteerId)).thenReturn(List.of(volunteerOrganization));
 
-        List<RankedOrganization> result = volunteerService.matchVolunteerWithMissions(volunteerId);
+        List<RankedOrganization> result = volunteerService.matchVolunteerWithMissions(volunteerId, 1);
 
         assertEquals(1, result.size());
         assertEquals(100, result.get(0).getOrganization().getId());
+        assertEquals("http://example.com/photo.jpg", result.get(0).getPhotoUrl());
+        assertEquals(5L, result.get(0).getAuthorizedVolunteersCount());
+
         verify(volunteerRepository, times(1)).findById(volunteerId);
         verify(missionRepository, times(1)).findMissionsByInterestsAndSkills(anyList(), anyList());
+        verify(userService, times(1)).getUserById(10);
+        verify(postulationService, times(1)).countAuthorizedVolunteersByOrganizationIds(List.of(100));
+        verify(volunteerOrganizationRepository, times(1)).findByVolunteerId(volunteerId);
     }
 
     @Test
@@ -669,12 +701,13 @@ class VolunteerServiceTest {
         when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.empty());
 
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
-            volunteerService.matchVolunteerWithMissions(volunteerId);
+            volunteerService.matchVolunteerWithMissions(volunteerId, 1);
         });
 
         assertEquals("El voluntario con ID " + volunteerId + " no existe.", exception.getMessage());
         verify(volunteerRepository, times(1)).findById(volunteerId);
     }
+
 
     @Test
     void testMatchVolunteerWithMissions_NoMissionsFound() {
@@ -689,7 +722,7 @@ class VolunteerServiceTest {
         when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.of(volunteer));
         when(missionRepository.findMissionsByInterestsAndSkills(anyList(), anyList())).thenReturn(Collections.emptyList());
 
-        List<RankedOrganization> result = volunteerService.matchVolunteerWithMissions(volunteerId);
+        List<RankedOrganization> result = volunteerService.matchVolunteerWithMissions(volunteerId, 1);
 
         assertTrue(result.isEmpty());
         verify(volunteerRepository, times(1)).findById(volunteerId);

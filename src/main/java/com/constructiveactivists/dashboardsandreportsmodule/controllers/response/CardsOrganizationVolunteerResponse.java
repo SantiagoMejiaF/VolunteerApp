@@ -12,11 +12,18 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CardsOrganizationVolunteerResponse {
+
     private Integer organizationId;
+
     private String name;
+
     private String description;
+
     private OrganizationTypeEnum organizationType;
+
     private String photoUrl;
+
     private long authorizedVolunteersCount;
+
     private SectorTypeEnum sector;
 }
