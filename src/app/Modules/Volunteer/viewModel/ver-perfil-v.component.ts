@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { VolunteerService } from '../model/services/volunteer.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 
 @Component({
   selector: 'app-ver-perfil-v',
@@ -12,6 +12,7 @@ export class VerPerfilVComponent implements OnInit {
   currentContent: string = 'content1';
   firstName: string = '';
   lastName: string = '';
+  origen: string;
   email: string = '';
   volunteerId: number = 0;
 
@@ -60,10 +61,13 @@ export class VerPerfilVComponent implements OnInit {
 
   constructor(
     private volunteerService: VolunteerService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
    
   ) {
-    
+    this.route.queryParams.subscribe(params => {
+      this.origen = params['from'];
+    });
     this.volunteerData = {
       userId: 0,
       personalInformation: {
@@ -89,7 +93,7 @@ export class VerPerfilVComponent implements OnInit {
 
   ngOnInit() {
    
-
+   
     
     this.loadVolunteerData();
    
@@ -143,6 +147,14 @@ export class VerPerfilVComponent implements OnInit {
       
     }
   }
-  
+  volver() {
+    // Volver a los detalles de la fundación con el parámetro 'origen'
+    
+    if (this.origen === 'verDetallesAxC' ) {
+      this.router.navigate(['/verDetallesAxC'], { queryParams: { from: this.origen } });
+    } else {
+      this.router.navigate(['/verVoluntarios']); // Navegar a Detalles de Fundación
+    }
+  }
 }
 

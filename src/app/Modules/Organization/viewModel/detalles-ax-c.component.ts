@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detalles-ax-c',
@@ -14,6 +15,7 @@ export class DetallesAxCComponent implements OnInit {
   imagen: string = '';
   actividadId: number = 0;
   status: string = '';
+  origen: string;
   role: string = '';
   qrCodeUrlInicial: string = '';
   qrCodeUrlFinal: string = '';
@@ -56,7 +58,11 @@ export class DetallesAxCComponent implements OnInit {
     }
   ];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
+    this.route.queryParams.subscribe(params => {
+      this.origen = params['from'];
+    });
+  }
 
   ngOnInit() {
 
@@ -128,5 +134,18 @@ export class DetallesAxCComponent implements OnInit {
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);  // Limpiar el objeto URL después de descargar
     });
+  }
+  verDetalles() {
+    this.router.navigate(['/verPerfilV'], { queryParams: { from: 'verDetallesAxC' } });
+
+  }
+  volver() {
+    // Volver a los detalles de la fundación con el parámetro 'origen'
+    
+    if (this.origen === 'verPerfilC' ) {
+      this.router.navigate(['/verPerfilC'], { queryParams: { from: this.origen } });
+    } else {
+      this.router.navigate(['/misAC']); // Navegar a Detalles de Fundación
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-
+import { ActivatedRoute,Router } from '@angular/router';
 @Component({
   selector: 'app-ver-voluntarios',
   templateUrl: '../view/ver-voluntarios.component.html',
@@ -48,7 +48,9 @@ export class VerVoluntariosComponent implements AfterViewInit {
       Status: 'Activo'
     }
   ];
+constructor(private router: Router,){
 
+}
   ngAfterViewInit(): void {
     this.initializeDataTable();
   }
@@ -87,5 +89,8 @@ export class VerVoluntariosComponent implements AfterViewInit {
       default:
         return '';
     }
+  }
+  verDetalles(){
+    this.router.navigate(['/verPerfilV'], { queryParams: { from: 'verVoluntarios' } });
   }
 }

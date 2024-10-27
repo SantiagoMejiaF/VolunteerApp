@@ -41,7 +41,7 @@
                                 <span [ngClass]="getStatusClass(user.Status)">{{ user.Status }}</span>
                               </td>
                               
-                            <td style="text-align: center;"><a [routerLink]="['/verPerfilV']"
+                            <td style="text-align: center;"><a (click)="verDetalles()"
                                     style="border: none; background: none;">
                                     <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
                                         onmouseover="this.style.color='#186dde';"

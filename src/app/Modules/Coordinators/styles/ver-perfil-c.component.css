@@ -404,3 +404,12 @@ h2  {
       }
     }
     
+    .back{
+      background: none;
+      border-radius: 50%;
+      border:none !important;
+      padding:6px 10px 6px 12px;
+    }
+    .back:hover{
+      background: #ECEAE9;
+    }

@@ -74,27 +74,27 @@
 
             <!-- Para ORGANIZACION *ngIf="userRole === 'ORGANIZACION'"-->
 
-            <li class="sidebar-item" *ngIf="userRole === 'ORGANIZACION'">
+            <li class="sidebar-item" >
                 <a [routerLink]="'/dashOrganization'" class="sidebar-link" title="Tablero de Control"
                     routerLinkActive="active">
                     <strong><i class="bi bi-columns-gap" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Tablero de Control</span>
                 </a>
             </li>
-            <li class="sidebar-item" *ngIf="userRole === 'ORGANIZACION'">
+            <li class="sidebar-item" >
                 <a [routerLink]="'/verCoordinador'" class="sidebar-link" title="Coordinadores"
                     routerLinkActive="active">
                     <strong><i class="bi bi-people" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Coordinadores</span>
                 </a>
             </li>
-            <li class="sidebar-item" *ngIf="userRole === 'ORGANIZACION'">
+            <li class="sidebar-item" >
                 <a [routerLink]="'/verVoluntarios'" class="sidebar-link" title="Voluntarios" routerLinkActive="active">
                     <strong><i class="bi bi-person-hearts" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Voluntarios</span>
                 </a>
             </li>
-            <li class="sidebar-item" *ngIf="userRole === 'ORGANIZACION'">
+            <li class="sidebar-item" >
                 <a [routerLink]="'/misiones'" class="sidebar-link" title="Misiones" routerLinkActive="active">
                     <strong><i class="bi bi-calendar" style="font-size: 1.2rem; color: #292C32;"></i></strong>
                     <span>Misiones</span>

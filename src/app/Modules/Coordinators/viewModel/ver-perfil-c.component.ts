@@ -187,7 +187,10 @@ export class VerPerfilCComponent {
         return '';
     }
   }
-  
+  verDetallesA() {
+    this.router.navigate(['/verDetallesAxC'], { queryParams: { from: 'verPerfilC' } });
+
+  }
 }
 
 

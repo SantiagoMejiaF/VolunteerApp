@@ -30,7 +30,7 @@
                                 <span [ngClass]="getStatusClass(activity.status)">{{ activity.status }}</span>
                             </td>
                             <td>
-                                <a [routerLink]="['/verDetallesAxC']" [queryParams]="{ id: activity.id }"
+                                <a (click)="verDetalles()" 
                                     style="border: none; background: none;">
                                     <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
                                         onmouseover="this.style.color='#186dde';"

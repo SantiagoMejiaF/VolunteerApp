@@ -81,4 +81,8 @@ export class ActividadesCComponent implements OnInit, AfterViewInit {
         return '';
     }
   }
+  verDetalles() {
+    this.router.navigate(['/verDetallesAxC'], { queryParams: { from: 'misAC' } });
+
+  }
 }
