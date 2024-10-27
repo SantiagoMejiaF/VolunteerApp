@@ -1,5 +1,6 @@
 package com.constructiveactivists.dashboardsandreportsmodule.controllers.configuration;
 
+import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
@@ -102,4 +103,18 @@ public interface DashboardOrganizationAPI {
     })
     @GetMapping("/total-beneficiaries-impacted-by-organization/{organizationId}")
     ResponseEntity<Integer> getTotalBeneficiariesImpactedByOrganization(@PathVariable Integer organizationId);
+
+    @Operation(summary = "Obtener el historial por una organización ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+    })
+    @GetMapping("/history-by-organization/{organizationId}")
+    ResponseEntity<List<ReviewEntity>> getHistoryByOrganization(@PathVariable Integer organizationId);
+
+    @Operation(summary = "Obtener el historial de un coordinador")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+    })
+    @GetMapping("/coordinator-review-history/{userId}")
+    ResponseEntity<List<ReviewEntity>> getCoordinatorReviewHistory(@PathVariable Integer userId);
 }
