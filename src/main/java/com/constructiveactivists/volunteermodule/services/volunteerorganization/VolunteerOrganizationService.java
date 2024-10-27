@@ -220,6 +220,4 @@ public class VolunteerOrganizationService {
                         .orElseThrow(() -> new BusinessException("Volunteer organization not found")))
                 .toList();
     }
-
-
 }

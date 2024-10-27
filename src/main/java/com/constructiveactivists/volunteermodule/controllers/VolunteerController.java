@@ -12,6 +12,7 @@ import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillE
 import com.constructiveactivists.volunteermodule.mappers.volunteer.RankedOrganizationMapper;
 import com.constructiveactivists.volunteermodule.mappers.volunteer.VolunteerMapper;
 import com.constructiveactivists.volunteermodule.mappers.volunteer.VolunteerUpdateMapper;
+import com.constructiveactivists.volunteermodule.models.RankedOrganization;
 import com.constructiveactivists.volunteermodule.services.volunteer.VolunteerService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -105,10 +106,11 @@ public class VolunteerController implements VolunteerAPI {
     }
 
     @Override
-    public ResponseEntity<List<RankedOrganizationResponse>> matchVolunteerWithOrganizations(@PathVariable Integer volunteerId) {
+    public ResponseEntity<List<RankedOrganizationResponse>> matchVolunteerWithOrganizations(Integer volunteerId, int numberOfMatches) {
         try {
-            List<RankedOrganizationResponse> rankedOrganizations = rankedOrganizationMapper.toResponses(volunteerService.matchVolunteerWithMissions(volunteerId));
-            return ResponseEntity.ok(rankedOrganizations);
+            List<RankedOrganization> rankedOrganizations = volunteerService.matchVolunteerWithMissions(volunteerId, numberOfMatches);
+            List<RankedOrganizationResponse> response = rankedOrganizationMapper.toResponses(rankedOrganizations);
+            return ResponseEntity.ok(response);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (Exception e) {

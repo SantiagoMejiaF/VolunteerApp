@@ -12,4 +12,8 @@ public class RankedOrganizationResponse {
     private OrganizationEntity organization;
 
     private int score;
+
+    private String photoUrl;
+
+    private long authorizedVolunteersCount;
 }

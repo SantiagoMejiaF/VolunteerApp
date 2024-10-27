@@ -21,7 +21,9 @@ import com.constructiveactivists.volunteermodule.entities.volunteer.Volunteering
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.*;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermodule.models.RankedOrganization;
+import com.constructiveactivists.volunteermodule.repositories.VolunteerOrganizationRepository;
 import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
+import com.constructiveactivists.volunteermodule.services.volunteerorganization.PostulationService;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.VolunteerOrganizationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -50,6 +52,8 @@ public class VolunteerService {
     private final ActivityService activityService;
     private final MissionRepository missionRepository;
     private final OrganizationRepository organizationRepository;
+    private final VolunteerOrganizationRepository volunteerOrganizationRepository;
+    private final PostulationService postulationService;
 
     private static final int MINIMUM_AGE = 16;
     private static final int MAXIMUM_AGE = 140;
@@ -219,7 +223,6 @@ public class VolunteerService {
         volunteerRepository.save(volunteer);
     }
 
-
     private void validateAge(LocalDate birthDate) {
         int age = calculateAge(birthDate);
         if (age < MINIMUM_AGE) {
@@ -233,7 +236,7 @@ public class VolunteerService {
         return volunteerRepository.findByRegistrationYear(startDateTime, endDateTime);
     }
 
-    public List<RankedOrganization> matchVolunteerWithMissions(Integer volunteerId) {
+    public List<RankedOrganization> matchVolunteerWithMissions(Integer volunteerId, int cantidadMatch) {
 
         VolunteerEntity volunteer = volunteerRepository.findById(volunteerId)
                 .orElseThrow(() -> new EntityNotFoundException("El voluntario con ID " + volunteerId + " no existe."));
@@ -261,14 +264,37 @@ public class VolunteerService {
             organizationScores.merge(organization, score, Integer::sum);
         }
 
+        List<Integer> existingOrganizationIds = volunteerOrganizationRepository.findByVolunteerId(volunteerId)
+                .stream()
+                .map(VolunteerOrganizationEntity::getOrganizationId)
+                .toList();
+
         List<RankedOrganization> rankedOrganizations = organizationScores.entrySet().stream()
-                .map(entry -> new RankedOrganization(entry.getKey(), entry.getValue()))
+                .filter(entry -> !existingOrganizationIds.contains(entry.getKey().getId()))
+                .map(entry -> {
+                    OrganizationEntity organization = entry.getKey();
+                    int score = entry.getValue();
+
+                    String photoUrl = userService.getUserById(organization.getUserId())
+                            .map(UserEntity::getImage)
+                            .orElse(null);
+
+                    long authorizedVolunteersCount = countAuthorizedVolunteersByOrganizationId(organization.getId());
+
+                    return new RankedOrganization(organization, score, photoUrl, authorizedVolunteersCount);
+                })
                 .sorted(Comparator.comparingInt(RankedOrganization::getScore).reversed())
+                .limit(cantidadMatch)
                 .toList();
 
         rankedOrganizations = breakTiesRandomly(rankedOrganizations);
 
         return rankedOrganizations;
+    }
+
+    public long countAuthorizedVolunteersByOrganizationId(Integer organizationId) {
+        List<Integer> organizationIds = List.of(organizationId);
+        return postulationService.countAuthorizedVolunteersByOrganizationIds(organizationIds);
     }
 
     Map<MissionEntity, Integer> calculateMissionMatchScores(List<InterestEnum> volunteerInterests,

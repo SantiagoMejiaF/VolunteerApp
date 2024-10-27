@@ -190,50 +190,54 @@ class VolunteerControllerTest {
     @Test
     void testMatchVolunteerWithOrganizations_VolunteerNotFound() {
         Integer volunteerId = 999;
+        int numberOfMatches = 5;
 
-        when(volunteerService.matchVolunteerWithMissions(volunteerId))
+        when(volunteerService.matchVolunteerWithMissions(volunteerId, numberOfMatches))
                 .thenThrow(new EntityNotFoundException("El voluntario con ID " + volunteerId + " no existe."));
 
-        ResponseEntity<List<RankedOrganizationResponse>> response = volunteerController.matchVolunteerWithOrganizations(volunteerId);
+        ResponseEntity<List<RankedOrganizationResponse>> response = volunteerController.matchVolunteerWithOrganizations(volunteerId, numberOfMatches);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNull(response.getBody());
 
-        verify(volunteerService, times(1)).matchVolunteerWithMissions(volunteerId);
+        verify(volunteerService, times(1)).matchVolunteerWithMissions(volunteerId, numberOfMatches);
         verify(rankedOrganizationMapper, never()).toResponses(anyList());
     }
 
     @Test
     void testMatchVolunteerWithOrganizations_InternalServerError() {
         Integer volunteerId = 1;
+        int numberOfMatches = 5;
 
-        when(volunteerService.matchVolunteerWithMissions(volunteerId))
+        when(volunteerService.matchVolunteerWithMissions(volunteerId, numberOfMatches))
                 .thenThrow(new RuntimeException("Error inesperado"));
 
-        ResponseEntity<List<RankedOrganizationResponse>> response = volunteerController.matchVolunteerWithOrganizations(volunteerId);
+        ResponseEntity<List<RankedOrganizationResponse>> response = volunteerController.matchVolunteerWithOrganizations(volunteerId, numberOfMatches);
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertNull(response.getBody());
 
-        verify(volunteerService, times(1)).matchVolunteerWithMissions(volunteerId);
+        verify(volunteerService, times(1)).matchVolunteerWithMissions(volunteerId, numberOfMatches);
         verify(rankedOrganizationMapper, never()).toResponses(anyList());
     }
 
     @Test
     void testMatchVolunteerWithOrganizations_Success() {
         Integer volunteerId = 1;
+        int numberOfMatches = 5;
+
         List<RankedOrganizationResponse> rankedOrganizations = List.of(new RankedOrganizationResponse());
 
-        when(volunteerService.matchVolunteerWithMissions(volunteerId)).thenReturn(new ArrayList<>());
+        when(volunteerService.matchVolunteerWithMissions(volunteerId, numberOfMatches)).thenReturn(new ArrayList<>());
         when(rankedOrganizationMapper.toResponses(anyList())).thenReturn(rankedOrganizations);
 
-        ResponseEntity<List<RankedOrganizationResponse>> response = volunteerController.matchVolunteerWithOrganizations(volunteerId);
+        ResponseEntity<List<RankedOrganizationResponse>> response = volunteerController.matchVolunteerWithOrganizations(volunteerId, numberOfMatches);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals(1, response.getBody().size());
 
-        verify(volunteerService, times(1)).matchVolunteerWithMissions(volunteerId);
+        verify(volunteerService, times(1)).matchVolunteerWithMissions(volunteerId, numberOfMatches);
         verify(rankedOrganizationMapper, times(1)).toResponses(anyList());
     }
 
