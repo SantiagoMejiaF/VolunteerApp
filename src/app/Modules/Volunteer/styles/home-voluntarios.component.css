@@ -1,98 +1,131 @@
-.card-description{
-    font-size: 14px;
+.card-description {
+  font-size: 14px;
 }
 
-.titulo{
-    font-size: 20px;
-    font-weight: bold;
+.titulo {
+  font-size: 20px;
+  font-weight: bold;
 }
 
-.custom{
-    font-size:14px;
-    background: #dfdfdf;
-    color: black !important;
-    border-radius: 15px;
+.custom {
+  font-size: 14px;
+  background: #dfdfdf;
+  color: black !important;
+  border-radius: 15px;
 }
 
-h2  {
-    font-weight: 600;
-    font-size: 20px;
-  }
-  .column1,
+h2 {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.column1,
 .column2 {
-  background-color: white; /* Fondo blanco */
-  border-radius: 20px; /* Bordes redondeados */
-  padding: 10px; /* Espaciado interno */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  background-color: white;
+  /* Fondo blanco */
+  border-radius: 20px;
+  /* Bordes redondeados */
+  padding: 10px;
+  /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Sombra para darle profundidad */
   margin-bottom: 20px;
 }
 
 .custom-card {
-    border-radius: 20px; 
-    overflow: hidden; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
-    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Estilos personalizados */
 .container {
-    max-width: 900px;
-  }
-  
-  .input-group .form-control {
-    border-radius: 8px 0 0 8px;
-  }
-  
-  .input-group .btn {
-    border-radius: 0 8px 8px 0;
-    border-color: #fb9778;
-  }
-  
-  .input-group .form-select {
-    border-radius: 8px;
-  }
-  
-  .shadow-sm {
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .bg-white {
-    background-color: #fff;
-  }
-  
-  .rounded {
-    border-radius: 12px;
-  }
-  
-  .custombtn{
-    background: #fb9778;
-    color: #fff;
-  }
-  .custom-container {
-    max-width: 1200px; /* Ajusta este valor según el ancho deseado */
-    margin: 0 auto; /* Centrar el contenedor */
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
-  @media (max-width: 768px) {
-    .custom-container {
-     
-      padding-left: 2px;
-      padding-right: 2px;
-    }
-    .column1 {
-  background-color: white; /* Fondo blanco */
-  border-radius: 10px; /* Bordes redondeados */
-  padding: 10px; /* Espaciado interno */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
-  margin-bottom: 20px;
-      
+  max-width: 900px;
 }
+
+.input-group .form-control {
+  border-radius: 8px 0 0 8px;
+}
+
+.input-group .btn {
+  border-radius: 0 8px 8px 0;
+  border-color: #fb9778;
+}
+
+.input-group .form-select {
+  border-radius: 8px;
+}
+
+.shadow-sm {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+.rounded {
+  border-radius: 12px;
+}
+
+.custombtn {
+  background: #fb9778;
+  color: #fff;
+}
+
+.custom-container {
+  max-width: 1200px;
+  /* Ajusta este valor según el ancho deseado */
+  margin: 0 auto;
+  /* Centrar el contenedor */
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@media (max-width: 768px) {
+  .custom-container {
+
+    padding-left: 2px;
+    padding-right: 2px;
   }
 
+  .column1 {
+    background-color: white;
+    /* Fondo blanco */
+    border-radius: 10px;
+    /* Bordes redondeados */
+    padding: 10px;
+    /* Espaciado interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra para darle profundidad */
+    margin-bottom: 20px;
 
-  .custom-card:hover {
-    transform: translateY(-5px); 
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); 
+  }
+}
+
+
+.custom-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.custom-container {
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.section-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  margin-bottom: 20px;
+}
+
+.text-muted {
+  color: #6c757d;
 }

@@ -1,10 +1,8 @@
 <div class="container custom-container">
     <div class="row column1">
-        <div class="row p-2">
-            <div class="col">
-                <div>
-                    <h2>Encuentra tus fundaciones</h2>
-                </div>
+        <div class="col">
+            <div class="section-title">
+                <h2>Encuentra tus fundaciones</h2>
             </div>
         </div>
     </div>
@@ -35,38 +33,106 @@
         </div>
     </div>
 
-    <div class="row">
-        <div *ngFor="let organizacion of filteredOrganizations; let i = index" class="col-12 col-lg-4 mb-4 mt-4">
-            <div class="card custom-card">
-                <div class="position-relative">
-                    <img [src]="getImage(i)" class="card-img-top" alt="Imagen de la organización"
-                        style="max-height: 150px; object-fit: cover;">
-                    <img [src]="organizacion.photoUrl" class="rounded-circle position-absolute" alt="User Avatar"
-                        width="70" height="70" style="bottom: -25px; left: 15px; border: 2px solid white; z-index: 1;">
+    <!-- Sección de Organizaciones Recomendadas con fondo blanco -->
+    <div class="section-box">
+        <div class="row">
+            <div class="col">
+                <h2>Organizaciones Recomendadas</h2>
+            </div>
+        </div>
+
+        <!-- Mensaje si no hay organizaciones recomendadas -->
+        <div class="row">
+            <div class="col" *ngIf="filteredRecommendedOrganizations.length === 0">
+                <p class="text-muted">No hay organizaciones recomendadas disponibles.</p>
+            </div>
+        </div>
+
+        <!-- Mostrar las organizaciones recomendadas si existen -->
+        <div class="row">
+            <div *ngFor="let organizacion of filteredRecommendedOrganizations; let i = index"
+                class="col-12 col-lg-4 mb-4 mt-4">
+                <div class="card custom-card">
+                    <div class="position-relative">
+                        <img [src]="getImage(i)" class="card-img-top" alt="Imagen de la organización"
+                            style="max-height: 150px; object-fit: cover;">
+                        <img [src]="organizacion.photoUrl" class="rounded-circle position-absolute" alt="User Avatar"
+                            width="70" height="70"
+                            style="bottom: -25px; left: 15px; border: 2px solid white; z-index: 1;">
+                    </div>
+                    <div class="card-body mt-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="titulo">{{ organizacion.titulo }}</span>
+                        </div>
+                        <h5 class="card-description">{{ organizacion.descripcion }}</h5>
+                        <div class="d-flex justify-content-start gap-2 my-2 mt-2">
+                            <div *ngFor="let etiqueta of organizacion.etiquetas" class="p-1 px-3 text-white custom">
+                                {{ etiqueta }}
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div class="d-flex align-items-center">
+                                <span class="mx-2 fw-bold" style="font-size: 1.2rem;">
+                                    <i class="bi bi-clipboard2-heart"></i>
+                                </span>
+                                <span class="small">{{ organizacion.voluntarios }} Voluntarios</span>
+                            </div>
+                            <div class="d-flex align-items-center" style="cursor: pointer;"
+                                (click)="verDetalles(organizacion.id)">
+                                <span class="mx-2 fw-bold text-muted" style="font-size: 1.2rem;">
+                                    <i class="bi bi-eye"></i>
+                                </span>
+                                <span class="small text-muted">Detalles</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body mt-3">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="titulo">{{ organizacion.titulo }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de Todas las Organizaciones con fondo blanco -->
+    <div class="section-box mt-5">
+        <div class="row">
+            <div class="col">
+                <h2>Todas las Organizaciones</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div *ngFor="let organizacion of filteredAllOrganizations; let i = index" class="col-12 col-lg-4 mb-4 mt-4">
+                <div class="card custom-card">
+                    <div class="position-relative">
+                        <img [src]="getImage(i)" class="card-img-top" alt="Imagen de la organización"
+                            style="max-height: 150px; object-fit: cover;">
+                        <img [src]="organizacion.photoUrl" class="rounded-circle position-absolute" alt="User Avatar"
+                            width="70" height="70"
+                            style="bottom: -25px; left: 15px; border: 2px solid white; z-index: 1;">
                     </div>
-                    <h5 class="card-description">{{ organizacion.descripcion }}</h5>
-                    <div class="d-flex justify-content-start gap-2 my-2 mt-2">
-                        <div *ngFor="let etiqueta of organizacion.etiquetas" class="p-1 px-3 text-white custom">
-                            {{ etiqueta }}
+                    <div class="card-body mt-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="titulo">{{ organizacion.titulo }}</span>
                         </div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <div class="d-flex align-items-center">
-                            <span class="mx-2 fw-bold" style="font-size: 1.2rem;">
-                                <i class="bi bi-clipboard2-heart"></i>
-                            </span>
-                            <span class="small">{{ organizacion.voluntarios }} Voluntarios</span>
+                        <h5 class="card-description">{{ organizacion.descripcion }}</h5>
+                        <div class="d-flex justify-content-start gap-2 my-2 mt-2">
+                            <div *ngFor="let etiqueta of organizacion.etiquetas" class="p-1 px-3 text-white custom">
+                                {{ etiqueta }}
+                            </div>
                         </div>
-                        <div class="d-flex align-items-center" style="cursor: pointer;"
-                            (click)="verDetalles(organizacion.id)">
-                            <span class="mx-2 fw-bold text-muted" style="font-size: 1.2rem;">
-                                <i class="bi bi-eye"></i>
-                            </span>
-                            <span class="small text-muted">Detalles</span>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div class="d-flex align-items-center">
+                                <span class="mx-2 fw-bold" style="font-size: 1.2rem;">
+                                    <i class="bi bi-clipboard2-heart"></i>
+                                </span>
+                                <span class="small">{{ organizacion.voluntarios }} Voluntarios</span>
+                            </div>
+                            <div class="d-flex align-items-center" style="cursor: pointer;"
+                                (click)="verDetalles(organizacion.id)">
+                                <span class="mx-2 fw-bold text-muted" style="font-size: 1.2rem;">
+                                    <i class="bi bi-eye"></i>
+                                </span>
+                                <span class="small text-muted">Detalles</span>
+                            </div>
                         </div>
                     </div>
                 </div>
