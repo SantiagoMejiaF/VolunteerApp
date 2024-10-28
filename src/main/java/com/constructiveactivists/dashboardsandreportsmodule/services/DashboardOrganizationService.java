@@ -1,5 +1,6 @@
 package com.constructiveactivists.dashboardsandreportsmodule.services;
 
+import com.constructiveactivists.dashboardsandreportsmodule.services.enums.Mes;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
@@ -209,6 +210,19 @@ public class DashboardOrganizationService {
                     return reviewRepository.findByActivityIn(activities);
                 })
                 .orElse(Collections.emptyList());
+    }
+
+    public Map<String, Long> getActivitiesCountByOrganizationAndYear(Integer organizationId, int year) {
+        List<MissionEntity> missions = missionService.getMissionsByOrganizationId(organizationId);
+        Map<String, Long> activitiesCount = Arrays.stream(Mes.values())
+                .collect(Collectors.toMap(Mes::name, mes -> 0L, (e1, e2) -> e1, LinkedHashMap::new));
+        missions.stream()
+                .flatMap(mission -> activityRepository.findByMissionId(mission.getId()).stream()
+                        .filter(activity -> activity.getDate().getYear() == year)
+                        .map(activity -> Mes.values()[activity.getDate().getMonthValue() - 1]))
+                .forEach(month -> activitiesCount.merge(String.valueOf(month), 1L, Long::sum));
+
+        return activitiesCount;
     }
 
 

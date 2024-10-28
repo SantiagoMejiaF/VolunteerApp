@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Tag(name = "Módulo de Misiones y Actividades", description = "Servicios relacionados con la gestión de misiones y actividades en la aplicación.")
 public interface ActivityAPI {
@@ -124,4 +125,13 @@ public interface ActivityAPI {
     })
     @GetMapping("/volunteer/{volunteerId}/rating")
     ResponseEntity<Double> getAverageRating(@PathVariable Integer volunteerId);
+
+    @Operation(summary = "Obtener el total de actividades realizadas de un voluntario por año")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/volunteer/{volunteerId}/year/{year}")
+    ResponseEntity<Map<String, Long>> getActivitiesCountByVolunteerAndYear(
+            @PathVariable Integer volunteerId,
+            @PathVariable int year);
 }

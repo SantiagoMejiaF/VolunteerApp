@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Month;
@@ -108,6 +109,14 @@ public class DashboardOrganizationController implements DashboardOrganizationAPI
     public ResponseEntity<List<ReviewEntity>> getCoordinatorReviewHistory(@PathVariable Integer userId) {
         List<ReviewEntity> reviews = dashboardOrganizationService.getCoordinatorReviewHistory(userId);
         return ResponseEntity.ok(reviews);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Long>> getActivitiesCountByOrganizationAndYear(
+            @RequestParam Integer organizationId,
+            @RequestParam int year) {
+        Map<String, Long> activitiesCount = dashboardOrganizationService.getActivitiesCountByOrganizationAndYear(organizationId, year);
+        return new ResponseEntity<>(activitiesCount, HttpStatus.OK);
     }
 
 }
