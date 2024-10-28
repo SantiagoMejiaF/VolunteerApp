@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -129,5 +130,12 @@ public class ActivityController implements ActivityAPI {
         }
     }
 
+    @Override
+    public ResponseEntity<Map<String, Long>> getActivitiesCountByVolunteerAndYear(
+            @PathVariable Integer volunteerId,
+            @PathVariable int year) {
+        Map<String, Long> activitiesCount = activityService.getActivitiesCountByVolunteerAndYearInSpanish(volunteerId, year);
+        return ResponseEntity.ok(activitiesCount);
+    }
 
 }

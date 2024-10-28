@@ -1,6 +1,7 @@
 package com.constructiveactivists.missionandactivitymodule.services.activity;
 
 import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.dashboardsandreportsmodule.services.enums.Mes;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
@@ -20,9 +21,8 @@ import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.constructiveactivists.configurationmodule.constants.AppConstants.*;
 
@@ -194,9 +194,25 @@ public class ActivityService {
                 .orElse(Collections.emptyList());
     }
 
+    public Map<String, Long> getActivitiesCountByVolunteerAndYearInSpanish(Integer volunteerId, int year) {
+        List<ActivityEntity> activities = this.getActivitiesByVolunteerId(volunteerId);
+        Map<String, Long> activitiesCount = Arrays.stream(Mes.values())
+                .collect(Collectors.toMap(Mes::name, mes -> 0L, (e1, e2) -> e1, LinkedHashMap::new));
+        activities.stream()
+                .filter(activity -> activity.getDate().getYear() == year)
+                .forEach(activity -> {
+                    int monthIndex = activity.getDate().getMonthValue();
+                    activitiesCount.put(Mes.values()[monthIndex - 1].name(), activitiesCount.get(Mes.values()[monthIndex - 1].name()) + 1);
+                });
+        return activitiesCount;
+    }
+
+
+
 
 
     public List<ActivityEntity> getAvailableActivitiesByCoordinator(Integer coordinatorId) {
         return activityRepository.findAllByActivityCoordinatorAndActivityStatus(coordinatorId, ActivityStatusEnum.DISPONIBLE);
     }
+
 }
