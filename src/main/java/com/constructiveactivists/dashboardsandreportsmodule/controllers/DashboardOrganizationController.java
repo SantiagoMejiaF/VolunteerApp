@@ -1,6 +1,7 @@
 package com.constructiveactivists.dashboardsandreportsmodule.controllers;
 
 import com.constructiveactivists.dashboardsandreportsmodule.controllers.configuration.DashboardOrganizationAPI;
+import com.constructiveactivists.dashboardsandreportsmodule.controllers.response.CardsOrganizationVolunteerResponse;
 import com.constructiveactivists.dashboardsandreportsmodule.services.DashboardOrganizationService;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
@@ -117,6 +118,12 @@ public class DashboardOrganizationController implements DashboardOrganizationAPI
             @RequestParam int year) {
         Map<String, Long> activitiesCount = dashboardOrganizationService.getActivitiesCountByOrganizationAndYear(organizationId, year);
         return new ResponseEntity<>(activitiesCount, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<List<CardsOrganizationVolunteerResponse>> getAllOrganizations() {
+        List<CardsOrganizationVolunteerResponse> organizations = dashboardOrganizationService.getAllOrganizationsCards();
+        return ResponseEntity.ok(organizations);
     }
 
 }

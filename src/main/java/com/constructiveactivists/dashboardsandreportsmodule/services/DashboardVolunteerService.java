@@ -180,8 +180,6 @@ public class DashboardVolunteerService {
                 .filter(Objects::nonNull)
                 .toList();
     }
-
-
     public long countAuthorizedVolunteersByVolunteerId(Integer volunteerId) {
         List<Integer> organizationIds = volunteerOrganizationService.getOrganizationIdsByVolunteerId(volunteerId);
         return postulationService.countAuthorizedVolunteersByOrganizationIds(organizationIds);

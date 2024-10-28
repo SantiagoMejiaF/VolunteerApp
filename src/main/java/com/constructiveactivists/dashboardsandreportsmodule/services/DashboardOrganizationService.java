@@ -1,5 +1,6 @@
 package com.constructiveactivists.dashboardsandreportsmodule.services;
 
+import com.constructiveactivists.dashboardsandreportsmodule.controllers.response.CardsOrganizationVolunteerResponse;
 import com.constructiveactivists.dashboardsandreportsmodule.services.enums.Mes;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
@@ -225,5 +226,23 @@ public class DashboardOrganizationService {
         return activitiesCount;
     }
 
-
+    public List<CardsOrganizationVolunteerResponse> getAllOrganizationsCards() {
+        return organizationService.getAllOrganizations().stream()
+                .map(organization -> {
+                    Optional<UserEntity> userEntity = userService.getUserById(organization.getUserId());
+                    String organizationPhoto = userEntity.map(UserEntity::getImage).orElse(null);
+                    long authorizedVolunteers = volunteerService.countAuthorizedVolunteersByOrganizationId(organization.getId());
+                    return new CardsOrganizationVolunteerResponse(
+                            organization.getId(),
+                            organization.getOrganizationName(),
+                            organization.getDescription(),
+                            organization.getOrganizationTypeEnum(),
+                            organizationPhoto,
+                            authorizedVolunteers,
+                            organization.getSectorTypeEnum()
+                    );
+                })
+                .filter(Objects::nonNull)
+                .toList();
+    }
 }

@@ -1,5 +1,6 @@
 package com.constructiveactivists.dashboardsandreportsmodule.controllers.configuration;
 
+import com.constructiveactivists.dashboardsandreportsmodule.controllers.response.CardsOrganizationVolunteerResponse;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
@@ -127,4 +128,11 @@ public interface DashboardOrganizationAPI {
     ResponseEntity<Map<String, Long>> getActivitiesCountByOrganizationAndYear(
             @RequestParam Integer organizationId,
             @RequestParam int year);
+
+    @Operation(summary = "Obtener cards de todas las  organizaciones")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+    })
+    @GetMapping("/get-cards-all-organizations")
+    ResponseEntity<List<CardsOrganizationVolunteerResponse>> getAllOrganizations();
 }
