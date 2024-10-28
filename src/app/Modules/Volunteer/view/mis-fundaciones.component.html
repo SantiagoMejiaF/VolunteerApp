@@ -52,7 +52,8 @@
                             <span class="small">{{ organizacion.voluntarios }} Voluntarios</span>
                         </div>
 
-                        <div class="d-flex align-items-center" style="cursor: pointer;" [routerLink]="['/verPerfilO']">
+                        <div class="d-flex align-items-center" style="cursor: pointer;"
+                            (click)="verDetalles(organizacion.organizationId)">
                             <span class="mx-2 fw-bold text-muted" style="font-size: 1.2rem;">
                                 <i class="bi bi-eye"></i>
                             </span>

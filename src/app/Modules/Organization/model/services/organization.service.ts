@@ -58,4 +58,15 @@ export class OrganizationService {
     return this.http.post<any>(`${this.apiUrl}/activity-coordinators`, coordinatorData, cabecera);
   }
 
+  getOrganizationDetailsById(organizationId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/organizations/${organizationId}`);
+  }
+
+  getOrganizationHistory(organizationId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/organizations-dashboard/history-by-organization/${organizationId}`);
+  }
+
+  getOrganizationActivities(organizationId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/missions/organization/${organizationId}/activities`);
+  }
 }

@@ -24,6 +24,7 @@ export class MisFundacionesComponent implements OnInit {
       this.volunteerService.getVolunteerFoundations(Number(volunteerId)).subscribe(
         (data) => {
           this.organizaciones = data.map((org) => ({
+            organizationId: org.organizationId,  // Aquí agregamos el organizationId
             titulo: org.name,
             descripcion: org.description,
             voluntarios: org.authorizedVolunteersCount,
@@ -39,6 +40,7 @@ export class MisFundacionesComponent implements OnInit {
       );
     }
   }
+
 
   // Función para obtener la imagen de fondo correspondiente, repitiendo cada 3
   getImage(index: number): string {
@@ -74,7 +76,8 @@ export class MisFundacionesComponent implements OnInit {
     }
   }
 
-  verDetalles() {
-    this.router.navigate(['/verPerfilO'], { queryParams: { from: 'misF' } });
+  verDetalles(organizationId: number) {
+    console.log('Organization ID:', organizationId);
+    this.router.navigate(['/verPerfilO'], { queryParams: { id: organizationId } });
   }
 }
