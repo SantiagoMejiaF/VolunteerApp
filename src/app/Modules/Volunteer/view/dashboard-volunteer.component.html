@@ -146,7 +146,8 @@
         <div class="col tittle" id="recentCustomers">
             <div class="cardHeader mb-2 d-flex justify-content-between align-items-center">
                 <h2>Fundaciones a las que estoy inscrito</h2>
-                <button type="button" id="buttonStyle" class="btn btn-outline-warning">Ver todos</button>
+                <button type="button" id="buttonStyle" class="btn btn-outline-warning"
+                    (click)="navigateToFundaciones()">Ver todos</button>
             </div>
             <div class="table-responsive">
                 <table class="table table-sm" id="datatableexample">
@@ -161,20 +162,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let user of data; let i = index">
+                        <tr *ngFor="let org of organizations; let i = index">
                             <td>{{ i + 1 }}</td>
                             <td width="60px">
                                 <div class="imgBx">
-                                    <img [src]="user.image || 'assets/img/user2.png'" alt="Perfil"
-                                        (error)="user.image='assets/img/user3.png'"
+                                    <img [src]="org.userDetails?.image || 'assets/img/user2.png'" alt="Perfil"
+                                        (error)="org.userDetails.image='assets/img/user3.png'"
                                         style="width:50px; height:50px; border-radius:50%;">
                                 </div>
                             </td>
-                            <td>
-                                <h4>{{user.firstName}} {{user.lastName}} <br> <span>Voluntario</span></h4>
-                            </td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.cedula }}</td>
+                            <td>{{ org.organizationDetails?.organizationName }}</td>
+                            <td>{{ org.userDetails?.email }}</td>
+                            <td>{{ org.responsiblePersonPhoneNumber }}</td>
+                            <td>{{ org.address }}</td>
                         </tr>
                     </tbody>
                 </table>

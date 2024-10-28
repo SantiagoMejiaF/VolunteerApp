@@ -85,4 +85,7 @@ export class VolunteerService {
     return this.http.get<any[]>(`${this.apiUrl}/activities/volunteer/${volunteerId}/year/${year}`);
   }
 
+  getRecentOrganizations(volunteerId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/volunteers-organizations/recent/${volunteerId}`);
+  }
 }

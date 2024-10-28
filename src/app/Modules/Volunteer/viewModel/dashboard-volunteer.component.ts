@@ -1,4 +1,5 @@
 import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   ChartComponent,
   ApexAxisChartSeries,
@@ -8,6 +9,7 @@ import {
   ApexStroke,
 } from 'ng-apexcharts';
 import { VolunteerService } from '../model/services/volunteer.service';
+import { OrganizationService } from '../../Organization/model/services/organization.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -27,6 +29,8 @@ export class DashboardVolunteerComponent implements AfterViewInit {
   public completedActivities = 0;
   public averageRating = 0;
   public beneficiariesImpacted = 0;
+  public organizations: any[] = [];
+
   @ViewChild('chart') chart: ChartComponent;
   public chartOptions: ChartOptions;
 
@@ -50,7 +54,11 @@ export class DashboardVolunteerComponent implements AfterViewInit {
     { id: 3, time: '01:30', name: 'Actividad...', responsible: 'Nombre Responsable', date: new Date(2024, 6, 6) }
   ];
 
-  constructor(private volunteerService: VolunteerService) {
+  constructor(
+    private volunteerService: VolunteerService,
+    private organizationService: OrganizationService,
+    private router: Router
+  ) {
     const today = new Date();
     this.selectedYear = today.getFullYear(); // Año actual
     this.currentYear = today.getFullYear();
@@ -89,6 +97,61 @@ export class DashboardVolunteerComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.loadDashboardData();
+    this.loadOrganizations();
+  }
+
+  // Método para cargar las fundaciones recientes del voluntario
+  loadOrganizations() {
+    const volunteerId = Number(localStorage.getItem('volunteerId'));
+    if (!volunteerId) {
+      console.error('No se encontró volunteerId en localStorage.');
+      return;
+    }
+
+    // Usar el servicio para obtener fundaciones recientes
+    this.volunteerService.getRecentOrganizations(volunteerId).subscribe(
+      (orgData: any[]) => {
+        if (!orgData || orgData.length === 0) {
+          console.warn('No se encontraron fundaciones.');
+          return;
+        }
+
+        // Tomar solo las tres últimas fundaciones
+        const recentOrganizations = orgData.slice(-3);
+
+        // Para cada organización, obtener los detalles de la fundación y el usuario responsable
+        recentOrganizations.forEach((org) => {
+          if (org.userId) {
+            // Obtener detalles de la fundación
+            this.organizationService.getOrganizationDetails(org.userId).subscribe(
+              (orgDetails) => {
+                org.organizationDetails = orgDetails;
+
+                // Obtener los detalles del usuario responsable (imagen y correo)
+                this.organizationService.getUserDetails(org.userId).subscribe(
+                  (userDetails) => {
+                    org.userDetails = userDetails; // Añadir los detalles del usuario (imagen y correo)
+                  },
+                  (error) => {
+                    console.error('Error al obtener los detalles del usuario responsable', error);
+                  }
+                );
+              },
+              (error) => {
+                console.error('Error al obtener detalles de la fundación', error);
+              }
+            );
+          } else {
+            console.warn('userId no definido para esta organización:', org);
+          }
+        });
+
+        this.organizations = recentOrganizations;
+      },
+      (error) => {
+        console.error('Error al obtener las fundaciones recientes', error);
+      }
+    );
   }
 
   // Generar el rango de años: 3 anteriores y 3 posteriores al año actual
@@ -99,15 +162,12 @@ export class DashboardVolunteerComponent implements AfterViewInit {
     this.yearRange = Array.from({ length: endYear - startYear + 1 }, (_, i) => startYear + i);
   }
 
-  // Método para cargar los datos del gráfico basado en el año seleccionado
   loadChartData(year: number) {
     const volunteerId = Number(localStorage.getItem('volunteerId')); // Obtener el volunteerId desde localStorage
-    console.log('Volunteer ID:', volunteerId); // Comprobar que volunteerId es válido
     this.volunteerService.getActivitiesByYear(volunteerId, year).subscribe(
       (activityData) => {
         const activitySeries = Object.values(activityData).map(val => Number(val));
 
-        // Actualizar el gráfico con los datos
         this.chartOptions.series = [
           {
             name: 'Actividades',
@@ -118,21 +178,15 @@ export class DashboardVolunteerComponent implements AfterViewInit {
       },
       (error) => {
         console.error('Error al cargar los datos del gráfico', error);
-        // Ver detalles del error
-        console.error('Detalles del error:', error.message, error.status, error.url);
       }
     );
   }
 
-
-
-  // Método llamado cuando el usuario cambia el año
   onYearChange(event: any): void {
-    this.selectedYear = event.target.value;  // Actualizar el año seleccionado
-    this.loadChartData(this.selectedYear);   // Cargar los datos correspondientes al nuevo año
+    this.selectedYear = event.target.value;
+    this.loadChartData(this.selectedYear);
   }
 
-  // Cargar los datos iniciales del dashboard
   loadDashboardData() {
     this.loadChartData(this.selectedYear);
 
@@ -142,17 +196,17 @@ export class DashboardVolunteerComponent implements AfterViewInit {
       },
       (error) => {
         console.error('Error al obtener las actividades completadas', error);
-        this.completedActivities = 0; // Valor por defecto en caso de error
+        this.completedActivities = 0;
       }
     );
 
     this.volunteerService.getAverageRating(this.userId).subscribe(
       (data: number | null) => {
-        this.averageRating = data ?? 0; // Si no hay datos, asignar 0
+        this.averageRating = data ?? 0;
       },
       (error) => {
         console.error('Error al obtener la puntuación promedio', error);
-        this.averageRating = 0; // Valor por defecto en caso de error
+        this.averageRating = 0;
       }
     );
 
@@ -162,12 +216,11 @@ export class DashboardVolunteerComponent implements AfterViewInit {
       },
       (error) => {
         console.error('Error al obtener los beneficiarios impactados', error);
-        this.beneficiariesImpacted = 0; // Valor por defecto en caso de error
+        this.beneficiariesImpacted = 0;
       }
     );
   }
 
-  // Método para generar las fechas del mes
   generateCalendar() {
     this.calendarDays = [];
     const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
@@ -190,7 +243,6 @@ export class DashboardVolunteerComponent implements AfterViewInit {
     }
   }
 
-  // Método para verificar si hay actividades en un día específico
   hasActivities(day: Date): boolean {
     return this.activities.some(activity =>
       activity.date.toDateString() === day?.toDateString()
@@ -234,5 +286,9 @@ export class DashboardVolunteerComponent implements AfterViewInit {
     return this.activities.filter(activity => {
       return activity.date.toDateString() === this.selectedDate.toDateString();
     });
+  }
+
+  navigateToFundaciones() {
+    this.router.navigate(['/misF']);  // Redireccionar a la ruta '/misF'
   }
 }
