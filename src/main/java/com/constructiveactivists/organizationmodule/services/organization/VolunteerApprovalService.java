@@ -11,7 +11,6 @@ import com.constructiveactivists.volunteermodule.entities.volunteer.enums.Organi
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
-import com.constructiveactivists.volunteermodule.services.volunteerorganization.DataShareVolunteerOrganizationService;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.PostulationService;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.VolunteerOrganizationService;
 import jakarta.mail.MessagingException;
