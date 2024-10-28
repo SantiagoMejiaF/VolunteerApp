@@ -134,10 +134,10 @@ export class DashboardAdminComponent implements OnInit {
       this.activeOrganizations = data;
     });
 
-    // Obtener los datos de los usuarios autorizados
+    // Obtener los datos de los usuarios autorizados y limitar a las últimas 5 entradas
     this.adminService.getAuthorizedUsers().subscribe((users) => {
-      this.data = users;
-      console.log('Usuarios autorizados obtenidos:', this.data);
+      this.data = users.slice(-5); // Mostrar solo las últimas 5 entradas
+      console.log('Últimos usuarios obtenidos:', this.data);
 
       // Llenar los roles de los usuarios
       this.populateUserRoles().then(() => {
@@ -147,23 +147,28 @@ export class DashboardAdminComponent implements OnInit {
     });
   }
 
-  // Método para llenar los roles y detalles adicionales de los usuarios
   populateUserRoles(): Promise<void> {
     return new Promise<void>((resolve) => {
       let completedRequests = 0;
 
       this.data.forEach((user) => {
-        user.rol = user.role.roleType; // Usar directamente el rol desde el objeto usuario
+        user.rol = user.role.roleType;
 
         if (user.rol === 'VOLUNTARIO') {
           this.volunteerService.getVolunteerDetails(user.id).subscribe((volunteerDetails) => {
-            user.cedula = volunteerDetails.personalInformation.identificationCard;
+            user.firstName = volunteerDetails.personalInformation.firstName;
+            user.lastName = volunteerDetails.personalInformation.lastName;
+            user.cedula = volunteerDetails.personalInformation.identificationCard || "Sin cédula";
+
             completedRequests++;
             if (completedRequests === this.data.length) resolve();
           });
         } else if (user.rol === 'ORGANIZACION') {
           this.organizationService.getOrganizationDetails(user.id).subscribe((organizationDetails) => {
-            user.cedula = organizationDetails.responsiblePersonId;
+            user.firstName = organizationDetails.organizationName; // Usamos organizationName si no hay firstName
+            user.lastName = '';  // Dejar vacío o asignar algún valor si no hay lastName
+            user.cedula = organizationDetails.responsiblePersonId || "Sin cédula";
+
             completedRequests++;
             if (completedRequests === this.data.length) resolve();
           });
@@ -173,7 +178,7 @@ export class DashboardAdminComponent implements OnInit {
         }
       });
 
-      if (this.data.length === 0) resolve(); // Resuelve la promesa si no hay usuarios
+      if (this.data.length === 0) resolve();
     });
   }
 
@@ -193,10 +198,20 @@ export class DashboardAdminComponent implements OnInit {
             title: "Perfil",
             data: null,
             render: (data, type, row) => {
-              return `<img src="${data.profileImage}" alt="${data.name}" class="profile-img"/>`;
+              // Ajustamos la lógica para mostrar la imagen de perfil, si no hay usamos la imagen por defecto
+              return `<img src="${data.image || 'assets/img/user2.png'}" alt="Perfil" 
+                style="width:50px; height:50px; border-radius:50%;" 
+                onerror="this.src='assets/img/user3.png'"/>`;
             }
           },
-          { title: "Nombre", data: "name" },  // Nombre con rol
+          {
+            title: "Nombre",
+            // Combinar firstName y lastName si existen, o usar un campo alternativo como organizationName
+            data: null,
+            render: (data, type, row) => {
+              return data.firstName ? `${data.firstName} ${data.lastName}` : data.organizationName || "Sin nombre";
+            }
+          },
           { title: "Email", data: "email" },
           { title: "Cédula", data: "cedula" }
         ],
@@ -210,11 +225,11 @@ export class DashboardAdminComponent implements OnInit {
           infoFiltered: '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros totales)</span>',
           lengthMenu: '<span style="font-size: 0.875rem;">Mostrar _MENU_ registros por página</span>',
           zeroRecords: '<span style="font-size: 0.875rem;">No se encontraron resultados</span>',
-
         },
       });
     }, 1000);
   }
+
   ngAfterViewInit(): void {
     this.initializeDataTable();
   }

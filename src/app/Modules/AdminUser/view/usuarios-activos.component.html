@@ -1,6 +1,6 @@
-<div class="container ">
+<div class="container">
     <div class="row">
-        <div class="col ">
+        <div class="col">
             <div class="tittle">
                 <h2>Usuarios Activos</h2>
             </div>
@@ -8,7 +8,7 @@
     </div>
 
     <div class="table-container">
-        <table class="table  table-sm  hover" id="datatableGestionUser">
+        <table class="table table-sm hover" id="datatableUsuariosActivos">
             <thead>
                 <tr>
                     <th class="text-left">#</th>
@@ -16,8 +16,8 @@
                     <th class="text-left">Perfil</th>
                     <th class="text-left">Rol</th>
                     <th class="text-left">Email</th>
-                    <th class="text-left">Cedula</th>
-                    <th class="text-left">Accion</th>
+                    <th class="text-left">Cédula</th>
+                    <th class="text-left">Acción</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,7 +54,6 @@
     </div>
 </div>
 
-
 <!-- Modal Voluntario -->
 <div class="modal fade" id="VolunteerModal" tabindex="-1" aria-labelledby="VolunteerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -73,13 +72,11 @@
                 <h6>Correo: {{ selectedUser?.email }}</h6>
                 <h6>Celular: {{ selectedUser?.personalInformation?.phoneNumber }}</h6>
             </div>
-
         </div>
     </div>
 </div>
 
-
-<!-- Modal Organización-->
+<!-- Modal Organización -->
 <div class="modal fade" id="organizationModal" tabindex="-1" aria-labelledby="organizationModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -120,7 +117,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

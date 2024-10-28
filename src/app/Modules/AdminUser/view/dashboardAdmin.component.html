@@ -17,7 +17,7 @@
                             harás un gran trabajo!</p>
                     </div>
                     <div class="col" id="imagen-col">
-                        <img src="assets/img/manLaptop.png" alt="">
+                        <img src="assets/img/manLaptop.png" alt="Imagen">
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@
                         </div>
                     </div>
                     <div class="col-4 ml-5" id="img2">
-                        <img src="assets/img/corazon.png" alt="">
+                        <img src="assets/img/corazon.png" alt="Imagen">
                     </div>
                 </div>
             </div>
@@ -88,7 +88,7 @@
                 <div class="row">
                     <div class="col m-5" id="recentCustomers">
                         <div class="cardHeader">
-                            <h2>Usuarios</h2>
+                            <h2>Usuarios recientes</h2>
                         </div>
                         <table class="table table-sm" id="datatableDashAdmin">
                             <thead>
@@ -97,26 +97,28 @@
                                     <th>Perfil</th>
                                     <th>Nombre</th>
                                     <th>Email</th>
-                                    <th>Cedula</th>
+                                    <th>Cédula</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let user of data; let i = index">
-                                    <td>{{ i + 1 }}</td>
+                                <tr *ngFor="let user of data">
+                                    <td>{{ user.id }}</td>
                                     <td width="60px">
                                         <div class="imgBx">
-                                            <img [src]="user.image || 'assets/img/user2.png'" alt="Perfil"
+                                            <!-- Asegurarse de que haya una imagen por defecto -->
+                                            <img [src]="user.image ? user.image : 'assets/img/user2.png'" alt="Perfil"
                                                 (error)="user.image='assets/img/user3.png'"
                                                 style="width:50px; height:50px; border-radius:50%;">
                                         </div>
                                     </td>
-                                    <td>
-                                        <h4>{{user.firstName}} {{user.lastName}} <br> <span>{{user.rol}}</span></h4>
-                                    </td>
+                                    <!-- Asegurarse de que los campos 'firstName' y 'lastName' existan, o usar 'name' -->
+                                    <td>{{ user.firstName ? (user.firstName + ' ' + user.lastName) : user.name }}</td>
+                                    <td>{{ user.rol }}</td>
                                     <td>{{ user.email }}</td>
                                     <td>{{ user.cedula }}</td>
                                 </tr>
                             </tbody>
+
                         </table>
                     </div>
                 </div>

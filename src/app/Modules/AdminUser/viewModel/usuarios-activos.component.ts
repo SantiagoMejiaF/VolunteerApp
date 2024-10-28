@@ -1,56 +1,83 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
+import { AdminService } from '../model/services/admin.service';
+import { VolunteerService } from '../../Volunteer/model/services/volunteer.service';
+import { OrganizationService } from '../../Organization/model/services/organization.service';
 
 @Component({
   selector: 'app-usuarios-activos',
   templateUrl: '../view/usuarios-activos.component.html',
-  styleUrl: '../styles/usuarios-activos.component.css'
+  styleUrls: ['../styles/usuarios-activos.component.css']
 })
-export class UsuariosActivosComponent {
+export class UsuariosActivosComponent implements AfterViewInit {
   selectedUser: any = {};
-  data = [
-    {
-      id: 1,
-      image: '',
-      firstName: 'Juan',
-      lastName: 'Pérez',
-      rol: 'VOLUNTARIO',
-      email: 'juan.perez@example.com',
-      Cedula: '123456789',
-      personalInformation: {
-        identificationCard: '123456789',
-        phoneNumber: '3001234567'
-      }
-    },
-    {
-      id: 2,
-      image: '',
-      firstName: 'Fundación',
-      lastName: 'ABC',
-      rol: 'ORGANIZACION',
-      email: 'fundacion.abc@example.com',
-      Cedula: '12098765',
-      responsiblePersonPhoneNumber: '1209876543',
-      organizationName: 'Fundación ABC',
-      nit: '12098765',
-      organizationTypeEnum: 'ONG',
-      sectorTypeEnum: 'Educación',
-      volunteeringTypeEnum: 'Presencial',
-      address: 'Calle 123 #45-67'
-    }
-  ];
+  data: any[] = [];
+
+  constructor(
+    private adminService: AdminService,
+    private volunteerService: VolunteerService,
+    private organizationService: OrganizationService
+  ) { }
+
   ngAfterViewInit(): void {
-    this.initializeDataTable();
+    this.fetchAndPopulateUsers();
   }
 
-  initializeDataTable(): void {
-    // Verificar si el DataTable ya está inicializado y destruirlo si es necesario
-    if ($.fn.dataTable.isDataTable('#datatableGestionUser')) {
-      $('#datatableGestionUser').DataTable().destroy();
+  fetchAndPopulateUsers(): void {
+    this.adminService.getAuthorizedUsers().subscribe((users) => {
+      this.data = users; // Asignar los datos
+      console.log('Usuarios autorizados obtenidos:', this.data);
+
+      this.populateUserRoles(); // Llenar los roles
+
+      setTimeout(() => {
+        this.refreshDataTable(); // Refrescar DataTable después de que los datos estén listos
+      }, 500);
+    });
+  }
+
+  populateUserRoles(): void {
+    this.data.forEach((user) => {
+      user.rol = user.role.roleType;
+
+      if (user.rol === 'VOLUNTARIO') {
+        this.volunteerService.getVolunteerDetails(user.id).subscribe((volunteerDetails) => {
+          user.personalInformation = volunteerDetails.personalInformation;
+          user.emergencyInformation = volunteerDetails.emergencyInformation;
+          user.volunteeringInformation = volunteerDetails.volunteeringInformation;
+          user.Cedula = volunteerDetails.personalInformation.identificationCard;
+        });
+      } else if (user.rol === 'ORGANIZACION') {
+        this.organizationService.getOrganizationDetails(user.id).subscribe((organizationDetails) => {
+          user.responsiblePersonId = organizationDetails.responsiblePersonId;
+          user.responsiblePersonPhoneNumber = organizationDetails.responsiblePersonPhoneNumber;
+          user.organizationName = organizationDetails.organizationName;
+          user.organizationTypeEnum = organizationDetails.organizationTypeEnum;
+          user.sectorTypeEnum = organizationDetails.sectorTypeEnum;
+          user.volunteeringTypeEnum = organizationDetails.volunteeringTypeEnum;
+          user.address = organizationDetails.address;
+          user.nit = organizationDetails.nit;
+          user.Cedula = organizationDetails.responsiblePersonId;
+        });
+      }
+    });
+
+    // Refrescar DataTable después de cargar los roles
+    setTimeout(() => {
+      this.refreshDataTable();
+    }, 500);
+  }
+
+  refreshDataTable(): void {
+    const tableId = '#datatableUsuariosActivos';
+
+    // Destruye el DataTable si ya existe
+    if ($.fn.dataTable.isDataTable(tableId)) {
+      $(tableId).DataTable().clear().destroy();
     }
 
-    // Inicializar el DataTable con un ligero retraso para asegurarse de que los datos se hayan renderizado
+    // Vuelve a crear el DataTable después de un pequeño retardo para asegurar que los datos estén listos
     setTimeout(() => {
-      $('#datatableGestionUser').DataTable({
+      $(tableId).DataTable({
         pagingType: 'full_numbers',
         pageLength: 5,
         processing: true,
@@ -62,11 +89,12 @@ export class UsuariosActivosComponent {
           infoEmpty: '<span style="font-size: 0.875rem;">No hay registros</span>',
           infoFiltered: '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
           lengthMenu: '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
-          zeroRecords: '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
+          zeroRecords: '<span style="font-size: 0.875rem;">No se encontró ningún registro</span>',
         },
       });
-    }, 100); // Ajustar el tiempo de retraso si es necesario
+    }, 100); // Ajusta el tiempo de retraso si es necesario
   }
+
 
 
   openModal(user: any) {
