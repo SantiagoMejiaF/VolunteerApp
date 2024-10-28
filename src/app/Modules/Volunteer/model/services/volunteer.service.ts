@@ -45,4 +45,26 @@ export class VolunteerService {
   updateVolunteer(id: number, volunteerData: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/volunteers/${id}`, volunteerData, cabecera);
   }
+
+  getCompletedActivities(userId: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/activities/volunteer/${userId}/completed`);
+  }
+
+  // Método para obtener la puntuación promedio
+  getAverageRating(userId: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/activities/volunteer/${userId}/rating`);
+  }
+
+  // Método para obtener los beneficiarios impactados
+  getBeneficiaries(userId: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/activities/volunteer/${userId}/beneficiaries`);
+  }
+
+  getActivitiesByVolunteerId(volunteerId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/activities/volunteer/${volunteerId}`);
+  }
+
+  getVolunteerFoundations(volunteerId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/volunteers-dashboard/foundations/${volunteerId}`);
+  }
 }

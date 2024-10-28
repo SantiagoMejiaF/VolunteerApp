@@ -1,8 +1,5 @@
 <div class="container mt-5">
-
-    <!-- Mostrar el calendario si `showCalendar` es true -->
     <div>
-
         <div class="row">
             <div class="col">
                 <div class="column1">
@@ -26,17 +23,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let activity of data">
+                                <tr *ngFor="let activity of activities">
                                     <td class="text-left">{{ activity.id }}</td>
                                     <td>{{ activity.title }}</td>
-                                    <td class="text-left">{{ activity.startDate }}</td>
+                                    <td class="text-left">{{ activity.date }}</td>
                                     <td>{{ activity.address }}</td>
                                     <td>
-                                        <span [ngClass]="getStatusClass(activity.status)">{{ activity.status }}</span>
+                                        <span [ngClass]="getStatusClass(activity.activityStatus)">
+                                            {{ activity.activityStatus }}
+                                        </span>
                                     </td>
                                     <td>
-                                        <a (click)="verDetalles(1)"
-                                            style="border: none; background: none;">
+                                        <a (click)="verDetalles(activity.id)" style="border: none; background: none;">
                                             <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
                                                 onmouseover="this.style.color='#186dde';"
                                                 onmouseout="this.style.color='#80777c';"></i>
@@ -50,8 +48,4 @@
             </div>
         </div>
     </div>
-
-    
 </div>
-
-

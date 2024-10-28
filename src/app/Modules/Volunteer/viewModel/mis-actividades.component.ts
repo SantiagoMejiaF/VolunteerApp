@@ -1,81 +1,63 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { VolunteerService } from '../model/services/volunteer.service';
 
 @Component({
   selector: 'app-mis-actividades',
   templateUrl: '../view/mis-actividades.component.html',
-  styleUrl: '../styles/mis-actividades.component.css'
+  styleUrls: ['../styles/mis-actividades.component.css']
 })
-export class MisActividadesComponent {
-  public data = [
-    {
-      id: 1,
-      title: 'Recogida de Basura',
-      startDate: '2024-10-25',
-      address: 'Calle 123, Ciudad Verde',
-      noVolunteers: 10,
-      status: 'DISPONIBLE',
-    },
-    {
-      id: 2,
-      title: 'Donación de Ropa',
-      startDate: '2024-11-01',
-      address: 'Av. Libertador, Plaza Mayor',
-      noVolunteers: 5,
-      status: 'COMPLETADO',
-    },
-    {
-      id: 3,
-      title: 'Convivencia en el Parque',
-      startDate: '2024-11-10',
-      address: 'Parque Central, Sector 4',
-      noVolunteers: 20,
-      status: 'APLAZADO',
-    },
-    {
-      id: 4,
-      title: 'Taller de Reciclaje',
-      startDate: '2024-11-15',
-      address: 'Centro Comunitario, Calle 45',
-      noVolunteers: 8,
-      status: 'PENDIENTE',
-    },
-    {
-      id: 5,
-      title: 'Plantación de Árboles',
-      startDate: '2024-11-20',
-      address: 'Calle Ecológica, Sector 3',
-      noVolunteers: 15,
-      status: 'COMPLETADO',
-    },
-    {
-      id: 6,
-      title: 'Campaña de Vacunación',
-      startDate: '2024-11-25',
-      address: 'Hospital Local, Av. San Martín',
-      noVolunteers: 12,
-      status: 'COMPLETADO',
-    },
-  ];
-  constructor(private router: Router ){}
+export class MisActividadesComponent implements OnInit, AfterViewInit {
+  public activities: any[] = []; // Variable para almacenar las actividades obtenidas
+  volunteerId!: number; // Variable para almacenar el ID del voluntario
+
+  constructor(
+    private router: Router,
+    private volunteerService: VolunteerService // Inyectar el servicio de voluntarios
+  ) { }
+
+  ngOnInit(): void {
+    this.volunteerId = Number(localStorage.getItem('volunteerId')); // Obtener el volunteerId del localStorage
+    if (this.volunteerId) {
+      this.loadActivities(this.volunteerId); // Cargar actividades del voluntario
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.initializeDataTable(); // Inicializar DataTable después de que la vista esté cargada
+  }
+
+  // Método para cargar actividades del voluntario
+  loadActivities(volunteerId: number): void {
+    this.volunteerService.getActivitiesByVolunteerId(volunteerId).subscribe(
+      (activities) => {
+        this.activities = activities; // Guardar las actividades obtenidas
+        this.initializeDataTable(); // Inicializar DataTable con las actividades
+      },
+      (error) => {
+        console.error('Error al obtener actividades:', error); // Manejar error
+      }
+    );
+  }
+
   getStatusClass(status: string): string {
+    // Método para obtener la clase CSS según el estado de la actividad
     switch (status) {
       case 'DISPONIBLE':
         return 'status-activo';
       case 'PENDIENTE':
         return 'status-pendiente';
-      case 'COMPLETADO':
-        return 'status-completado';
-      case 'APLAZADO':
-        return 'status-aplazado';
+      case 'COMPLETADA':
+        return 'status-completada';
+      case 'APLAZADA':
+        return 'status-aplazada';
       default:
         return '';
     }
   }
-  ngAfterViewInit(): void {
-    this.initializeDataTable();
-  }
+
   initializeDataTable(): void {
+    // Método para inicializar DataTable
     if ($.fn.dataTable.isDataTable('#datatableActividadesO')) {
       $('#datatableActividadesO').DataTable().destroy();
     }
@@ -98,13 +80,9 @@ export class MisActividadesComponent {
     }, 1);
   }
 
-  verDetalles(index: number | undefined) {
-    const validIndex = index ?? 1;
-    const imagenId = (validIndex % 6) + 1;
-    
-    // Navegar a la ruta con el parámetro que indica el origen
-    this.router.navigate(['/actividad', validIndex, `card${imagenId}.svg`, { fromMisActividades: true }], { queryParams: { from: 'misA' } });
+  verDetalles(id: number): void {
+    // Método para ver los detalles de una actividad
+    const imagenId = (id % 6) + 1;
+    this.router.navigate(['/actividad', id, `card${imagenId}.svg`, { fromMisActividades: true }], { queryParams: { from: 'misA' } });
   }
-
-   
 }

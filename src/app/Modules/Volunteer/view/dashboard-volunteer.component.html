@@ -1,6 +1,6 @@
 <div class="container">
-    <div class="row  h-100">
-        <div class="col-12 col-lg-8  h-100  " id="Grande1">
+    <div class="row h-100">
+        <div class="col-12 col-lg-8 h-100" id="Grande1">
             <div class="container pl-0">
                 <!-- Contenido del primer div -->
                 <div class="row">
@@ -8,9 +8,9 @@
                         <div class="row">
                             <div class="col" id="texto">
                                 <h2>¡Hola!</h2>
-                                <p>Este es tu espacio para gestionar tus actividades y logros. Aquí podrás ver un resumen de tus horas dedicadas, los logros alcanzados y las actividades programadas ¡Gracias por ser parte
-                                    de
-                                    nuestra comunidad!</p>
+                                <p>Este es tu espacio para gestionar tus actividades y logros. Aquí podrás ver un
+                                    resumen de tus horas dedicadas, los logros alcanzados y las actividades programadas.
+                                    ¡Gracias por ser parte de nuestra comunidad!</p>
                             </div>
                             <div class="col" id="imagen-col">
                                 <img src="assets/img/manLaptop.png" alt="">
@@ -18,29 +18,32 @@
                         </div>
                     </div>
                 </div>
+                <!-- Estadísticas -->
                 <div class="row">
                     <div class="col-12 col-lg-4 h-100 mb-4" id="Users">
                         <div class="card-container">
                             <i class="bi bi-people-fill" style="font-size: 2rem; color: #ffffff;"></i>
-                            <h3 class="mt-4">1000</h3>
+                            <h3 class="mt-4">{{ completedActivities }}</h3>
                             <p>Actividades Completadas</p>
                         </div>
                     </div>
                     <div class="col-12 col-lg-4 h-100 mb-4" id="Volunteer">
                         <div class="card-container">
                             <i class="bi bi-person-heart" style="font-size: 2rem; color: #000000;"></i>
-                            <h3 class="mt-4">1000</h3>
-                            <p>Logros <br> Obtenidos</p>
+                            <h3 class="mt-4">{{ averageRating }}</h3>
+                            <p>Puntuación <br> Promedio</p>
                         </div>
                     </div>
                     <div class="col-12 col-lg-4 h-100 mb-4" id="Organization">
                         <div class="card-container">
                             <i class="bi bi-building-fill-check" style="font-size: 2rem; color: #ffffff;"></i>
-                            <h3 class="mt-4">1000</h3>
+                            <h3 class="mt-4">{{ beneficiariesImpacted }}</h3>
                             <p>Beneficiarios <br> impactados</p>
                         </div>
                     </div>
                 </div>
+
+                <!-- Gráfico -->
                 <div class="row">
                     <div class="col tittle" id="table-container">
                         <div class="row align-items-center">
@@ -60,7 +63,6 @@
                                     </ul>
                                 </div>
                             </div>
-
                         </div>
                         <div class="row align-items-center">
                             <div class="col">
@@ -74,15 +76,12 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
         <!-- Segundo div -->
-        <div class="col-12 col-lg-4  h-100 " id="Grande2">
-
+        <div class="col-12 col-lg-4 h-100" id="Grande2">
             <h2 class="mb-4">Actividades programadas</h2>
             <div class="card1 flex-grow-1" id="card">
-                <!-- Contenido del segundo div -->
                 <div class="card-header text-center">
                     <div class="d-flex justify-content-between align-items-center">
                         <button class="btn custom-btn" (click)="prevMonth()">&lt;</button>
@@ -90,7 +89,6 @@
                         <button class="btn custom-btn" (click)="nextMonth()">&gt;</button>
                     </div>
                 </div>
-
                 <div class="card-body">
                     <div class="row text-center">
                         <div class="col" id="dia">Do</div>
@@ -101,7 +99,6 @@
                         <div class="col" id="dia">Vi</div>
                         <div class="col" id="dia">Sa</div>
                     </div>
-
                     <div class="row text-center" *ngFor="let week of calendarDays">
                         <div *ngFor="let day of week" class="col" [class.bg-primary]="isToday(day)"
                             (click)="selectDay(day)">
@@ -109,12 +106,11 @@
                             <span *ngIf="hasActivities(day)" class="activity-dot"></span>
                         </div>
                     </div>
-
                     <div class="mt-3">
                         <p id="texti">Actividades para {{ selectedDate | date:'EEEE, dd MMMM yyyy' }}</p>
                         <ul class="list-group">
-                            @for (activity of filteredActivities(); track activity.id) {
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <li *ngFor="let activity of filteredActivities()"
+                                class="list-group-item d-flex justify-content-between align-items-start">
                                 <div style="display: flex; align-items: center;">
                                     <div>
                                         <strong class="text-dark" style="font-size: 16px;">{{ activity.time }}</strong>
@@ -128,8 +124,8 @@
                                     </div>
                                 </div>
                             </li>
-                            } @empty {
-                            <li class="list-group-item" style="font-size: 16px;">
+                            <li *ngIf="filteredActivities().length === 0" class="list-group-item"
+                                style="font-size: 16px;">
                                 <div style="display: flex; align-items: center;">
                                     <div>
                                         <i class="bi bi-emoji-frown" style="font-size: 1.5rem;"></i>
@@ -142,17 +138,14 @@
                                     </div>
                                 </div>
                             </li>
-                            }
                         </ul>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 
-   
+    <!-- Fundaciones inscritas -->
     <div class="row">
         <div class="col tittle" id="recentCustomers">
             <div class="cardHeader mb-2 d-flex justify-content-between align-items-center">
@@ -190,7 +183,6 @@
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
 </div>

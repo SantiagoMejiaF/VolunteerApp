@@ -6,6 +6,7 @@ import { TokenService } from '../model/services/token.service';
 import { OrganizationService } from '../../Organization/model/services/organization.service';
 import { TokenDto } from '../model/token-dto';
 import { HttpClient } from '@angular/common/http';
+import { VolunteerService } from '../../Volunteer/model/services/volunteer.service';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
     private oauthService: OauthService,
     private tokenService: TokenService,
     private organizationService: OrganizationService,
+    private volunteerService: VolunteerService,
     private http: HttpClient
   ) { }
 
@@ -117,9 +119,20 @@ export class LoginComponent implements OnInit {
         if (authorizationType === 'PENDIENTE') {
           this.loadPendingMessage();
         } else if (authorizationType === 'AUTORIZADO') {
-          this.router.navigate(['/dashVolunteer']);
+          this.volunteerService.getVolunteerDetails(userId).subscribe(
+            (volunteerDetails) => {
+              console.log('VolunteerId:', volunteerDetails.id);
+              localStorage.setItem('volunteerId', volunteerDetails.id.toString()); // Guardar el volunteerId en localStorage
+              this.router.navigate(['/dashVolunteer']);
+            },
+            (error) => {
+              console.error('Error al obtener los detalles del voluntario:', error);
+              this.logOut();
+            }
+          );
         }
         break;
+
       case 'ORGANIZACION':
         if (authorizationType === 'PENDIENTE') {
           this.loadPendingMessage();
