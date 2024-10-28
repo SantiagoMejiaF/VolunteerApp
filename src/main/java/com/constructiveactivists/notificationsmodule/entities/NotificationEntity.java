@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-
 @Getter
 @Setter
 @Entity
@@ -30,4 +29,3 @@ public class NotificationEntity {
     @Column(name = "USUARIO_ID", nullable = false)
     private Integer userId;
 }
-
