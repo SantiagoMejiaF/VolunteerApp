@@ -25,6 +25,14 @@ export class AdminService {
     return this.httpClient.get<any[]>(`${this.apiUrl}/users/pending`, cabecera);
   }
 
+  public getVolunteersCountByMonth(year: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.apiUrl}/volunteers-dashboard/volunteers-count-by-month/${year}`, cabecera);
+  }
+
+  public getOrganizationsCountByMonth(year: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.apiUrl}/organizations-dashboard/organizations-count-by-month/${year}`, cabecera);
+  }
+
   public sendApprovalEmail(userId: number, approved: boolean): Observable<any> {
     return this.httpClient.post(
       `${this.apiUrl}/users/${userId}/send-approval-or-rejection-email?userId=${userId}&approved=${approved}`,

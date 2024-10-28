@@ -48,20 +48,15 @@
         <div class="col h-100">
             <div class="table-container">
                 <div class="row align-items-center">
-                    <div class="col-3 mt-4 ml-5 ">
+                    <div class="col-3 mt-4 ml-5">
                         <h2>Estadísticas</h2>
                     </div>
                     <div class="col-3 mt-4 ml-4" id="drop">
                         <div class="dropdown">
-                            <button class="btn  dropdown-toggle border" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Selecciona el año
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">2024</a></li>
-                                <li><a class="dropdown-item" href="#">2025</a></li>
-                                <li><a class="dropdown-item" href="#">2026</a></li>
-                            </ul>
+                            <!-- Aquí se genera el dropdown dinámicamente con los años -->
+                            <select class="form-control" (change)="onYearChange($event)" [(ngModel)]="selectedYear">
+                                <option *ngFor="let year of yearRange" [value]="year">{{ year }}</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -105,20 +100,17 @@
                                     <td>{{ user.id }}</td>
                                     <td width="60px">
                                         <div class="imgBx">
-                                            <!-- Asegurarse de que haya una imagen por defecto -->
                                             <img [src]="user.image ? user.image : 'assets/img/user2.png'" alt="Perfil"
                                                 (error)="user.image='assets/img/user3.png'"
                                                 style="width:50px; height:50px; border-radius:50%;">
                                         </div>
                                     </td>
-                                    <!-- Asegurarse de que los campos 'firstName' y 'lastName' existan, o usar 'name' -->
                                     <td>{{ user.firstName ? (user.firstName + ' ' + user.lastName) : user.name }}</td>
                                     <td>{{ user.rol }}</td>
                                     <td>{{ user.email }}</td>
                                     <td>{{ user.cedula }}</td>
                                 </tr>
                             </tbody>
-
                         </table>
                     </div>
                 </div>

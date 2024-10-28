@@ -32,7 +32,7 @@ export type ChartOptions = {
 };
 
 @Component({
-  selector: 'app-dash-borrar',
+  selector: 'app-dashboard-admin',
   templateUrl: '../view/dashboardAdmin.component.html',
   styleUrls: ['../styles/dashboardAdmin.component.css'],
 })
@@ -45,24 +45,17 @@ export class DashboardAdminComponent implements OnInit {
   public activeOrganizations: number = 0;
   public data: any[] = [];
 
+  // Nuevo para el dropdown de años
+  public selectedYear: number;
+  public yearRange: number[] = [];
+
   constructor(
     private adminService: AdminService,
     private volunteerService: VolunteerService,
     private organizationService: OrganizationService
   ) {
     this.chartOptions = {
-      series: [
-        {
-          name: 'Voluntarios',
-          data: [44, 55, 41, 37, 22, 43, 21],
-          color: "#fb9778"
-        },
-        {
-          name: 'Organizaciones',
-          data: [53, 32, 33, 52, 13, 43, 32],
-          color: "#06C9D7"
-        },
-      ],
+      series: [],
       chart: {
         type: 'bar',
         height: 350,
@@ -77,26 +70,22 @@ export class DashboardAdminComponent implements OnInit {
         width: 1,
         colors: ['#fff'],
       },
-      title: {
-        text: '',
-      },
       xaxis: {
-        categories: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dic'],
-        labels: {
-          formatter: function (val) {
-            return val;
-          },
+        title: {
+          text: 'Cantidad',
         },
+        categories: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
       },
       yaxis: {
-        title: {
-          text: undefined,
-        },
+      },
+      title: {
+        text: 'Voluntarios y Organizaciones por Mes',
+        align: 'center',
       },
       tooltip: {
         y: {
           formatter: function (val) {
-            return val + 'K';
+            return val.toString();
           },
         },
       },
@@ -112,9 +101,18 @@ export class DashboardAdminComponent implements OnInit {
         enabled: false,
       },
     };
+
+    // Definir el año actual como predeterminado
+    this.selectedYear = new Date().getFullYear();
   }
 
   ngOnInit(): void {
+    // Calcular el rango de años: 3 años antes y 3 años después
+    this.calculateYearRange();
+
+    // Cargar datos iniciales para el año predeterminado
+    this.loadChartData(this.selectedYear);
+
     // Obtener los datos del usuario desde localStorage
     const userInfo = JSON.parse(localStorage.getItem('userInfo')!);
     if (userInfo) {
@@ -145,6 +143,45 @@ export class DashboardAdminComponent implements OnInit {
         this.initializeDataTable();
       });
     });
+  }
+
+  // Calcular el rango de años
+  calculateYearRange() {
+    const currentYear = new Date().getFullYear();
+    const startYear = currentYear - 3;
+    const endYear = currentYear + 3;
+    this.yearRange = Array.from({ length: endYear - startYear + 1 }, (_, i) => startYear + i);
+  }
+
+  // Cargar datos para el gráfico según el año seleccionado
+  loadChartData(year: number): void {
+    this.adminService.getVolunteersCountByMonth(year).subscribe((volunteerData) => {
+      this.adminService.getOrganizationsCountByMonth(year).subscribe((organizationData) => {
+        // Asegúrate de que los datos sean solo números
+        const volunteerSeries = Object.values(volunteerData).map(val => Number(val));
+        const organizationSeries = Object.values(organizationData).map(val => Number(val));
+
+        // Actualizar el gráfico con los datos dinámicos
+        this.chartOptions.series = [
+          {
+            name: 'Voluntarios',
+            data: volunteerSeries,
+            color: "#fb9778"
+          },
+          {
+            name: 'Organizaciones',
+            data: organizationSeries,
+            color: "#06C9D7"
+          }
+        ];
+      });
+    });
+  }
+
+  // Llamado cuando el usuario selecciona un año
+  onYearChange(event: any): void {
+    this.selectedYear = event.target.value;  // Actualizar el año seleccionado
+    this.loadChartData(this.selectedYear);   // Cargar los datos correspondientes al nuevo año
   }
 
   populateUserRoles(): Promise<void> {
@@ -198,7 +235,6 @@ export class DashboardAdminComponent implements OnInit {
             title: "Perfil",
             data: null,
             render: (data, type, row) => {
-              // Ajustamos la lógica para mostrar la imagen de perfil, si no hay usamos la imagen por defecto
               return `<img src="${data.image || 'assets/img/user2.png'}" alt="Perfil" 
                 style="width:50px; height:50px; border-radius:50%;" 
                 onerror="this.src='assets/img/user3.png'"/>`;
@@ -206,7 +242,6 @@ export class DashboardAdminComponent implements OnInit {
           },
           {
             title: "Nombre",
-            // Combinar firstName y lastName si existen, o usar un campo alternativo como organizationName
             data: null,
             render: (data, type, row) => {
               return data.firstName ? `${data.firstName} ${data.lastName}` : data.organizationName || "Sin nombre";

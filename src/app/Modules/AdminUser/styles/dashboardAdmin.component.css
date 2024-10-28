@@ -1,63 +1,88 @@
+h1 {
+  font-weight: bold;
+  color: #ED4B4B;
+}
 
-h1{
-    font-weight: bold;
-    color: #ED4B4B;
+.tittle {
+  background-color: white;
+  /* Fondo blanco */
+  border-radius: 20px;
+  /* Bordes redondeados */
+  padding: 20px;
+  /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Sombra para darle profundidad */
+  margin-bottom: 20px;
+
 }
-.tittle{
-    background-color: white; /* Fondo blanco */
-  border-radius: 20px; /* Bordes redondeados */
-  padding: 20px; /* Espaciado interno */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
-  margin-bottom:20px;
- 
-}
+
 .table-container {
-  background-color: white; /* Fondo blanco */
-  border-radius: 20px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  background-color: white;
+  /* Fondo blanco */
+  border-radius: 20px;
+  /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Sombra para darle profundidad */
 }
-.userApp{
-    background-color: white; /* Fondo blanco */
-  border-radius: 20px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+
+.userApp {
+  background-color: white;
+  /* Fondo blanco */
+  border-radius: 20px;
+  /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Sombra para darle profundidad */
 }
 
 
 #header .card-container {
-    flex: 1;
-    background-color: white; /* Fondo blanco */
-    border-radius: 20px; /* Bordes redondeados */
-    padding: 20px; /* Espaciado interno */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  flex: 1;
+  background-color: white;
+  /* Fondo blanco */
+  border-radius: 20px;
+  /* Bordes redondeados */
+  padding: 20px;
+  /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Sombra para darle profundidad */
 }
+
 #header .cards {
-    background-color: white; /* Fondo blanco */
-    border-radius: 20px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  background-color: white;
+  /* Fondo blanco */
+  border-radius: 20px;
+  /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Sombra para darle profundidad */
 }
-#header img{
-    height: 200px;
-    width: auto;
+
+#header img {
+  height: 200px;
+  width: auto;
 }
 
 #header .card-container p {
-    font-weight: 400;  
-    font-size: 18px;  
-    color: #F9F7F6;
+  font-weight: 400;
+  font-size: 18px;
+  color: #F9F7F6;
 }
+
 #header h3 {
-    font-weight: 600;
-    font-size: 25px;
-    color: #F9F7F6;
+  font-weight: 600;
+  font-size: 25px;
+  color: #F9F7F6;
 }
-#texto{
-    padding: 20px;
-    margin-left: 20px;
+
+#texto {
+  padding: 20px;
+  margin-left: 20px;
 }
+
 h2 {
   font-weight: 600;
   font-size: 20px;
 }
+
 p {
   font-weight: 400;
   font-size: 14px;
@@ -65,164 +90,198 @@ p {
 
 #Users .card-container {
   background: #03A3AE;
-    background-size: cover; /* Llena todo el contenedor */
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 100%;
+  background-size: cover;
+  /* Llena todo el contenedor */
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
 }
+
 #Volunteer .card-container {
   background-image: url("/assets/img/4.svg");
-    background-size: cover; /* Llena todo el contenedor */
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 100%;
+  background-size: cover;
+  /* Llena todo el contenedor */
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
 }
+
 #Organization .card-container {
   background: #FB9778;
-    background-size: cover; /* Llena todo el contenedor */
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 100%;
+  background-size: cover;
+  /* Llena todo el contenedor */
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
 }
+
 #Volunteer .card-container p {
-  font-weight: 600;  
-  font-size: 18px;  
+  font-weight: 600;
+  font-size: 18px;
   color: black;
 }
-#Volunteer .card-container h3{
+
+#Volunteer .card-container h3 {
   color: black;
 }
- .head p {
-    font-weight: 600;
-    color: #b3abb4;
-  }
+
+.head p {
+  font-weight: 600;
+  color: #b3abb4;
+}
+
 .organization i {
-    background: rgba(237, 75, 75, 0.24);
-    padding: 0.5rem;
-    border-radius: 50%;
-    color: white;
-    font-size: 2rem;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 3.5rem; /* Ajusta el tamaño si es necesario */
-    height: 3.5rem; /* Ajusta el tamaño si es necesario */
+  background: rgba(237, 75, 75, 0.24);
+  padding: 0.5rem;
+  border-radius: 50%;
+  color: white;
+  font-size: 2rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 3.5rem;
+  /* Ajusta el tamaño si es necesario */
+  height: 3.5rem;
+  /* Ajusta el tamaño si es necesario */
 }
+
 .volunteer i {
-    background:rgba(239, 201, 64, 0.29);
-    padding: 0.5rem;
-    border-radius: 50%;
-    color: white;
-    font-size: 2rem;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 3.5rem; /* Ajusta el tamaño si es necesario */
-    height: 3.5rem; /* Ajusta el tamaño si es necesario */
+  background: rgba(239, 201, 64, 0.29);
+  padding: 0.5rem;
+  border-radius: 50%;
+  color: white;
+  font-size: 2rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 3.5rem;
+  /* Ajusta el tamaño si es necesario */
+  height: 3.5rem;
+  /* Ajusta el tamaño si es necesario */
 }
 
 .Users i {
-    background:rgba(30, 20, 80, 0.5);
-    padding: 0.5rem;
-    border-radius: 50%;
-    color: white;
-    font-size: 2rem;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 3.5rem; /* Ajusta el tamaño si es necesario */
-    height: 3.5rem; /* Ajusta el tamaño si es necesario */
+  background: rgba(30, 20, 80, 0.5);
+  padding: 0.5rem;
+  border-radius: 50%;
+  color: white;
+  font-size: 2rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 3.5rem;
+  /* Ajusta el tamaño si es necesario */
+  height: 3.5rem;
+  /* Ajusta el tamaño si es necesario */
 }
 
 .divider-container {
-    width: 100%;
-    overflow: hidden;
+  width: 100%;
+  overflow: hidden;
 }
 
 .divider-container hr {
-    border: 0;
-    height: 2px;
-    background-color: #1E1450;
-    width: 100%;
-    margin: 0;
+  border: 0;
+  height: 2px;
+  background-color: #1E1450;
+  width: 100%;
+  margin: 0;
 }
 
 .recentCustomers {
-    position: relative;
-    display: grid;
-    min-height: 500px;
-    background-color: transparent;
-    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
-    border-radius: 10px;
-  }
-  #recentCustomers .imgBx {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    border-radius: 50px;
-    overflow: hidden;
-  }
-  #recentCustomers .imgBx img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  #recentCustomers table tr td {
-    padding: 12px 10px;
-  }
-  #recentCustomers table tr td h4, #recentCustomers table tr td {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.2rem;
-  }
-  #recentCustomers table tr th {
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1.2rem;
-  }
-  #datatableexample table tr td h4 span {
-    font-size: 14px;
-    color: var(--black2);
-  }
-  #datatableexample table tr:hover {
-    background: var(--blue);
-    color: var(--white);
-  }
-  #datatableexample table tr:hover td h4 span {
-    color: var(--white);
-  }
-
-  
-
-  @media (max-width: 1200px) {
-    #Users, #Volunteer, #Organization {
-        margin-top: 20px;
-        width: 100%;
-    }
-    #img2 {
-      display: none;
-    }
+  position: relative;
+  display: grid;
+  min-height: 500px;
+  background-color: transparent;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
 }
-    
+
+#recentCustomers .imgBx {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+#recentCustomers .imgBx img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#recentCustomers table tr td {
+  padding: 12px 10px;
+}
+
+#recentCustomers table tr td h4,
+#recentCustomers table tr td {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2rem;
+}
+
+#recentCustomers table tr th {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2rem;
+}
+
+#datatableexample table tr td h4 span {
+  font-size: 14px;
+  color: var(--black2);
+}
+
+#datatableexample table tr:hover {
+  background: var(--blue);
+  color: var(--white);
+}
+
+#datatableexample table tr:hover td h4 span {
+  color: var(--white);
+}
+
+
+
+@media (max-width: 1200px) {
+
+  #Users,
+  #Volunteer,
+  #Organization {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  #img2 {
+    display: none;
+  }
+}
+
 @media (max-width: 608px) {
   #imagen-col {
-      display: none;
+    display: none;
   }
+
   /* Asegura que #drop se convierta en una nueva columna y ocupe todo el ancho */
   #drop {
-    flex: 0 0 100%; /* Ocupa el 100% del ancho */
-    max-width: 100%; /* Asegura que no se contraiga más allá del 100% */
-    margin-left: 0; /* Elimina el margen izquierdo */
-    margin-top: 20px; /* Añade un margen superior para separarlo del contenido anterior */
+    flex: 0 0 100%;
+    /* Ocupa el 100% del ancho */
+    max-width: 100%;
+    /* Asegura que no se contraiga más allá del 100% */
+    margin-left: 0;
+    /* Elimina el margen izquierdo */
+    margin-top: 20px;
+    /* Añade un margen superior para separarlo del contenido anterior */
   }
 }
 
 @media (max-width: 410px) {
-  .tittle h1{
-    font-size:30px;
+  .tittle h1 {
+    font-size: 30px;
   }
 }
 
@@ -236,5 +295,3 @@ p {
 }
 }
 */
-
-
