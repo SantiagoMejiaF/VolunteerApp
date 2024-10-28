@@ -67,4 +67,17 @@ export class VolunteerService {
   getVolunteerFoundations(volunteerId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/volunteers-dashboard/foundations/${volunteerId}`);
   }
+
+  getMatchingOrganizations(volunteerId: number, numberOfMatches: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/volunteers/${volunteerId}/match-organizations?numberOfMatches=${numberOfMatches}`);
+  }
+
+  joinOrganization(volunteerId: number, organizationId: number): Observable<any> {
+    const body = {
+      volunteerId: volunteerId,
+      organizationId: organizationId
+    };
+
+    return this.http.post<any>(`${this.apiUrl}/volunteers-organizations/pending`, body, cabecera);
+  }
 }

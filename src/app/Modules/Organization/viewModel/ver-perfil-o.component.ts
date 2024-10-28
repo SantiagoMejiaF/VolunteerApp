@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrganizationService } from '../model/services/organization.service';
+import { VolunteerService } from '../../Volunteer/model/services/volunteer.service';
 
 @Component({
   selector: 'app-ver-perfil-o',
@@ -16,17 +17,25 @@ export class VerPerfilOComponent implements OnInit {
   currentContent: string = 'content1';
   fromPage: string = 'misF';
   timelineData: any[] = [];
-  actividades: any[] = []; // Para almacenar las actividades de la organización
+  actividades: any[] = [];
+  volunteerId: number = 0; // ID del voluntario que se obtiene desde localStorage
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private organizationService: OrganizationService
+    private organizationService: OrganizationService,
+    private volunteerService: VolunteerService // Agregar el servicio de voluntarios
   ) { }
 
   ngOnInit(): void {
     const organizationId = this.route.snapshot.queryParams['id'];
+    this.fromPage = this.route.snapshot.queryParams['from'] || 'misF'; // Capturar correctamente `from` o establecer `misF`
     console.log('Organization ID recibido:', organizationId);
+    console.log('Página de origen:', this.fromPage);
+
+    // Obtener el volunteerId desde localStorage
+    const volunteerId = Number(localStorage.getItem('volunteerId'));
+    this.volunteerId = volunteerId;
 
     if (organizationId) {
       // Obtener los detalles de la organización
@@ -86,6 +95,8 @@ export class VerPerfilOComponent implements OnInit {
     }
   }
 
+
+
   showContent(contentId: string) {
     this.currentContent = contentId;
   }
@@ -99,9 +110,21 @@ export class VerPerfilOComponent implements OnInit {
     this.router.navigate([`/${this.fromPage}`]);
   }
 
+  // Método para enviar la solicitud para ser parte de la organización
   unirseF(event: Event) {
     event.preventDefault();
-    alert('Se ha enviado tu solicitud de forma exitosa');
+
+    // Enviar la solicitud de unión
+    this.volunteerService.joinOrganization(this.volunteerId, this.organizationData.id).subscribe(
+      (response) => {
+        alert('Se ha enviado tu solicitud de forma exitosa');
+        console.log('Solicitud enviada con éxito', response);
+      },
+      (error) => {
+        console.error('Error al enviar la solicitud', error);
+        alert('Ocurrió un error al enviar la solicitud.');
+      }
+    );
   }
 
   verDetalles(index: number) {
@@ -110,5 +133,4 @@ export class VerPerfilOComponent implements OnInit {
     // Aquí puedes navegar a una nueva página de detalles o mostrar más información
     // Ejemplo: this.router.navigate(['/actividad-detalle', actividad.id]);
   }
-
 }

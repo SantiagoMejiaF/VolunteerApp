@@ -11,9 +11,13 @@
           <h2 class="mt-1">Perfil Fundación {{ organizationData.organizationName }}</h2>
         </div>
 
-        <button id="Crear" (click)="unirseF($event)">
-          <i class="bi bi-plus-circle mr-2"></i>Quiero ser parte
-        </button>
+        <!-- Mostrar el botón "Quiero ser parte" solo si viene de home-voluntarios -->
+        <div *ngIf="fromPage === 'homeV'">
+          <button id="Crear" (click)="unirseF($event)">
+            <i class="bi bi-plus-circle mr-2"></i>Quiero ser parte
+          </button>
+        </div>
+
       </div>
     </div>
   </div>
