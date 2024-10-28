@@ -1,6 +1,7 @@
 package com.constructiveactivists.organizationmodule.services.organization;
 
 import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
+import com.constructiveactivists.notificationsmodule.services.NotificationService;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.services.UserService;
@@ -46,6 +47,9 @@ class VolunteerApprovalServiceTest {
 
     @Mock
     private PostulationService postulationService;
+
+    @Mock
+    private NotificationService notificationService;
 
     @InjectMocks
     private VolunteerApprovalService volunteerApprovalService;
@@ -93,6 +97,8 @@ class VolunteerApprovalServiceTest {
 
         verify(organizationService, times(1)).approveVolunteer(volunteerOrganization.getId());
         verify(mailSender, times(1)).send(any(MimeMessage.class));
+        verify(notificationService, times(1)).createNotification(volunteerUser.getId(), "Aprobación de Voluntario",
+                String.format("¡Felicidades, %s! Has sido aprobado por la organización %s.", "John", "Test Org"));
     }
 
     @Test
@@ -133,6 +139,8 @@ class VolunteerApprovalServiceTest {
 
         verify(organizationService, times(1)).rejectVolunteer(volunteerOrganization.getId());
         verify(mailSender, times(1)).send(any(MimeMessage.class));
+        verify(notificationService, times(1)).createNotification(volunteerUser.getId(), "Rechazo de Voluntario",
+                String.format("Lo sentimos, %s. Has sido rechazado por la organización %s.", "John", "Test Org"));
     }
 
     @Test
