@@ -30,11 +30,15 @@ export class DashboardVolunteerComponent implements AfterViewInit {
   @ViewChild('chart') chart: ChartComponent;
   public chartOptions: ChartOptions;
 
-  private y = 0;
+  // Rango de años para el dropdown
+  public selectedYear: number;
+  public yearRange: number[] = [];
+
   private userId: number;
   currentYear: number;
   currentMonth: number;
   selectedDate: Date;
+
   months: string[] = [
     'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
     'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
@@ -48,16 +52,20 @@ export class DashboardVolunteerComponent implements AfterViewInit {
 
   constructor(private volunteerService: VolunteerService) {
     const today = new Date();
+    this.selectedYear = today.getFullYear(); // Año actual
     this.currentYear = today.getFullYear();
     this.currentMonth = today.getMonth();
     this.selectedDate = today;
     this.userId = Number(localStorage.getItem('userId')); // Obtener el userId desde localStorage
+
+    this.generateYearRange();
     this.generateCalendar();
+
     this.chartOptions = {
       series: [
         {
           name: 'actividades completadas',
-          data: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110],
+          data: [], // Los datos se cargarán dinámicamente
           color: "#FF5733"
         },
       ],
@@ -83,8 +91,51 @@ export class DashboardVolunteerComponent implements AfterViewInit {
     this.loadDashboardData();
   }
 
+  // Generar el rango de años: 3 anteriores y 3 posteriores al año actual
+  generateYearRange() {
+    const currentYear = new Date().getFullYear();
+    const startYear = currentYear - 3;
+    const endYear = currentYear + 3;
+    this.yearRange = Array.from({ length: endYear - startYear + 1 }, (_, i) => startYear + i);
+  }
+
+  // Método para cargar los datos del gráfico basado en el año seleccionado
+  loadChartData(year: number) {
+    const volunteerId = Number(localStorage.getItem('volunteerId')); // Obtener el volunteerId desde localStorage
+    console.log('Volunteer ID:', volunteerId); // Comprobar que volunteerId es válido
+    this.volunteerService.getActivitiesByYear(volunteerId, year).subscribe(
+      (activityData) => {
+        const activitySeries = Object.values(activityData).map(val => Number(val));
+
+        // Actualizar el gráfico con los datos
+        this.chartOptions.series = [
+          {
+            name: 'Actividades',
+            data: activitySeries,
+            color: "#FF5733"
+          }
+        ];
+      },
+      (error) => {
+        console.error('Error al cargar los datos del gráfico', error);
+        // Ver detalles del error
+        console.error('Detalles del error:', error.message, error.status, error.url);
+      }
+    );
+  }
+
+
+
+  // Método llamado cuando el usuario cambia el año
+  onYearChange(event: any): void {
+    this.selectedYear = event.target.value;  // Actualizar el año seleccionado
+    this.loadChartData(this.selectedYear);   // Cargar los datos correspondientes al nuevo año
+  }
+
+  // Cargar los datos iniciales del dashboard
   loadDashboardData() {
-    // Obtener actividades completadas
+    this.loadChartData(this.selectedYear);
+
     this.volunteerService.getCompletedActivities(this.userId).subscribe(
       (data: number) => {
         this.completedActivities = data;
@@ -95,7 +146,6 @@ export class DashboardVolunteerComponent implements AfterViewInit {
       }
     );
 
-    // Obtener puntuación promedio
     this.volunteerService.getAverageRating(this.userId).subscribe(
       (data: number | null) => {
         this.averageRating = data ?? 0; // Si no hay datos, asignar 0
@@ -106,7 +156,6 @@ export class DashboardVolunteerComponent implements AfterViewInit {
       }
     );
 
-    // Obtener beneficiarios impactados
     this.volunteerService.getBeneficiaries(this.userId).subscribe(
       (data: number) => {
         this.beneficiariesImpacted = data;
@@ -117,7 +166,6 @@ export class DashboardVolunteerComponent implements AfterViewInit {
       }
     );
   }
-
 
   // Método para generar las fechas del mes
   generateCalendar() {

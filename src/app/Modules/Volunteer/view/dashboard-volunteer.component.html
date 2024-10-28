@@ -48,21 +48,17 @@
                     <div class="col tittle" id="table-container">
                         <div class="row align-items-center">
                             <div class="col-6">
-                                <h2>Actividades x Mes</h2>
+                                <h2>Actividades por Mes</h2>
                             </div>
                             <div class="col-2" id="drop">
                                 <div class="dropdown">
-                                    <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Selecciona el año
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">2024</a></li>
-                                        <li><a class="dropdown-item" href="#">2025</a></li>
-                                        <li><a class="dropdown-item" href="#">2026</a></li>
-                                    </ul>
+                                    <select class="form-control" (change)="onYearChange($event)"
+                                        [(ngModel)]="selectedYear">
+                                        <option *ngFor="let year of yearRange" [value]="year">{{ year }}</option>
+                                    </select>
                                 </div>
                             </div>
+
                         </div>
                         <div class="row align-items-center">
                             <div class="col">

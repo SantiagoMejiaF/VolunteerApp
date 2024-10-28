@@ -80,4 +80,9 @@ export class VolunteerService {
 
     return this.http.post<any>(`${this.apiUrl}/volunteers-organizations/pending`, body, cabecera);
   }
+
+  getActivitiesByYear(volunteerId: number, year: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/activities/volunteer/${volunteerId}/year/${year}`);
+  }
+
 }

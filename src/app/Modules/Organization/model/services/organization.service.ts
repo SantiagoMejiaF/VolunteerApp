@@ -69,4 +69,5 @@ export class OrganizationService {
   getOrganizationActivities(organizationId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/missions/organization/${organizationId}/activities`);
   }
+
 }
