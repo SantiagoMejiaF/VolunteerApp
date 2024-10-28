@@ -29,5 +29,4 @@ public class NotificationController implements NotificationAPI {
         List<NotificationEntity> notifications = notificationService.getMostRecentFiveNotificationsByUserId(userId);
         return ResponseEntity.ok(notifications);
     }
-
 }

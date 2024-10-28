@@ -242,24 +242,20 @@ class DashboardVolunteerServiceTest {
 
     @Test
     void testGetTenRecentVolunteers() {
-        // Crear una lista de voluntarios con fechas de registro
         List<VolunteerEntity> volunteers = new ArrayList<>();
 
-        // Voluntario más reciente
         VolunteerEntity volunteer1 = mock(VolunteerEntity.class);
         VolunteeringInformationEntity volunteeringInfo1 = mock(VolunteeringInformationEntity.class);
         when(volunteeringInfo1.getRegistrationDate()).thenReturn(LocalDate.of(2024, 10, 20).atStartOfDay());
         when(volunteer1.getVolunteeringInformation()).thenReturn(volunteeringInfo1);
         volunteers.add(volunteer1);
 
-        // Voluntario menos reciente
         VolunteerEntity volunteer2 = mock(VolunteerEntity.class);
         VolunteeringInformationEntity volunteeringInfo2 = mock(VolunteeringInformationEntity.class);
         when(volunteeringInfo2.getRegistrationDate()).thenReturn(LocalDate.of(2024, 10, 15).atStartOfDay());
         when(volunteer2.getVolunteeringInformation()).thenReturn(volunteeringInfo2);
         volunteers.add(volunteer2);
 
-        // Agregar más voluntarios con fechas de registro diferentes
         for (int i = 3; i <= 15; i++) {
             VolunteerEntity volunteer = mock(VolunteerEntity.class);
             VolunteeringInformationEntity volunteeringInfo = mock(VolunteeringInformationEntity.class);
@@ -268,16 +264,12 @@ class DashboardVolunteerServiceTest {
             volunteers.add(volunteer);
         }
 
-        // Configurar el comportamiento del mock de VolunteerService
         when(volunteerService.getAllVolunteers()).thenReturn(volunteers);
 
-        // Llamar al método que estamos probando
         List<VolunteerEntity> recentVolunteers = dashboardVolunteerService.getTenRecentVolunteers();
 
-        // Verificar el tamaño de la lista devuelta
         assertEquals(10, recentVolunteers.size(), "Should return 10 recent volunteers");
 
-        // Verificar que los voluntarios están ordenados por fecha de registro
         for (int i = 1; i < recentVolunteers.size(); i++) {
             LocalDate date1 = LocalDate.from(recentVolunteers.get(i - 1).getVolunteeringInformation().getRegistrationDate());
             LocalDate date2 = LocalDate.from(recentVolunteers.get(i).getVolunteeringInformation().getRegistrationDate());
@@ -290,7 +282,6 @@ class DashboardVolunteerServiceTest {
     void testGetVolunteersCountByMonth() {
         int year = 2024;
 
-        // Crear una lista de voluntarios con diferentes fechas de registro
         List<VolunteerEntity> volunteers = List.of(
                 createVolunteer(LocalDate.of(year, Month.JANUARY, 5)),
                 createVolunteer(LocalDate.of(year, Month.FEBRUARY, 10)),
@@ -301,22 +292,18 @@ class DashboardVolunteerServiceTest {
                 createVolunteer(LocalDate.of(year, Month.APRIL, 5))
         );
 
-        // Configurar el comportamiento del mock de VolunteerService
         when(volunteerService.getVolunteersByDateRange(
                 LocalDateTime.of(year, Month.JANUARY, 1, 0, 0),
                 LocalDateTime.of(year, Month.DECEMBER, 31, 23, 59, 59)))
                 .thenReturn(volunteers);
 
-        // Llamar al método que estamos probando
         Map<Month, Long> result = dashboardVolunteerService.getVolunteersCountByMonth(year);
 
-        // Verificar los conteos esperados
         assertEquals(2L, result.get(Month.JANUARY), "Should be 2 volunteers in January");
         assertEquals(1L, result.get(Month.FEBRUARY), "Should be 1 volunteer in February");
         assertEquals(3L, result.get(Month.MARCH), "Should be 3 volunteers in March");
         assertEquals(1L, result.get(Month.APRIL), "Should be 1 volunteer in April");
 
-        // Verificar que otros meses tienen un conteo de 0
         assertEquals(0L, result.get(Month.MAY), "Should be 0 volunteers in May");
         assertEquals(0L, result.get(Month.JUNE), "Should be 0 volunteers in June");
         assertEquals(0L, result.get(Month.JULY), "Should be 0 volunteers in July");
@@ -326,18 +313,17 @@ class DashboardVolunteerServiceTest {
         assertEquals(0L, result.get(Month.NOVEMBER), "Should be 0 volunteers in November");
         assertEquals(0L, result.get(Month.DECEMBER), "Should be 0 volunteers in December");
 
-        // Verificar que se llamó a getVolunteersByDateRange una vez
         verify(volunteerService, times(1)).getVolunteersByDateRange(
                 LocalDateTime.of(year, Month.JANUARY, 1, 0, 0),
                 LocalDateTime.of(year, Month.DECEMBER, 31, 23, 59, 59));
     }
 
     private VolunteerEntity createVolunteer(LocalDate registrationDate) {
-        VolunteerEntity volunteer = mock(VolunteerEntity.class);
+        VolunteerEntity volunteer1 = mock(VolunteerEntity.class);
         VolunteeringInformationEntity volunteeringInfo = mock(VolunteeringInformationEntity.class);
         when(volunteeringInfo.getRegistrationDate()).thenReturn(registrationDate.atStartOfDay());
-        when(volunteer.getVolunteeringInformation()).thenReturn(volunteeringInfo);
-        return volunteer;
+        when(volunteer1.getVolunteeringInformation()).thenReturn(volunteeringInfo);
+        return volunteer1;
     }
 
     @Test
@@ -348,8 +334,6 @@ class DashboardVolunteerServiceTest {
                 dashboardVolunteerService.getNextActivityForVolunteer(volunteerId));
         assertEquals("El voluntario con el ID 1 no existe en la base de datos.", exception.getMessage());
     }
-
-
 
     @Test
      void testGetNextActivityForVolunteer_NoOrganizations() {
@@ -373,7 +357,6 @@ class DashboardVolunteerServiceTest {
     @Test
      void testGetNextActivityForVolunteer_WithNextActivity() {
         Integer volunteerId = 1;
-        LocalDateTime now = LocalDateTime.now();
         when(volunteerService.getVolunteerById(volunteerId)).thenReturn(Optional.of(mock(VolunteerEntity.class)));
         VolunteerOrganizationEntity volunteerOrg = mock(VolunteerOrganizationEntity.class);
         when(volunteerOrg.getOrganizationId()).thenReturn(1);
@@ -405,6 +388,4 @@ class DashboardVolunteerServiceTest {
         ActivityEntity result = dashboardVolunteerService.getNextActivityForVolunteer(volunteerId);
         assertNull(result, "Should return null if there are no future activities");
     }
-
-
 }

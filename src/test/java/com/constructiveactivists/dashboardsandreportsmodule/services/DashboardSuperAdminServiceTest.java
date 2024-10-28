@@ -5,9 +5,7 @@ import com.constructiveactivists.missionandactivitymodule.services.activity.Acti
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.entities.enums.AuthorizationStatus;
 import com.constructiveactivists.usermodule.repositories.UserRepository;
-import com.constructiveactivists.volunteermodule.entities.volunteer.enums.OrganizationStatusEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.DataShareVolunteerOrganizationEntity;
-import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.DataShareVolunteerOrganizationService;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.PostulationService;
 import org.junit.jupiter.api.Test;

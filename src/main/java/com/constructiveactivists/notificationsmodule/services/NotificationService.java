@@ -25,7 +25,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static com.constructiveactivists.configurationmodule.constants.AppConstants.USER_NOT_FOUND;
 
@@ -58,7 +57,7 @@ public class NotificationService {
         return allNotifications.stream()
                 .sorted(Comparator.comparing(NotificationEntity::getCreationDate).reversed())
                 .limit(5)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public void  createNotification(Integer userId, String title, String description) {

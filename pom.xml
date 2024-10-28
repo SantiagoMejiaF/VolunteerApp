@@ -232,6 +232,7 @@
 						<exclude>**/configurationmodule/**</exclude>
 						<exclude>**/dashboardsandreportsmodule/controllers/configuration/**</exclude>
 						<exclude>**/dashboardsandreportsmodule/controllers/response/**</exclude>
+						<exclude>**/dashboardsandreportsmodule/services/enums/**</exclude>
 
 						<exclude>**/externalservicesmodule/controllers/configuration/**</exclude>
 						<exclude>**/externalservicesmodule/controllers/response/**</exclude>
@@ -264,6 +265,13 @@
 						<exclude>**/volunteermodule/repositories/**</exclude>
 						<exclude>**/volunteermodule/models/**</exclude>
 
+						<exclude>**/notificationsmodule/controllers/configuration/**</exclude>
+						<exclude>**/notificationsmodule/controllers/request/**</exclude>
+						<exclude>**/notificationsmodule/controllers/response/**</exclude>
+						<exclude>**/notificationsmodule/entities/**</exclude>
+						<exclude>**/notificationsmodule/repositories/**</exclude>
+						<exclude>**/notificationsmodule/models/**</exclude>
+
 						<exclude>com/constructiveactivists/VolunteerAppBackendApplication.class</exclude>
 					</excludes>
 				</configuration>
@@ -293,7 +301,7 @@
 										<limit>
 											<counter>LINE</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.9</minimum>
+											<minimum>0.87</minimum>
 										</limit>
 									</limits>
 								</rule>

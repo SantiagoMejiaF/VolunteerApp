@@ -421,7 +421,7 @@ class VolunteerOrganizationServiceTest {
     }
 
     @Test
-    public void testGetRecentOrganizationsByVolunteerId_NoVolunteerOrganizations() {
+    void testGetRecentOrganizationsByVolunteerId_NoVolunteerOrganizations() {
         Integer volunteerId = 1;
         when(volunteerOrganizationRepository.findByVolunteerId(volunteerId))
                 .thenReturn(Collections.emptyList());
@@ -430,7 +430,7 @@ class VolunteerOrganizationServiceTest {
     }
 
     @Test
-    public void testGetRecentOrganizationsByVolunteerId_NoRecentPostulations() {
+    void testGetRecentOrganizationsByVolunteerId_NoRecentPostulations() {
         Integer volunteerId = 1;
         VolunteerOrganizationEntity volunteerOrganization = new VolunteerOrganizationEntity();
         volunteerOrganization.setId(101);

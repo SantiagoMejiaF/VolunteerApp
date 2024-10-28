@@ -3,18 +3,19 @@ package com.constructiveactivists.missionandactivitymodule.services.activity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.repositories.ActivityRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class ActivityStatusService {
 
-    @Autowired
     private ActivityRepository activityRepository;
+
     @Scheduled(fixedRate = 60000)
     public void updateActivityStatus() {
         LocalDateTime now = LocalDateTime.now();

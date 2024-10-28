@@ -2,7 +2,6 @@ package com.constructiveactivists.dashboardsandreportsmodule.controllers;
 
 import com.constructiveactivists.dashboardsandreportsmodule.services.DashboardSuperAdminService;
 import com.constructiveactivists.usermodule.entities.UserEntity;
-import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
