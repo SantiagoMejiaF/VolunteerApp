@@ -70,4 +70,23 @@ export class OrganizationService {
     return this.http.get<any[]>(`${this.apiUrl}/missions/organization/${organizationId}/activities`);
   }
 
+  getCompletedMissionsCount(orgId: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/organizations-dashboard/completed-missions-count-by-organization/${orgId}`);
+  }
+
+  getTotalBeneficiariesImpacted(orgId: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/organizations-dashboard/total-beneficiaries-impacted-by-organization/${orgId}`);
+  }
+
+  getVolunteerAvailabilityCount(orgId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/organizations-dashboard/volunteer-availability-count-by-organization/${orgId}`);
+  }
+
+  getSkillCounts(orgId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/organizations-dashboard/skill-counts-by-organization/${orgId}`);
+  }
+
+  getActivitiesCountByYear(orgId: number, year: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/organizations-dashboard/activities-count-by-organization-and-year?organizationId=${orgId}&year=${year}`);
+  }
 }
