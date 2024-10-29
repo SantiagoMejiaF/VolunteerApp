@@ -6,6 +6,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { ActivityService } from '../../Coordinators/model/services/activity.service';
 import { ActivatedRoute } from '@angular/router';
 import { OrganizationService } from '../../Organization/model/services/organization.service';
+import { MissionsService } from '../../Misiones/model/services/mission.service';
 
 @Component({
   selector: 'app-calendar-a',
@@ -18,6 +19,7 @@ export class CalendarAComponent implements AfterViewInit, OnInit {
   missionForm: FormGroup;
   calendarOptions: CalendarOptions;
   isEditing = false;
+  selectedActivity: any = null;
   missionId: number | null = null; // Id de la misión obtenido
   coordinators: any[] = []; // Lista de coordinadores
 
@@ -25,7 +27,8 @@ export class CalendarAComponent implements AfterViewInit, OnInit {
     private fb: FormBuilder,
     private activityService: ActivityService,
     private route: ActivatedRoute,
-    private organizationService: OrganizationService
+    private organizationService: OrganizationService,
+    private missionsService: MissionsService
   ) {
     this.setCalendarOptions();
     window.addEventListener('resize', this.setCalendarOptions.bind(this));
@@ -53,7 +56,7 @@ export class CalendarAComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    
+
     // Obtener missionId desde query params
     this.route.queryParams.subscribe(params => {
       this.missionId = +params['id']; // Convertir el parámetro en número
@@ -111,7 +114,8 @@ export class CalendarAComponent implements AfterViewInit, OnInit {
             description: activity.description,
             extendedProps: {
               city: activity.city,
-              address: activity.address
+              address: activity.address,
+              activityId: activity.id
             }
           }));
           this.calendarEvents = events; // Asignar los eventos al calendario
@@ -220,9 +224,57 @@ export class CalendarAComponent implements AfterViewInit, OnInit {
   }
 
   handleEventClick(info: any) {
-    console.log('Evento seleccionado:', info.event);
-    this.showCalendar = false;
+    const activityId = info.event.extendedProps.activityId; // Asegúrate de que el activityId se pase en los eventos
+    console.log('Activity ID:', activityId);
+
+    if (activityId) {
+      this.activityService.getActivityById(activityId).subscribe(
+        (activityDetails) => {
+          this.selectedActivity = activityDetails;
+          this.showCalendar = false;
+
+          if (activityDetails.activityCoordinator) {
+            this.loadCoordinatorDetails(this.selectedActivity);
+          }
+        },
+        (error) => {
+          console.error('Error al obtener los detalles de la actividad', error);
+        }
+      );
+    } else {
+      console.error('Activity ID is undefined or invalid.');
+    }
   }
+
+  loadCoordinatorDetails(activity: any) {
+    this.missionsService.getActivityCoordinator(activity.activityCoordinator).subscribe(
+      (coordinatorDetails) => {
+        activity.coordinatorPhone = coordinatorDetails.phoneActivityCoordinator;
+        if (coordinatorDetails.userId) {
+          this.organizationService.getUserDetails(coordinatorDetails.userId).subscribe(
+            (userDetails) => {
+              // Asignar los datos del coordinador al objeto de actividad
+              activity.coordinatorName = `${userDetails.firstName} ${userDetails.lastName}`;
+              activity.coordinatorEmail = userDetails.email;
+            },
+            (error) => {
+              console.error('Error al obtener detalles del usuario coordinador', error);
+              activity.coordinatorName = 'No asignado';
+              activity.coordinatorEmail = '';
+              activity.coordinatorPhone = '';
+            }
+          );
+        }
+      },
+      (error) => {
+        console.error('Error al obtener detalles del coordinador', error);
+        activity.coordinatorName = 'No asignado';
+        activity.coordinatorEmail = '';
+        activity.coordinatorPhone = '';
+      }
+    );
+  }
+
 
   toggleEdit() {
     this.isEditing = !this.isEditing;

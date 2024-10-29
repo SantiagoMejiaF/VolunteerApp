@@ -20,7 +20,7 @@
 
     <!-- Usar `ng-template` para mostrar el componente `app-detalles-a` cuando showCalendar sea false -->
     <ng-template #detalles>
-        <app-detalles-a (back)="handleBack()"></app-detalles-a>
+        <app-detalles-a [activity]="selectedActivity" [iconType]="'back'" (back)="handleBack()"></app-detalles-a>
     </ng-template>
 </div>
 
