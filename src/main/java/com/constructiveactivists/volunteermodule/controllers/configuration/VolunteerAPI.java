@@ -147,12 +147,4 @@ public interface VolunteerAPI {
     ResponseEntity<List<RankedOrganizationResponse>> matchVolunteerWithOrganizations(
             @PathVariable("volunteerId") Integer volunteerId,
             @RequestParam(name = "numberOfMatches") int numberOfMatches);
-
-
-    @Operation(summary = "Obtener los últimos 5 voluntarios registrados en la aplicación")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Operación exitosa", content = @Content(schema = @Schema(implementation = VolunteerEntity.class))),
-    })
-    @GetMapping("/last-five")
-    ResponseEntity<List<VolunteerEntity>> getLastFiveVolunteers();
 }

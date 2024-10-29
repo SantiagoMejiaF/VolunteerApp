@@ -28,6 +28,7 @@ public final class AppConstants {
     public static final String VOLUNTEER_NOT_ACTIVITIES = "El voluntario no tiene actividades completadas.";
     public static final String VOLUNTEER_NOT_AVAIBLE_REVIEWS = "El voluntario tiene actividades completadas, pero no hay reseñas disponibles.";
 
+    public static final String RELACION_ORGANIZACION_VOLUNTARIO_NOT_FOUND = "Relación entre la organización y el voluntario NO encontrada";
     public static final String EMAIL_TEMPLATE = "<html>" +
             "<body style='font-family: Inter, sans-serif; color: #000000;'>" +
             "<div style='background-color: %s; padding: 30px 10px; text-align: center; color: white;'>" +
