@@ -26,6 +26,8 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.COORDINATOR_MESSAGE_ID;
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.NOT_FOUND_MESSAGE;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -267,5 +269,38 @@ class ActivityCoordinatorServiceTest {
 
         assertFalse(result.isPresent());
         verify(activityCoordinatorRepository, times(1)).findById(coordinatorId);
+    }
+
+    @Test
+     void testGetActivityCoordinatorByUserId_Found() {
+        Integer userId = 1;
+        ActivityCoordinatorEntity coordinator = new ActivityCoordinatorEntity();
+        coordinator.setId(1);
+        coordinator.setUserId(userId);
+        coordinator.setOrganizationId(10);
+        coordinator.setIdentificationCard("123456789");
+        coordinator.setPhoneActivityCoordinator("123456789");
+        coordinator.setCompletedActivities(List.of(1, 2, 3));
+
+        when(activityCoordinatorRepository.findByUserId(userId)).thenReturn(Optional.of(coordinator));
+        ActivityCoordinatorEntity result = activityCoordinatorService.getActivityCoordinatorByUserId(userId);
+        assertNotNull(result);
+        assertEquals(userId, result.getUserId());
+        assertEquals(coordinator.getOrganizationId(), result.getOrganizationId());
+        assertEquals(coordinator.getIdentificationCard(), result.getIdentificationCard());
+        assertEquals(coordinator.getPhoneActivityCoordinator(), result.getPhoneActivityCoordinator());
+        assertEquals(coordinator.getCompletedActivities(), result.getCompletedActivities());
+        verify(activityCoordinatorRepository, times(1)).findByUserId(userId);
+    }
+
+    @Test
+     void testGetActivityCoordinatorByUserId_NotFound() {
+        Integer userId = 2;
+        when(activityCoordinatorRepository.findByUserId(userId)).thenReturn(Optional.empty());
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
+                () -> activityCoordinatorService.getActivityCoordinatorByUserId(userId));
+
+        assertEquals(COORDINATOR_MESSAGE_ID + userId + NOT_FOUND_MESSAGE, exception.getMessage());
+        verify(activityCoordinatorRepository, times(1)).findByUserId(userId);
     }
 }

@@ -65,4 +65,11 @@ public interface ActivityCoordinatorAPI {
     ResponseEntity<ActivityCoordinatorEntity> getCoordinatorById(@PathVariable Integer id);
 
 
+    @Operation(summary = "Obtener un coordinador de actividad por su ID de usuario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+            @ApiResponse(responseCode = "404", description = "No encontrado")
+    })
+    @GetMapping("/user/{userId}")
+    ResponseEntity<ActivityCoordinatorEntity> getActivityCoordinatorByUserId(@PathVariable Integer userId);
 }

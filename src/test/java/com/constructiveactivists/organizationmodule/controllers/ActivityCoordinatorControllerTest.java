@@ -7,6 +7,7 @@ import com.constructiveactivists.organizationmodule.models.CoordinatorAvailabili
 import com.constructiveactivists.organizationmodule.mappers.activitycoordinator.ActivityCoordinatorMapper;
 import com.constructiveactivists.organizationmodule.mappers.activitycoordinator.CoordinatorAvailabilityMapper;
 import com.constructiveactivists.organizationmodule.services.activitycoordinator.ActivityCoordinatorService;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -177,5 +178,29 @@ class ActivityCoordinatorControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(Objects.requireNonNull(response.getBody()).isEmpty());
         verify(activityCoordinatorService, times(1)).findByOrganizationId(organizationId);
+    }
+    @Test
+     void testGetActivityCoordinatorByUserId_Found() {
+        Integer userId = 1;
+        ActivityCoordinatorEntity coordinator = new ActivityCoordinatorEntity();
+        coordinator.setId(1);
+        coordinator.setUserId(userId);
+        coordinator.setOrganizationId(10);
+        coordinator.setIdentificationCard("123456789");
+        coordinator.setPhoneActivityCoordinator("123456789");
+        when(activityCoordinatorService.getActivityCoordinatorByUserId(userId)).thenReturn(coordinator);
+        ResponseEntity<ActivityCoordinatorEntity> response = activityCoordinatorController.getActivityCoordinatorByUserId(userId);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(coordinator, response.getBody());
+        verify(activityCoordinatorService, times(1)).getActivityCoordinatorByUserId(userId);
+    }
+    @Test
+     void testGetActivityCoordinatorByUserId_NotFound() {
+        Integer userId = 2;
+        when(activityCoordinatorService.getActivityCoordinatorByUserId(userId)).thenThrow(new EntityNotFoundException());
+        ResponseEntity<ActivityCoordinatorEntity> response = activityCoordinatorController.getActivityCoordinatorByUserId(userId);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull( response.getBody());
+        verify(activityCoordinatorService, times(1)).getActivityCoordinatorByUserId(userId);
     }
 }

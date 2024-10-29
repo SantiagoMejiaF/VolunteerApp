@@ -7,6 +7,7 @@ import com.constructiveactivists.organizationmodule.entities.activitycoordinator
 import com.constructiveactivists.organizationmodule.mappers.activitycoordinator.ActivityCoordinatorMapper;
 import com.constructiveactivists.organizationmodule.mappers.activitycoordinator.CoordinatorAvailabilityMapper;
 import com.constructiveactivists.organizationmodule.services.activitycoordinator.ActivityCoordinatorService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -73,5 +74,15 @@ public class ActivityCoordinatorController implements ActivityCoordinatorAPI {
         Optional<ActivityCoordinatorEntity> coordinator = activityCoordinatorService.getCoordinatorById(id);
         return coordinator.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @Override
+    public ResponseEntity<ActivityCoordinatorEntity> getActivityCoordinatorByUserId(@PathVariable Integer userId) {
+        try {
+            ActivityCoordinatorEntity coordinator = activityCoordinatorService.getActivityCoordinatorByUserId(userId);
+            return ResponseEntity.ok(coordinator);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(404).body(null);
+        }
     }
 }
