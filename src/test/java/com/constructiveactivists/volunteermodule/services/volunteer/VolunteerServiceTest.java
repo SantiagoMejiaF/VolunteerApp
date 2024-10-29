@@ -675,7 +675,6 @@ class VolunteerServiceTest {
         when(missionRepository.findMissionsByInterestsAndSkills(anyList(), anyList())).thenReturn(List.of(mission));
         when(organizationRepository.findById(100)).thenReturn(Optional.of(organization));
         when(userService.getUserById(10)).thenReturn(Optional.of(user));
-        when(postulationService.countAuthorizedVolunteersByOrganizationIds(List.of(100))).thenReturn(5L);
         when(volunteerOrganizationRepository.findByVolunteerId(volunteerId)).thenReturn(List.of(volunteerOrganization));
 
         List<RankedOrganization> result = volunteerService.matchVolunteerWithMissions(volunteerId, 1);
@@ -683,12 +682,11 @@ class VolunteerServiceTest {
         assertEquals(1, result.size());
         assertEquals(100, result.get(0).getOrganization().getId());
         assertEquals("http://example.com/photo.jpg", result.get(0).getPhotoUrl());
-        assertEquals(5L, result.get(0).getAuthorizedVolunteersCount());
+        assertEquals(0L, result.get(0).getAuthorizedVolunteersCount());
 
         verify(volunteerRepository, times(1)).findById(volunteerId);
         verify(missionRepository, times(1)).findMissionsByInterestsAndSkills(anyList(), anyList());
         verify(userService, times(1)).getUserById(10);
-        verify(postulationService, times(1)).countAuthorizedVolunteersByOrganizationIds(List.of(100));
         verify(volunteerOrganizationRepository, times(1)).findByVolunteerId(volunteerId);
     }
 
