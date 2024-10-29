@@ -1,14 +1,12 @@
-<div class="col ">
-
-
+<div *ngIf="activity">
     <div class="column2">
+        <!-- Navegación de secciones -->
         <ul class="nav mb-4">
             <li class="nav-item">
                 <a class="nav-link" [ngClass]="{'active-link': currentContent === 'content1'}"
                     (click)="showContent('content1')">
                     <strong><i class="bi bi-blockquote-left"></i></strong>
                     <span class="nav-text">Descripción</span>
-
                 </a>
             </li>
             <li class="nav-item">
@@ -23,188 +21,113 @@
                     (click)="showContent('content3')">
                     <strong><i class="bi bi-graph-up"></i></strong>
                     <span class="nav-text">Informes</span>
-
                 </a>
             </li>
-
         </ul>
 
+        <!-- Sección de Descripción -->
         <div *ngIf="currentContent === 'content1'" class="content">
-            <div class="col-9  ml-3">
-
-
+            <div class="col-9 ml-3">
                 <div *ngIf="!isEditing">
                     <div class="card-body">
-
-
                         <div class="row">
                             <!-- Columna Izquierda -->
                             <div class="col-md-6">
-                                <p><strong>Título:</strong> titu</p>
-                                <p><strong>Descripción:</strong> Descripción:</p>
-                                <p><strong>Fecha:</strong> Fecha:</p>
-                                <p><strong>Hora de inicio:</strong> Hora de inicio</p>
-                                <p><strong>Hora de fin:</strong> Hora de fin:</p>
-                                <p><strong>Ciudad:</strong> Ciudad:</p>
-                                <p><strong>Localidad:</strong> Localidad:</p>
-                                <p><strong>Dirección:</strong> Dirección:</p>
+                                <p><strong>Título:</strong> {{ activity.title }}</p>
+                                <p><strong>Descripción:</strong> {{ activity.description }}</p>
+                                <p><strong>Fecha:</strong> {{ activity.date }}</p>
+                                <p><strong>Hora de inicio:</strong> {{ activity.startTime }}</p>
+                                <p><strong>Hora de fin:</strong> {{ activity.endTime }}</p>
+                                <p><strong>Ciudad:</strong> {{ activity.city }}</p>
+                                <p><strong>Localidad:</strong> {{ activity.locality }}</p>
+                                <p><strong>Dirección:</strong> {{ activity.address }}</p>
                             </div>
 
                             <!-- Columna Derecha -->
                             <div class="col-md-6">
-                                <p><strong>Número de Voluntarios Requeridos:</strong> Número de Voluntarios Requeridos:
-                                </p>
-                                <p><strong>Horas Requeridas:</strong> Horas Requeridas:</p>
-                                <p><strong>Visibilidad:</strong> Visibilidad:</p>
-                                <p><strong>Número de Beneficiarios:</strong> Número de</p>
-                                <p><strong>Observaciones:</strong>Observaciones:</p>
+                                <p><strong>Número de Voluntarios Requeridos:</strong> {{
+                                    activity.numberOfVolunteersRequired }}</p>
+                                <p><strong>Horas Requeridas:</strong> {{ activity.requiredHours }}</p>
+                                <p><strong>Visibilidad:</strong> {{ activity.visibility }}</p>
+                                <p><strong>Número de Beneficiarios:</strong> {{ activity.numberOfBeneficiaries }}</p>
+                                <p><strong>Observaciones:</strong> {{ activity.observations }}</p>
                             </div>
                         </div>
                         <div class="row mb-3">
-
                             <div class="col d-flex justify-content-end">
                                 <button class="editar" (click)="toggleEdit()">
-                                    <i class="bi bi-pencil"></i>
+                                    <i class="bi bi-pencil"></i> Editar
                                 </button>
                                 <button class="editar1" (click)="onComeBack()">
-                                    <i class="bi" [ngClass]="iconType === 'calendar' ? 'bi-calendar' : 'bi-arrow-left'"></i>
+                                    <i class="bi"
+                                        [ngClass]="iconType === 'calendar' ? 'bi-calendar' : 'bi-arrow-left'"></i>
                                 </button>
                             </div>
-
                         </div>
                     </div>
                 </div>
 
-                <!-- Formulario de edición -->
-                <app-edit-a *ngIf="isEditing" (cancel)="toggleEdit()"></app-edit-a>
+                <!-- Formulario de edición (Opcional) -->
+                <app-edit-a *ngIf="isEditing"></app-edit-a>
             </div>
-
-
-
         </div>
 
+        <!-- Sección de Encargados -->
         <div *ngIf="currentContent === 'content2'" class="content">
-            <h2>Coordinador Actividad</h2>
+            <h2>Coordinador de la Actividad</h2>
             <div class="d-flex">
                 <div class="mt-3 ml-3" style="text-align: left;">
-                    <p><strong>Nombre:</strong> titu</p>
-                    <p><strong>Email:</strong> Descripción:</p>
-                    <p><strong>Celular:</strong> Fecha:</p>
+                    <p><strong>Nombre:</strong> {{ activity.coordinatorName }}</p>
+                    <p><strong>Email:</strong> {{ activity.coordinatorEmail }}</p>
+                    <p><strong>Celular:</strong> {{ activity.coordinatorPhone }}</p>
                 </div>
             </div>
+
             <hr>
-            <h2 class="mt-4">Lider Comunidad</h2>
+
+            <h2 class="mt-4">Líder de la Comunidad</h2>
             <div class="d-flex">
-
                 <div class="mt-3 ml-3" style="text-align: left;">
-                    <p><strong>Nombre:</strong> titu</p>
-                    <p><strong>Email:</strong> Descripción:</p>
-                    <p><strong>Celular:</strong> Fecha:</p>
+                    <p><strong>Nombre:</strong> {{ activity.personalDataCommunityLeaderEntity?.nameCommunityLeader }}
+                    </p>
+                    <p><strong>Email:</strong> {{ activity.personalDataCommunityLeaderEntity?.emailCommunityLeader }}
+                    </p>
+                    <p><strong>Celular:</strong> {{ activity.personalDataCommunityLeaderEntity?.phoneCommunityLeader }}
+                    </p>
                 </div>
             </div>
-            <div class="row mb-3">
-
-                <div class="col d-flex justify-content-end">
-                    <button class="editar1" (click)="onComeBack()">
-                        <i class="bi" [ngClass]="iconType === 'calendar' ? 'bi-calendar' : 'bi-arrow-left'"></i>
-                    </button>
-                </div>
-
-            </div>
-
         </div>
 
+        <!-- Sección de Informes -->
         <div *ngIf="currentContent === 'content3'" class="content">
+            <!-- Aquí puedes agregar gráficos e informes relacionados -->
             <div class="card text-center custom-card1 mt-5 mb-5">
                 <div class="card-body text-center">
-                    <h2>Horas relizadas</h2>
+                    <h2>Horas realizadas</h2>
                     <i class="bi bi-stopwatch" style="font-size:2rem"></i>
-                    <h1>5</h1>
+                    <h1>{{ activity.hoursCompleted }}</h1>
                 </div>
             </div>
+
             <div class="row ml-1 mr-1">
                 <div class="col-md custom-card mr-4 mb-3 col-12">
-                  <div id="chart">
-                    <apx-chart [series]="chartOptions.series" 
-                               [chart]="chartOptions.chart"
-                               [plotOptions]="chartOptions.plotOptions" 
-                               [labels]="chartOptions.labels"
-                               [fill]="chartOptions.fill" 
-                               [title]="chartOptions.title">
-                    </apx-chart>
-                  </div>
+                    <div id="chart">
+                        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                            [plotOptions]="chartOptions.plotOptions" [labels]="chartOptions.labels"
+                            [fill]="chartOptions.fill" [title]="chartOptions.title">
+                        </apx-chart>
+                    </div>
                 </div>
-                
+
                 <div class="col-md custom-card mr-4 mb-3 col-12">
-                  <div id="chart">
-                    <apx-chart [series]="chartOptions1.series" 
-                               [chart]="chartOptions1.chart"
-                               [plotOptions]="chartOptions1.plotOptions" 
-                               [labels]="chartOptions1.labels"
-                               [fill]="chartOptions1.fill" 
-                               [title]="chartOptions1.title">
-                    </apx-chart>
-                  </div>
+                    <div id="chart">
+                        <apx-chart [series]="chartOptions1.series" [chart]="chartOptions1.chart"
+                            [plotOptions]="chartOptions1.plotOptions" [labels]="chartOptions1.labels"
+                            [fill]="chartOptions1.fill" [title]="chartOptions1.title">
+                        </apx-chart>
+                    </div>
                 </div>
-              </div>
-            <!-- Mostrar promedio de horas realizadas -->
-            <!-- Mostrar promedio de horas realizadas con tarjeta estilizada -->
-            
-            <div class="col tittle mt-4 custom-card" id="recentCustomers">
-                <h2 class="mt-3">Lista voluntarios</h2>
-                <div class="table-responsive">
-                    <table class="table table-sm" id="datatableexample">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Perfil</th>
-                                <th>Nombre</th>
-                                <th>Email</th>
-                                <th>Cedula</th>
-                                <th>Horas Realizadas</th>
-                                <th>Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let user of data; let i = index">
-                                <td>{{ i + 1 }}</td>
-                                <td width="60px">
-                                    <div class="imgBx">
-                                        <img [src]="user.image || 'assets/img/user2.png'" alt="Perfil"
-                                            (error)="user.image='assets/img/user3.png'"
-                                            style="width:50px; height:50px; border-radius:50%;">
-                                    </div>
-                                </td>
-                                <td>
-                                    <h4>{{user.firstName}} {{user.lastName}} <br></h4>
-                                </td>
-                                <td>{{ user.email }}</td>
-                                <td>{{ user.cedula }}</td>
-                                <td>5</td>
-
-                                <td style="text-align: center;"><a [routerLink]="['/verPerfilV']"
-                                        style="border: none; background: none;">
-                                        <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
-                                            onmouseover="this.style.color='#186dde';"
-                                            onmouseout="this.style.color='#80777c';"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-            <div class="row mb-3 mt-4">
-
-                <div class="col d-flex justify-content-end">
-                    <button class="editar1" (click)="onComeBack()">
-                        <i class="bi" [ngClass]="iconType === 'calendar' ? 'bi-calendar' : 'bi-arrow-left'"></i>
-                    </button>
-                </div>
-
             </div>
         </div>
-
     </div>
 </div>

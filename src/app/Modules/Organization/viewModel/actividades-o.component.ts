@@ -6,6 +6,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { ActivityService } from '../../Coordinators/model/services/activity.service';
 import { ActivatedRoute } from '@angular/router';
 import { OrganizationService } from '../model/services/organization.service';
+import { MissionsService } from '../../Misiones/model/services/mission.service';
 
 @Component({
   selector: 'app-actividades-o',
@@ -18,68 +19,19 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
   missionForm: FormGroup;
   calendarOptions: CalendarOptions;
   isEditing = false;
+  selectedActivity: any = null;
   missionId: number | null = null; // Id de la misión obtenido
   coordinators: any[] = []; // Lista de coordinadores
-  public data = [
-    {
-      id: 1,
-      title: 'Recogida de Basura',
-      startDate: '2024-10-25',
-      address: 'Calle 123, Ciudad Verde',
-      noVolunteers: 10,
-      status: 'DISPONIBLE',
-    },
-    {
-      id: 2,
-      title: 'Donación de Ropa',
-      startDate: '2024-11-01',
-      address: 'Av. Libertador, Plaza Mayor',
-      noVolunteers: 5,
-      status: 'COMPLETADO',
-    },
-    {
-      id: 3,
-      title: 'Convivencia en el Parque',
-      startDate: '2024-11-10',
-      address: 'Parque Central, Sector 4',
-      noVolunteers: 20,
-      status: 'APLAZADO',
-    },
-    {
-      id: 4,
-      title: 'Taller de Reciclaje',
-      startDate: '2024-11-15',
-      address: 'Centro Comunitario, Calle 45',
-      noVolunteers: 8,
-      status: 'PENDIENTE',
-    },
-    {
-      id: 5,
-      title: 'Plantación de Árboles',
-      startDate: '2024-11-20',
-      address: 'Calle Ecológica, Sector 3',
-      noVolunteers: 15,
-      status: 'COMPLETADO',
-    },
-    {
-      id: 6,
-      title: 'Campaña de Vacunación',
-      startDate: '2024-11-25',
-      address: 'Hospital Local, Av. San Martín',
-      noVolunteers: 12,
-      status: 'COMPLETADO',
-    },
-  ];
-  
-  
+  public activities: any[] = [];
 
   constructor(
     private fb: FormBuilder,
     private activityService: ActivityService,
     private route: ActivatedRoute,
-    private organizationService: OrganizationService
+    private organizationService: OrganizationService,
+    private missionsService: MissionsService
   ) {
-   
+
 
     // Inicializamos el formulario sin valores predefinidos
     this.missionForm = this.fb.group({
@@ -104,18 +56,75 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    
-  
-    
-  }
-  
 
-  
-  ngAfterViewInit(): void {
-    this.initializeDataTable();
+    // Obtener missionId desde query params
+    this.route.queryParams.subscribe(params => {
+      this.missionId = +params['id']; // Convertir el parámetro en número
+      if (this.missionId) {
+        console.log('MissionId obtenido de queryParams:', this.missionId);
+        this.loadMissionActivities(this.missionId);
+      } else {
+        console.error('MissionId no encontrado en los queryParams.');
+      }
+    });
+    this.loadCoordinators();
   }
- 
-  
+
+
+  loadMissionActivities(missionId: number): void {
+    this.activityService.getActivitiesByMissionId(missionId).subscribe(
+      (activities: any[]) => {
+        this.activities = activities;
+
+        // Debugging para verificar la carga de actividades
+        console.log('Actividades cargadas:', this.activities);
+
+        // Solo inicializar la tabla una vez que las actividades han sido cargadas
+        setTimeout(() => {
+          this.initializeDataTable();  // Inicializar la tabla con las actividades cargadas
+        }, 0);  // Dar un pequeño retraso para asegurar que Angular renderice las actividades
+      },
+      (error) => {
+        console.error('Error al cargar actividades por misión', error);
+      }
+    );
+  }
+
+
+
+  ngAfterViewInit(): void {
+    // Ya no inicializamos la tabla aquí, lo hacemos cuando las actividades están cargadas
+  }
+
+  loadCoordinators(): void {
+    const orgId = localStorage.getItem('OrgId'); // Obtener el ID de la organización desde localStorage
+    if (orgId) {
+      this.activityService.getCoordinatorsByOrganizationId(+orgId).subscribe(
+        (coordinators) => {
+          this.coordinators = []; // Limpiamos la lista de coordinadores
+          coordinators.forEach((coordinator) => {
+            // Por cada coordinador, obtenemos los detalles del usuario
+            this.organizationService.getUserDetails(coordinator.userId).subscribe(
+              (userDetails) => {
+                this.coordinators.push({
+                  id: coordinator.id,
+                  name: `${userDetails.firstName} ${userDetails.lastName}`, // Combina el nombre y apellido del usuario
+                });
+              },
+              (error) => {
+                console.error('Error al obtener los detalles del usuario:', error);
+              }
+            );
+          });
+        },
+        (error) => {
+          console.error('Error al cargar los coordinadores:', error);
+        }
+      );
+    } else {
+      console.error('OrgId no encontrado en el localStorage');
+    }
+  }
 
   submitForm() {
     if (this.missionForm.valid) {
@@ -159,7 +168,8 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
             }
           };
 
-        
+          const currentEvents = this.calendarOptions.events as any[];
+          this.calendarOptions.events = [...currentEvents, newEvent];
 
           this.closeModal();
         },
@@ -180,8 +190,48 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
     }
   }
 
-  mostrar() {
-    this.showCalendar = false;
+  mostrar(activityId: number): void {
+    // Obtener detalles de la actividad seleccionada
+    this.activityService.getActivityById(activityId).subscribe(
+      (activityDetails) => {
+        this.selectedActivity = activityDetails; // Asignar los detalles de la actividad
+        this.showCalendar = false;  // Ocultar la lista y mostrar los detalles
+
+        this.loadCoordinatorDetails(this.selectedActivity);
+      },
+      (error) => {
+        console.error('Error al obtener los detalles de la actividad', error);
+      }
+    );
+  }
+
+  loadCoordinatorDetails(activity: any) {
+    this.missionsService.getActivityCoordinator(activity.activityCoordinator).subscribe(
+      (coordinatorDetails) => {
+        activity.coordinatorPhone = coordinatorDetails.phoneActivityCoordinator;
+        if (coordinatorDetails.userId) {
+          this.organizationService.getUserDetails(coordinatorDetails.userId).subscribe(
+            (userDetails) => {
+              // Asignar los datos del coordinador al objeto de actividad
+              activity.coordinatorName = `${userDetails.firstName} ${userDetails.lastName}`;
+              activity.coordinatorEmail = userDetails.email;
+            },
+            (error) => {
+              console.error('Error al obtener detalles del usuario coordinador', error);
+              activity.coordinatorName = 'No asignado';
+              activity.coordinatorEmail = '';
+              activity.coordinatorPhone = '';
+            }
+          );
+        }
+      },
+      (error) => {
+        console.error('Error al obtener detalles del coordinador', error);
+        activity.coordinatorName = 'No asignado';
+        activity.coordinatorEmail = '';
+        activity.coordinatorPhone = '';
+      }
+    );
   }
 
   toggleEdit() {
@@ -190,6 +240,7 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
 
   handleBack2() {
     this.showCalendar = true;
+    this.selectedActivity = null;
   }
 
   // Métodos para avanzar y retroceder entre los pasos del formulario
@@ -207,7 +258,7 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
         return 'status-activo';
       case 'PENDIENTE':
         return 'status-pendiente';
-      case 'COMPLETADO':
+      case 'COMPLETADA':
         return 'status-completado';
       case 'APLAZADO':
         return 'status-aplazado';
@@ -237,6 +288,6 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
       });
     }, 1);
   }
-  
+
 }
 

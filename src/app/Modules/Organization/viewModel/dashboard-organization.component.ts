@@ -13,6 +13,7 @@ import {
   ApexResponsive,
 } from 'ng-apexcharts';
 import { OrganizationService } from '../model/services/organization.service';
+import { MissionsService } from '../../Misiones/model/services/mission.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -56,22 +57,16 @@ export class DashboardOrganizationComponent implements OnInit {
   public currentYear: number;
   public currentMonth: number;
   public months: string[] = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-
-  public data: any[] = []; // Para los voluntarios recientes
-  public volunteersCount: number = 0; // Para el conteo de voluntarios
-
-  public activities: any[] = [
-    { id: 1, time: '09:30', name: 'Actividad de perritos', responsible: 'Henry Madariaga', date: new Date(2024, 6, 6) },
-    { id: 2, time: '12:00', name: 'Enseñanza', responsible: 'Daniela Torres', date: new Date(2024, 6, 6) },
-    { id: 3, time: '01:30', name: 'Actividad...', responsible: 'Nombre Responsable', date: new Date(2024, 6, 6) }
-  ];
+  public data: any[] = [];
+  public volunteersCount: number = 0;
+  public activities: any[] = [];
 
   @ViewChild('chart') chart: ChartComponent;
   public chartOptions: ChartOptions;
   public chartOptions2: ChartOptions2;
   public chartOptions3: ChartOptions3;
 
-  constructor(private organizationService: OrganizationService) {
+  constructor(private organizationService: OrganizationService, private missionsService: MissionsService,) {
     this.chartOptions = {
       series: [
         {
@@ -243,6 +238,7 @@ export class DashboardOrganizationComponent implements OnInit {
     if (orgId) {
       // Cargar actividades del año actual
       this.loadActivitiesByYear(+orgId, this.currentYear);
+      this.loadProgrammedActivities();
 
       // Cargar otros datos relevantes
       this.organizationService.getCompletedMissionsCount(+orgId).subscribe(data => {
@@ -271,15 +267,78 @@ export class DashboardOrganizationComponent implements OnInit {
     this.generateCalendar();
   }
 
+  loadProgrammedActivities() {
+    const orgId = Number(localStorage.getItem('OrgId')); // Obtener OrgId del localStorage
+    if (!orgId) {
+      console.error('No se encontró OrgId en localStorage.');
+      return;
+    }
+
+    this.organizationService.getActivitiesByOrganization(orgId).subscribe(
+      (activities: any[]) => {
+        // Iterar sobre las actividades y buscar los coordinadores
+        activities.forEach(activity => {
+          if (activity.activityCoordinator) {
+            this.loadCoordinatorDetails(activity);
+          } else {
+            activity.responsible = 'No asignado';
+          }
+        });
+
+        // Guardamos las actividades programadas en la lista "activities"
+        this.activities = activities.map(activity => ({
+          id: activity.id,
+          time: `${activity.startTime}`, // Formato de la hora de inicio
+          name: activity.title,  // Nombre de la actividad
+          responsible: activity.responsible || 'Cargando...', // Inicialmente poner "Cargando..." si falta el nombre
+          date: new Date(activity.date)  // Convertir la fecha
+        }));
+
+        // Actualizamos el calendario
+        this.generateCalendar();
+      },
+      (error) => {
+        console.error('Error al cargar las actividades programadas', error);
+      }
+    );
+  }
+
+  loadCoordinatorDetails(activity: any) {
+    this.missionsService.getActivityCoordinator(activity.activityCoordinator).subscribe(
+      (coordinatorDetails) => {
+        if (coordinatorDetails.userId) {
+          this.organizationService.getUserDetails(coordinatorDetails.userId).subscribe(
+            (userDetails) => {
+              // Actualizamos el campo responsable de la actividad en la lista original
+              const foundActivity = this.activities.find(a => a.id === activity.id);
+              if (foundActivity) {
+                foundActivity.responsible = `${userDetails.firstName} ${userDetails.lastName}`;
+              }
+            },
+            (error) => {
+              console.error('Error al obtener detalles del usuario responsable', error);
+              activity.responsible = 'No asignado';
+            }
+          );
+        }
+      },
+      (error) => {
+        console.error('Error al obtener detalles del coordinador', error);
+        activity.responsible = 'No asignado';
+      }
+    );
+  }
+
+
   // Generar el calendario para mostrar los días
   generateCalendar() {
-    this.calendarDays = [];
+    // Tu lógica para generar el calendario
     const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
     const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
-
+    const calendarDays: any[] = [];
     let day = 1;
     for (let i = 0; i < 6; i++) {
-      const week: (Date | null)[] = [];
+      const week: any[] = [];
       for (let j = 0; j < 7; j++) {
         if (i === 0 && j < firstDay) {
           week.push(null);
@@ -290,8 +349,9 @@ export class DashboardOrganizationComponent implements OnInit {
           day++;
         }
       }
-      this.calendarDays.push(week);
+      calendarDays.push(week);
     }
+    this.calendarDays = calendarDays;
   }
 
   // Navegar al mes anterior en el calendario
@@ -331,9 +391,7 @@ export class DashboardOrganizationComponent implements OnInit {
 
   // Verificar si hay actividades en un día específico
   hasActivities(day: Date): boolean {
-    return this.activities.some(activity =>
-      activity.date.toDateString() === day?.toDateString()
-    );
+    return this.activities.some(activity => new Date(activity.date).toDateString() === day?.toDateString());
   }
 
   // Filtrar las actividades para el día seleccionado

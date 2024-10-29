@@ -89,4 +89,12 @@ export class OrganizationService {
   getActivitiesCountByYear(orgId: number, year: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/organizations-dashboard/activities-count-by-organization-and-year?organizationId=${orgId}&year=${year}`);
   }
+
+  getActivitiesByOrganization(orgId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/missions/organization/${orgId}/activities`);
+  }
+
+  getActivitiesByMissionId(missionId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/activities/mission/${missionId}`);
+  }
 }

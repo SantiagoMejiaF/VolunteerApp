@@ -27,18 +27,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let activity of data">
+                                <tr *ngFor="let activity of activities">
                                     <td class="text-left">{{ activity.id }}</td>
                                     <td>{{ activity.title }}</td>
-                                    <td class="text-left">{{ activity.startDate }}</td>
+                                    <td class="text-left">{{ activity.date }}</td>
                                     <td>{{ activity.address }}</td>
-                                    <td class="text-left">{{ activity.noVolunteers }}</td>
+                                    <td class="text-left">{{ activity.numberOfVolunteersRequired }}</td>
                                     <td>
-                                        <span [ngClass]="getStatusClass(activity.status)">{{ activity.status }}</span>
+                                        <span [ngClass]="getStatusClass(activity.activityStatus)">
+                                            {{ activity.activityStatus }}
+                                        </span>
                                     </td>
                                     <td>
-                                        <a (click)="mostrar()"
-                                            style="border: none; background: none;">
+                                        <a (click)="mostrar(activity.id)" style="border: none; background: none;">
                                             <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
                                                 onmouseover="this.style.color='#186dde';"
                                                 onmouseout="this.style.color='#80777c';"></i>
@@ -55,7 +56,7 @@
 
     <!-- Usar `ng-template` para mostrar el componente `app-detalles-a` cuando showCalendar sea false -->
     <ng-template #detalles>
-        <app-detalles-a (back)="handleBack2()" [iconType]="'back'"></app-detalles-a>
+        <app-detalles-a *ngIf="selectedActivity" [activity]="selectedActivity" [iconType]="'back'"></app-detalles-a>
     </ng-template>
 </div>
 

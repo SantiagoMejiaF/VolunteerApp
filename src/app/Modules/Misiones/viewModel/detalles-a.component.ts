@@ -1,4 +1,4 @@
-import { Component, ViewChild, EventEmitter, Output, Input  } from "@angular/core";
+import { Component, ViewChild, EventEmitter, Output, Input } from "@angular/core";
 
 
 import {
@@ -9,6 +9,7 @@ import {
   ApexFill,
   ChartComponent
 } from "ng-apexcharts";
+
 
 
 export type ChartOptions = {
@@ -35,63 +36,15 @@ export type ChartOptions1 = {
   styleUrl: '../styles/detalles-a.component.css'
 })
 export class DetallesAComponent {
+  @Input() activity: any;  // Recibe los detalles de la actividad seleccionada
+  @Input() iconType: 'calendar' | 'back' = 'calendar'; // Tipo de ícono que se muestra
   currentContent: string = 'content1';
-  selectedSection: string = 'descripcion';
   isEditing = false;
-  @Input() iconType: 'calendar' | 'back' = 'calendar';
-  public data: any[] = [
-    {
-      firstName: 'Juan',
-      lastName: 'Pérez',
-      email: 'juan.perez@example.com',
-      cedula: '12345678',
-      image: 'assets/img/user1.png',
-    },
-    {
-      firstName: 'María',
-      lastName: 'Gómez',
-      email: 'maria.gomez@example.com',
-      cedula: '87654321',
-      image: 'assets/img/user2.png',
-    },
-    {
-      firstName: 'Carlos',
-      lastName: 'Rodríguez',
-      email: 'carlos.rodriguez@example.com',
-      cedula: '12349876',
-      image: 'assets/img/user3.png',
-    },
-    {
-      firstName: 'Lucía',
-      lastName: 'Martínez',
-      email: 'lucia.martinez@example.com',
-      cedula: '98761234',
-      image: '',
-    },
-    {
-      firstName: 'Pedro',
-      lastName: 'Sánchez',
-      email: 'pedro.sanchez@example.com',
-      cedula: '13579246',
-      image: 'assets/img/user5.png',
-    }
-  ];
-  
-  showContent(contentId: string) {
-    this.currentContent = contentId;
-  }
-  toggleEdit() {
-    this.isEditing = !this.isEditing;
-  }
-  @Output() back = new EventEmitter<void>();
 
-  onComeBack() {
-    this.back.emit();
-  }
   @ViewChild("chart") chart: ChartComponent;
-  public chartOptions:ChartOptions;
-  public chartOptions1:ChartOptions1;
- 
+  public chartOptions: ChartOptions;
+  public chartOptions1: ChartOptions1;
+
   constructor() {
     this.chartOptions = {
       series: [76],
@@ -139,7 +92,7 @@ export class DetallesAComponent {
       },
       labels: ["Average Results"],
       title: {
-        text: "# de Voluntarios", // Título de la gráfica
+        text: "# de Voluntarios",
         align: 'center',
         style: {
           fontSize: '16px',
@@ -147,6 +100,7 @@ export class DetallesAComponent {
         }
       }
     };
+
     this.chartOptions1 = {
       series: [76],
       chart: {
@@ -160,7 +114,7 @@ export class DetallesAComponent {
           track: {
             background: "#e7e7e7",
             strokeWidth: "97%",
-            margin: 5, // margin is in pixels
+            margin: 5,
             dropShadow: {
               enabled: true,
               top: 2,
@@ -193,7 +147,7 @@ export class DetallesAComponent {
       },
       labels: ["Average Results"],
       title: {
-        text: "# de Beneficiarios", // Título de la gráfica
+        text: "# de Beneficiarios",
         align: 'center',
         style: {
           fontSize: '16px',
@@ -202,4 +156,21 @@ export class DetallesAComponent {
       }
     };
   }
+
+  showContent(contentId: string) {
+    this.currentContent = contentId;
+  }
+
+  toggleEdit() {
+    this.isEditing = !this.isEditing;
+  }
+
+  onComeBack() {
+    console.log('Back button clicked'); // Simplemente para depuración
+  }
+
+  ngOnChanges() {
+    console.log('Activity:', this.activity);
+  }
+
 }

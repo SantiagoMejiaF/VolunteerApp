@@ -59,10 +59,10 @@ const routes: Routes = [
         path: 'active-users',
         component: UsuariosActivosComponent,
       },
-      
-    
-     
-      
+
+
+
+
       //PANTALLAS ORGANIZACIÓN
       {
         path: 'dashOrganization',
@@ -70,7 +70,7 @@ const routes: Routes = [
       },
       {
         path: 'verPerfilO',
-        component:VerPerfilOComponent,
+        component: VerPerfilOComponent,
       },
       {
         path: 'perfilO',
@@ -78,53 +78,53 @@ const routes: Routes = [
       },
       {
         path: 'verVoluntarios',
-        component:VerVoluntariosComponent,
+        component: VerVoluntariosComponent,
       },
       {
         path: 'verCoordinador',
-        component:CoordinadoresComponent,
+        component: CoordinadoresComponent,
       },
       {
         path: 'verDetallesAxC',
-        component:DetallesAxCComponent,
+        component: DetallesAxCComponent,
       },
       {
         path: 'ActividadesO',
-        component:ActividadesOComponent,
+        component: ActividadesOComponent,
       },
-    
+
 
 
       //MISIONES 
       {
         path: 'misiones',
-        component:MisionesComponent,
+        component: MisionesComponent,
       },
       {
         path: 'detallesM',
-        component:DetallesMComponent,
+        component: DetallesMComponent,
       },
       {
         path: 'editM',
-        component:EditMComponent,
+        component: EditMComponent,
       },
       {
         path: 'calendar',
-        component:CalendarAComponent,
+        component: CalendarAComponent,
       },
       {
         path: 'detallesA',
-        component:DetallesAComponent,
+        component: DetallesAComponent,
       },
-      { 
-        path: 'actividad/:id/:image', 
+      {
+        path: 'actividad/:id/:image',
         component: ActividadDComponent
       },
-      
+
       //PANTALLAS DE VOLUNTARIO
       {
         path: 'homeV',
-        component:HomeVoluntariosComponent,
+        component: HomeVoluntariosComponent,
       },
       {
         path: 'dashVolunteer',
@@ -132,15 +132,15 @@ const routes: Routes = [
       },
       {
         path: 'misF',
-        component:MisFundacionesComponent,
+        component: MisFundacionesComponent,
       },
       {
         path: 'miC',
-        component:ActividadesVComponent,
+        component: ActividadesVComponent,
       },
       {
         path: 'verPerfilV',
-        component:VerPerfilVComponent,
+        component: VerPerfilVComponent,
       },
       {
         path: 'perfil',
@@ -148,28 +148,28 @@ const routes: Routes = [
       },
       {
         path: 'misA',
-        component:MisActividadesComponent
+        component: MisActividadesComponent
       },
 
       //COORDINADOR
-      
+
       {
         path: 'perfilC',
-        component:PerfilCComponent,
+        component: PerfilCComponent,
       },
       {
         path: 'verPerfilC',
-        component:VerPerfilCComponent,
+        component: VerPerfilCComponent,
       },
       {
         path: 'detallesC',
-        component:DetallesCComponent,
+        component: DetallesCComponent,
       },
       {
         path: 'misAC',
-        component:ActividadesCComponent,
+        component: ActividadesCComponent,
       },
-      
+
     ],
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },

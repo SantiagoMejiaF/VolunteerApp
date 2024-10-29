@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ActividadesCComponent } from './actividades-c.component';
+import { ActividadesCComponent } from '../Modules/Coordinators/viewModel/actividades-c.component';
 
 describe('ActividadesCComponent', () => {
   let component: ActividadesCComponent;
@@ -10,7 +10,7 @@ describe('ActividadesCComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ActividadesCComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ActividadesCComponent);
     component = fixture.componentInstance;

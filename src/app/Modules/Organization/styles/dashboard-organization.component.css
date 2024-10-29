@@ -9,14 +9,6 @@
   margin-bottom: 20px;
 }
 
-#download-options {
-  position: absolute;
-  top: -30px;
-  /* Ajusta este valor para mover el botón hacia arriba */
-  right: 10px;
-  /* Ajusta para posicionar a la derecha */
-  z-index: 10;
-}
 
 #Grande2 {
   background-color: white;
