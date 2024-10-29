@@ -224,6 +224,18 @@ public class VolunteerOrganizationService {
                 .toList();
     }
 
+    public long countAcceptedVolunteerOrganizationsByOrganizationId(Integer organizationId) {
+        List<Integer> volunteerOrganizationIds = volunteerOrganizationRepository.findByOrganizationId(organizationId)
+                .stream()
+                .map(VolunteerOrganizationEntity::getId)
+                .toList();
+        if (volunteerOrganizationIds.isEmpty()) {
+            return 0;
+        }
+        List<PostulationEntity> acceptedPostulations = postulationRepository.findByStatusAndVolunteerOrganizationIdIn(
+                OrganizationStatusEnum.ACEPTADO, volunteerOrganizationIds);
+        return acceptedPostulations.size();
+    }
     public List<VolunteerEntity> findFiveVolunteer(Integer organizationId) {
         List<Integer> volunteerOrganizationIds = volunteerOrganizationRepository.findByOrganizationId(organizationId)
                 .stream()

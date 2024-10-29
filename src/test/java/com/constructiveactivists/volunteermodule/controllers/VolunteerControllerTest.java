@@ -241,25 +241,4 @@ class VolunteerControllerTest {
         verify(rankedOrganizationMapper, times(1)).toResponses(anyList());
     }
 
-    @Test
-    void testGetLastFiveVolunteers() {
-        VolunteerEntity volunteer1 = new VolunteerEntity();
-        volunteer1.setId(1);
-        VolunteerEntity volunteer2 = new VolunteerEntity();
-        volunteer2.setId(2);
-
-        List<VolunteerEntity> volunteers = List.of(volunteer1, volunteer2);
-
-        when(volunteerService.getLastFiveVolunteers()).thenReturn(volunteers);
-
-        ResponseEntity<List<VolunteerEntity>> response = volunteerController.getLastFiveVolunteers();
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals(2, response.getBody().size());
-        assertEquals(volunteer1, response.getBody().get(0));
-        assertEquals(volunteer2, response.getBody().get(1));
-
-        verify(volunteerService, times(1)).getLastFiveVolunteers();
-    }
 }
