@@ -16,6 +16,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.constructiveactivists.configurationmodule.constants.AppConstants.POSTULATION_NOT_FOUND;
 import static com.constructiveactivists.configurationmodule.constants.AppConstants.ZONE_PLACE;
@@ -111,8 +113,12 @@ public class PostulationService {
         postulationRepository.save(postulation);
     }
 
-    public long countAuthorizedVolunteersByOrganizationIds(List<Integer> organizationIds) {
-        return postulationRepository.countByVolunteerOrganizationIdInAndStatus(organizationIds, OrganizationStatusEnum.ACEPTADO);
+    public Map<Integer, Long> countAcceptedVolunteers() {
+        List<Object[]> results = postulationRepository.countAcceptedVolunteersByOrganization(OrganizationStatusEnum.ACEPTADO);
+        return results.stream()
+                .collect(Collectors.toMap(
+                        result -> (Integer) result[0],
+                        result -> (Long) result[1]
+                ));
     }
-
 }

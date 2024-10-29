@@ -223,19 +223,7 @@ class PostulationServiceTest {
         verify(postulationRepository, times(1)).findAll();
     }
 
-    @Test
-    void testCountAuthorizedVolunteersByOrganizationIds() {
-        List<Integer> organizationIds = List.of(1, 2, 3);
 
-        when(postulationRepository.countByVolunteerOrganizationIdInAndStatus(organizationIds, OrganizationStatusEnum.ACEPTADO))
-                .thenReturn(10L);
-
-        long result = postulationService.countAuthorizedVolunteersByOrganizationIds(organizationIds);
-
-        assertEquals(10L, result);
-        verify(postulationRepository, times(1))
-                .countByVolunteerOrganizationIdInAndStatus(organizationIds, OrganizationStatusEnum.ACEPTADO);
-    }
 
     @Test
     void testGetPendingPostulationsByOrganizationId_NoVolunteerOrganizations() {
