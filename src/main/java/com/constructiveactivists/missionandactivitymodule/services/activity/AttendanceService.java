@@ -166,6 +166,9 @@ public class AttendanceService {
             throw new AttendanceException("Check-in time not within allowed range.");
         }
     }
+    public void validateCheckInTime(Integer activityId) {
+        checkInTimeValidity(activityId);
+    }
 
     private void checkOutTimeValidity(Integer activityId) {
         ActivityEntity activityEntity = activityService.getById(activityId)

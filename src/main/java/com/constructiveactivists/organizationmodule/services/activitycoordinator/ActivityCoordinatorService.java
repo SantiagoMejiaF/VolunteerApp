@@ -22,7 +22,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
-import static com.constructiveactivists.configurationmodule.constants.AppConstants.USER_NOT_FOUND;
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.*;
 
 @AllArgsConstructor
 @Service
@@ -43,8 +43,6 @@ public class ActivityCoordinatorService {
         Optional<OrganizationEntity> organizationOpt = organizationService.getOrganizationById(activityCoordinator.getOrganizationId());
         if (organizationOpt.isEmpty()) {
             throw new BusinessException("La organización con ID " + activityCoordinator.getOrganizationId() + " no existe.");
-        } else {
-            organizationOpt.get();
         }
         activityCoordinator.setUserId(userId);
         return activityCoordinatorRepository.save(activityCoordinator);
@@ -95,5 +93,9 @@ public class ActivityCoordinatorService {
         return activityCoordinatorRepository.findById(id);
     }
 
+    public ActivityCoordinatorEntity getActivityCoordinatorByUserId(Integer userId) {
+        return activityCoordinatorRepository.findByUserId(userId)
+                .orElseThrow(() -> new EntityNotFoundException(COORDINATOR_MESSAGE_ID + userId+NOT_FOUND_MESSAGE));
+    }
 
 }

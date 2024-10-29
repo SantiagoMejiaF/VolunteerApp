@@ -13,7 +13,6 @@ import com.constructiveactivists.organizationmodule.repositories.ActivityCoordin
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteeringInformationEntity;
 import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
-import com.constructiveactivists.volunteermodule.services.volunteer.VolunteerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDate;
+import java.time.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -36,8 +35,6 @@ class ActivityServiceTest {
     @Mock
     private VolunteerGroupService volunteerGroupService;
 
-    @Mock
-    private VolunteerService volunteerService;
 
     @Mock
     private MissionRepository missionRepository;
@@ -48,8 +45,6 @@ class ActivityServiceTest {
     @Mock
     private ActivityRepository activityRepository;
 
-    @Mock
-    private ReviewRepository reviewRepository;
 
     @Mock
     private VolunteerGroupRepository groupRepository;
@@ -68,6 +63,7 @@ class ActivityServiceTest {
 
     @InjectMocks
     private ActivityService activityService;
+
 
     @BeforeEach
     void setUp() {
