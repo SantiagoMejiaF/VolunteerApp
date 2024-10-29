@@ -80,4 +80,10 @@ public class VolunteerOrganizationController implements VolunteerOrganizationAPI
         return new ResponseEntity<>(acceptedVolunteers, acceptedVolunteers.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<Long> countAcceptedVolunteers(@PathVariable Integer organizationId) {
+        long count = volunteerOrganizationService.countAcceptedVolunteerOrganizationsByOrganizationId(organizationId);
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
+
 }
