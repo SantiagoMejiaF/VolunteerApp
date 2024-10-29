@@ -4,6 +4,7 @@ import com.constructiveactivists.configurationmodule.exceptions.BusinessExceptio
 import com.constructiveactivists.dashboardsandreportsmodule.controllers.response.CardsOrganizationVolunteerResponse;
 import com.constructiveactivists.dashboardsandreportsmodule.services.DashboardVolunteerService;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
+import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.InterestEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.time.Month;
 import java.util.List;
 import java.util.Map;
 
@@ -24,11 +26,11 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class DashboardVolunteerControllerTest {
 
-    @InjectMocks
-    private DashboardVolunteerController dashboardVolunteerController;
-
     @Mock
     private DashboardVolunteerService dashboardService;
+
+    @InjectMocks
+    private DashboardVolunteerController dashboardVolunteerController;
 
     @Test
     void testGetAgeRanges() {
@@ -158,5 +160,64 @@ class DashboardVolunteerControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(expectedFoundations, response.getBody());
         verify(dashboardService, times(1)).getFoundationsByVolunteerId(volunteerId);
+    }
+
+    @Test
+    void testGetTenRecentVolunteers_Success() {
+        List<VolunteerEntity> expectedVolunteers = List.of(new VolunteerEntity());
+
+        when(dashboardService.getTenRecentVolunteers()).thenReturn(expectedVolunteers);
+
+        ResponseEntity<List<VolunteerEntity>> response = dashboardVolunteerController.getTenRecentVolunteers();
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedVolunteers, response.getBody());
+        verify(dashboardService, times(1)).getTenRecentVolunteers();
+    }
+
+    @Test
+    void testGetTenRecentVolunteers_BusinessException() {
+        when(dashboardService.getTenRecentVolunteers()).thenThrow(new BusinessException("No volunteers found"));
+
+        ResponseEntity<List<VolunteerEntity>> response = dashboardVolunteerController.getTenRecentVolunteers();
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
+        verify(dashboardService, times(1)).getTenRecentVolunteers();
+    }
+
+    @Test
+    void testGetVolunteersCountByMonth_Success() {
+        int year = 2024;
+        Map<Month, Long> expectedVolunteersCount = Map.of(
+                Month.JANUARY, 5L,
+                Month.FEBRUARY, 10L
+        );
+
+        when(dashboardService.getVolunteersCountByMonth(year)).thenReturn(expectedVolunteersCount);
+
+        ResponseEntity<Map<Month, Long>> response = dashboardVolunteerController.getVolunteersCountByMonth(year);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedVolunteersCount, response.getBody());
+        verify(dashboardService, times(1)).getVolunteersCountByMonth(year);
+    }
+
+    @Test
+    void testGetVolunteersCountByMonth_NoData() {
+        int year = 2024;
+        Map<Month, Long> expectedVolunteersCount = Map.of();
+
+        when(dashboardService.getVolunteersCountByMonth(year)).thenReturn(expectedVolunteersCount);
+
+        ResponseEntity<Map<Month, Long>> response = dashboardVolunteerController.getVolunteersCountByMonth(year);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedVolunteersCount, response.getBody());
+        verify(dashboardService, times(1)).getVolunteersCountByMonth(year);
     }
 }

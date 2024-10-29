@@ -1,5 +1,6 @@
 package com.constructiveactivists.volunteermodule.controllers;
 
+import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.volunteermodule.controllers.request.volunteer.VolunteerRequest;
 import com.constructiveactivists.volunteermodule.controllers.request.volunteer.VolunteerUpdateRequest;
 import com.constructiveactivists.volunteermodule.controllers.response.RankedOrganizationResponse;
@@ -241,4 +242,48 @@ class VolunteerControllerTest {
         verify(rankedOrganizationMapper, times(1)).toResponses(anyList());
     }
 
+    @Test
+    void testRemoveVolunteerFromActivity_Success() {
+        Integer volunteerId = 1;
+        Integer activityId = 100;
+
+        doNothing().when(volunteerService).removeVolunteerFromActivity(volunteerId, activityId);
+
+        ResponseEntity<String> response = volunteerController.removeVolunteerFromActivity(volunteerId, activityId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Voluntario eliminado de la actividad exitosamente", response.getBody());
+        verify(volunteerService, times(1)).removeVolunteerFromActivity(volunteerId, activityId);
+    }
+
+    @Test
+    void testRemoveVolunteerFromActivity_NotFound() {
+        Integer volunteerId = 1;
+        Integer activityId = 100;
+
+        doThrow(new EntityNotFoundException("No se encontró el voluntario o la actividad")).when(volunteerService).removeVolunteerFromActivity(volunteerId, activityId);
+
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
+            volunteerController.removeVolunteerFromActivity(volunteerId, activityId);
+        });
+
+        assertEquals("No se encontró el voluntario o la actividad", exception.getMessage());
+        verify(volunteerService, times(1)).removeVolunteerFromActivity(volunteerId, activityId);
+    }
+
+    @Test
+    void testRemoveVolunteerFromActivity_ConflictDueToTiming() {
+        Integer volunteerId = 1;
+        Integer activityId = 100;
+
+        doThrow(new BusinessException("Solo puedes eliminar la inscripción hasta 2 días antes del inicio de la actividad."))
+                .when(volunteerService).removeVolunteerFromActivity(volunteerId, activityId);
+
+        BusinessException exception = assertThrows(BusinessException.class, () -> {
+            volunteerController.removeVolunteerFromActivity(volunteerId, activityId);
+        });
+
+        assertEquals("Solo puedes eliminar la inscripción hasta 2 días antes del inicio de la actividad.", exception.getMessage());
+        verify(volunteerService, times(1)).removeVolunteerFromActivity(volunteerId, activityId);
+    }
 }

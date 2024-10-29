@@ -54,17 +54,17 @@ public class AttendanceService {
         registerCheckOut(email, activityId);
     }
 
-    private void validateCheckIn(String email, Integer activityId) {
+    void validateCheckIn(String email, Integer activityId) {
         verifyUserAuthorization(email, activityId);
         checkInTimeValidity(activityId);
     }
 
-    private void validateCheckOut(String email, Integer activityId) {
+    void validateCheckOut(String email, Integer activityId) {
         verifyUserAuthorization(email, activityId);
         checkOutTimeValidity(activityId);
     }
 
-    private void registerCheckIn(String email, Integer activityId) {
+    void registerCheckIn(String email, Integer activityId) {
         UserEntity userEntity = userService.findByEmail(email)
                 .orElseThrow(() -> new AttendanceException(USER_NOT_FOUND));
 
@@ -101,7 +101,7 @@ public class AttendanceService {
         volunteerService.addVolunteerActivity(volunteerEntity.getId(), activityEntity.getId());
     }
 
-    private void registerCheckOut(String email, Integer activityId) {
+    void registerCheckOut(String email, Integer activityId) {
         UserEntity userEntity = userService.findByEmail(email)
                 .orElseThrow(() -> new AttendanceException("User not found"));
 
@@ -130,7 +130,7 @@ public class AttendanceService {
         attendanceRepository.save(attendance);
     }
 
-    private void verifyUserAuthorization(String email, Integer activityId) {
+    void verifyUserAuthorization(String email, Integer activityId) {
         boolean isMember = isVolunteerInGroup(email, activityId);
         if (!isMember) {
             throw new AttendanceException(USER_NOT_AUTHORIZED);
@@ -151,7 +151,7 @@ public class AttendanceService {
         return volunteerGroupMembershipService.isVolunteerInGroup(activityId, volunteerId);
     }
 
-    private void checkInTimeValidity(Integer activityId) {
+    void checkInTimeValidity(Integer activityId) {
         ActivityEntity activityEntity = activityService.getById(activityId)
                 .orElseThrow(() -> new AttendanceException(ACTIVITY_NOT_FOUND));
 
@@ -170,7 +170,7 @@ public class AttendanceService {
         checkInTimeValidity(activityId);
     }
 
-    private void checkOutTimeValidity(Integer activityId) {
+    void checkOutTimeValidity(Integer activityId) {
         ActivityEntity activityEntity = activityService.getById(activityId)
                 .orElseThrow(() -> new AttendanceException(ACTIVITY_NOT_FOUND));
 

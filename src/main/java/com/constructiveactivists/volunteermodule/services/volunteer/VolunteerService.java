@@ -187,6 +187,30 @@ public class VolunteerService {
         volunteerGroupService.save(volunteerGroup);
     }
 
+    public void removeVolunteerFromActivity(Integer volunteerId, Integer activityId) {
+
+        VolunteerGroupEntity volunteerGroup = volunteerGroupService.getVolunteerGroupByActivityId(activityId)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró un grupo de voluntarios para la actividad con ID: " + activityId));
+
+        ActivityEntity activity = activityService.getById(activityId)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la actividad con ID: " + activityId));
+
+        LocalDate today = LocalDate.now();
+        if (activity.getDate().isBefore(today.plusDays(2))) {
+            throw new BusinessException("Solo puedes eliminar la inscripción hasta 2 días antes del inicio de la actividad.");
+        }
+
+        boolean isMember = volunteerGroupMembershipService.isVolunteerInGroup(volunteerGroup.getId(), volunteerId);
+        if (!isMember) {
+            throw new BusinessException("El voluntario no está registrado en el grupo.");
+        }
+
+        volunteerGroupMembershipService.removeVolunteerFromGroup(volunteerGroup.getId(), volunteerId);
+
+        volunteerGroup.setCurrentVolunteers(volunteerGroup.getCurrentVolunteers() - 1);
+        volunteerGroupService.save(volunteerGroup);
+    }
+
     void validateUserExists(Integer userId) {
         Optional<UserEntity> user = userService.getUserById(userId);
         if (user.isEmpty()) {

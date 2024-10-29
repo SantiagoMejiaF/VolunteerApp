@@ -21,6 +21,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -58,37 +59,42 @@ class VolunteerOrganizationServiceTest {
     @InjectMocks
     private VolunteerOrganizationService volunteerOrganizationService;
 
-    private VolunteerOrganizationEntity volunteerOrganizationEntity;
+    private VolunteerOrganizationEntity volunteerOrganization;
 
+    private PostulationEntity postulation;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        volunteerOrganizationEntity = new VolunteerOrganizationEntity();
-        volunteerOrganizationEntity.setId(1);
-        volunteerOrganizationEntity.setVolunteerId(1);
-        volunteerOrganizationEntity.setOrganizationId(1);
+        volunteerOrganization = new VolunteerOrganizationEntity();
+        volunteerOrganization.setId(1);
+        volunteerOrganization.setVolunteerId(1);
+        volunteerOrganization.setOrganizationId(1);
+
+        postulation = new PostulationEntity();
+        postulation.setVolunteerOrganizationId(1);
+        postulation.setStatus(OrganizationStatusEnum.ACEPTADO);
     }
 
     @Test
     void testSaveVolunteerOrganization_Success() {
         when(volunteerRepository.existsById(1)).thenReturn(true);
         when(organizationRepository.existsById(1)).thenReturn(true);
-        when(volunteerOrganizationRepository.save(any(VolunteerOrganizationEntity.class))).thenReturn(volunteerOrganizationEntity);
+        when(volunteerOrganizationRepository.save(any(VolunteerOrganizationEntity.class))).thenReturn(volunteerOrganization);
 
-        VolunteerOrganizationEntity result = volunteerOrganizationService.save(volunteerOrganizationEntity);
+        VolunteerOrganizationEntity result = volunteerOrganizationService.save(volunteerOrganization);
 
         assertNotNull(result);
         assertEquals(1, result.getVolunteerId());
         verify(volunteerRepository, times(1)).existsById(1);
         verify(organizationRepository, times(1)).existsById(1);
-        verify(volunteerOrganizationRepository, times(1)).save(volunteerOrganizationEntity);
+        verify(volunteerOrganizationRepository, times(1)).save(volunteerOrganization);
     }
 
     @Test
     void testGetVolunteerOrganizationDetails_Success() {
-        when(volunteerOrganizationRepository.findById(1)).thenReturn(Optional.of(volunteerOrganizationEntity));
+        when(volunteerOrganizationRepository.findById(1)).thenReturn(Optional.of(volunteerOrganization));
         when(postulationRepository.findById(1)).thenReturn(Optional.of(new PostulationEntity()));
         when(dataShareRepository.findById(1)).thenReturn(Optional.of(new DataShareVolunteerOrganizationEntity()));
         when(volunteerRepository.findById(1)).thenReturn(Optional.of(new VolunteerEntity()));
@@ -105,10 +111,10 @@ class VolunteerOrganizationServiceTest {
 
     @Test
     void testGetPendingVolunteersByOrganizationId() {
-        volunteerOrganizationEntity.setId(1);
-        volunteerOrganizationEntity.setVolunteerId(1);
+        volunteerOrganization.setId(1);
+        volunteerOrganization.setVolunteerId(1);
 
-        List<VolunteerOrganizationEntity> volunteerOrganizations = List.of(volunteerOrganizationEntity);
+        List<VolunteerOrganizationEntity> volunteerOrganizations = List.of(volunteerOrganization);
 
         PostulationEntity postulationEntity = new PostulationEntity();
         postulationEntity.setVolunteerOrganizationId(1);
@@ -125,7 +131,7 @@ class VolunteerOrganizationServiceTest {
         userEntity.setEmail("john.doe@example.com");
 
         when(volunteerOrganizationRepository.findByOrganizationId(1)).thenReturn(volunteerOrganizations);
-        when(volunteerOrganizationRepository.findById(1)).thenReturn(Optional.of(volunteerOrganizationEntity));
+        when(volunteerOrganizationRepository.findById(1)).thenReturn(Optional.of(volunteerOrganization));
         when(postulationRepository.findByStatusAndVolunteerOrganizationIdIn(OrganizationStatusEnum.PENDIENTE, List.of(1))).thenReturn(postulations);
         when(volunteerRepository.findById(1)).thenReturn(Optional.of(volunteerEntity));
         when(userRepository.findById(1)).thenReturn(Optional.of(userEntity));
@@ -140,9 +146,9 @@ class VolunteerOrganizationServiceTest {
 
     @Test
     void testGetAcceptedVolunteersByOrganizationId() {
-        volunteerOrganizationEntity.setVolunteerId(1);
+        volunteerOrganization.setVolunteerId(1);
 
-        List<VolunteerOrganizationEntity> volunteerOrganizations = List.of(volunteerOrganizationEntity);
+        List<VolunteerOrganizationEntity> volunteerOrganizations = List.of(volunteerOrganization);
 
         PostulationEntity postulationEntity = new PostulationEntity();
         postulationEntity.setVolunteerOrganizationId(1);
@@ -159,7 +165,7 @@ class VolunteerOrganizationServiceTest {
         userEntity.setEmail("john.doe@example.com");
 
         when(volunteerOrganizationRepository.findByOrganizationId(1)).thenReturn(volunteerOrganizations);
-        when(volunteerOrganizationRepository.findById(1)).thenReturn(Optional.of(volunteerOrganizationEntity));
+        when(volunteerOrganizationRepository.findById(1)).thenReturn(Optional.of(volunteerOrganization));
         when(postulationRepository.findByStatusAndVolunteerOrganizationIdIn(OrganizationStatusEnum.ACEPTADO, List.of(1))).thenReturn(postulations);
         when(volunteerRepository.findById(1)).thenReturn(Optional.of(volunteerEntity));
         when(userRepository.findById(1)).thenReturn(Optional.of(userEntity));
@@ -173,10 +179,10 @@ class VolunteerOrganizationServiceTest {
 
     @Test
     void testGetRejectedVolunteersByOrganizationId() {
-        volunteerOrganizationEntity.setId(1);
-        volunteerOrganizationEntity.setVolunteerId(1);
+        volunteerOrganization.setId(1);
+        volunteerOrganization.setVolunteerId(1);
 
-        List<VolunteerOrganizationEntity> volunteerOrganizations = List.of(volunteerOrganizationEntity);
+        List<VolunteerOrganizationEntity> volunteerOrganizations = List.of(volunteerOrganization);
 
         PostulationEntity postulationEntity = new PostulationEntity();
         postulationEntity.setVolunteerOrganizationId(1);
@@ -193,7 +199,7 @@ class VolunteerOrganizationServiceTest {
         userEntity.setEmail("john.doe@example.com");
 
         when(volunteerOrganizationRepository.findByOrganizationId(1)).thenReturn(volunteerOrganizations);
-        when(volunteerOrganizationRepository.findById(1)).thenReturn(Optional.of(volunteerOrganizationEntity));
+        when(volunteerOrganizationRepository.findById(1)).thenReturn(Optional.of(volunteerOrganization));
         when(postulationRepository.findByStatusAndVolunteerOrganizationIdIn(OrganizationStatusEnum.RECHAZADO, List.of(1))).thenReturn(postulations);
         when(volunteerRepository.findById(1)).thenReturn(Optional.of(volunteerEntity));
         when(userRepository.findById(1)).thenReturn(Optional.of(userEntity));
@@ -207,7 +213,6 @@ class VolunteerOrganizationServiceTest {
 
     @Test
     void testGetOrganizationIdsByVolunteerId() {
-        VolunteerOrganizationEntity volunteerOrganization = new VolunteerOrganizationEntity();
         volunteerOrganization.setOrganizationId(100);
 
         List<VolunteerOrganizationEntity> volunteerOrganizations = List.of(volunteerOrganization);
@@ -224,7 +229,6 @@ class VolunteerOrganizationServiceTest {
 
     @Test
     void testAddVolunteerOrganizationPending_Success() {
-        VolunteerOrganizationEntity volunteerOrganization = new VolunteerOrganizationEntity();
         volunteerOrganization.setVolunteerId(1);
         volunteerOrganization.setOrganizationId(1);
 
@@ -243,7 +247,6 @@ class VolunteerOrganizationServiceTest {
 
     @Test
     void testAddVolunteerOrganizationPending_AlreadyExists() {
-        VolunteerOrganizationEntity volunteerOrganization = new VolunteerOrganizationEntity();
         volunteerOrganization.setVolunteerId(1);
         volunteerOrganization.setOrganizationId(1);
 
@@ -259,8 +262,6 @@ class VolunteerOrganizationServiceTest {
 
     @Test
     void testFindByVolunteerIdAndOrganizationId_Success() {
-        VolunteerOrganizationEntity volunteerOrganization = new VolunteerOrganizationEntity();
-
         when(volunteerOrganizationRepository.findByVolunteerIdAndOrganizationId(1, 1)).thenReturn(Optional.of(volunteerOrganization));
 
         VolunteerOrganizationEntity result = volunteerOrganizationService.findByVolunteerIdAndOrganizationId(1, 1);
@@ -293,7 +294,6 @@ class VolunteerOrganizationServiceTest {
 
     @Test
     void testGetOrganizationsByVolunteerId() {
-        VolunteerOrganizationEntity volunteerOrganization = new VolunteerOrganizationEntity();
         List<VolunteerOrganizationEntity> volunteerOrganizations = List.of(volunteerOrganization);
 
         when(volunteerOrganizationRepository.findByVolunteerId(1)).thenReturn(volunteerOrganizations);
@@ -306,7 +306,6 @@ class VolunteerOrganizationServiceTest {
 
     @Test
     void testGetVolunteersByOrganizationId() {
-        VolunteerOrganizationEntity volunteerOrganization = new VolunteerOrganizationEntity();
         List<VolunteerOrganizationEntity> volunteerOrganizations = List.of(volunteerOrganization);
 
         when(volunteerOrganizationRepository.findByOrganizationId(1)).thenReturn(volunteerOrganizations);
@@ -319,7 +318,6 @@ class VolunteerOrganizationServiceTest {
 
     @Test
     void testFindAll() {
-        VolunteerOrganizationEntity volunteerOrganization = new VolunteerOrganizationEntity();
         List<VolunteerOrganizationEntity> volunteerOrganizations = List.of(volunteerOrganization);
 
         when(volunteerOrganizationRepository.findAll()).thenReturn(volunteerOrganizations);
@@ -332,7 +330,6 @@ class VolunteerOrganizationServiceTest {
 
     @Test
     void testFindVolunteerOrganizationIdsByOrganizationId() {
-        VolunteerOrganizationEntity volunteerOrganization = new VolunteerOrganizationEntity();
         volunteerOrganization.setId(1);
 
         List<VolunteerOrganizationEntity> volunteerOrganizations = List.of(volunteerOrganization);
@@ -351,7 +348,7 @@ class VolunteerOrganizationServiceTest {
         when(volunteerRepository.existsById(1)).thenReturn(false);
 
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
-            volunteerOrganizationService.save(volunteerOrganizationEntity);
+            volunteerOrganizationService.save(volunteerOrganization);
         });
 
         assertEquals("El voluntario con ID 1 no existe.", exception.getMessage());
@@ -365,7 +362,7 @@ class VolunteerOrganizationServiceTest {
         when(organizationRepository.existsById(1)).thenReturn(false);
 
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
-            volunteerOrganizationService.save(volunteerOrganizationEntity);
+            volunteerOrganizationService.save(volunteerOrganization);
         });
 
         assertEquals("La organización con ID 1 no existe.", exception.getMessage());
@@ -387,7 +384,7 @@ class VolunteerOrganizationServiceTest {
 
     @Test
     void testGetVolunteerOrganizationDetails_PostulationNotFound() {
-        when(volunteerOrganizationRepository.findById(1)).thenReturn(Optional.of(volunteerOrganizationEntity));
+        when(volunteerOrganizationRepository.findById(1)).thenReturn(Optional.of(volunteerOrganization));
         when(postulationRepository.findById(1)).thenReturn(Optional.empty());
 
         BusinessException exception = assertThrows(BusinessException.class, () -> {
@@ -399,7 +396,7 @@ class VolunteerOrganizationServiceTest {
 
     @Test
     void testGetVolunteerOrganizationDetails_DataShareNotFound() {
-        when(volunteerOrganizationRepository.findById(1)).thenReturn(Optional.of(volunteerOrganizationEntity));
+        when(volunteerOrganizationRepository.findById(1)).thenReturn(Optional.of(volunteerOrganization));
         when(postulationRepository.findById(1)).thenReturn(Optional.of(new PostulationEntity()));
         when(dataShareRepository.findById(1)).thenReturn(Optional.empty());
 
@@ -432,7 +429,6 @@ class VolunteerOrganizationServiceTest {
     @Test
     void testGetRecentOrganizationsByVolunteerId_NoRecentPostulations() {
         Integer volunteerId = 1;
-        VolunteerOrganizationEntity volunteerOrganization = new VolunteerOrganizationEntity();
         volunteerOrganization.setId(101);
         when(volunteerOrganizationRepository.findByVolunteerId(volunteerId))
                 .thenReturn(Arrays.asList(volunteerOrganization));
@@ -442,6 +438,95 @@ class VolunteerOrganizationServiceTest {
         assertTrue(recentOrganizations.isEmpty());
     }
 
+    @Test
+    void testFindAcceptedVolunteerOrganizationsByOrganizationId() {
+        when(volunteerOrganizationRepository.findByOrganizationId(1))
+                .thenReturn(List.of(volunteerOrganization));
+        when(postulationRepository.findByStatusAndVolunteerOrganizationIdIn(OrganizationStatusEnum.ACEPTADO, List.of(1)))
+                .thenReturn(List.of(postulation));
+        when(volunteerOrganizationRepository.findById(1))
+                .thenReturn(Optional.of(volunteerOrganization));
 
+        List<VolunteerOrganizationEntity> result = volunteerOrganizationService.findAcceptedVolunteerOrganizationsByOrganizationId(1);
 
+        assertEquals(1, result.size());
+        assertEquals(volunteerOrganization, result.get(0));
+        verify(volunteerOrganizationRepository, times(1)).findByOrganizationId(1);
+    }
+
+    @Test
+    void testCountAcceptedVolunteerOrganizationsByOrganizationId() {
+        when(volunteerOrganizationRepository.findByOrganizationId(1))
+                .thenReturn(List.of(volunteerOrganization));
+        when(postulationRepository.findByStatusAndVolunteerOrganizationIdIn(OrganizationStatusEnum.ACEPTADO, List.of(1)))
+                .thenReturn(List.of(postulation));
+
+        long count = volunteerOrganizationService.countAcceptedVolunteerOrganizationsByOrganizationId(1);
+
+        assertEquals(1, count);
+        verify(postulationRepository, times(1)).findByStatusAndVolunteerOrganizationIdIn(OrganizationStatusEnum.ACEPTADO, List.of(1));
+    }
+
+    @Test
+    void testFindFiveVolunteer() {
+        VolunteerEntity volunteer = new VolunteerEntity();
+        volunteer.setId(1);
+        volunteer.setUserId(100);
+
+        when(volunteerOrganizationRepository.findByOrganizationId(1))
+                .thenReturn(List.of(volunteerOrganization));
+        when(postulationRepository.findByStatusAndVolunteerOrganizationIdIn(OrganizationStatusEnum.ACEPTADO, List.of(1)))
+                .thenReturn(List.of(postulation));
+        when(volunteerOrganizationRepository.findById(1))
+                .thenReturn(Optional.of(volunteerOrganization));
+        when(volunteerRepository.findById(1))
+                .thenReturn(Optional.of(volunteer));
+
+        List<VolunteerEntity> result = volunteerOrganizationService.findFiveVolunteer(1);
+
+        assertEquals(1, result.size());
+        assertEquals(volunteer.getId(), result.get(0).getId());
+        verify(volunteerRepository, times(1)).findById(1);
+    }
+
+    @Test
+    void testGetRecentOrganizationsByVolunteerId() {
+        VolunteerOrganizationEntity volunteerOrganization1 = new VolunteerOrganizationEntity();
+        volunteerOrganization1.setId(1);
+        volunteerOrganization1.setOrganizationId(100);
+        VolunteerOrganizationEntity volunteerOrganization2 = new VolunteerOrganizationEntity();
+        volunteerOrganization2.setId(2);
+        volunteerOrganization2.setOrganizationId(101);
+
+        PostulationEntity postulation1 = new PostulationEntity();
+        postulation1.setVolunteerOrganizationId(1);
+        postulation1.setRegistrationDate(LocalDate.of(2024, 10, 20));
+        PostulationEntity postulation2 = new PostulationEntity();
+        postulation2.setVolunteerOrganizationId(2);
+        postulation2.setRegistrationDate(LocalDate.of(2024, 10, 18));
+
+        OrganizationEntity organization1 = new OrganizationEntity();
+        organization1.setId(100);
+        OrganizationEntity organization2 = new OrganizationEntity();
+        organization2.setId(101);
+
+        when(volunteerOrganizationRepository.findByVolunteerId(1))
+                .thenReturn(Arrays.asList(volunteerOrganization1, volunteerOrganization2));
+        when(postulationRepository.findByVolunteerOrganizationIdIn(List.of(1, 2)))
+                .thenReturn(Arrays.asList(postulation1, postulation2));
+        when(volunteerOrganizationRepository.findById(1))
+                .thenReturn(Optional.of(volunteerOrganization1));
+        when(volunteerOrganizationRepository.findById(2))
+                .thenReturn(Optional.of(volunteerOrganization2));
+        when(organizationRepository.findAllById(List.of(100, 101)))
+                .thenReturn(List.of(organization1, organization2));
+
+        List<OrganizationEntity> recentOrganizations = volunteerOrganizationService.getRecentOrganizationsByVolunteerId(1);
+
+        assertEquals(2, recentOrganizations.size());
+        assertEquals(organization1.getId(), recentOrganizations.get(0).getId());
+        assertEquals(organization2.getId(), recentOrganizations.get(1).getId());
+
+        verify(organizationRepository, times(1)).findAllById(List.of(100, 101));
+    }
 }

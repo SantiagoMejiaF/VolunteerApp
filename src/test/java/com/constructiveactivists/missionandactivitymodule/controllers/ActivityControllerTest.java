@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,14 +43,12 @@ class ActivityControllerTest {
 
     private ActivityEntity mockActivity;
     private ActivityRequest mockActivityRequest;
-    private ReviewEntity mockReview;
-    private AttendanceEntity mockAttendance;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        mockReview = new ReviewEntity();
+        ReviewEntity mockReview = new ReviewEntity();
         mockReview.setId(1);
         mockReview.setDescription("Great activity, well organized.");
         mockReview.setCreationDate(LocalDate.of(2024, 9, 3));
@@ -57,7 +56,7 @@ class ActivityControllerTest {
         mockReview.setRating(5);
         mockReview.setImageUrls(List.of("image1.jpg", "image2.jpg"));
 
-        mockAttendance = new AttendanceEntity();
+        AttendanceEntity mockAttendance = new AttendanceEntity();
         mockAttendance.setId(1);
         mockAttendance.setVolunteerId(101);
         mockAttendance.setCheckInTime(LocalTime.of(8, 0));
@@ -344,5 +343,26 @@ class ActivityControllerTest {
         assertEquals(totalBeneficiaries, response.getBody());
 
         verify(activityService, times(1)).getTotalBeneficiariesImpactedByVolunteer(volunteerId);
+    }
+
+    @Test
+    void testGetActivitiesCountByVolunteerAndYear() {
+        int volunteerId = 1;
+        int year = 2024;
+        Map<String, Long> expectedActivitiesCount = Map.of(
+                "Enero", 5L,
+                "Febrero", 3L,
+                "Marzo", 7L
+        );
+
+        when(activityService.getActivitiesCountByVolunteerAndYearInSpanish(volunteerId, year)).thenReturn(expectedActivitiesCount);
+
+        ResponseEntity<Map<String, Long>> response = activityController.getActivitiesCountByVolunteerAndYear(volunteerId, year);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(expectedActivitiesCount, response.getBody());
+
+        verify(activityService, times(1)).getActivitiesCountByVolunteerAndYearInSpanish(volunteerId, year);
     }
 }

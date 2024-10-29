@@ -147,4 +147,14 @@ public interface VolunteerAPI {
     ResponseEntity<List<RankedOrganizationResponse>> matchVolunteerWithOrganizations(
             @PathVariable("volunteerId") Integer volunteerId,
             @RequestParam(name = "numberOfMatches") int numberOfMatches);
+
+
+    @Operation(summary = "Eliminar la inscripción de un voluntario de una actividad")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Voluntario eliminado de la actividad exitosamente"),
+            @ApiResponse(responseCode = "404", description = "No encontrado"),
+            @ApiResponse(responseCode = "409", description = "Conflicto: Solo se permite la eliminación 2 días antes de la actividad")
+    })
+    @DeleteMapping("/{volunteerId}/activities/{activityId}/remove")
+    ResponseEntity<String> removeVolunteerFromActivity(@PathVariable("volunteerId") Integer volunteerId, @PathVariable("activityId") Integer activityId);
 }
