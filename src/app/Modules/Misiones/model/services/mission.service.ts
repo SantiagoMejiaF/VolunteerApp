@@ -39,4 +39,14 @@ export class MissionsService {
     createMission(mission: Mission): Observable<Mission> {
         return this.http.post<Mission>(`${this.apiUrl}/missions`, mission);
     }
+
+    getActivityById(activityId: number): Observable<any> {
+        const url = `${this.apiUrl}/activities/${activityId}`;
+        return this.http.get<any>(url);
+    }
+
+    getActivityCoordinator(coordinatorId: number): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/activity-coordinators/${coordinatorId}`);
+    }
+
 }

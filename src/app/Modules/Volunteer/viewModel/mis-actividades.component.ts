@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { VolunteerService } from '../model/services/volunteer.service';
 
@@ -7,7 +7,7 @@ import { VolunteerService } from '../model/services/volunteer.service';
   templateUrl: '../view/mis-actividades.component.html',
   styleUrls: ['../styles/mis-actividades.component.css']
 })
-export class MisActividadesComponent implements OnInit, AfterViewInit {
+export class MisActividadesComponent implements OnInit {
   public activities: any[] = []; // Variable para almacenar las actividades obtenidas
   volunteerId!: number; // Variable para almacenar el ID del voluntario
 
@@ -23,16 +23,14 @@ export class MisActividadesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit(): void {
-    this.initializeDataTable(); // Inicializar DataTable después de que la vista esté cargada
-  }
-
   // Método para cargar actividades del voluntario
   loadActivities(volunteerId: number): void {
     this.volunteerService.getActivitiesByVolunteerId(volunteerId).subscribe(
       (activities) => {
         this.activities = activities; // Guardar las actividades obtenidas
-        this.initializeDataTable(); // Inicializar DataTable con las actividades
+        setTimeout(() => {
+          this.initializeDataTable(); // Inicializar DataTable después de que las actividades se carguen
+        }, 100); // Un pequeño retraso para asegurar que la tabla esté renderizada
       },
       (error) => {
         console.error('Error al obtener actividades:', error); // Manejar error
@@ -61,23 +59,21 @@ export class MisActividadesComponent implements OnInit, AfterViewInit {
     if ($.fn.dataTable.isDataTable('#datatableActividadesO')) {
       $('#datatableActividadesO').DataTable().destroy();
     }
-    setTimeout(() => {
-      $('#datatableActividadesO').DataTable({
-        pagingType: 'full_numbers',
-        pageLength: 5,
-        processing: true,
-        lengthMenu: [5, 10, 25],
-        scrollX: true,
-        language: {
-          info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
-          search: '<span style="font-size: 0.875rem;">Buscar</span>',
-          infoEmpty: '<span style="font-size: 0.875rem;">No hay registros</span>',
-          infoFiltered: '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
-          lengthMenu: '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
-          zeroRecords: '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
-        }
-      });
-    }, 1);
+    $('#datatableActividadesO').DataTable({
+      pagingType: 'full_numbers',
+      pageLength: 5,
+      processing: true,
+      lengthMenu: [5, 10, 25],
+      scrollX: true,
+      language: {
+        info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
+        search: '<span style="font-size: 0.875rem;">Buscar</span>',
+        infoEmpty: '<span style="font-size: 0.875rem;">No hay registros</span>',
+        infoFiltered: '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
+        lengthMenu: '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
+        zeroRecords: '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
+      }
+    });
   }
 
   verDetalles(id: number): void {

@@ -1,15 +1,21 @@
 .column1,
 .column2 {
-  background-color: white; /* Fondo blanco */
-  border-radius: 20px; /* Bordes redondeados */
-  padding: 20px; /* Espaciado interno */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  background-color: white;
+  /* Fondo blanco */
+  border-radius: 20px;
+  /* Bordes redondeados */
+  padding: 20px;
+  /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Sombra para darle profundidad */
   margin-bottom: 20px;
 }
+
 .column1 h2 {
   font-weight: 600;
   font-size: 20px;
 }
+
 /* Estilos generales */
 .container {
   max-width: 850px;
@@ -82,29 +88,56 @@ hr {
 /* Media query para pantallas pequeñas */
 @media (max-width: 768px) {
   .profile-img {
-    display: none; /* Oculta la imagen de perfil en pantallas pequeñas */
+    display: none;
+    /* Oculta la imagen de perfil en pantallas pequeñas */
   }
 
   .card-title {
-    font-size: 1.5rem; /* Reduce el tamaño del título en pantallas pequeñas */
+    font-size: 1.5rem;
+    /* Reduce el tamaño del título en pantallas pequeñas */
   }
 
   .custom-img {
-    height: 200px; /* Ajusta la altura de la imagen de fondo para pantallas más pequeñas */
+    height: 200px;
+    /* Ajusta la altura de la imagen de fondo para pantallas más pequeñas */
   }
 }
+
 .btn {
   background: #fb9778;
   color: white !important;
   border: none;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-.back{
+
+.back {
   background: none;
   border-radius: 50%;
-  border:none !important;
-  padding:6px 12px 6px 12px;
+  border: none !important;
+  padding: 6px 12px 6px 12px;
 }
-.back:hover{
+
+.back:hover {
   background: #ECEAE9;
+}
+
+.line-separator {
+  border-left: 1px solid gray;
+  height: auto;
+  margin-left: 0;
+  /* Elimina el margen si existe */
+  margin-right: 0;
+  /* Elimina el margen si existe */
+}
+
+.ml-0 {
+  margin-left: 0 !important;
+  /* Asegúrate de que no haya margen izquierdo */
+}
+
+.profile-img {
+  width: 50px;
+  /* Ajusta según el tamaño que prefieras */
+  height: 50px;
+  /* Ajusta según el tamaño que prefieras */
 }

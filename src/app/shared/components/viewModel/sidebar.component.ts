@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-sidebar',
   templateUrl: '../view/sidebar.component.html',
@@ -9,6 +10,7 @@ export class SidebarComponent implements OnInit {
   userName: string = '';
   userEmail: string = '';
   userRole: string = '';
+  userImage: SafeUrl = ''
   isSidebarExpanded: boolean = false; // Controla la expansión del sidebar
   isMobileSidebarVisible: boolean = false; // Controla si el sidebar es visible en móvil
 
@@ -28,9 +30,11 @@ export class SidebarComponent implements OnInit {
     this.userName = `${userInfo.firstName} ${userInfo.lastName}`;
     this.userEmail = userInfo.email;
     this.userRole = localStorage.getItem('role') || '';
+    this.userImage = this.sanitizer.bypassSecurityTrustUrl(userInfo.image || 'assets/img/default-user.png');
   }
 
-  constructor(private router: Router) { }
+
+  constructor(private router: Router, private sanitizer: DomSanitizer) { }
   // Alternar expansión del sidebar
   toggleSidebar(): void {
     if (window.innerWidth <= 768) { // Si es móvil, mostrar u ocultar el sidebar móvil

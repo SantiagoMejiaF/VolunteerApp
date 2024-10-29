@@ -146,11 +146,14 @@
                     </div>
                 </div>
 
-                <img src="assets/img/user3.png" alt="User" class="user-img" (click)="toggleMenu()">
+                <img [src]="userImage" alt="User" class="user-img" (click)="toggleMenu()"
+                    (error)="userImage='assets/img/default-user.png'">
+
                 <div *ngIf="isMenuVisible" class="user-menu">
                     <div class="user-profile-container">
                         <div class="user-profile-header">
-                            <img src="assets/img/user3.png" alt="User" class="user2-img">
+                            <img [src]="userImage" alt="User" class="user2-img"
+                                (error)="userImage='assets/img/default-user.png'">
                             <div class="user-info">
                                 <h3>{{ userName }}</h3>
                                 <p>{{ userRole }}</p>
