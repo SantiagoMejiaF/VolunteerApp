@@ -163,7 +163,7 @@ public class DashboardVolunteerService {
 
                         Optional<PostulationEntity> postulation = Optional.ofNullable(postulationService.findById(volunteerOrg.getId()));
                         if (postulation.map(PostulationEntity::getStatus).orElse(null) == OrganizationStatusEnum.ACEPTADO) {
-                            long authorizedVolunteers = this.countAuthorizedVolunteersByVolunteerId(volunteerId);
+                            long authorizedVolunteers = volunteerService.countAuthorizedVolunteersByOrganizationId(organization.get().getId());
                             return new CardsOrganizationVolunteerResponse(
                                     organization.get().getId(),
                                     organization.get().getOrganizationName(),
@@ -179,10 +179,6 @@ public class DashboardVolunteerService {
                 })
                 .filter(Objects::nonNull)
                 .toList();
-    }
-    public long countAuthorizedVolunteersByVolunteerId(Integer volunteerId) {
-        List<Integer> organizationIds = volunteerOrganizationService.getOrganizationIdsByVolunteerId(volunteerId);
-        return postulationService.countAuthorizedVolunteersByOrganizationIds(organizationIds);
     }
 
     public List<VolunteerEntity> getTenRecentVolunteers() {

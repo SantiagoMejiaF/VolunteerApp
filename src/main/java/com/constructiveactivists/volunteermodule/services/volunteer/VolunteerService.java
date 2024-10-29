@@ -291,9 +291,10 @@ public class VolunteerService {
     }
 
     public long countAuthorizedVolunteersByOrganizationId(Integer organizationId) {
-        List<Integer> organizationIds = List.of(organizationId);
-        return postulationService.countAuthorizedVolunteersByOrganizationIds(organizationIds);
+        Map<Integer, Long> acceptedVolunteersCount = postulationService.countAcceptedVolunteers();
+        return acceptedVolunteersCount.getOrDefault(organizationId, 0L);
     }
+
 
     Map<MissionEntity, Integer> calculateMissionMatchScores(List<InterestEnum> volunteerInterests,
                                                             List<SkillEnum> volunteerSkills,

@@ -83,10 +83,10 @@ public interface VolunteerOrganizationAPI {
     ResponseEntity<List<VolunteerEntity>> getRecentAcceptedFiveVolunteersByOrganizationId(
             @PathVariable Integer organizationId);
 
-    @Operation(summary = "Obtener el contador de los voluntarios aceptador por una organización")
+    @Operation(summary = "Obtener el numero total de los voluntarios aceptados por una organización")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa")
     })
-    @GetMapping("/recent/count/accepted/{organizationId}")
+    @GetMapping("/count/accepted/{organizationId}")
     ResponseEntity<Long> countAcceptedVolunteers(@PathVariable Integer organizationId);
 }
