@@ -79,7 +79,7 @@ public interface VolunteerOrganizationAPI {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa")
     })
-    @GetMapping("/recent/accepted/{organizationId}")
+    @GetMapping("/recent/list/accepted/{organizationId}")
     ResponseEntity<List<VolunteerEntity>> getRecentAcceptedFiveVolunteersByOrganizationId(
             @PathVariable Integer organizationId);
 
@@ -87,6 +87,6 @@ public interface VolunteerOrganizationAPI {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa")
     })
-    @GetMapping("/recent/accepted/{organizationId}")
+    @GetMapping("/recent/count/accepted/{organizationId}")
     ResponseEntity<Long> countAcceptedVolunteers(@PathVariable Integer organizationId);
 }
