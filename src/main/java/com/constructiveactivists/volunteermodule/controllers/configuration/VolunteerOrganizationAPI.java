@@ -4,6 +4,7 @@ import com.constructiveactivists.organizationmodule.entities.organization.Organi
 import com.constructiveactivists.volunteermodule.controllers.request.volunteerorganization.VolunteerOrganizationRequest;
 import com.constructiveactivists.volunteermodule.controllers.response.StatusVolunteerOrganizationResponse;
 import com.constructiveactivists.volunteermodule.controllers.response.VolunteerOrganizationResponse;
+import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -72,5 +73,13 @@ public interface VolunteerOrganizationAPI {
             @ApiResponse(responseCode = "200", description = "Operación exitosa")
     })
     @GetMapping("/recent/{volunteerId}")
-    ResponseEntity<List<OrganizationEntity>> getRecentfiveOrganizationsByVolunteerId(@PathVariable Integer volunteerId);
+    ResponseEntity<List<OrganizationEntity>> getRecentFiveOrganizationsByVolunteerId(@PathVariable Integer volunteerId);
+
+    @Operation(summary = "Obtener los últimos cinco voluntarios aceptados por una organización")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/recent/accepted/{organizationId}")
+    ResponseEntity<List<VolunteerEntity>> getRecentAcceptedFiveVolunteersByOrganizationId(
+            @PathVariable Integer organizationId);
 }

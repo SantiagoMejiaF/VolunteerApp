@@ -25,6 +25,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.RELACION_ORGANIZACION_VOLUNTARIO_NOT_FOUND;
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.VOLUNTEER_NOT_FOUND;
+
 @Service
 @AllArgsConstructor
 public class VolunteerOrganizationService {
@@ -220,4 +223,29 @@ public class VolunteerOrganizationService {
                         .orElseThrow(() -> new BusinessException("Volunteer organization not found")))
                 .toList();
     }
+
+    public List<VolunteerEntity> findFiveVolunteer(Integer organizationId) {
+        List<Integer> volunteerOrganizationIds = volunteerOrganizationRepository.findByOrganizationId(organizationId)
+                .stream()
+                .map(VolunteerOrganizationEntity::getId)
+                .toList();
+        if (volunteerOrganizationIds.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<PostulationEntity> acceptedPostulations = postulationRepository.findByStatusAndVolunteerOrganizationIdIn(
+                OrganizationStatusEnum.ACEPTADO, volunteerOrganizationIds);
+        return acceptedPostulations.stream()
+                .sorted(Comparator.comparing(PostulationEntity::getRegistrationDate).reversed())
+                .limit(5)
+                .map(postulation -> {
+                    VolunteerOrganizationEntity volunteerOrganization = volunteerOrganizationRepository
+                            .findById(postulation.getVolunteerOrganizationId())
+                            .orElseThrow(() -> new BusinessException(RELACION_ORGANIZACION_VOLUNTARIO_NOT_FOUND));
+
+                    return volunteerRepository.findById(volunteerOrganization.getVolunteerId())
+                            .orElseThrow(() -> new BusinessException(VOLUNTEER_NOT_FOUND));
+                })
+                .toList();
+    }
+
 }

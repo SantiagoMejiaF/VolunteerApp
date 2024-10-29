@@ -5,10 +5,12 @@ import com.constructiveactivists.volunteermodule.controllers.configuration.Volun
 import com.constructiveactivists.volunteermodule.controllers.request.volunteerorganization.VolunteerOrganizationRequest;
 import com.constructiveactivists.volunteermodule.controllers.response.StatusVolunteerOrganizationResponse;
 import com.constructiveactivists.volunteermodule.controllers.response.VolunteerOrganizationResponse;
+import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermodule.mappers.volunteerorganization.VolunteerOrganizationMapper;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.VolunteerOrganizationService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,12 +65,19 @@ public class VolunteerOrganizationController implements VolunteerOrganizationAPI
     }
 
     @Override
-    public ResponseEntity<List<OrganizationEntity>> getRecentfiveOrganizationsByVolunteerId(@PathVariable Integer volunteerId) {
+    public ResponseEntity<List<OrganizationEntity>> getRecentFiveOrganizationsByVolunteerId(@PathVariable Integer volunteerId) {
         List<OrganizationEntity> organizations = volunteerOrganizationService.getRecentOrganizationsByVolunteerId(volunteerId);
         if (organizations.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(organizations);
+    }
+
+    @Override
+    public ResponseEntity<List<VolunteerEntity>> getRecentAcceptedFiveVolunteersByOrganizationId(
+            @PathVariable Integer organizationId) {
+        List<VolunteerEntity> acceptedVolunteers = volunteerOrganizationService.findFiveVolunteer(organizationId);
+        return new ResponseEntity<>(acceptedVolunteers, acceptedVolunteers.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);
     }
 
 }

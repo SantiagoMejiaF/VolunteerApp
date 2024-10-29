@@ -118,8 +118,4 @@ public class VolunteerController implements VolunteerAPI {
         }
     }
 
-    public ResponseEntity<List<VolunteerEntity>> getLastFiveVolunteers() {
-        List<VolunteerEntity> lastFiveVolunteers = volunteerService.getLastFiveVolunteers();
-        return ResponseEntity.ok(lastFiveVolunteers);
-    }
 }
