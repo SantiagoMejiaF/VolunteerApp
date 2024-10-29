@@ -14,6 +14,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -89,5 +91,42 @@ class ReviewControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertTrue(Objects.requireNonNull(response.getBody()).contains("Esta actividad ya tiene una reseña"));
         verify(reviewService, times(1)).createReviewForActivity(anyInt(), any(ReviewEntity.class));
+    }
+
+    @Test
+    void testGetReviewsByVolunteerId_WithReviews() {
+        Integer volunteerId = 1;
+        ReviewEntity review1 = new ReviewEntity();
+        review1.setId(1);
+        review1.setDescription("Muy buena actividad");
+
+        ReviewEntity review2 = new ReviewEntity();
+        review2.setId(2);
+        review2.setDescription("Actividad satisfactoria");
+
+        List<ReviewEntity> expectedReviews = List.of(review1, review2);
+
+        when(reviewService.getReviewsByVolunteerId(volunteerId)).thenReturn(expectedReviews);
+
+        ResponseEntity<List<ReviewEntity>> response = reviewController.getReviewsByVolunteerId(volunteerId);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedReviews, response.getBody());
+        verify(reviewService, times(1)).getReviewsByVolunteerId(volunteerId);
+    }
+
+    @Test
+    void testGetReviewsByVolunteerId_NoReviews() {
+        Integer volunteerId = 1;
+
+        when(reviewService.getReviewsByVolunteerId(volunteerId)).thenReturn(Collections.emptyList());
+
+        ResponseEntity<List<ReviewEntity>> response = reviewController.getReviewsByVolunteerId(volunteerId);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        assertNull(response.getBody());
+        verify(reviewService, times(1)).getReviewsByVolunteerId(volunteerId);
     }
 }

@@ -21,4 +21,9 @@ public class VolunteerGroupMembershipService {
         membership.setVolunteerId(volunteerId);
         volunteerGroupMembershipRepository.save(membership);
     }
+
+    public void removeVolunteerFromGroup(Integer groupId, Integer volunteerId) {
+        volunteerGroupMembershipRepository.deleteByGroupIdAndVolunteerId(groupId, volunteerId);
+    }
+
 }

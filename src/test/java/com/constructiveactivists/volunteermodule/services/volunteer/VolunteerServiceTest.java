@@ -292,7 +292,6 @@ class VolunteerServiceTest {
     void testAddVolunteerActivity() {
         VolunteeringInformationEntity volunteeringInfo = new VolunteeringInformationEntity();
         volunteeringInfo.setActivitiesCompleted(new ArrayList<>());
-        VolunteerEntity volunteerEntity = new VolunteerEntity();
         volunteerEntity.setVolunteeringInformation(volunteeringInfo);
         when(volunteerRepository.findById(1)).thenReturn(Optional.of(volunteerEntity));
         volunteerService.addVolunteerActivity(1, 101);
@@ -725,5 +724,64 @@ class VolunteerServiceTest {
         verify(missionRepository, times(1)).findMissionsByInterestsAndSkills(anyList(), anyList());
     }
 
+    @Test
+    void testRemoveVolunteerFromActivity_Success() {
+        VolunteerGroupEntity volunteerGroup = new VolunteerGroupEntity();
+        volunteerGroup.setId(10);
+        volunteerGroup.setCurrentVolunteers(5);
 
+        ActivityEntity activity = new ActivityEntity();
+        activity.setDate(LocalDate.now().plusDays(3));
+
+        when(volunteerGroupService.getVolunteerGroupByActivityId(1)).thenReturn(Optional.of(volunteerGroup));
+        when(activityService.getById(1)).thenReturn(Optional.of(activity));
+        when(volunteerGroupMembershipService.isVolunteerInGroup(10, 1)).thenReturn(true);
+
+        volunteerService.removeVolunteerFromActivity(1, 1);
+
+        verify(volunteerGroupMembershipService, times(1)).removeVolunteerFromGroup(10, 1);
+        assertEquals(4, volunteerGroup.getCurrentVolunteers());
+        verify(volunteerGroupService, times(1)).save(volunteerGroup);
+    }
+
+    @Test
+    void testRemoveVolunteerFromActivity_NotEnoughDays() {
+        VolunteerGroupEntity volunteerGroup = new VolunteerGroupEntity();
+        volunteerGroup.setId(10);
+        volunteerGroup.setCurrentVolunteers(5);
+
+        ActivityEntity activity = new ActivityEntity();
+        activity.setDate(LocalDate.now().plusDays(1));
+
+        when(volunteerGroupService.getVolunteerGroupByActivityId(1)).thenReturn(Optional.of(volunteerGroup));
+        when(activityService.getById(1)).thenReturn(Optional.of(activity));
+
+        BusinessException exception = assertThrows(BusinessException.class, () -> {
+            volunteerService.removeVolunteerFromActivity(1, 1);
+        });
+
+        assertEquals("Solo puedes eliminar la inscripción hasta 2 días antes del inicio de la actividad.", exception.getMessage());
+        verify(volunteerGroupMembershipService, never()).removeVolunteerFromGroup(anyInt(), anyInt());
+    }
+
+    @Test
+    void testRemoveVolunteerFromActivity_VolunteerNotInGroup() {
+        VolunteerGroupEntity volunteerGroup = new VolunteerGroupEntity();
+        volunteerGroup.setId(10);
+        volunteerGroup.setCurrentVolunteers(5);
+
+        ActivityEntity activity = new ActivityEntity();
+        activity.setDate(LocalDate.now().plusDays(3));
+
+        when(volunteerGroupService.getVolunteerGroupByActivityId(1)).thenReturn(Optional.of(volunteerGroup));
+        when(activityService.getById(1)).thenReturn(Optional.of(activity));
+        when(volunteerGroupMembershipService.isVolunteerInGroup(10, 1)).thenReturn(false);
+
+        BusinessException exception = assertThrows(BusinessException.class, () -> {
+            volunteerService.removeVolunteerFromActivity(1, 1);
+        });
+
+        assertEquals("El voluntario no está registrado en el grupo.", exception.getMessage());
+        verify(volunteerGroupMembershipService, never()).removeVolunteerFromGroup(anyInt(), anyInt());
+    }
 }

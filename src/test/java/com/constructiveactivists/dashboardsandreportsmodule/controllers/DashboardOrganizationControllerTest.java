@@ -1,7 +1,10 @@
 package com.constructiveactivists.dashboardsandreportsmodule.controllers;
 
+import com.constructiveactivists.dashboardsandreportsmodule.controllers.response.CardsOrganizationVolunteerResponse;
 import com.constructiveactivists.dashboardsandreportsmodule.services.DashboardOrganizationService;
+import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import org.junit.jupiter.api.Test;
@@ -202,5 +205,89 @@ class DashboardOrganizationControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(expectedTotalBeneficiaries, response.getBody());
         verify(dashboardOrganizationService, times(1)).getTotalBeneficiariesImpactedByOrganization(organizationId);
+    }
+
+    @Test
+    void testGetVolunteerAvailabilityCountByOrganization() {
+        int organizationId = 1;
+        Map<AvailabilityEnum, Long> expectedAvailabilityCount = Map.of(
+                AvailabilityEnum.LUNES, 5L,
+                AvailabilityEnum.MARTES, 10L
+        );
+
+        when(dashboardOrganizationService.getVolunteerAvailabilityCountByOrganization(organizationId))
+                .thenReturn(expectedAvailabilityCount);
+
+        ResponseEntity<Map<AvailabilityEnum, Long>> response =
+                dashboardOrganizationController.getVolunteerAvailabilityCountByOrganization(organizationId);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedAvailabilityCount, response.getBody());
+        verify(dashboardOrganizationService, times(1)).getVolunteerAvailabilityCountByOrganization(organizationId);
+    }
+
+    @Test
+    void testGetHistoryByOrganization() {
+        int organizationId = 1;
+        List<ReviewEntity> expectedReviews = List.of(new ReviewEntity());
+
+        when(dashboardOrganizationService.getReviewsByOrganization(organizationId)).thenReturn(expectedReviews);
+
+        ResponseEntity<List<ReviewEntity>> response = dashboardOrganizationController.getHistoryByOrganization(organizationId);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedReviews, response.getBody());
+        verify(dashboardOrganizationService, times(1)).getReviewsByOrganization(organizationId);
+    }
+
+    @Test
+    void testGetCoordinatorReviewHistory() {
+        int userId = 1;
+        List<ReviewEntity> expectedReviews = List.of(new ReviewEntity());
+
+        when(dashboardOrganizationService.getCoordinatorReviewHistory(userId)).thenReturn(expectedReviews);
+
+        ResponseEntity<List<ReviewEntity>> response = dashboardOrganizationController.getCoordinatorReviewHistory(userId);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedReviews, response.getBody());
+        verify(dashboardOrganizationService, times(1)).getCoordinatorReviewHistory(userId);
+    }
+
+    @Test
+    void testGetActivitiesCountByOrganizationAndYear() {
+        int organizationId = 1;
+        int year = 2024;
+        Map<String, Long> expectedActivitiesCount = Map.of(
+                "January", 5L,
+                "February", 3L
+        );
+
+        when(dashboardOrganizationService.getActivitiesCountByOrganizationAndYear(organizationId, year))
+                .thenReturn(expectedActivitiesCount);
+
+        ResponseEntity<Map<String, Long>> response = dashboardOrganizationController.getActivitiesCountByOrganizationAndYear(organizationId, year);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedActivitiesCount, response.getBody());
+        verify(dashboardOrganizationService, times(1)).getActivitiesCountByOrganizationAndYear(organizationId, year);
+    }
+
+    @Test
+    void testGetAllOrganizations() {
+        List<CardsOrganizationVolunteerResponse> expectedOrganizations = List.of(new CardsOrganizationVolunteerResponse());
+
+        when(dashboardOrganizationService.getAllOrganizationsCards()).thenReturn(expectedOrganizations);
+
+        ResponseEntity<List<CardsOrganizationVolunteerResponse>> response = dashboardOrganizationController.getAllOrganizations();
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedOrganizations, response.getBody());
+        verify(dashboardOrganizationService, times(1)).getAllOrganizationsCards();
     }
 }

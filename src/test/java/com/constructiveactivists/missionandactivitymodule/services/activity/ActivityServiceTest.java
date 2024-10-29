@@ -1,7 +1,9 @@
 package com.constructiveactivists.missionandactivitymodule.services.activity;
 
+import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.PersonalDataCommunityLeaderEntity;
+import com.constructiveactivists.missionandactivitymodule.entities.activity.ReviewEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupEntity;
@@ -13,6 +15,7 @@ import com.constructiveactivists.organizationmodule.repositories.ActivityCoordin
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteeringInformationEntity;
 import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
+import com.constructiveactivists.volunteermodule.services.volunteer.VolunteerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,10 +24,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.*;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -35,7 +35,6 @@ class ActivityServiceTest {
     @Mock
     private VolunteerGroupService volunteerGroupService;
 
-
     @Mock
     private MissionRepository missionRepository;
 
@@ -44,7 +43,6 @@ class ActivityServiceTest {
 
     @Mock
     private ActivityRepository activityRepository;
-
 
     @Mock
     private VolunteerGroupRepository groupRepository;
@@ -60,6 +58,12 @@ class ActivityServiceTest {
 
     @Mock
     private ReviewEmailService reviewEmailService;
+
+    @Mock
+    private ReviewRepository reviewRepository;
+
+    @Mock
+    private VolunteerService volunteerService;
 
     @InjectMocks
     private ActivityService activityService;
@@ -322,7 +326,7 @@ class ActivityServiceTest {
     }
 
     @Test
-     void testGetActivitiesByVolunteerAndDate() {
+    void testGetActivitiesByVolunteerAndDate() {
         ActivityEntity activity1 = new ActivityEntity();
         activity1.setId(1);
         activity1.setDate(LocalDate.of(2024, 10, 5));
@@ -340,14 +344,14 @@ class ActivityServiceTest {
     }
 
     @Test
-     void testGetActivitiesByVolunteerAndDate_NoActivities() {
+    void testGetActivitiesByVolunteerAndDate_NoActivities() {
         when(activityRepository.findByIdIn(any())).thenReturn(Collections.emptyList());
         List<ActivityEntity> activities = activityService.getActivitiesByVolunteerAndDate(1, 10, 2024);
         assertEquals(Collections.emptyList(), activities);
     }
 
     @Test
-     void testGetTotalBeneficiariesImpactedByVolunteer_ActivitiesCompleted() {
+    void testGetTotalBeneficiariesImpactedByVolunteer_ActivitiesCompleted() {
         Integer volunteerId = 1;
         VolunteerEntity volunteer = new VolunteerEntity();
         VolunteeringInformationEntity volunteeringInfo = new VolunteeringInformationEntity();
@@ -368,7 +372,7 @@ class ActivityServiceTest {
     }
 
     @Test
-     void testGetTotalBeneficiariesImpactedByVolunteer_NoActivitiesCompleted() {
+    void testGetTotalBeneficiariesImpactedByVolunteer_NoActivitiesCompleted() {
         Integer volunteerId = 1;
         VolunteerEntity volunteer = new VolunteerEntity();
         VolunteeringInformationEntity volunteeringInfo = new VolunteeringInformationEntity();
@@ -380,7 +384,7 @@ class ActivityServiceTest {
     }
 
     @Test
-     void testGetTotalBeneficiariesImpactedByVolunteer_VolunteerNotFound() {
+    void testGetTotalBeneficiariesImpactedByVolunteer_VolunteerNotFound() {
         Integer volunteerId = 1;
         when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.empty());
         int totalBeneficiaries = activityService.getTotalBeneficiariesImpactedByVolunteer(volunteerId);
@@ -389,7 +393,7 @@ class ActivityServiceTest {
     }
 
     @Test
-     void testGetCompletedActivitiesCountVolunteer_VolunteerExistsWithCompletedActivities() {
+    void testGetCompletedActivitiesCountVolunteer_VolunteerExistsWithCompletedActivities() {
         Integer volunteerId = 1;
         VolunteerEntity volunteer = new VolunteerEntity();
         VolunteeringInformationEntity volunteeringInformation = new VolunteeringInformationEntity();
@@ -405,20 +409,20 @@ class ActivityServiceTest {
     }
 
     @Test
-        void testGetCompletedActivitiesCountVolunteer_VolunteerExistsWithNoCompletedActivities() {
-            Integer volunteerId = 1;
-            VolunteerEntity volunteer = new VolunteerEntity();
-            VolunteeringInformationEntity volunteeringInformation = new VolunteeringInformationEntity();
-            volunteeringInformation.setActivitiesCompleted(Collections.emptyList());
+    void testGetCompletedActivitiesCountVolunteer_VolunteerExistsWithNoCompletedActivities() {
+        Integer volunteerId = 1;
+        VolunteerEntity volunteer = new VolunteerEntity();
+        VolunteeringInformationEntity volunteeringInformation = new VolunteeringInformationEntity();
+        volunteeringInformation.setActivitiesCompleted(Collections.emptyList());
 
-            volunteer.setVolunteeringInformation(volunteeringInformation);
+        volunteer.setVolunteeringInformation(volunteeringInformation);
 
-            when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.of(volunteer));
+        when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.of(volunteer));
 
-            int result = activityService.getCompletedActivitiesCountVolunteer(volunteerId);
+        int result = activityService.getCompletedActivitiesCountVolunteer(volunteerId);
 
-            assertEquals(0, result);
-        }
+        assertEquals(0, result);
+    }
 
     @Test
     void testGetCompletedActivitiesCountVolunteer_VolunteerDoesNotExist() {
@@ -448,4 +452,160 @@ class ActivityServiceTest {
         assertEquals(Collections.emptyList(), result);
     }
 
+    @Test
+    void testGetAverageRatingByVolunteer_Success() {
+        Integer volunteerId = 1;
+
+        VolunteerEntity volunteer = new VolunteerEntity();
+        VolunteeringInformationEntity volunteeringInfo = new VolunteeringInformationEntity();
+        volunteeringInfo.setActivitiesCompleted(List.of(1, 2, 3));
+        volunteer.setVolunteeringInformation(volunteeringInfo);
+
+        when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.of(volunteer));
+
+        ActivityEntity activity1 = new ActivityEntity();
+        activity1.setId(1);
+        ActivityEntity activity2 = new ActivityEntity();
+        activity2.setId(2);
+        ActivityEntity activity3 = new ActivityEntity();
+        activity3.setId(3);
+
+        when(activityRepository.findAllById(List.of(1, 2, 3))).thenReturn(List.of(activity1, activity2, activity3));
+
+        ReviewEntity review1 = new ReviewEntity();
+        review1.setRating(4);
+        ReviewEntity review2 = new ReviewEntity();
+        review2.setRating(5);
+        ReviewEntity review3 = new ReviewEntity();
+        review3.setRating(3);
+
+        when(reviewRepository.findByActivityIn(List.of(activity1, activity2, activity3))).thenReturn(List.of(review1, review2, review3));
+
+        Double averageRating = activityService.getAverageRatingByVolunteer(volunteerId);
+        assertEquals(4.0, averageRating);
+    }
+
+    @Test
+    void testGetAverageRatingByVolunteer_NoCompletedActivities() {
+        Integer volunteerId = 1;
+
+        when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.empty());
+
+        BusinessException exception = assertThrows(BusinessException.class, () ->
+                activityService.getAverageRatingByVolunteer(volunteerId)
+        );
+
+        assertEquals("El voluntario no tiene actividades completadas.", exception.getMessage());
+    }
+
+    @Test
+    void testGetCompletedActivitiesVolunteerList_WithActivities() {
+        Integer volunteerId = 1;
+        VolunteerEntity volunteer = new VolunteerEntity();
+        VolunteeringInformationEntity volunteeringInfo = new VolunteeringInformationEntity();
+        volunteeringInfo.setActivitiesCompleted(List.of(1, 2, 3));
+        volunteer.setVolunteeringInformation(volunteeringInfo);
+
+        List<ActivityEntity> activities = List.of(new ActivityEntity(), new ActivityEntity(), new ActivityEntity());
+
+        when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.of(volunteer));
+        when(activityRepository.findAllById(volunteeringInfo.getActivitiesCompleted())).thenReturn(activities);
+
+        List<ActivityEntity> result = activityService.getCompletedActivitiesVolunteerList(volunteerId);
+
+        assertEquals(3, result.size());
+    }
+
+    @Test
+    void testGetCompletedActivitiesVolunteerList_NoActivities() {
+        Integer volunteerId = 1;
+        VolunteerEntity volunteer = new VolunteerEntity();
+        VolunteeringInformationEntity volunteeringInfo = new VolunteeringInformationEntity();
+        volunteeringInfo.setActivitiesCompleted(Collections.emptyList());
+        volunteer.setVolunteeringInformation(volunteeringInfo);
+
+        when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.of(volunteer));
+
+        List<ActivityEntity> result = activityService.getCompletedActivitiesVolunteerList(volunteerId);
+
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void testGetCompletedActivitiesVolunteerList_VolunteerNotFound() {
+        Integer volunteerId = 1;
+
+        when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.empty());
+
+        List<ActivityEntity> result = activityService.getCompletedActivitiesVolunteerList(volunteerId);
+
+        assertTrue(result.isEmpty());
+    }
+
+
+    @Test
+    void testGetActivitiesCountByVolunteerAndYearInSpanish_WithActivities() {
+        Integer volunteerId = 1;
+        int year = 2023;
+
+        ActivityEntity activity1 = new ActivityEntity();
+        activity1.setDate(LocalDate.of(2023, 1, 15));
+        ActivityEntity activity2 = new ActivityEntity();
+        activity2.setDate(LocalDate.of(2023, 2, 5));
+        ActivityEntity activity3 = new ActivityEntity();
+        activity3.setDate(LocalDate.of(2023, 1, 20));
+
+        when(activityService.getActivitiesByVolunteerId(volunteerId)).thenReturn(List.of(activity1, activity2, activity3));
+
+        Map<String, Long> result = activityService.getActivitiesCountByVolunteerAndYearInSpanish(volunteerId, year);
+
+        assertEquals(2L, result.get("ENERO"));
+        assertEquals(1L, result.get("FEBRERO"));
+        assertEquals(0L, result.get("MARZO"));
+    }
+
+    @Test
+    void testGetActivitiesCountByVolunteerAndYearInSpanish_NoActivitiesInYear() {
+        Integer volunteerId = 1;
+        int year = 2023;
+
+        ActivityEntity activity1 = new ActivityEntity();
+        activity1.setDate(LocalDate.of(2022, 12, 30));
+        ActivityEntity activity2 = new ActivityEntity();
+        activity2.setDate(LocalDate.of(2021, 1, 1));
+
+        when(activityService.getActivitiesByVolunteerId(volunteerId)).thenReturn(List.of(activity1, activity2));
+
+        Map<String, Long> result = activityService.getActivitiesCountByVolunteerAndYearInSpanish(volunteerId, year);
+
+        assertTrue(result.values().stream().allMatch(count -> count == 0L));
+    }
+
+    @Test
+    void testGetAverageRatingByVolunteer_NoAvailableReviews() {
+        Integer volunteerId = 1;
+
+        VolunteerEntity volunteer = new VolunteerEntity();
+        VolunteeringInformationEntity volunteeringInfo = new VolunteeringInformationEntity();
+        volunteeringInfo.setActivitiesCompleted(List.of(1, 2, 3));
+        volunteer.setVolunteeringInformation(volunteeringInfo);
+
+        when(volunteerRepository.findById(volunteerId)).thenReturn(Optional.of(volunteer));
+
+        ActivityEntity activity1 = new ActivityEntity();
+        activity1.setId(1);
+        ActivityEntity activity2 = new ActivityEntity();
+        activity2.setId(2);
+        ActivityEntity activity3 = new ActivityEntity();
+        activity3.setId(3);
+
+        when(activityRepository.findAllById(List.of(1, 2, 3))).thenReturn(List.of(activity1, activity2, activity3));
+        when(reviewRepository.findByActivityIn(List.of(activity1, activity2, activity3))).thenReturn(Collections.emptyList());
+
+        BusinessException exception = assertThrows(BusinessException.class, () -> {
+            activityService.getAverageRatingByVolunteer(volunteerId);
+        });
+
+        assertEquals("El voluntario tiene actividades completadas, pero no hay reseñas disponibles.", exception.getMessage());
+    }
 }

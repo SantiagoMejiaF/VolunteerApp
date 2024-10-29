@@ -118,4 +118,9 @@ public class VolunteerController implements VolunteerAPI {
         }
     }
 
+    @Override
+    public ResponseEntity<String> removeVolunteerFromActivity(Integer volunteerId, Integer activityId) {
+        volunteerService.removeVolunteerFromActivity(volunteerId, activityId);
+        return ResponseEntity.ok("Voluntario eliminado de la actividad exitosamente");
+    }
 }
