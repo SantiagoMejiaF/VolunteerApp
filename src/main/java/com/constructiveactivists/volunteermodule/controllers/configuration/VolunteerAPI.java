@@ -134,7 +134,7 @@ public interface VolunteerAPI {
             @ApiResponse(responseCode = "409", description = "Conflicto: El voluntario ya está inscrito o el grupo está completo")
     })
     @PostMapping("/{volunteerId}/activities/{activityId}/signup")
-    ResponseEntity<Void> signUpForActivity(@PathVariable("volunteerId") Integer volunteerId, @PathVariable("activityId") Integer activityId);
+    ResponseEntity<String> signUpForActivity(@PathVariable("volunteerId") Integer volunteerId, @PathVariable("activityId") Integer activityId);
 
 
     @Operation(summary = "Realizar un match entre un voluntario y las organizaciones basadas en intereses y habilidades")

@@ -100,9 +100,9 @@ public class VolunteerController implements VolunteerAPI {
     }
 
     @Override
-    public ResponseEntity<Void> signUpForActivity(Integer volunteerId,Integer activityId) {
+    public ResponseEntity<String> signUpForActivity(Integer volunteerId,Integer activityId) {
         volunteerService.signUpForActivity(volunteerId, activityId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Voluntario inscrito exitosamente");
     }
 
     @Override

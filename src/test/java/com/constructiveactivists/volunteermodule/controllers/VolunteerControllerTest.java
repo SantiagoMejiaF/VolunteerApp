@@ -182,7 +182,7 @@ class VolunteerControllerTest {
     void testSignUpForActivity() {
         doNothing().when(volunteerService).signUpForActivity(1, 100);
 
-        ResponseEntity<Void> response = volunteerController.signUpForActivity(1, 100);
+        ResponseEntity<String> response = volunteerController.signUpForActivity(1, 100);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(volunteerService, times(1)).signUpForActivity(1, 100);
     }

@@ -149,7 +149,7 @@ public class VolunteerService {
         return volunteerRepository.save(volunteer);
     }
 
-    public void signUpForActivity(Integer activityId, Integer volunteerId) {
+    public void signUpForActivity(Integer volunteerId, Integer activityId) {
 
         VolunteerGroupEntity volunteerGroup = volunteerGroupService.getVolunteerGroupByActivityId(activityId)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró un grupo de voluntarios para la actividad con ID: " + activityId));
