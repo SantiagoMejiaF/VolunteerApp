@@ -59,7 +59,8 @@ export class VerPerfilOComponent implements OnInit {
           // Obtener el historial (timeline) de la organización
           this.organizationService.getOrganizationHistory(organizationId).subscribe(
             (historyData) => {
-              this.timelineData = historyData.map(item => ({
+              this.timelineData = historyData.map((item, index) => ({
+                id: index + 1, // Contador incremental
                 title: item.activity.title,
                 description: item.description || 'No hay descripción disponible.',
                 rating: item.rating,

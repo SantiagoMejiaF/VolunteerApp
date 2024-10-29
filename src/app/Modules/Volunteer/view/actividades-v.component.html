@@ -1,7 +1,6 @@
 <div class="container mt-5">
-  <div class="row  ">
-
-    <div class="container ">
+  <div class="row">
+    <div class="container">
       <!-- Título y calendario deben estar en el mismo sistema de columnas -->
       <div class="row">
         <div class="col-12">
@@ -10,15 +9,15 @@
           </div>
         </div>
       </div>
-    
+
       <!-- Calendario dentro del mismo contenedor de ancho completo -->
       <div class="row">
         <div class="col-12">
-          <full-calendar [options]="calendarOptions"></full-calendar>
+          <full-calendar [options]="calendarOptions"></full-calendar> <!-- Calendario -->
         </div>
       </div>
     </div>
-    
+  </div>
 
   <!-- Modal para mostrar los detalles del evento -->
   <div *ngIf="isModalOpen" class="modal" tabindex="-1" style="display: block; background: rgba(0,0,0,0.5);">
@@ -29,10 +28,10 @@
           <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p><strong>Fecha:</strong> {{ selectedEvent?.start }}</p>
-          <p><strong>Hora de inicio:</strong> {{ selectedEvent?.hourS }}</p>
-          <p><strong>Hora de fin:</strong> {{ selectedEvent?.hourE }}</p>
-          <p><strong>Descripción:</strong> {{ selectedEvent?.description }}</p>
+          <p><strong>Fecha:</strong> {{ selectedEvent?.start | date: 'dd MMMM yyyy' }}</p>
+          <p><strong>Hora de inicio:</strong> {{ selectedEvent?.start | date: 'HH:mm:ss' }}</p>
+          <p><strong>Hora de fin:</strong> {{ selectedEvent?.end | date: 'HH:mm:ss' }}</p>
+          <p><strong>Descripción:</strong> {{ selectedEvent?.extendedProps?.description }}</p>
           <p><strong>Ciudad:</strong> {{ selectedEvent?.extendedProps?.city }}</p>
           <p><strong>Dirección:</strong> {{ selectedEvent?.extendedProps?.address }}</p>
         </div>

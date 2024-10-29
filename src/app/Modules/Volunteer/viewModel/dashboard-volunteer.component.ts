@@ -10,6 +10,7 @@ import {
 } from 'ng-apexcharts';
 import { VolunteerService } from '../model/services/volunteer.service';
 import { OrganizationService } from '../../Organization/model/services/organization.service';
+import { MissionsService } from '../../Misiones/model/services/mission.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -57,6 +58,7 @@ export class DashboardVolunteerComponent implements AfterViewInit {
   constructor(
     private volunteerService: VolunteerService,
     private organizationService: OrganizationService,
+    private missionsService: MissionsService,
     private router: Router
   ) {
     const today = new Date();
@@ -98,7 +100,71 @@ export class DashboardVolunteerComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.loadDashboardData();
     this.loadOrganizations();
+    this.loadProgrammedActivities();
   }
+
+  loadProgrammedActivities() {
+    const volunteerId = Number(localStorage.getItem('volunteerId'));
+    if (!volunteerId) {
+      console.error('No se encontró volunteerId en localStorage.');
+      return;
+    }
+
+    this.volunteerService.getActivitiesByVolunteerId(volunteerId).subscribe(
+      (activities: any[]) => {
+        // Iterar sobre las actividades y buscar los coordinadores
+        activities.forEach(activity => {
+          if (activity.activityCoordinator) {
+            this.loadCoordinatorDetails(activity);
+          } else {
+            activity.responsible = 'No asignado';
+          }
+        });
+
+        // Guardamos las actividades programadas en la lista "activities"
+        this.activities = activities.map(activity => ({
+          id: activity.id,
+          time: `${activity.startTime}`, // Formato de la hora de inicio
+          name: activity.title,  // Nombre de la actividad
+          responsible: activity.responsible || 'Cargando...', // Inicialmente poner "Cargando..." si falta el nombre
+          date: new Date(activity.date)  // Convertir la fecha
+        }));
+
+        // Actualizamos el calendario
+        this.generateCalendar();
+      },
+      (error) => {
+        console.error('Error al cargar las actividades programadas', error);
+      }
+    );
+  }
+
+  loadCoordinatorDetails(activity: any) {
+    this.missionsService.getActivityCoordinator(activity.activityCoordinator).subscribe(
+      (coordinatorDetails) => {
+        if (coordinatorDetails.userId) {
+          this.organizationService.getUserDetails(coordinatorDetails.userId).subscribe(
+            (userDetails) => {
+              // Actualizamos el campo responsable de la actividad en la lista original
+              const foundActivity = this.activities.find(a => a.id === activity.id);
+              if (foundActivity) {
+                foundActivity.responsible = `${userDetails.firstName} ${userDetails.lastName}`;
+              }
+            },
+            (error) => {
+              console.error('Error al obtener detalles del usuario responsable', error);
+              activity.responsible = 'No asignado';
+            }
+          );
+        }
+      },
+      (error) => {
+        console.error('Error al obtener detalles del coordinador', error);
+        activity.responsible = 'No asignado';
+      }
+    );
+  }
+
 
   // Método para cargar las fundaciones recientes del voluntario
   loadOrganizations() {
