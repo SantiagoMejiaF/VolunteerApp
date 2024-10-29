@@ -11,6 +11,7 @@ import { OrganizationService } from '../../Organization/model/services/organizat
 export class UsuariosActivosComponent implements AfterViewInit {
   selectedUser: any = {};
   data: any[] = [];
+  dataLoaded: boolean = false;
 
   constructor(
     private adminService: AdminService,
@@ -30,6 +31,7 @@ export class UsuariosActivosComponent implements AfterViewInit {
       this.populateUserRoles(); // Llenar los roles
 
       setTimeout(() => {
+        this.dataLoaded = true;
         this.refreshDataTable(); // Refrescar DataTable después de que los datos estén listos
       }, 500);
     });
@@ -61,10 +63,7 @@ export class UsuariosActivosComponent implements AfterViewInit {
       }
     });
 
-    // Refrescar DataTable después de cargar los roles
-    setTimeout(() => {
-      this.refreshDataTable();
-    }, 500);
+    
   }
 
   refreshDataTable(): void {

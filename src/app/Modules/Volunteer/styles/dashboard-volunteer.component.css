@@ -19,7 +19,10 @@ height: 888px!important;
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
 margin-bottom:20px;
 }
-
+.selected-day {
+  background-color: #d3d3d3; /* Fondo gris claro */
+  border-radius: 50%;
+}
 
 img{
   height: 200px;
@@ -47,7 +50,7 @@ p {
   height: 100%;
 }
 #Volunteer .card-container {
-  background-image: url("/assets/img/4.svg");
+  background: #F5C620;
   background-size: cover; 
   background-repeat: no-repeat;
   background-position: center;
@@ -73,17 +76,7 @@ p {
   font-size: 18px;  
   color: #F9F7F6;
 }
-#Volunteer .card-container p {
-  font-weight: 600;  
-  font-size: 18px;  
-  color: black;
-}
-#Volunteer .card-container h3{
-  color: black;
-}
-#Volunteer .card-container i{
-  color: black;
-}
+
 h3 {
   font-weight: 600;
   font-size: 25px;

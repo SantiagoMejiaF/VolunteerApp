@@ -88,11 +88,24 @@
                     <span>Coordinadores</span>
                 </a>
             </li>
+            
             <li class="sidebar-item" *ngIf="userRole === 'ORGANIZACION'">
-                <a [routerLink]="'/verVoluntarios'" class="sidebar-link" title="Voluntarios" routerLinkActive="active">
-                    <strong><i class="bi bi-person-hearts" style="font-size: 1.2rem; color: #292C32;"></i></strong>
-                    <span>Voluntarios</span>
+                <a class="sidebar-link" (click)="toggleMenu4()">
+                    <i class="bi bi-clipboard2-heart" style="font-size: 1.2rem; color: #292C32;"></i>
+                    <span>Gestión Voluntarios</span>
                 </a>
+                <ul *ngIf="menuOpen" class="submenu">
+                    <li>
+                        <a [routerLink]="'/SolicitudesV'" class="sidebar-link" routerLinkActive="active">
+                            <i class="bi bi-shield-lock" style="font-size: 1rem;"></i> Gestionar Solicitudes
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="'/verVoluntarios'" class="sidebar-link" routerLinkActive="active">
+                            <i class="bi bi-people" style="font-size: 1rem;"></i> Voluntarios
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="sidebar-item" *ngIf="userRole === 'ORGANIZACION'">
                 <a [routerLink]="'/misiones'" class="sidebar-link" title="Misiones" routerLinkActive="active">
@@ -165,7 +178,7 @@
 
                         <hr>
 
-                        <ul class="user-menu-list">
+                        <ul class="user-menu-list" *ngIf="userRole !== 'SUPER_ADMIN'">
                             <li class="user-menu-item" (click)="goToProfile()">
                                 <i class="bi bi-person"></i>
                                 <div>

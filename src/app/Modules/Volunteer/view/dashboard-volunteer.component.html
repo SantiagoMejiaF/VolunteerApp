@@ -29,7 +29,7 @@
                     </div>
                     <div class="col-12 col-lg-4 h-100 mb-4" id="Volunteer">
                         <div class="card-container">
-                            <i class="bi bi-person-heart" style="font-size: 2rem; color: #000000;"></i>
+                            <i class="bi bi-person-heart" style="font-size: 2rem; color: #ffffff;"></i>
                             <h3 class="mt-4">{{ averageRating }}</h3>
                             <p>Puntuación <br> Promedio</p>
                         </div>
@@ -96,7 +96,8 @@
                         <div class="col" id="dia">Sa</div>
                     </div>
                     <div class="row text-center" *ngFor="let week of calendarDays">
-                        <div *ngFor="let day of week" class="col" [class.bg-primary]="isToday(day)"
+                        <div *ngFor="let day of week" class="col" 
+                        [ngClass]="{'selected-day': isSelected(day), 'bg-primary': isToday(day)}"
                             (click)="selectDay(day)">
                             <span [class.text-muted]="!day" id="dia">{{ day?.getDate() }}</span>
                             <span *ngIf="hasActivities(day)" class="activity-dot"></span>

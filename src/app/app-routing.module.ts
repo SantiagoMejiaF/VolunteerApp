@@ -33,6 +33,7 @@ import { ActividadesCComponent } from './Modules/Coordinators/viewModel/activida
 import { UsuariosActivosComponent } from './Modules/AdminUser/viewModel/usuarios-activos.component';
 import { ActividadesOComponent } from './Modules/Organization/viewModel/actividades-o.component';
 import { MisActividadesComponent } from './Modules/Volunteer/viewModel/mis-actividades.component';
+import { SolicitudesVComponent } from './Modules/Organization/viewModel/solicitudes-v.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -91,6 +92,10 @@ const routes: Routes = [
       {
         path: 'ActividadesO',
         component: ActividadesOComponent,
+      },
+      {
+        path: 'SolicitudesV',
+        component:SolicitudesVComponent,
       },
 
 

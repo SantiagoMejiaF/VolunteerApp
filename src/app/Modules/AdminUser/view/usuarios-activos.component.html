@@ -8,7 +8,7 @@
     </div>
 
     <div class="table-container">
-        <table class="table table-sm hover" id="datatableUsuariosActivos">
+        <table *ngIf="dataLoaded" class="table table-sm hover" id="datatableUsuariosActivos">
             <thead>
                 <tr>
                     <th class="text-left">#</th>

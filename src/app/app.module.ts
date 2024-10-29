@@ -59,6 +59,7 @@ import { MisionesLComponent } from './Modules/landingModule/viewModel/misiones-l
 import { UsuariosActivosComponent } from './Modules/AdminUser/viewModel/usuarios-activos.component';
 import { ActividadesOComponent } from './Modules/Organization/viewModel/actividades-o.component';
 import { MisActividadesComponent } from './Modules/Volunteer/viewModel/mis-actividades.component';
+import { SolicitudesVComponent } from './Modules/Organization/viewModel/solicitudes-v.component';
 
 
 
@@ -107,7 +108,8 @@ registerLocaleData(localeEs, 'es');
     MisionesLComponent,
     UsuariosActivosComponent,
     ActividadesOComponent,
-    MisActividadesComponent
+    MisActividadesComponent,
+    SolicitudesVComponent
   ],
   imports: [
     BrowserModule,

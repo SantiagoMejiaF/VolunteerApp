@@ -6,24 +6,46 @@ import { OrganizationService } from '../../Organization/model/services/organizat
 @Component({
   selector: 'app-home-voluntarios',
   templateUrl: '../view/home-voluntarios.component.html',
-  styleUrls: ['../styles/home-voluntarios.component.css']
+  styleUrls: ['../styles/home-voluntarios.component.css'],
 })
 export class HomeVoluntariosComponent implements OnInit {
-  organizacionesRecomendadas: any[] = [];  // Organizaciones recomendadas
-  todasLasOrganizaciones: any[] = [];  // Todas las organizaciones
-  filteredRecommendedOrganizations: any[] = [];  // Organizaciones recomendadas filtradas
-  filteredAllOrganizations: any[] = [];  // Todas las organizaciones filtradas
+  organizacionesRecomendadas: any[] = []; // Organizaciones recomendadas
+  todasLasOrganizaciones: any[] = []; // Todas las organizaciones
+  filteredRecommendedOrganizations: any[] = []; // Organizaciones recomendadas filtradas
+  filteredAllOrganizations: any[] = []; // Todas las organizaciones filtradas
   searchText: string = '';
   category: string = 'TODOS'; // Categoría seleccionada
-  imagenes = ['assets/img/card1.svg', 'assets/img/card2.svg', 'assets/img/card3.svg', 'assets/img/card4.svg', 'assets/img/card5.svg', 'assets/img/card6.svg'];
+  imagenes = [
+    'assets/img/card1.svg',
+    'assets/img/card2.svg',
+    'assets/img/card3.svg',
+    'assets/img/card4.svg',
+    'assets/img/card5.svg',
+    'assets/img/card6.svg',
+  ];
   sectors: string[] = ['TODOS']; // Lista de sectores para el filtro
-
+  // Variables para la paginación
+  pageSize: number = 3; // Número de elementos por página
+  currentPage: number = 1; // Página actual
+  totalItems: number = 0; // Total de organizaciones
+  totalPages: number = 0;
+  Math = Math;
   constructor(
     private volunteerService: VolunteerService,
     private organizationService: OrganizationService,
     private router: Router
-  ) { }
-
+  ) {}
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.paginateOrganizations();
+  }
+  
+  // Función para paginar las organizaciones filtradas
+  paginateOrganizations() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.filteredAllOrganizations = this.todasLasOrganizaciones.slice(start, end);
+  }
   ngOnInit(): void {
     const volunteerId = Number(localStorage.getItem('volunteerId') || 1); // Obtiene el volunteerId correctamente
 
@@ -33,12 +55,16 @@ export class HomeVoluntariosComponent implements OnInit {
         this.organizacionesRecomendadas = data.map((org) => ({
           id: org.organization.id,
           titulo: org.organization.organizationName,
-          descripcion: org.organization.description || 'No hay descripción disponible.',
+          descripcion:
+            org.organization.description || 'No hay descripción disponible.',
           voluntarios: org.authorizedVolunteersCount,
-          etiquetas: [org.organization.organizationTypeEnum, org.organization.sectorTypeEnum],
-          photoUrl: org.photoUrl || 'assets/img/user3.png'
+          etiquetas: [
+            org.organization.organizationTypeEnum,
+            org.organization.sectorTypeEnum,
+          ],
+          photoUrl: org.photoUrl || 'assets/img/user3.png',
         }));
-        this.filteredRecommendedOrganizations = this.organizacionesRecomendadas;  // Inicialmente muestra todas
+        this.filteredRecommendedOrganizations = this.organizacionesRecomendadas; // Inicialmente muestra todas
       },
       (error) => {
         console.error('Error al cargar las fundaciones recomendadas', error);
@@ -54,9 +80,12 @@ export class HomeVoluntariosComponent implements OnInit {
           descripcion: org.description || 'No hay descripción disponible.',
           voluntarios: org.authorizedVolunteersCount,
           etiquetas: [org.organizationType, org.sector],
-          photoUrl: org.photoUrl || 'assets/img/user3.png'
+          photoUrl: org.photoUrl || 'assets/img/user3.png',
         }));
-        this.filteredAllOrganizations = this.todasLasOrganizaciones;  // Inicialmente muestra todas
+        this.totalItems = this.todasLasOrganizaciones.length;
+        this.totalPages = Math.ceil(this.totalItems / this.pageSize);  // Establecer el número total de organizaciones
+      this.paginateOrganizations(); // Inicialmente muestra todas
+
       },
       (error) => {
         console.error('Error al cargar todas las organizaciones', error);
@@ -84,22 +113,37 @@ export class HomeVoluntariosComponent implements OnInit {
     const searchLower = this.searchText.toLowerCase();
 
     // Filtrar organizaciones recomendadas
-    this.filteredRecommendedOrganizations = this.organizacionesRecomendadas.filter(org => {
-      const matchesSearch = org.titulo.toLowerCase().includes(searchLower) || org.descripcion.toLowerCase().includes(searchLower);
-      const matchesCategory = this.category === 'TODOS' || org.etiquetas.includes(this.category);
-      return matchesSearch && matchesCategory;
-    });
+    this.filteredRecommendedOrganizations =
+      this.organizacionesRecomendadas.filter((org) => {
+        const matchesSearch =
+          org.titulo.toLowerCase().includes(searchLower) ||
+          org.descripcion.toLowerCase().includes(searchLower);
+        const matchesCategory =
+          this.category === 'TODOS' || org.etiquetas.includes(this.category);
+        return matchesSearch && matchesCategory;
+      });
 
     // Filtrar todas las organizaciones
-    this.filteredAllOrganizations = this.todasLasOrganizaciones.filter(org => {
-      const matchesSearch = org.titulo.toLowerCase().includes(searchLower) || org.descripcion.toLowerCase().includes(searchLower);
-      const matchesCategory = this.category === 'TODOS' || org.etiquetas.includes(this.category);
-      return matchesSearch && matchesCategory;
-    });
+    this.filteredAllOrganizations = this.todasLasOrganizaciones.filter(
+      (org) => {
+        const matchesSearch =
+          org.titulo.toLowerCase().includes(searchLower) ||
+          org.descripcion.toLowerCase().includes(searchLower);
+        const matchesCategory =
+          this.category === 'TODOS' || org.etiquetas.includes(this.category);
+        return matchesSearch && matchesCategory;
+      }
+    );
+     // Aquí es donde debes agregar el código de paginación después de filtrar
+  this.totalItems = this.filteredAllOrganizations.length; 
+  this.totalPages = Math.ceil(this.totalItems / this.pageSize); // Actualizar el número total de elementos filtrados
+  this.paginateOrganizations(); 
   }
 
   // Función para ver los detalles de una organización
   verDetalles(organizationId: number) {
-    this.router.navigate(['/verPerfilO'], { queryParams: { id: organizationId, from: 'homeV' } });
+    this.router.navigate(['/verPerfilO'], {
+      queryParams: { id: organizationId, from: 'homeV' },
+    });
   }
 }

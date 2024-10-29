@@ -16,6 +16,7 @@ export class MisionesComponent implements OnInit {
   missionTypes: string[] = [];
   volunteerRequirements: string[] = [];
   requiredSkills: string[] = [];
+  requiredInterestsList: string[] = [];
   newMission: any = {
     missionType: '',
     title: '',
@@ -25,7 +26,8 @@ export class MisionesComponent implements OnInit {
     department: '',
     visibility: true, // Visible por defecto
     volunteerMissionRequirementsEnumList: [],
-    requiredSkillsList: []
+    requiredSkillsList: [],
+    requiredInterestsList: []
   };
 
   constructor(private router: Router, private missionsService: MissionsService) { }

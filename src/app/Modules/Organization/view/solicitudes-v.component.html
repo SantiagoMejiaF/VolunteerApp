@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="row">
+        <div class="col tittle">
+            <div class="column1">
+                <h2>Gestionar solicitudes</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col tittle" id="recentCustomers">
+
+            <div class="table-responsive">
+                <table class="table table-sm" id="datatableSolicitudesVoluntarios">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Perfil</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Cedula</th>
+                            <th>Status</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of data; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td width="60px">
+                                <div class="imgBx">
+                                    <img [src]="user.image || 'assets/img/user2.png'" alt="Perfil"
+                                        (error)="user.image='assets/img/user3.png'"
+                                        style="width:50px; height:50px; border-radius:50%;">
+                                </div>
+                            </td>
+                            <td>
+                                <h4>{{user.firstName}} {{user.lastName}} <br></h4>
+                            </td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.cedula }}</td>
+                            <td>
+                                <span [ngClass]="getStatusClass(user.Status)">{{ user.Status }}</span>
+                              </td>
+                              
+                            <td style="text-align: center;"><a (click)="verDetalles()"
+                                    style="border: none; background: none;">
+                                    <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
+                                        onmouseover="this.style.color='#186dde';"
+                                        onmouseout="this.style.color='#80777c';"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

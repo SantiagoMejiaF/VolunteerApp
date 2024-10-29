@@ -112,3 +112,12 @@ h2  {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
   margin-bottom: 20px;
 }
+.custom-btn{
+    background: #FB9778;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 8px 8px 8px;
+    border-radius: 10px;
+    border: none !important;
+}

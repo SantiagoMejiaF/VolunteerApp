@@ -196,3 +196,11 @@ h5 {
 .btn-close {
   margin-left: 10px;
 }
+
+.custom-button{
+  font-size: 16px!important;
+    font-weight: 400 !important;
+    font-family: "Quicksand", sans-serif!important;
+    background-color: #03A3AE!important;
+    color: white!important;
+}

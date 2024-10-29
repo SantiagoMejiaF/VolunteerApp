@@ -266,7 +266,10 @@ export class DashboardOrganizationComponent implements OnInit {
     this.selectedDate = today;
     this.generateCalendar();
   }
-
+  
+  isSelected(day: Date): boolean {
+    return this.selectedDate && day && day.toDateString() === this.selectedDate.toDateString();
+  }
   loadProgrammedActivities() {
     const orgId = Number(localStorage.getItem('OrgId')); // Obtener OrgId del localStorage
     if (!orgId) {

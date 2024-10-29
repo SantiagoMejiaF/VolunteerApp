@@ -23,6 +23,7 @@ export class SidebarComponent implements OnInit {
   ];
   ngOnInit(): void {
     this.loadUserInfo();
+    console.log(this.userRole);
   }
 
   loadUserInfo(): void {

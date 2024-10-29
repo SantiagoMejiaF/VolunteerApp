@@ -165,7 +165,9 @@ export class DashboardVolunteerComponent implements AfterViewInit {
     );
   }
 
-
+  isSelected(day: Date): boolean {
+    return this.selectedDate && day && day.toDateString() === this.selectedDate.toDateString();
+  }
   // Método para cargar las fundaciones recientes del voluntario
   loadOrganizations() {
     const volunteerId = Number(localStorage.getItem('volunteerId'));

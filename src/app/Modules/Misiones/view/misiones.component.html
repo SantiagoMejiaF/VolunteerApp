@@ -73,7 +73,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="MissionModalLabel">Crea tu misión</h1>
+                <h2 class="modal-title fs-5" id="MissionModalLabel">Crea tu misión</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -141,17 +141,22 @@
                             <option *ngFor="let skill of requiredSkills" [value]="skill">{{ skill }}</option>
                         </select>
                     </div>
-
+                    <div class="mb-3">
+                        <label for="requiredInterestsList">Intereses </label>
+                        <select id="requiredInterestsList" [(ngModel)]="newMission.requiredInterestsList" name="requiredInterestsList"
+                            class="form-select" multiple>
+                            <option *ngFor="let interest of requiredInterestsList" [value]="interest">{{ interest }}</option>
+                        </select>
+                    </div>
                     <!-- Visibilidad -->
                     <div class="form-check mb-3 ml-2">
                         <input class="form-check-input" type="checkbox" id="visibility"
                             [(ngModel)]="newMission.visibility" name="visibility" checked>
                         <label class="form-check-label" for="visibility">Visible al público</label>
                     </div>
-
+                    
                     <!-- Botón de Envío -->
-                    <button type="submit" class="btn custom-button"
-                        style="border: 2px solid #ffcc00; border-radius: 50px; background-color: transparent; color: #000; padding: 5px 20px;">
+                    <button type="submit" class="btn custom-button">
                         Crear Misión
                     </button>
                 </form>
