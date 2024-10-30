@@ -43,14 +43,14 @@ export class MisionesComponent implements OnInit {
       this.loadMissionTypes();
       this.loadVolunteerRequirements();
       this.loadRequiredSkills();
+      this.loadInterests();  // Cargar la lista de intereses
     } else {
       console.error('OrgId no encontrado en el localStorage');
     }
 
     // Agrega aquí el MutationObserver para monitorear cuando se agregue un backdrop al DOM
-    const observer = new MutationObserver(function (mutationsList) {
+    const observer = new MutationObserver((mutationsList) => {
       for (let mutation of mutationsList) {
-        // Asegúrate de que el nodo sea un HTMLElement
         mutation.addedNodes.forEach((node) => {
           if (node instanceof HTMLElement && node.classList.contains('modal-backdrop')) {
             console.log('Se ha añadido un modal-backdrop');
@@ -59,7 +59,6 @@ export class MisionesComponent implements OnInit {
       }
     });
 
-    // Observar el body por cambios en el DOM
     observer.observe(document.body, { childList: true, subtree: true });
   }
 
@@ -82,14 +81,13 @@ export class MisionesComponent implements OnInit {
     }
 
     setTimeout(() => {
-
       this.dataTable = $('#datatableMisiones').DataTable({
         pagingType: 'full_numbers',
-        pageLength: 5,  // Ajustar a tus necesidades
+        pageLength: 5,
         processing: true,
-        lengthMenu: [5, 10, 25, 50],  // Menú de paginado
-        scrollX: true,  // Mantener el scroll horizontal
-        scrollY: '400px',  // Mantener el scroll vertical (ajusta según tus necesidades)
+        lengthMenu: [5, 10, 25, 50],
+        scrollX: true,
+        scrollY: '400px',
         scrollCollapse: true,
         data: this.data,
         columns: [
@@ -101,7 +99,7 @@ export class MisionesComponent implements OnInit {
           { data: 'visibility' },
           {
             data: 'missionStatus',
-            render: function (data, type, row) {
+            render: (data) => {
               let bgColor = 'lightyellow';
               let textColor = '#ADBF38';
 
@@ -117,8 +115,8 @@ export class MisionesComponent implements OnInit {
             }
           },
           {
-            data: null,  // Columna para acciones (ver detalles y eliminar)
-            render: function (data, type, row) {
+            data: null,
+            render: (data, type, row) => {
               return `
                 <a href="/detallesM?id=${row.id}" style="border: none; background: none;">
                   <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
@@ -182,6 +180,18 @@ export class MisionesComponent implements OnInit {
     );
   }
 
+  // Cargar intereses
+  loadInterests(): void {
+    this.missionsService.getInterests().subscribe(
+      (interests) => {
+        this.requiredInterestsList = interests;
+      },
+      (error) => {
+        console.error('Error al cargar los intereses:', error);
+      }
+    );
+  }
+
   createMission(): void {
     const mission = {
       organizationId: parseInt(localStorage.getItem('OrgId') || '0'),
@@ -193,7 +203,8 @@ export class MisionesComponent implements OnInit {
       department: this.newMission.department,
       visibility: this.newMission.visibility ? 'PUBLICA' : 'PRIVADA',
       volunteerMissionRequirementsEnumList: this.newMission.volunteerMissionRequirementsEnumList,
-      requiredSkillsList: this.newMission.requiredSkillsList
+      requiredSkillsList: this.newMission.requiredSkillsList,
+      requiredInterestsList: this.newMission.requiredInterestsList
     };
 
     this.missionsService.createMission(mission).subscribe(
@@ -228,16 +239,14 @@ export class MisionesComponent implements OnInit {
       modalElement.classList.add('show');  // Agregar la clase que lo hace visible
       document.body.classList.add('modal-open');  // Asegurarse de que el body esté en modo modal
 
-      // Esperar un breve momento para asegurar que el backdrop se haya generado
       setTimeout(() => {
-        // Eliminar cualquier backdrop adicional que haya sido generado
         const backdrops = document.querySelectorAll('.modal-backdrop');
         if (backdrops.length > 1) {
           backdrops.forEach((backdrop, index) => {
-            if (index > 0) backdrop.remove();  // Eliminar los backdrops adicionales, dejando solo el primero
+            if (index > 0) backdrop.remove();
           });
         }
-      }, 50);  // 50ms debería ser suficiente para esperar a que el backdrop aparezca
+      }, 50);
     }
   }
 
@@ -248,7 +257,6 @@ export class MisionesComponent implements OnInit {
       modalElement.classList.remove('show');  // Remover la clase que lo muestra
       document.body.classList.remove('modal-open');  // Restaurar el estado del body
 
-      // Eliminar cualquier backdrop adicional
       const backdrops = document.querySelectorAll('.modal-backdrop');
       backdrops.forEach((backdrop) => {
         backdrop.remove();
@@ -257,14 +265,10 @@ export class MisionesComponent implements OnInit {
   }
 
   details(missionId: number) {
-    // Guardar el missionId en el localStorage
-    console.log('Guardando missionId en localStorage:', missionId); // Agregar este log para verificar
+    console.log('Guardando missionId en localStorage:', missionId);
     localStorage.setItem('missionId', missionId.toString());
-
-    // Navegar a la pantalla de detalles de la misión
     this.router.navigate(['/detallesM'], { queryParams: { id: missionId } });
   }
-
 
   getStatusClass(status: string): string {
     switch (status) {

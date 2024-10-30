@@ -49,4 +49,8 @@ export class MissionsService {
         return this.http.get<any>(`${this.apiUrl}/activity-coordinators/${coordinatorId}`);
     }
 
+    getInterests(): Observable<string[]> {
+        return this.http.get<string[]>(`${this.apiUrl}/missions/interests`);
+    }
+
 }
