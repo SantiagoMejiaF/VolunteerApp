@@ -47,6 +47,12 @@
                             <i class="fa fa-search" style="font-size: 1rem; color: #80777c;"
                                 onmouseover="this.style.color='#186dde';" onmouseout="this.style.color='#80777c';"></i>
                         </button>
+                        <button style="border: none; background: none;" data-bs-toggle="modal"
+                            data-bs-target="#coordinatorModal" (click)="openModal(user)"
+                            *ngIf="user.rol === 'COORDINADOR_ACTIVIDAD'">
+                            <i class="fa fa-search" style="font-size: 1rem; color: #80777c;"
+                                onmouseover="this.style.color='#186dde';" onmouseout="this.style.color='#80777c';"></i>
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -107,7 +113,49 @@
                             data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
                                 <h6>Nombre: {{ selectedUser?.organizationName }}</h6>
-                                <h6>NIT: {{ selectedUser?.nit }}</h6>
+                                <h6>NIT: {{ selectedUser?.Cedula }}</h6>
+                                <h6>Tipo de Organización: {{ selectedUser?.organizationTypeEnum }}</h6>
+                                <h6>Sector: {{ selectedUser?.sectorTypeEnum }}</h6>
+                                <h6>Tipo de Voluntariado: {{ selectedUser?.volunteeringTypeEnum }}</h6>
+                                <h6>Dirección: {{ selectedUser?.address }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Coordinador de Actividad -->
+<div class="modal fade" id="coordinatorModal" tabindex="-1" aria-labelledby="coordinatorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h4>Detalles</h4>
+                    <h5>Coordinador de Actividad</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>Nombre: {{ selectedUser?.firstName }}</h6>
+                <h6>Correo: {{ selectedUser?.email }}</h6>
+                <h6>Cédula: {{ selectedUser?.Cedula }}</h6>
+                <h6>Celular: {{ selectedUser?.phone }}</h6>
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                aria-controls="flush-collapseTwo">
+                                Datos de la organización que pertenece
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                            data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <h6>Nombre de la Organización: {{ selectedUser?.organizationName }}</h6>
                                 <h6>Tipo de Organización: {{ selectedUser?.organizationTypeEnum }}</h6>
                                 <h6>Sector: {{ selectedUser?.sectorTypeEnum }}</h6>
                                 <h6>Tipo de Voluntariado: {{ selectedUser?.volunteeringTypeEnum }}</h6>

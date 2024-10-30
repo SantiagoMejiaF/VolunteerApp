@@ -41,4 +41,8 @@ export class AdminService {
     );
   }
 
+  public getCoordinatorDetails(userId: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.apiUrl}/activity-coordinators/user/${userId}`, cabecera);
+  }
+
 }

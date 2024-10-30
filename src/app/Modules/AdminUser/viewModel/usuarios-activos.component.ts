@@ -60,11 +60,26 @@ export class UsuariosActivosComponent implements AfterViewInit {
           user.nit = organizationDetails.nit;
           user.Cedula = organizationDetails.responsiblePersonId;
         });
+      } else if (user.rol === 'COORDINADOR_ACTIVIDAD') {
+        // Obtener detalles del coordinador de actividad
+        this.adminService.getCoordinatorDetails(user.id).subscribe((coordinatorDetails) => {
+          user.Cedula = coordinatorDetails.identificationCard;
+          user.phone = coordinatorDetails.phoneActivityCoordinator;
+
+          // Luego obtenemos los detalles de la organización del coordinador
+          this.organizationService.getOrganizationDetailsById(coordinatorDetails.organizationId).subscribe((organizationDetails) => {
+            user.organizationName = organizationDetails.organizationName;
+            user.nit = organizationDetails.nit;
+            user.organizationTypeEnum = organizationDetails.organizationTypeEnum;
+            user.sectorTypeEnum = organizationDetails.sectorTypeEnum;
+            user.volunteeringTypeEnum = organizationDetails.volunteeringTypeEnum;
+            user.address = organizationDetails.address;
+          });
+        });
       }
     });
-
-    
   }
+
 
   refreshDataTable(): void {
     const tableId = '#datatableUsuariosActivos';

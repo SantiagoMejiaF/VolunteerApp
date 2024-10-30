@@ -187,24 +187,43 @@ export class DashboardAdminComponent implements OnInit {
   populateUserRoles(): Promise<void> {
     return new Promise<void>((resolve) => {
       let completedRequests = 0;
+      console.log('Datos completos de usuarios autorizados en this.data:', this.data);
 
       this.data.forEach((user) => {
         user.rol = user.role.roleType;
 
         if (user.rol === 'VOLUNTARIO') {
-          this.volunteerService.getVolunteerDetails(user.id).subscribe((volunteerDetails) => {
-            user.firstName = volunteerDetails.personalInformation.firstName;
-            user.lastName = volunteerDetails.personalInformation.lastName;
-            user.cedula = volunteerDetails.personalInformation.identificationCard || "Sin cédula";
-
+          // No deberías sobrescribir los valores de firstName y lastName si ya existen
+          if (!user.firstName || !user.lastName || !user.cedula) {
+            this.volunteerService.getVolunteerDetails(user.id).subscribe((volunteerDetails) => {
+              if (volunteerDetails && volunteerDetails.personalInformation) {
+                user.firstName = volunteerDetails.personalInformation.firstName || user.firstName || "Sin nombre";
+                user.lastName = volunteerDetails.personalInformation.lastName || user.lastName || "";
+                user.cedula = volunteerDetails.personalInformation.identificationCard || "Sin cédula";
+              }
+              completedRequests++;
+              if (completedRequests === this.data.length) resolve();
+            }, error => {
+              console.log('Error al obtener detalles del voluntario:', error);
+              completedRequests++;
+              if (completedRequests === this.data.length) resolve();
+            });
+          } else {
             completedRequests++;
             if (completedRequests === this.data.length) resolve();
-          });
+          }
         } else if (user.rol === 'ORGANIZACION') {
           this.organizationService.getOrganizationDetails(user.id).subscribe((organizationDetails) => {
             user.firstName = organizationDetails.organizationName; // Usamos organizationName si no hay firstName
             user.lastName = '';  // Dejar vacío o asignar algún valor si no hay lastName
             user.cedula = organizationDetails.responsiblePersonId || "Sin cédula";
+
+            completedRequests++;
+            if (completedRequests === this.data.length) resolve();
+          });
+        } else if (user.rol === 'COORDINADOR_ACTIVIDAD') {
+          this.adminService.getCoordinatorDetails(user.id).subscribe((coordinatorDetails) => {
+            user.cedula = coordinatorDetails.identificationCard || "Sin cédula";
 
             completedRequests++;
             if (completedRequests === this.data.length) resolve();
