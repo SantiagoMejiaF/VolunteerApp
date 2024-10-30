@@ -68,7 +68,7 @@ public class ReviewController implements ReviewAPI {
                 "       p { font-size: 16px; line-height: 1.6; color: #333; }" +
                 "       .logo { text-align: center; margin-bottom: 20px; }" +
                 "       .logo img { max-width: 150px; height: auto; }" +
-                "       .highlight { background-color: #e7f3fe; border-left: 4px solid #2196F3; padding: 10px; margin: 20px 0; }" +
+                "       .highlight { background-color: #effaff; border-left: 4px solid #06c9d7; padding: 10px; margin: 20px 0; }" +
                 "       @media (max-width: 600px) {" +
                 "           .container { padding: 15px; }" +
                 "           h1 { font-size: 24px; }" +
@@ -78,8 +78,13 @@ public class ReviewController implements ReviewAPI {
                 "</head>" +
                 "<body>" +
                 "   <div class='container'>" +
+                "<div style='background-color: %s; padding: 30px 10px; text-align: center; color: white;'>" +
+                "<img src='https://tinypic.host/image/Correos.21eDBx' style='height: 150px; vertical-align: middle; margin-right: 20px;' alt='Volunteer App' />" +
+                "<span style='font-size: 28px; font-weight: bold;'>RESEÑA\n" +
+                "EXITOSA</span>" +
+                "</div>" +
                 "       <div class='logo'>" +
-                "           <img src='https://tinypic.host/images/2024/09/21/logo.png' alt='Logo'>" +
+                "           <img src='https://tinypic.host/image/logos.21T6BZ' alt='Logo'>" +
                 "       </div>" +
                 "       <h1>¡Reseña Creada con Éxito!</h1>" +
                 "       <p>Gracias por dejar tu reseña para la actividad <strong>" + activityName + "</strong>.</p>" +
@@ -89,9 +94,10 @@ public class ReviewController implements ReviewAPI {
                 "           <p><strong>Calificación:</strong> " + reviewRating + "/5</p>" +
                 "       </div>" +
                 "       <p>Fecha de creación: " + review.getCreationDate() + "</p>" +
-                "       <p>¡Esperamos verte pronto en futuras actividades!</p>" +
+                "       <p style='color: #fb9778;'>¡Esperamos verte pronto en futuras actividades!</p>" +
                 "       <p>Si tienes más comentarios o preguntas, no dudes en contactarnos.</p>" +
                 "   </div>" +
+                "<p><span style='font-weight: bold; color: #000000;'><img src='https://tinypic.host/image/logos.21T6BZ' style='height: 50px; vertical-align: middle;' alt='Volunteer App Logo' /> Volunteer App</span></p>" +
                 "</body>" +
                 "</html>";
     }
