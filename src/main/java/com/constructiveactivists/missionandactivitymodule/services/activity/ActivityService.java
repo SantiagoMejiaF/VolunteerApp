@@ -59,17 +59,11 @@ public class ActivityService {
         volunteerGroup.setNumberOfVolunteersRequired(activity.getNumberOfVolunteersRequired());
         volunteerGroup.setCurrentVolunteers(0);
         VolunteerGroupEntity savedVolunteerGroup = volunteerGroupService.save(volunteerGroup);
-
         activity.setVolunteerGroup(savedVolunteerGroup.getId());
-
         ActivityEntity activitySaved = activityRepository.save(activity);
-
         savedVolunteerGroup.setActivity(activitySaved.getId());
         volunteerGroupService.save(savedVolunteerGroup);
-
         activityRepository.save(activitySaved);
-        reviewEmailService.sendFormEmail(activitySaved.getPersonalDataCommunityLeaderEntity().getEmailCommunityLeader(), activitySaved.getId());
-
         return activitySaved;
     }
 

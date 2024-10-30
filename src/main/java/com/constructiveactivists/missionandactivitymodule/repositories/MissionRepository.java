@@ -1,6 +1,7 @@
 package com.constructiveactivists.missionandactivitymodule.repositories;
 
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
+import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionStatusEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.InterestEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,6 +20,8 @@ public interface MissionRepository extends JpaRepository<MissionEntity, Integer>
     Optional<MissionEntity> getMissionById(Integer id);
 
     List<MissionEntity> findTop3ByOrderByCreatedAtDesc();
+
+    List<MissionEntity> findByMissionStatus(MissionStatusEnum missionStatus);
 
     @Query("SELECT DISTINCT m FROM MissionEntity m " +
             "WHERE EXISTS (" +

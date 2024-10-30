@@ -27,7 +27,6 @@ import java.time.*;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 class ActivityServiceTest {
@@ -56,8 +55,6 @@ class ActivityServiceTest {
     @Mock
     private ActivityCoordinatorRepository activityCoordinatorRepository;
 
-    @Mock
-    private ReviewEmailService reviewEmailService;
 
     @Mock
     private ReviewRepository reviewRepository;
@@ -100,7 +97,6 @@ class ActivityServiceTest {
         assertEquals(ActivityStatusEnum.DISPONIBLE, savedActivity.getActivityStatus());
         verify(activityRepository, times(2)).save(activity);
         verify(volunteerGroupService, times(2)).save(any(VolunteerGroupEntity.class));
-        verify(reviewEmailService, times(1)).sendFormEmail(eq("leader@example.com"), anyInt());
     }
 
     private ActivityEntity getActivityEntity(MissionEntity mission, ActivityCoordinatorEntity coordinator) {
