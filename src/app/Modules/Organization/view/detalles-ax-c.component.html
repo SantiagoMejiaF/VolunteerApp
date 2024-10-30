@@ -3,66 +3,58 @@
         <div class="col">
             <div class="column1 d-flex justify-content-between align-items-center">
                 <div class="d-flex">
-                    <button class="back mr-2" routerLink="/verPerfilC">
+                    <button class="back mr-2" (click)="volver()">
                         <i class="fas fa-chevron-left"></i>
-                      </button>
-                    <h2 class="mt-1">Actividad detalles</h2>
+                    </button>
+                    <h2 class="mt-1">Detalles de la Actividad </h2>
                 </div>
-                
-                <!--*ngIf="role === 'COORDINADOR'"-->
-                <div class="qr" *ngIf="role === 'COORDINADOR' && status === 'Activo'">
-                    <button data-bs-toggle="modal" data-bs-target="#QRInicial"  class="mr-3 custom1">Qr Inicial</button>
-                    <button data-bs-toggle="modal" data-bs-target="#QRFinal"  class="mr-3 custom2">Qr Final</button>
+
+                <div class="qr" *ngIf="role === 'COORDINADOR_ACTIVIDAD' && status === 'DISPONIBLE'">
+                    <button data-bs-toggle="modal" data-bs-target="#QRInicial" class="mr-3 custom1">Qr Inicial</button>
+                    <button data-bs-toggle="modal" data-bs-target="#QRFinal" class="mr-3 custom2">Qr Final</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="card custom-card">
-        <img [src]="imagen" class="card-img-top custom-img" alt="Imagen de la actividad">        <div class="card-body">
+        <img [src]="imagen" class="card-img-top custom-img" alt="Imagen de la actividad">
+        <div class="card-body">
             <div class="d-flex align-items-center mb-3">
-                <img src="assets/img/fundacion.jpeg" class="rounded-circle profile-img" alt="Profile">
                 <div class="ml-3">
                     <div [ngClass]="getStatusClass()" class="etiqueta_status">
-                        <h3>Activo</h3>
+                        <h3>{{ status }}</h3> <!-- Mostrar el estado de la actividad -->
                     </div>
-                    <h5 class="card-title mb-0">Nombre de la actividad ujuuu</h5>
+                    <h5 class="card-title mb-0"> {{ activityDetails.title }}</h5>
+                    <!-- Mostrar el título de la actividad -->
                     <div class="text-muted small">
-                        <i class="bi bi-eye"></i> 5/10 inscritos &nbsp;&nbsp; <i class="bi bi-calendar"></i> 25 de
-                        Septiembre, 2024
+                        <i class="bi bi-eye"></i> {{ activityDetails.noVolunteers }} inscritos &nbsp;&nbsp;
+                        <i class="bi bi-calendar"></i> {{ activityDetails.startDate | date:'dd/MM/yyyy' }}
                     </div>
                 </div>
             </div>
             <hr class="mt-3" style="height: 1px; background-color: rgb(136, 135, 135); border: none;">
-            <h4>Datos generales</h4>
+            <h4>Datos Generales</h4>
             <p class="card-text">
-                <strong>Hora inicio:</strong> 5:00 am<br>
-                <strong>Horas requeridad:</strong> 5<br>
-                <strong>Ciudad:</strong> Bogotá
+                <strong>Hora inicio:</strong> {{ activityDetails.startTime }}<br>
+                <strong>Horas requeridas:</strong> {{ activityDetails.requiredHours }}<br>
+                <strong>Ciudad:</strong> {{ activityDetails.city }}
             </p>
             <hr class="mt-3" style="height: 1px; background-color: rgb(136, 135, 135); border: none;">
             <h4>Coordinador Encargado</h4>
             <p class="card-text">
-                <strong>Nombre:</strong> Chris Evans<br>
-                <strong>Teléfono:</strong> 554789612<br>
-                <strong>Cédula:</strong>1006587923
+                <strong>Nombre:</strong> {{ activityDetails.coordinator.name }}<br>
+                <strong>Teléfono:</strong> {{ activityDetails.coordinator.phone }}<br>
+                <strong>Cédula:</strong> {{ activityDetails.coordinator.id }}
             </p>
             <hr class="mt-3" style="height: 1px; background-color: rgb(136, 135, 135); border: none;">
             <h4>Descripción</h4>
             <p class="card-text">
-                Descripción: Es un hecho establecido hace demasiado tiempo que un lector se distraerá con el contenido
-                del texto de un sitio mientras que mira su diseño. El punto de usar Lorem Ipsum es que tiene una
-                distribución más o menos normal de las letras, al contrario de usar textos como por ejemplo "Contenido
-                aquí, contenido aquí". Estos textos hacen parecerlo un español que se puede leer. Muchos paquetes de
-                autoedición y editores de páginas web usan el Lorem Ipsum como su texto por defecto, y al hacer una
-                búsqueda de "Lorem Ipsum" va a dar por resultado muchos sitios web que usan este texto si se encuentran
-                en estado de desarrollo. Muchas versiones han evolucionado a través de los años, algunas veces por
-                accidente, otras veces a propósito (por ejemplo insertándole humor y cosas por el estilo).
+                {{ activityDetails.description }}
             </p>
-            
-            <hr class="mt-3" style="height: 1px; background-color: rgb(136, 135, 135); border: none;">
-            <h4>Lista de voluntarios Inscritos</h4>
-            <div class="col tittle mt-4" id="recentCustomers">
 
+            <hr class="mt-3" style="height: 1px; background-color: rgb(136, 135, 135); border: none;">
+            <h4>Lista de Voluntarios Inscritos</h4>
+            <div class="col tittle mt-4" id="recentCustomers">
                 <div class="table-responsive">
                     <table class="table table-sm" id="datatableexample">
                         <thead>
@@ -77,7 +69,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let user of data; let i = index">
+                            <tr *ngFor="let user of activityDetails.volunteers; let i = index">
+                                <!-- Iterar sobre los voluntarios -->
                                 <td>{{ i + 1 }}</td>
                                 <td width="60px">
                                     <div class="imgBx">
@@ -87,14 +80,14 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <h4>{{user.firstName}} {{user.lastName}} <br></h4>
+                                    <h4>{{ user.firstName }} {{ user.lastName }} <br></h4>
                                 </td>
                                 <td>{{ user.email }}</td>
                                 <td>{{ user.cedula }}</td>
                                 <td>5</td>
-                                  
-                                <td style="text-align: center;"><a (click)="verDetalles()"
-                                        style="border: none; background: none;">
+                                <!-- Aquí puedes agregar lógica para mostrar horas realizadas si es necesario -->
+                                <td style="text-align: center;">
+                                    <a (click)="verDetalles()" style="border: none; background: none;">
                                         <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
                                             onmouseover="this.style.color='#186dde';"
                                             onmouseout="this.style.color='#80777c';"></i>
@@ -104,49 +97,37 @@
                         </tbody>
                     </table>
                 </div>
-    
             </div>
-            
         </div>
     </div>
-
-    
 </div>
 
-<!-- Modal para Crear una nueva Misión -->
-<!-- Modal para Crear una nueva Misión -->
-<!-- Modal para Crear una nueva Misión -->
-<!-- Modal para Crear una nueva Misión -->
+<!-- Modal para QR Inicial -->
 <div class="modal fade" id="QRInicial" tabindex="-1" aria-labelledby="QRInicialLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div>
-            <h4>Empecemos</h4>
-            <h5>Crea un nuevo coordinador</h5>
-          </div>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h4>Empecemos</h4>
+                    <h5>Crea un nuevo coordinador</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="qr-container">
+                    <img *ngIf="qrCodeUrlInicial" [src]="qrCodeUrlInicial" alt="Imagen Inicial" />
+                </div>
+                <div class="mt-3">
+                    <button *ngIf="qrCodeUrlInicial" (click)="downloadQRInicial()" class="btn btn-primary">
+                        Descargar Imagen
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body text-center">
-          <!-- Espacio fijo para la imagen de ejemplo -->
-          <div class="qr-container">
-            <img *ngIf="qrCodeUrlInicial" [src]="qrCodeUrlInicial" alt="Imagen Inicial" />
-          </div>
-  
-          <!-- Botón para descargar la imagen usando Blob -->
-          <div class="mt-3">
-            <button *ngIf="qrCodeUrlInicial" (click)="downloadQRInicial()" class="btn btn-primary">
-              Descargar Imagen
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
-  
-  
-  
+</div>
 
+<!-- Modal para QR Final -->
 <div class="modal fade" id="QRFinal" tabindex="-1" aria-labelledby="QRFinalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
@@ -158,18 +139,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <!-- Espacio fijo para la imagen de ejemplo -->
                 <div class="qr-container">
-                  <img *ngIf="qrCodeUrlFinal" [src]="qrCodeUrlFinal" alt="Imagen Inicial" />
+                    <img *ngIf="qrCodeUrlFinal" [src]="qrCodeUrlFinal" alt="Imagen Final" />
                 </div>
-        
-                <!-- Botón para descargar la imagen usando Blob -->
                 <div class="mt-3">
-                  <button *ngIf="qrCodeUrlFinal" (click)="downloadQRFinal()" class="btn btn-primary">
-                    Descargar Imagen
-                  </button>
+                    <button *ngIf="qrCodeUrlFinal" (click)="downloadQRFinal()" class="btn btn-primary">
+                        Descargar Imagen
+                    </button>
                 </div>
-              </div>
+            </div>
         </div>
     </div>
 </div>

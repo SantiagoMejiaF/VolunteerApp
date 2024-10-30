@@ -1,7 +1,7 @@
-<div class="container ">
+<div class="container">
     <div class="row">
         <div class="col d-flex justify-content-between align-items-center" id="tittle">
-            <h2>Mis actividades programadas</h2>
+            <h2>Mis Actividades Programadas</h2>
         </div>
     </div>
     <div class="row">
@@ -12,9 +12,9 @@
                         <tr>
                             <th>#</th>
                             <th>Nombre Actividad</th>
-                            <th>Fecha inicio</th>
+                            <th>Fecha Inicio</th>
                             <th>Dirección</th>
-                            <th># voluntarios</th>
+                            <th># Voluntarios</th>
                             <th>Status</th>
                             <th>Acción</th>
                         </tr>
@@ -25,13 +25,12 @@
                             <td>{{ activity.title }}</td>
                             <td class="text-left">{{ activity.startDate }}</td>
                             <td>{{ activity.address }}</td>
-                            <td class="text-left">{{ activity.noVolunteers }}</td>
+                            <td class="text-center">{{ activity.noVolunteers }}</td>
                             <td>
                                 <span [ngClass]="getStatusClass(activity.status)">{{ activity.status }}</span>
                             </td>
                             <td>
-                                <a (click)="verDetalles()" 
-                                    style="border: none; background: none;">
+                                <a (click)="verDetalles(activity)" style="border: none; background: none;">
                                     <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
                                         onmouseover="this.style.color='#186dde';"
                                         onmouseout="this.style.color='#80777c';"></i>
@@ -39,12 +38,12 @@
                             </td>
                         </tr>
                     </tbody>
+
                 </table>
             </div>
         </div>
     </div>
 </div>
-
 
 <!-- Modal para Crear una nueva Misión -->
 <div class="modal fade" id="VolunteerModal" tabindex="-1" aria-labelledby="VolunteerModalLabel" aria-hidden="true">

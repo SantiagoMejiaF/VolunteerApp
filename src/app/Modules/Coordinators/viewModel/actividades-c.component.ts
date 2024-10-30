@@ -2,44 +2,85 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivityService } from '../model/services/activity.service';
 import { Activity } from '../model/activity.model';
 import { Router } from '@angular/router';
+import { MissionsService } from '../../Misiones/model/services/mission.service';
+import { OrganizationService } from '../../Organization/model/services/organization.service';
 
 @Component({
   selector: 'app-actividades-c',
   templateUrl: '../view/actividades-c.component.html',
-  styleUrl: '../styles/actividades-c.component.css',
+  styleUrls: ['../styles/actividades-c.component.css'],
 })
 export class ActividadesCComponent implements OnInit, AfterViewInit {
   selectedActividad: any = {};
-  data: Activity[] = [];
+  data: any[] = [];
+  coordinatorId: number | null = null;
+  loadingComplete: boolean = false; // Estado para indicar si la carga ha finalizado
 
-  constructor(private router: Router, private activityService: ActivityService) { }
+  constructor(private router: Router, private activityService: ActivityService, private missionsService: MissionsService, private organizationService: OrganizationService) { }
 
   ngOnInit(): void {
-    this.loadActivities();
+    this.coordinatorId = Number(localStorage.getItem('coordinatorId'));
+    console.log('Coordinator ID:', this.coordinatorId); // Verifica que el ID sea correcto
+    if (this.coordinatorId) {
+      this.loadActivities();
+    } else {
+      console.error('Coordinador ID no encontrado en localStorage');
+    }
   }
 
   ngAfterViewInit(): void {
-    this.initializeDataTable();
   }
 
-  // Método para cargar actividades desde el servicio
-  // Método para cargar actividades desde el servicio
   loadActivities(): void {
-    this.activityService.getActivities().subscribe(
-      (response: Activity[]) => {
-        this.data = response.map(activity => ({
-          id: activity.id,
-          title: activity.title,
-          startDate: activity.startDate,
-          address: activity.address,
-          noVolunteers: activity.noVolunteers, // Usando el campo `noVolunteers`
-          status: activity.status // Usando el campo `status`
-        }));
-      },
-      error => {
-        console.error('Error al cargar las actividades', error);
-      }
-    );
+    if (this.coordinatorId) {
+      this.activityService.getActivitiesByCoordinator(this.coordinatorId).subscribe(
+        (response: any[]) => {
+          console.log('Response from API:', response);
+          if (response && response.length > 0) {
+            this.data = response.map(activity => ({
+              id: activity.id,
+              title: activity.title,
+              startDate: activity.date,
+              address: activity.address,
+              noVolunteers: activity.numberOfVolunteersRequired,
+              status: activity.activityStatus,
+              startTime: activity.startTime,
+              description: activity.description,
+              city: activity.city,
+              requiredHours: activity.requiredHours,
+              coordinatorId: activity.activityCoordinator // Guardar el ID del coordinador
+            }));
+
+            // Obtener los detalles del coordinador para cada actividad
+            this.data.forEach(activity => {
+              this.missionsService.getActivityCoordinator(activity.coordinatorId).subscribe(coordinatorDetails => {
+                activity.coordinator = {
+                  id: coordinatorDetails.identificationCard,
+                  phone: coordinatorDetails.phoneActivityCoordinator,
+                  userId: coordinatorDetails.userId
+                };
+
+                // Obtener el nombre del usuario
+                this.organizationService.getUserDetails(coordinatorDetails.userId).subscribe(userDetails => {
+                  activity.coordinator.name = userDetails.firstName + ' ' + userDetails.lastName; // Asumiendo que el campo se llama 'name'
+                });
+              }, error => {
+                console.error('Error fetching coordinator details', error);
+              });
+            });
+
+            console.log('Mapped data:', this.data);
+            this.loadingComplete = true; // Marca la carga como completa
+            this.initializeDataTable(); // Inicializa la tabla después de cargar los datos
+          } else {
+            console.log('No activities found for this coordinator.');
+          }
+        },
+        error => {
+          console.error('Error al cargar las actividades del coordinador', error);
+        }
+      );
+    }
   }
 
 
@@ -73,7 +114,7 @@ export class ActividadesCComponent implements OnInit, AfterViewInit {
         return 'status-activo';
       case 'PENDIENTE':
         return 'status-pendiente';
-      case 'COMPLETADO':
+      case 'COMPLETADA':
         return 'status-completado';
       case 'APLAZADO':
         return 'status-aplazado';
@@ -81,8 +122,16 @@ export class ActividadesCComponent implements OnInit, AfterViewInit {
         return '';
     }
   }
-  verDetalles() {
-    this.router.navigate(['/verDetallesAxC'], { queryParams: { from: 'misAC' } });
 
+  verDetalles(activity: any): void {
+    if (!this.loadingComplete) {
+    }
+
+    // Guardar la información de la actividad seleccionada en localStorage
+    localStorage.setItem('selectedActivity', JSON.stringify(activity));
+
+    // Redirigir a la vista de detalles
+    this.router.navigate(['/verDetallesAxC'], { queryParams: { from: 'misAC' } });
   }
+
 }

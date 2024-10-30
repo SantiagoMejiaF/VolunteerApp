@@ -1,17 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detalles-ax-c',
   templateUrl: '../view/detalles-ax-c.component.html',
-  styleUrls: ['../styles/detalles-ax-c.component.css'] // Ojo con la 's' en styles.
+  styleUrls: ['../styles/detalles-ax-c.component.css']
 })
 export class DetallesAxCComponent implements OnInit {
-
-  // MARTIN NECESITO EL STATUS DE LA ACTIVIDAD PARA COLOCAR LA IMAGEN SEGÚN ESO, TAMBIÉN 
-  //NECESITO EL ROL EN ESTA PANTALLA Y LLENAR LOS WR CON LOS SERVICIOS
   imagen: string = '';
   actividadId: number = 0;
   status: string = '';
@@ -19,6 +15,7 @@ export class DetallesAxCComponent implements OnInit {
   role: string = '';
   qrCodeUrlInicial: string = '';
   qrCodeUrlFinal: string = '';
+  activityDetails: any;
 
   public data: any[] = [
     {
@@ -65,12 +62,17 @@ export class DetallesAxCComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Obtener la actividad seleccionada del localStorage
+    const selectedActivity = localStorage.getItem('selectedActivity');
+    if (selectedActivity) {
+      this.activityDetails = JSON.parse(selectedActivity);
+      this.actividadId = this.activityDetails.id;
+      this.status = this.activityDetails.status; // Obtener el status de la actividad
+      this.setImagenByStatus(this.status); // Configurar la imagen según el estado
+    } else {
+      console.error('No hay actividad seleccionada en localStorage');
+    }
 
-    // MARTIN NECESITO EL STATUS PARA COLOCAR LA IMAGEN SEGÚN ESO
-    this.status = 'Activo'; 
-    this.qrCodeUrlInicial = 'assets/img/LOGO_VOLUNTEERE.png';
-    this.qrCodeUrlFinal = 'assets/img/LOGO_VOLUNTEERE.png';
-    this.setImagenByStatus(this.status);
     const roleStr = localStorage.getItem('role');
     if (roleStr) {
       this.role = roleStr;
@@ -79,16 +81,16 @@ export class DetallesAxCComponent implements OnInit {
 
   setImagenByStatus(status: string) {
     switch (status) {
-      case 'Activo':
+      case 'DISPONIBLE':
         this.imagen = 'assets/img/card4.svg';
         break;
-      case 'Pendiente':
+      case 'PENDIENTE':
         this.imagen = 'assets/img/card6.svg';
         break;
-      case 'Completado':
+      case 'COMPLETADA':
         this.imagen = 'assets/img/card5.svg';
         break;
-      case 'Aplazado':
+      case 'APLAZADO':
         this.imagen = 'assets/img/card3.svg';
         break;
       default:
@@ -96,14 +98,14 @@ export class DetallesAxCComponent implements OnInit {
         break;
     }
   }
+
   getStatusClass(): string {
-    
     switch (this.status) {
-      case 'Activo':
+      case 'ACTIVO':
         return 'status-activo';
-      case 'Pendiente':
+      case 'PENDIENTE':
         return 'status-pendiente';
-      case 'Completado':
+      case 'COMPLETADA':
         return 'status-completado';
       case 'Aplazado':
         return 'status-aplazado';
@@ -111,6 +113,7 @@ export class DetallesAxCComponent implements OnInit {
         return '';
     }
   }
+
   downloadQRInicial(): void {
     this.http.get(this.qrCodeUrlInicial, { responseType: 'blob' }).subscribe((blob) => {
       const url = window.URL.createObjectURL(blob);
@@ -123,8 +126,9 @@ export class DetallesAxCComponent implements OnInit {
       window.URL.revokeObjectURL(url);  // Limpiar el objeto URL después de descargar
     });
   }
+
   downloadQRFinal(): void {
-    this.http.get(this.qrCodeUrlInicial, { responseType: 'blob' }).subscribe((blob) => {
+    this.http.get(this.qrCodeUrlFinal, { responseType: 'blob' }).subscribe((blob) => {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -135,14 +139,14 @@ export class DetallesAxCComponent implements OnInit {
       window.URL.revokeObjectURL(url);  // Limpiar el objeto URL después de descargar
     });
   }
+
   verDetalles() {
     this.router.navigate(['/verPerfilV'], { queryParams: { from: 'verDetallesAxC' } });
-
   }
+
   volver() {
     // Volver a los detalles de la fundación con el parámetro 'origen'
-    
-    if (this.origen === 'verPerfilC' ) {
+    if (this.origen === 'verPerfilC') {
       this.router.navigate(['/verPerfilC'], { queryParams: { from: this.origen } });
     } else {
       this.router.navigate(['/misAC']); // Navegar a Detalles de Fundación

@@ -35,4 +35,8 @@ export class ActivityService {
   getActivityById(activityId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/activities/${activityId}`);
   }
+
+  getActivitiesByCoordinator(coordinatorId: number): Observable<Activity[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/activities/coordinator/${coordinatorId}`, cabecera);
+  }
 }

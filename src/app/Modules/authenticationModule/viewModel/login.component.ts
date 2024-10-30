@@ -7,6 +7,7 @@ import { OrganizationService } from '../../Organization/model/services/organizat
 import { TokenDto } from '../model/token-dto';
 import { HttpClient } from '@angular/common/http';
 import { VolunteerService } from '../../Volunteer/model/services/volunteer.service';
+import { AdminService } from '../../AdminUser/model/services/admin.service';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,8 @@ export class LoginComponent implements OnInit {
     private tokenService: TokenService,
     private organizationService: OrganizationService,
     private volunteerService: VolunteerService,
-    private http: HttpClient
+    private http: HttpClient,
+    private adminService: AdminService,
   ) { }
 
   ngOnInit(): void {
@@ -151,7 +153,17 @@ export class LoginComponent implements OnInit {
         }
         break;
       case 'COORDINADOR_ACTIVIDAD':
-        this.router.navigate(['/misAC']);
+        this.adminService.getCoordinatorDetails(userId).subscribe(
+          (coordinatorDetails) => {
+            console.log('Coordinator ID:', coordinatorDetails.id);
+            localStorage.setItem('coordinatorId', coordinatorDetails.id.toString()); // Guardar el coordinatorId en localStorage
+            this.router.navigate(['/misAC']);
+          },
+          (error) => {
+            console.error('Error al obtener los detalles del coordinador de actividad:', error);
+            this.logOut();
+          }
+        );
         break;
       default:
         console.error('Unknown role type:', roleType);
