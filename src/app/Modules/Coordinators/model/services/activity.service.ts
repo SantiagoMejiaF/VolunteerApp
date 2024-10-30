@@ -39,4 +39,9 @@ export class ActivityService {
   getActivitiesByCoordinator(coordinatorId: number): Observable<Activity[]> {
     return this.http.get<any[]>(`${this.apiUrl}/activities/coordinator/${coordinatorId}`, cabecera);
   }
+
+  getQRInicial(activityId: number): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/activities/checkout/${activityId}`, { responseType: 'blob' });
+  }
+
 }

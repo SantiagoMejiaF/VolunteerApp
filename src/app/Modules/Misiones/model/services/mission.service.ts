@@ -53,4 +53,14 @@ export class MissionsService {
         return this.http.get<string[]>(`${this.apiUrl}/missions/interests`);
     }
 
+    getQRInicial(activityId: number): Observable<Blob> {
+        return this.http.get<Blob>(`${this.apiUrl}/activities/checkin/${activityId}`, { responseType: 'blob' as 'json' });
+    }
+
+    getQRFinal(activityId: number): Observable<Blob> {
+        return this.http.get<Blob>(`${this.apiUrl}/activities/checkout/${activityId}`, { responseType: 'blob' as 'json' });
+    }
+
+
+
 }

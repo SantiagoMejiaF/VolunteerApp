@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { MissionsService } from '../../Misiones/model/services/mission.service';
 
 @Component({
   selector: 'app-detalles-ax-c',
@@ -55,7 +56,7 @@ export class DetallesAxCComponent implements OnInit {
     }
   ];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private missionsService: MissionsService) {
     this.route.queryParams.subscribe(params => {
       this.origen = params['from'];
     });
@@ -69,6 +70,28 @@ export class DetallesAxCComponent implements OnInit {
       this.actividadId = this.activityDetails.id;
       this.status = this.activityDetails.status; // Obtener el status de la actividad
       this.setImagenByStatus(this.status); // Configurar la imagen según el estado
+
+      this.missionsService.getQRInicial(this.actividadId).subscribe(
+        (response) => {
+          // Crear un objeto URL para la imagen del QR
+          const url = window.URL.createObjectURL(response);
+          this.qrCodeUrlInicial = url;
+        },
+        (error) => {
+          console.error('Error al obtener el QR inicial', error);
+        }
+      );
+
+      this.missionsService.getQRFinal(this.actividadId).subscribe(
+        (response) => {
+          const url = window.URL.createObjectURL(response);
+          this.qrCodeUrlFinal = url;
+        },
+        (error) => {
+          console.error('Error al obtener el QR final', error);
+        }
+      );
+
     } else {
       console.error('No hay actividad seleccionada en localStorage');
     }
@@ -115,29 +138,22 @@ export class DetallesAxCComponent implements OnInit {
   }
 
   downloadQRInicial(): void {
-    this.http.get(this.qrCodeUrlInicial, { responseType: 'blob' }).subscribe((blob) => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'qrInicial.png';  // Nombre del archivo que se descargará
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);  // Limpiar el objeto URL después de descargar
-    });
+    const a = document.createElement('a');
+    a.href = this.qrCodeUrlInicial;
+    a.download = 'qr_inicial.png'; // Nombre del archivo que se descargará
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 
+
   downloadQRFinal(): void {
-    this.http.get(this.qrCodeUrlFinal, { responseType: 'blob' }).subscribe((blob) => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'qrFinal.png';  // Nombre del archivo que se descargará
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);  // Limpiar el objeto URL después de descargar
-    });
+    const a = document.createElement('a');
+    a.href = this.qrCodeUrlFinal;
+    a.download = 'qr_final.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 
   verDetalles() {
