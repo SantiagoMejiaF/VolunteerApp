@@ -76,6 +76,7 @@ export class VerPerfilOComponent implements OnInit {
           this.organizationService.getOrganizationActivities(organizationId).subscribe(
             (activitiesData) => {
               this.actividades = activitiesData.map(activity => ({
+                id: activity.id,
                 nombre: activity.title,
                 descripcion: activity.description,
                 fecha: activity.date,
@@ -128,16 +129,16 @@ export class VerPerfilOComponent implements OnInit {
     );
   }
 
-  verDetalles(id: number) {
-    const actividad = this.actividades[id];
+  verDetalles(actividadId: number) {
+    const actividad = this.actividades[actividadId];
     console.log('Detalles de la actividad:', actividad);
-    const imagenId = (id % 6) + 1;
+    const imagenId = (actividadId % 6) + 1;
     const from = this.fromPage === 'homeV' ? 'homeV' : 'misF';
 
     this.router.navigate(
-      ['/actividad', id, `card${imagenId}.svg`, { fromMisActividades: true }], 
+      ['/actividad', actividadId, `card${imagenId}.svg`, { fromMisActividades: true }],
       { queryParams: { from: from } }
     );
-  
+
   }
 }

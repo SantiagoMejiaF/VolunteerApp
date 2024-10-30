@@ -1,25 +1,22 @@
-# Etapa de construcción
+# Build
 FROM node:18-alpine AS build
 WORKDIR /app
 
-# Copia y instala solo las dependencias
 COPY package*.json ./
 RUN npm ci
 
-# Instala Angular CLI y copia el resto del código
-RUN npm install -g @angular/cli
 COPY . .
+RUN npx ng build --configuration=production
 
-# Construcción de la aplicación
-RUN node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng build --configuration=production
-
-# Etapa de producción
+# Prod
 FROM nginx:latest
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-COPY  --from=build /app/dist/volunteer-app/ /usr/share/nginx/html/;
+COPY --from=build /app/dist/volunteer-app/browser/ /usr/share/nginx/html/
+
+
 EXPOSE 80
 
-
+CMD ["nginx", "-g", "daemon off;"]
 
 #docker build -t volunteer-app:production .
 #docker run -d -p 8080:80 --name front-volunteerapp volunteer-app:production
