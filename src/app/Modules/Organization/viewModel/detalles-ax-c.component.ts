@@ -124,13 +124,13 @@ export class DetallesAxCComponent implements OnInit {
 
   getStatusClass(): string {
     switch (this.status) {
-      case 'ACTIVO':
+      case 'DISPONIBLE':
         return 'status-activo';
       case 'PENDIENTE':
         return 'status-pendiente';
       case 'COMPLETADA':
         return 'status-completado';
-      case 'Aplazado':
+      case 'APLAZADO':
         return 'status-aplazado';
       default:
         return '';
