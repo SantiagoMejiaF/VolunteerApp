@@ -16,7 +16,7 @@ RUN node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng build --co
 # Etapa de producción
 FROM nginx:latest
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/dist/volunteer-app/browser/ /usr/share/nginx/html/
+COPY  --from=build /app/dist/volunteer-app/ /usr/share/nginx/html/;
 EXPOSE 80
 
 

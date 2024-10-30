@@ -69,8 +69,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let user of activityDetails.volunteers; let i = index">
-                                <!-- Iterar sobre los voluntarios -->
+                            <tr *ngFor="let user of data; let i = index">
                                 <td>{{ i + 1 }}</td>
                                 <td width="60px">
                                     <div class="imgBx">
@@ -80,14 +79,14 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <h4>{{ user.firstName }} {{ user.lastName }} <br></h4>
+                                    <h4>{{user.firstName}} {{user.lastName}} <br></h4>
                                 </td>
                                 <td>{{ user.email }}</td>
                                 <td>{{ user.cedula }}</td>
                                 <td>5</td>
-                                <!-- Aquí puedes agregar lógica para mostrar horas realizadas si es necesario -->
-                                <td style="text-align: center;">
-                                    <a (click)="verDetalles()" style="border: none; background: none;">
+
+                                <td style="text-align: center;"><a (click)="verDetalles()"
+                                        style="border: none; background: none;">
                                         <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
                                             onmouseover="this.style.color='#186dde';"
                                             onmouseout="this.style.color='#80777c';"></i>
@@ -97,9 +96,13 @@
                         </tbody>
                     </table>
                 </div>
+
             </div>
+
         </div>
     </div>
+
+
 </div>
 
 <!-- Modal para QR Inicial -->
