@@ -128,10 +128,16 @@ export class VerPerfilOComponent implements OnInit {
     );
   }
 
-  verDetalles(index: number) {
-    const actividad = this.actividades[index];
+  verDetalles(id: number) {
+    const actividad = this.actividades[id];
     console.log('Detalles de la actividad:', actividad);
-    // Aquí puedes navegar a una nueva página de detalles o mostrar más información
-    // Ejemplo: this.router.navigate(['/actividad-detalle', actividad.id]);
+    const imagenId = (id % 6) + 1;
+    const from = this.fromPage === 'homeV' ? 'homeV' : 'misF';
+
+    this.router.navigate(
+      ['/actividad', id, `card${imagenId}.svg`, { fromMisActividades: true }], 
+      { queryParams: { from: from } }
+    );
+  
   }
 }

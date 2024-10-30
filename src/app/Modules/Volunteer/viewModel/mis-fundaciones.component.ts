@@ -78,6 +78,6 @@ export class MisFundacionesComponent implements OnInit {
 
   verDetalles(organizationId: number) {
     console.log('Organization ID:', organizationId);
-    this.router.navigate(['/verPerfilO'], { queryParams: { id: organizationId } });
+    this.router.navigate(['/verPerfilO'], { queryParams: { id: organizationId , from: 'misF'} });
   }
 }
