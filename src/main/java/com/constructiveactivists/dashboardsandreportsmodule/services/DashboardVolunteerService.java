@@ -1,10 +1,14 @@
 package com.constructiveactivists.dashboardsandreportsmodule.services;
 
 import com.constructiveactivists.dashboardsandreportsmodule.controllers.response.CardsOrganizationVolunteerResponse;
+import com.constructiveactivists.dashboardsandreportsmodule.controllers.response.VolunteerInfoResponse;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
+import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupMembershipEntity;
+import com.constructiveactivists.missionandactivitymodule.repositories.VolunteerGroupRepository;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
 import com.constructiveactivists.organizationmodule.repositories.OrganizationRepository;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.OrganizationStatusEnum;
+import com.constructiveactivists.volunteermodule.entities.volunteerorganization.DataShareVolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupEntity;
@@ -17,6 +21,8 @@ import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEnt
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.InterestEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
+import com.constructiveactivists.volunteermodule.repositories.VolunteerOrganizationRepository;
+import com.constructiveactivists.volunteermodule.services.volunteerorganization.DataShareVolunteerOrganizationService;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.PostulationService;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.VolunteerOrganizationService;
 import com.constructiveactivists.volunteermodule.services.volunteer.VolunteerService;
@@ -29,8 +35,7 @@ import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.constructiveactivists.configurationmodule.constants.AppConstants.NOT_FOUND_MESSAGE;
-import static com.constructiveactivists.configurationmodule.constants.AppConstants.VOLUNTEER_MESSAGE_ID;
+import static com.constructiveactivists.configurationmodule.constants.AppConstants.*;
 
 @Service
 @AllArgsConstructor
@@ -47,6 +52,12 @@ public class DashboardVolunteerService {
     private final VolunteerOrganizationService volunteerOrganizationService;
     private final OrganizationRepository organizationRepository;
     private final PostulationService postulationService;
+
+    private final VolunteerGroupRepository volunteerGroupRepository;
+
+    private final VolunteerOrganizationRepository volunteerOrganizationRepository;
+
+    private final DataShareVolunteerOrganizationService dataShareVolunteerOrganizationService;
 
     public Map<String, Long> getAgeRanges() {
 
@@ -202,5 +213,38 @@ public class DashboardVolunteerService {
             volunteersByMonth.merge(month, 1L, Long::sum);
         });
         return volunteersByMonth;
+    }
+
+    public List<VolunteerInfoResponse> getVolunteersInfoByActivityId(Integer activityId) {
+        ActivityEntity activity = activityService.getById(activityId)
+                .orElseThrow(() -> new EntityNotFoundException(ACTIVITY_NOT_FOUND));
+        VolunteerGroupEntity volunteerGroup = volunteerGroupRepository.findById(activity.getVolunteerGroup())
+                .orElseThrow(() -> new EntityNotFoundException(VOLUNTEER_GROUP_NOT_FOUND));
+        Integer organizationId = volunteerGroup.getOrganizationId();
+        return volunteerGroupRepository.findById(activity.getVolunteerGroup())
+                .orElseThrow(() -> new EntityNotFoundException(VOLUNTEER_GROUP_NOT_FOUND))
+                .getMemberships().stream()
+                .map(VolunteerGroupMembershipEntity::getVolunteerId)
+                .filter(volunteerId -> volunteerOrganizationRepository.existsByVolunteerIdAndOrganizationId(volunteerId, organizationId))
+                .map(volunteerId -> {
+                    Integer volunteerOrganizationId = volunteerOrganizationRepository
+                            .findByVolunteerIdAndOrganizationId(volunteerId, organizationId)
+                            .map(VolunteerOrganizationEntity::getId)
+                            .orElseThrow(() -> new EntityNotFoundException(VOLUNTEER_NOT_FOUND));
+                    DataShareVolunteerOrganizationEntity dataShare = dataShareVolunteerOrganizationService
+                            .findById(volunteerOrganizationId);
+                    VolunteerEntity volunteer = volunteerService.getVolunteerById(volunteerId)
+                            .orElseThrow(() -> new EntityNotFoundException(VOLUNTEER_NOT_FOUND));
+                    UserEntity user = userService.getUserById(volunteer.getUserId())
+                            .orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND));
+                    VolunteerInfoResponse dto = new VolunteerInfoResponse();
+                    dto.setName(user.getFirstName() + " " + user.getLastName());
+                    dto.setEmail(user.getEmail());
+                    dto.setIdentificationCard(volunteer.getPersonalInformation().getIdentificationCard());
+                    dto.setImage(user.getImage());
+                    dto.setHoursDone(dataShare.getHoursDone());
+                    return dto;
+                })
+                .toList();
     }
 }

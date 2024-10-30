@@ -2,6 +2,7 @@ package com.constructiveactivists.dashboardsandreportsmodule.controllers;
 
 import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.dashboardsandreportsmodule.controllers.response.CardsOrganizationVolunteerResponse;
+import com.constructiveactivists.dashboardsandreportsmodule.controllers.response.VolunteerInfoResponse;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.dashboardsandreportsmodule.controllers.configuration.DashboardVolunteerAPI;
 import com.constructiveactivists.dashboardsandreportsmodule.services.DashboardVolunteerService;
@@ -93,5 +94,14 @@ public class DashboardVolunteerController implements DashboardVolunteerAPI {
     public ResponseEntity<Map<Month, Long>> getVolunteersCountByMonth(@PathVariable int year) {
         Map<Month, Long> volunteersByMonth = dashboardService.getVolunteersCountByMonth(year);
         return ResponseEntity.ok(volunteersByMonth);
+    }
+
+    @Override
+    public ResponseEntity<List<VolunteerInfoResponse>> getVolunteersByActivity(@PathVariable Integer activityId) {
+        List<VolunteerInfoResponse> volunteerInfoList = dashboardService.getVolunteersInfoByActivityId(activityId);
+        if (volunteerInfoList.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(volunteerInfoList);
     }
 }

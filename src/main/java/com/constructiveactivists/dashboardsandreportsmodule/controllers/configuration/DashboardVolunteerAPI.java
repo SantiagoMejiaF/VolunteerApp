@@ -1,6 +1,7 @@
 package com.constructiveactivists.dashboardsandreportsmodule.controllers.configuration;
 
 import com.constructiveactivists.dashboardsandreportsmodule.controllers.response.CardsOrganizationVolunteerResponse;
+import com.constructiveactivists.dashboardsandreportsmodule.controllers.response.VolunteerInfoResponse;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.AvailabilityEnum;
@@ -93,4 +94,11 @@ public interface DashboardVolunteerAPI {
     })
     @GetMapping("/volunteers-count-by-month/{year}")
     ResponseEntity<Map<Month, Long>> getVolunteersCountByMonth(@PathVariable int year);
+
+    @Operation(summary = "Obtener informacion de voluntarios para el coordinador por actividad")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa"),
+    })
+    @GetMapping("/volunteers-by-activity/{activityId}")
+    ResponseEntity<List<VolunteerInfoResponse>> getVolunteersByActivity(@PathVariable Integer activityId);
 }
