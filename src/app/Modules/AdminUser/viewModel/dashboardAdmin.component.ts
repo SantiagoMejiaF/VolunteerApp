@@ -191,10 +191,10 @@ export class DashboardAdminComponent implements OnInit {
 
       this.data.forEach((user) => {
         user.rol = user.role.roleType;
+        if (!user.firstName || !user.lastName || !user.cedula) {
+          if (user.rol === 'VOLUNTARIO') {
+            // No deberías sobrescribir los valores de firstName y lastName si ya existen
 
-        if (user.rol === 'VOLUNTARIO') {
-          // No deberías sobrescribir los valores de firstName y lastName si ya existen
-          if (!user.firstName || !user.lastName || !user.cedula) {
             this.volunteerService.getVolunteerDetails(user.id).subscribe((volunteerDetails) => {
               if (volunteerDetails && volunteerDetails.personalInformation) {
                 user.firstName = volunteerDetails.personalInformation.firstName || user.firstName || "Sin nombre";
@@ -208,26 +208,27 @@ export class DashboardAdminComponent implements OnInit {
               completedRequests++;
               if (completedRequests === this.data.length) resolve();
             });
+
+          } else if (user.rol === 'ORGANIZACION') {
+            this.organizationService.getOrganizationDetails(user.id).subscribe((organizationDetails) => {
+              user.firstName = organizationDetails.organizationName; // Usamos organizationName si no hay firstName
+              user.lastName = '';  // Dejar vacío o asignar algún valor si no hay lastName
+              user.cedula = organizationDetails.responsiblePersonId || "Sin cédula";
+
+              completedRequests++;
+              if (completedRequests === this.data.length) resolve();
+            });
+          } else if (user.rol === 'COORDINADOR_ACTIVIDAD') {
+            this.adminService.getCoordinatorDetails(user.id).subscribe((coordinatorDetails) => {
+              user.cedula = coordinatorDetails.identificationCard || "Sin cédula";
+
+              completedRequests++;
+              if (completedRequests === this.data.length) resolve();
+            });
           } else {
             completedRequests++;
             if (completedRequests === this.data.length) resolve();
           }
-        } else if (user.rol === 'ORGANIZACION') {
-          this.organizationService.getOrganizationDetails(user.id).subscribe((organizationDetails) => {
-            user.firstName = organizationDetails.organizationName; // Usamos organizationName si no hay firstName
-            user.lastName = '';  // Dejar vacío o asignar algún valor si no hay lastName
-            user.cedula = organizationDetails.responsiblePersonId || "Sin cédula";
-
-            completedRequests++;
-            if (completedRequests === this.data.length) resolve();
-          });
-        } else if (user.rol === 'COORDINADOR_ACTIVIDAD') {
-          this.adminService.getCoordinatorDetails(user.id).subscribe((coordinatorDetails) => {
-            user.cedula = coordinatorDetails.identificationCard || "Sin cédula";
-
-            completedRequests++;
-            if (completedRequests === this.data.length) resolve();
-          });
         } else {
           completedRequests++;
           if (completedRequests === this.data.length) resolve();
