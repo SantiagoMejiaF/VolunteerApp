@@ -9,6 +9,7 @@ import com.constructiveactivists.missionandactivitymodule.entities.mission.enums
 import com.constructiveactivists.missionandactivitymodule.repositories.MissionRepository;
 import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
 import com.constructiveactivists.organizationmodule.services.organization.OrganizationService;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.InterestEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -67,6 +68,10 @@ public class MissionService {
 
     public List<SkillEnum> getRequiredSkills() {
         return Arrays.asList(SkillEnum.values());
+    }
+
+    public List<InterestEnum> getRequiredInterests() {
+        return Arrays.asList(InterestEnum.values());
     }
 
     public void cancelMissionById(Integer missionId) {

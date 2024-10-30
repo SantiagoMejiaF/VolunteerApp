@@ -10,6 +10,7 @@ import com.constructiveactivists.missionandactivitymodule.entities.mission.enums
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VolunteerMissionRequirementsEnum;
 import com.constructiveactivists.missionandactivitymodule.mappers.mission.MissionMapper;
 import com.constructiveactivists.missionandactivitymodule.services.mission.MissionService;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.InterestEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -79,6 +80,11 @@ public class MissionController implements MissionAPI {
     @Override
     public ResponseEntity<List<SkillEnum>> getRequiredSkills() {
         return ResponseEntity.ok(missionService.getRequiredSkills());
+    }
+
+    @Override
+    public ResponseEntity<List<InterestEnum>> getInterests() {
+        return ResponseEntity.ok(missionService.getRequiredInterests());
     }
 
     @Override

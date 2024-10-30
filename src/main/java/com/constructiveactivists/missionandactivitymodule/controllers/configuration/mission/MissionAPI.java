@@ -7,6 +7,7 @@ import com.constructiveactivists.missionandactivitymodule.entities.mission.enums
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionTypeEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VisibilityEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.VolunteerMissionRequirementsEnum;
+import com.constructiveactivists.volunteermodule.entities.volunteer.enums.InterestEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.SkillEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -89,6 +90,13 @@ public interface MissionAPI {
     })
     @GetMapping("/required-skills")
     ResponseEntity<List<SkillEnum>> getRequiredSkills();
+
+    @Operation(summary = "Obtener los intereses.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa")
+    })
+    @GetMapping("/interests")
+    ResponseEntity<List<InterestEnum>> getInterests();
 
     @Operation(summary = "Cancelar una misión por su ID.")
     @ApiResponses(value = {
