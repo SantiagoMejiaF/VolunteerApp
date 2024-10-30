@@ -15,4 +15,5 @@ public class StatusVolunteerOrganizationResponse {
     private String email;
     private String identificationNumber;
     private OrganizationStatusEnum status;
+    private Integer id;
 }

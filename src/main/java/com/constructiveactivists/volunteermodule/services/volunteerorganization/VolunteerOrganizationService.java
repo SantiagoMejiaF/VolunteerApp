@@ -163,7 +163,8 @@ public class VolunteerOrganizationService {
                             user.getFirstName() + " " + user.getLastName(),
                             user.getEmail(),
                             volunteer.getPersonalInformation().getIdentificationCard(),
-                            postulation.getStatus()
+                            postulation.getStatus(),
+                            volunteer.getId()
                     );
                 })
                 .toList();
