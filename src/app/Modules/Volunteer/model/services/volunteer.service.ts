@@ -92,4 +92,13 @@ export class VolunteerService {
   getAllOrganizations(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/organizations-dashboard/get-cards-all-organizations`);
   }
+
+  getVolunteerHistory(volunteerId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/reviews/history/volunteer/${volunteerId}`);
+  }
+
+  approveVolunteer(volunteerId: number, organizationId: number, approved: boolean): Observable<any> {
+    const url = `${this.apiUrl}/organizations/approve-volunteer?volunteerId=${volunteerId}&organizationId=${organizationId}&approved=${approved}`;
+    return this.http.post<any>(url, {}, cabecera); // Se hace la solicitud POST al servidor
+  }
 }

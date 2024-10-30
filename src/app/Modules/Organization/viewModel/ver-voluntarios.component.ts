@@ -1,60 +1,66 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { ActivatedRoute,Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { OrganizationService } from '../model/services/organization.service'; // Importar el servicio necesario
+
 @Component({
   selector: 'app-ver-voluntarios',
   templateUrl: '../view/ver-voluntarios.component.html',
   styleUrls: ['../styles/ver-voluntarios.component.css']
 })
 export class VerVoluntariosComponent implements AfterViewInit {
-  public data: any[] = [
-    {
-      firstName: 'Juan',
-      lastName: 'Pérez',
-      email: 'juan.perez@example.com',
-      cedula: '12345678',
-      image: 'assets/img/user1.png',
-      Status: 'Activo'
-    },
-    {
-      firstName: 'María',
-      lastName: 'Gómez',
-      email: 'maria.gomez@example.com',
-      cedula: '87654321',
-      image: 'assets/img/user2.png',
-      Status: 'Pendiente'
-    },
-    {
-      firstName: 'Carlos',
-      lastName: 'Rodríguez',
-      email: 'carlos.rodriguez@example.com',
-      cedula: '12349876',
-      image: 'assets/img/user3.png',
-      Status: 'Activo'
-    },
-    {
-      firstName: 'Lucía',
-      lastName: 'Martínez',
-      email: 'lucia.martinez@example.com',
-      cedula: '98761234',
-      image: '',
-      Status: 'Rechazado'
-    },
-    {
-      firstName: 'Pedro',
-      lastName: 'Sánchez',
-      email: 'pedro.sanchez@example.com',
-      cedula: '13579246',
-      image: 'assets/img/user5.png',
-      Status: 'Activo'
-    }
-  ];
-constructor(private router: Router,){
+  public data: any[] = []; // Inicializamos el arreglo de voluntarios
+  public dataLoaded: boolean = false;
 
-}
+  constructor(
+    private router: Router,
+    private organizationService: OrganizationService // Inyectamos el servicio de organización
+  ) { }
+
   ngAfterViewInit(): void {
-    this.initializeDataTable();
+    this.loadActiveVolunteers(); // Llamamos a la función para cargar voluntarios
   }
 
+  // Cargar los voluntarios activos (aceptados)
+  loadActiveVolunteers(): void {
+    this.dataLoaded = false; // Desactivar la acción de ver detalles mientras se cargan los datos
+    const orgId = localStorage.getItem('OrgId'); // Obtener OrgId del localStorage
+    if (orgId) {
+      this.organizationService.getAcceptedVolunteers(+orgId).subscribe((volunteers) => {
+        this.data = volunteers; // Asignamos los voluntarios a la variable 'data' para el *ngFor
+
+        // Por cada voluntario, obtenemos detalles adicionales
+        const volunteerPromises = this.data.map(volunteer => {
+          return new Promise<void>((resolve) => {
+            this.organizationService.getVolunteerDetails(volunteer.id).subscribe(volunteerDetails => {
+              volunteer.personalInformation = volunteerDetails.personalInformation;
+              volunteer.emergencyInformation = volunteerDetails.emergencyInformation;
+
+              // Obtener la imagen del voluntario usando el userId
+              this.organizationService.getUserDetails(volunteerDetails.userId).subscribe(userDetails => {
+                volunteer.image = userDetails.image;
+                volunteer.firstName = userDetails.firstName;
+                volunteer.lastName = userDetails.lastName;
+                volunteer.email = userDetails.email;
+                volunteer.cedula = volunteerDetails.personalInformation.identificationCard;
+                volunteer.Status = volunteer.status;
+
+                // Una vez que los detalles del voluntario estén listos, resolvemos la promesa
+                resolve();
+              });
+            });
+          });
+        });
+
+        // Esperar a que todos los voluntarios se hayan cargado antes de habilitar el botón
+        Promise.all(volunteerPromises).then(() => {
+          this.dataLoaded = true; // Todos los datos están completamente cargados
+          this.initializeDataTable(); // Inicializar la tabla de datos
+        });
+      });
+    }
+  }
+
+  // Inicializa la tabla de datos
   initializeDataTable(): void {
     if ($.fn.dataTable.isDataTable('#datatableVerVoluntarios')) {
       $('#datatableVerVoluntarios').DataTable().destroy();
@@ -80,7 +86,7 @@ constructor(private router: Router,){
 
   getStatusClass(status: string): string {
     switch (status) {
-      case 'Activo':
+      case 'ACEPTADO':
         return 'status-activo';
       case 'Pendiente':
         return 'status-pendiente';
@@ -90,7 +96,12 @@ constructor(private router: Router,){
         return '';
     }
   }
-  verDetalles(){
+
+  verDetalles(volunteer: any): void {
+    if (!this.dataLoaded) {
+      return;
+    }
+    localStorage.setItem('selectedVolunteer', JSON.stringify(volunteer));
     this.router.navigate(['/verPerfilV'], { queryParams: { from: 'verVoluntarios' } });
   }
 }

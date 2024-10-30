@@ -1,33 +1,39 @@
 /* Aplica la fuente Quicksand a todos los textos */
 
 
-h2  {
+h2 {
   font-weight: 600;
   font-size: 20px;
 }
-a{
-    font-weight: 400;
-    font-size: 16px;
-  }
+
+a {
+  font-weight: 400;
+  font-size: 16px;
+}
+
 p {
   font-weight: 400;
   font-size: 14px;
 }
+
 h4 {
   font-weight: 500;
   font-size: 18px;
   color: #949494;
 }
-h6{
-    font-weight: 700;
-    font-size: 15px;
+
+h6 {
+  font-weight: 700;
+  font-size: 15px;
 }
-#misionimg{
-    width: 135px;
-    height: 135px;
-    border-radius:50%;
+
+#misionimg {
+  width: 135px;
+  height: 135px;
+  border-radius: 50%;
 
 }
+
 .column1 img {
   width: 120px;
   height: auto !important;
@@ -35,10 +41,14 @@ h6{
 
 .column1,
 .column2 {
-  background-color: white; /* Fondo blanco */
-  border-radius: 20px; /* Bordes redondeados */
-  padding: 20px; /* Espaciado interno */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  background-color: white;
+  /* Fondo blanco */
+  border-radius: 20px;
+  /* Bordes redondeados */
+  padding: 20px;
+  /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Sombra para darle profundidad */
   margin-bottom: 20px;
 }
 
@@ -54,7 +64,8 @@ h6{
 }
 
 /* Cuando el enlace está activo, cambia el color */
-.nav-link.active-link, .nav-link.active-link i {
+.nav-link.active-link,
+.nav-link.active-link i {
   color: #fb9778;
 }
 
@@ -72,12 +83,12 @@ h6{
 
 
 @media (max-width: 768px) {
- 
+
   .nav-text {
     display: none;
   }
 
- 
+
   .nav-link.active-link .nav-text {
     display: inline-block;
   }
@@ -87,88 +98,100 @@ h6{
 .nav-text {
   transition: opacity 0.3s ease;
 }
+
 /* End: Estilo para los enlaces de navegación */
 
 p {
-    font-family: "Quicksand", sans-serif;
-    font-weight: regular;
-    font-size: 20px;
-    color: #ffffff;
+  font-family: "Quicksand", sans-serif;
+  font-weight: regular;
+  font-size: 20px;
+  color: #ffffff;
 }
-.datos h6{
-    color: #b7c0c7;
-    font-weight: 500;
+
+.datos h6 {
+  color: #b7c0c7;
+  font-weight: 500;
 }
-.datos p{
-    color: #000;
-    font-size: 14px;
+
+.datos p {
+  color: #000;
+  font-size: 14px;
 }
 
 #nor {
-    padding: 10px;
-    width: 100%;
-    font-size: 17px;
-    font-family: "Quicksand", sans-serif;
-    border: 1px solid #c6c6c6;
-    border-radius: 10px;
-    -webkit-appearance: none;
-    transition: border-color 0.3s ease; /* Añade una transición suave */
+  padding: 10px;
+  width: 100%;
+  font-size: 17px;
+  font-family: "Quicksand", sans-serif;
+  border: 1px solid #c6c6c6;
+  border-radius: 10px;
+  -webkit-appearance: none;
+  transition: border-color 0.3s ease;
+  /* Añade una transición suave */
 }
 
 #nor:focus {
-    border-color: #186dde; 
-    outline: none; 
+  border-color: #186dde;
+  outline: none;
 }
 
 ng-multiselect-dropdown {
-    width: 100%;
-    font-size: 17px;
-    font-family: "Quicksand", sans-serif;
-    display: block;
+  width: 100%;
+  font-size: 17px;
+  font-family: "Quicksand", sans-serif;
+  display: block;
 }
 
 .btn-secondary {
-    font-family: "Quicksand", sans-serif;
-    background-color:#0ecc95;
-    border: 2px; 
-    padding: 8px 15px;
-    color: white;
-    font-size: 14px;
-    border-radius: 30px;
-    transition: background-color 0.1s, color 0.3s, border-color 0.3s;
-    margin-top: 10px;
-    margin-left: 12px;
-    font-weight: 500;
-  }
-  
-  .btn-secondary:hover {
-    background-color: #09ad7f; 
-    color: white; 
-  }
-  
-  .btn-secondary:focus {
-    outline: none;
-  }
+  font-family: "Quicksand", sans-serif;
+  background-color: #0ecc95;
+  border: 2px;
+  padding: 8px 15px;
+  color: white;
+  font-size: 14px;
+  border-radius: 30px;
+  transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+  margin-top: 10px;
+  margin-left: 12px;
+  font-weight: 500;
+}
 
-  .award-container {
-    display: flex; /* Alinea los elementos en una fila */
-    align-items: center; /* Alinea verticalmente los elementos en el centro */
-    justify-content: center; /* Centra los elementos horizontalmente */
-    gap: 8px; /* Espacio entre el ícono y el número */
-    margin-top: 10px; /* Espacio encima del contenedor, ajusta según sea necesario */
-    transition: color 0.3s ease; /* Suaviza el cambio de color del texto e ícono */
+.btn-secondary:hover {
+  background-color: #09ad7f;
+  color: white;
+}
+
+.btn-secondary:focus {
+  outline: none;
+}
+
+.award-container {
+  display: flex;
+  /* Alinea los elementos en una fila */
+  align-items: center;
+  /* Alinea verticalmente los elementos en el centro */
+  justify-content: center;
+  /* Centra los elementos horizontalmente */
+  gap: 8px;
+  /* Espacio entre el ícono y el número */
+  margin-top: 10px;
+  /* Espacio encima del contenedor, ajusta según sea necesario */
+  transition: color 0.3s ease;
+  /* Suaviza el cambio de color del texto e ícono */
 }
 
 .award-container:hover {
-    color: blue; /* Cambia el color del texto e ícono al pasar el mouse */
+  color: blue;
+  /* Cambia el color del texto e ícono al pasar el mouse */
 }
 
 .award-container i {
-    font-size: 24px; /* Tamaño del ícono */
+  font-size: 24px;
+  /* Tamaño del ícono */
 }
 
 .award-container h4 {
-    margin: 0; 
+  margin: 0;
 }
 
 
@@ -200,21 +223,25 @@ ng-multiselect-dropdown {
 .how-it-works.row .col-2 {
   align-self: stretch;
 }
+
 .how-it-works.row .col-2::after {
   content: "";
   position: absolute;
   border-left: 3px solid #03A3AE;
   z-index: 1;
 }
+
 .how-it-works.row .col-2.bottom::after {
   height: 50%;
   left: 50%;
   top: 50%;
 }
+
 .how-it-works.row .col-2.full::after {
   height: 100%;
   left: calc(50% - 3px);
 }
+
 .how-it-works.row .col-2.top::after {
   height: 50%;
   left: 50%;
@@ -226,46 +253,56 @@ ng-multiselect-dropdown {
   padding: 0;
   height: 40px;
 }
+
 .timeline hr {
   border-top: 3px solid #03A3AE;
   margin: 0;
   top: 17px;
   position: relative;
 }
+
 .timeline .col-2 {
   display: flex;
   overflow: hidden;
 }
+
 .timeline .corner {
   border: 3px solid #03A3AE;
   width: 100%;
   position: relative;
   border-radius: 15px;
 }
+
 .timeline .top-right {
   left: 50%;
   top: -50%;
 }
+
 .timeline .left-bottom {
   left: -50%;
   top: calc(50% - 3px);
 }
+
 .timeline .top-left {
   left: -50%;
   top: -50%;
 }
+
 .timeline .right-bottom {
   left: 50%;
   top: calc(50% - 3px);
 }
 
-#lindo h5,#lindo p {
+#lindo h5,
+#lindo p {
   color: black;
 }
-#lindo h5{
+
+#lindo h5 {
   font-size: 18px;
 }
-#lindo p{
+
+#lindo p {
   font-size: 14px;
 }
 
@@ -276,68 +313,70 @@ ng-multiselect-dropdown {
 
 /*START: PERSONAL DATA*/
 .tab {
-    padding: 15px;
-    margin: 0 auto;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.data-section {
+  margin-bottom: 15px;
+}
+
+.data-section h6 {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: BLACK;
+}
+
+.data-section p {
+  font-size: 16px;
+  color: BLACK;
+}
+
+h4 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+i {
+  margin-right: 5px;
+  color: BLACK;
+}
+
+@media (max-width: 768px) {
+  .tab {
+    padding: 10px;
+    margin: 10px;
   }
-  
-  .data-section {
-    margin-bottom: 15px;
-  }
-  
-  .data-section h6 {
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: BLACK;
-  }
-  
+
   .data-section p {
-    font-size: 16px;
-    color: BLACK;
-  }
-  
-  h4 {
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  i {
-    margin-right: 5px;color: BLACK;
-  }
-  
-  @media (max-width: 768px) {
-    .tab {
-      padding: 10px;
-      margin: 10px;
-    }
-  
-    .data-section p {
-      font-size: 14px;
-    }
-  }
-
-
-  /*OPCIONALES*/
-  .Aceptar{
-    border: none;
-    background: #03A3AE;
-    color: white;
-    font-weight: 500;
-    border-radius: 5px;
     font-size: 14px;
-    padding: 7px 15px 7px 15px;
-    /*ADBI*/
-    margin-right: 10px;
+  }
+}
 
-  }
-  .Rechazar{
-    border: none;
-    background: #F36060;
-    color: white;
-    font-weight: 500;
-    border-radius: 5px;
-    font-size: 14px;
-    padding: 7px 15px 7px 15px;
-  }
+
+/*OPCIONALES*/
+.Aceptar {
+  border: none;
+  background: #03A3AE;
+  color: white;
+  font-weight: 500;
+  border-radius: 5px;
+  font-size: 14px;
+  padding: 7px 15px 7px 15px;
+  /*ADBI*/
+  margin-right: 10px;
+
+}
+
+.Rechazar {
+  border: none;
+  background: #F36060;
+  color: white;
+  font-weight: 500;
+  border-radius: 5px;
+  font-size: 14px;
+  padding: 7px 15px 7px 15px;
+}
 
 
 
@@ -347,22 +386,23 @@ ng-multiselect-dropdown {
     align-items: flex-start;
   }
 
- 
+
   #misionimg {
     text-align: center;
   }
 
   .ml-3 {
-    margin-left: 0 !important; 
+    margin-left: 0 !important;
   }
 }
 
-.back{
+.back {
   background: none;
   border-radius: 50%;
-  border:none !important;
-  padding:6px 10px 6px 12px;
+  border: none !important;
+  padding: 6px 10px 6px 12px;
 }
-.back:hover{
+
+.back:hover {
   background: #ECEAE9;
 }

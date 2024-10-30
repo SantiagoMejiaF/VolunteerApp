@@ -97,4 +97,17 @@ export class OrganizationService {
   getActivitiesByMissionId(missionId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/activities/mission/${missionId}`);
   }
+
+  getPendingVolunteers(orgId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/volunteers-organizations/pending/${orgId}`);
+  }
+
+  getVolunteerDetails(volunteerId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/volunteers/${volunteerId}`);
+  }
+
+  getAcceptedVolunteers(orgId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/volunteers-organizations/accepted/${orgId}`);
+  }
+
 }
