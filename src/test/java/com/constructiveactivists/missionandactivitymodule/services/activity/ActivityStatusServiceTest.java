@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
+import com.constructiveactivists.missionandactivitymodule.entities.activity.PersonalDataCommunityLeaderEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.repositories.ActivityRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,9 @@ class ActivityStatusServiceTest {
     @Mock
     private ActivityRepository activityRepository;
 
+    @Mock
+    private ReviewEmailService reviewEmailService;
+
     @InjectMocks
     private ActivityStatusService activityStatusService;
 
@@ -32,22 +36,25 @@ class ActivityStatusServiceTest {
 
     @Test
     void testUpdateActivityStatus_ActivitiesInProgress() {
-        // Configurar la fecha y hora actuales
         LocalDateTime now = LocalDateTime.now();
         LocalDate today = now.toLocalDate();
 
-        // Crear una lista de actividades
         ActivityEntity activity1 = new ActivityEntity();
         activity1.setDate(today);
         activity1.setStartTime(now.minusMinutes(10).toLocalTime());
         activity1.setEndTime(now.plusMinutes(10).toLocalTime());
         activity1.setActivityStatus(ActivityStatusEnum.DISPONIBLE);
-
+        PersonalDataCommunityLeaderEntity leader1 = new PersonalDataCommunityLeaderEntity();
+        leader1.setEmailCommunityLeader("leader1@example.com");
+        activity1.setPersonalDataCommunityLeaderEntity(leader1);
         ActivityEntity activity2 = new ActivityEntity();
         activity2.setDate(today);
         activity2.setStartTime(now.minusMinutes(20).toLocalTime());
         activity2.setEndTime(now.minusMinutes(10).toLocalTime());
         activity2.setActivityStatus(ActivityStatusEnum.DISPONIBLE);
+        PersonalDataCommunityLeaderEntity leader2 = new PersonalDataCommunityLeaderEntity();
+        leader2.setEmailCommunityLeader("leader2@example.com");
+        activity2.setPersonalDataCommunityLeaderEntity(leader2);
         List<ActivityEntity> activities = Arrays.asList(activity1, activity2);
         when(activityRepository.findByActivityStatusNot(ActivityStatusEnum.COMPLETADA)).thenReturn(activities);
         activityStatusService.updateActivityStatus();

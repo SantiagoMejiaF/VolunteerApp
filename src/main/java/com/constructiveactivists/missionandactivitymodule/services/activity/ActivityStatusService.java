@@ -15,6 +15,7 @@ import java.util.List;
 public class ActivityStatusService {
 
     private ActivityRepository activityRepository;
+    private ReviewEmailService reviewEmailService;
 
     @Scheduled(fixedRate = 60000)
     public void updateActivityStatus() {
@@ -30,6 +31,7 @@ public class ActivityStatusService {
             }
             else if (now.isAfter(endDateTime) && activity.getActivityStatus() != ActivityStatusEnum.COMPLETADA) {
                 activity.setActivityStatus(ActivityStatusEnum.COMPLETADA);
+                reviewEmailService.sendFormEmail(activity.getPersonalDataCommunityLeaderEntity().getEmailCommunityLeader(), activity.getId());
             }
         });
         if (activities.stream().anyMatch(activity -> activity.getActivityStatus() == ActivityStatusEnum.EN_CURSO || activity.getActivityStatus() == ActivityStatusEnum.COMPLETADA)) {
