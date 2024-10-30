@@ -52,15 +52,13 @@ public class ReviewEmailService {
                 "</head>" +
                 "<body>" +
                 "<div class='container'>" +
-                "<img src='cid:logo' alt='Logo' style='display: block; margin: 0 auto; width: 150px;'>" +
+                "<img src='cid:review' alt='Review' style='display: block; margin: 0 auto; width: 150px;'>" +
                 "<h2>Formulario de Reseña de: <strong>" + activityTitle + "</strong></h2>" +
                 "<p>Por favor, completa el siguiente formulario para dejar tu reseña sobre la actividad.</p>" +
                 "<p style='color: red; font-weight: bold;'>Nota: Una vez enviado el formulario, no se puede editar la reseña.</p>" +
                 "<form action='https://volunteer-app.online/api/v1/back-volunteer-app/reviews/review' method='GET'>" +
                 "<input type='hidden' name='activityId' value='" + activityId + "'/>" +
-                "<label for='description'>Descripción:</label>" +
-                "<textarea id='description' name='description' required></textarea>" +
-                "<label for='rating'>Calificación:</label>" +
+                "<label for='rating'>Por favor califica la actividad del 1 al 5, donde 5 significa que superó tus expectativas y 1 indica que fue muy insatisfactoria.</label>" +
                 "<select id='rating' name='rating' required>" +
                 "  <option value=''>Selecciona una calificación</option>" +
                 "  <option value='1'>1 - Muy malo</option>" +
@@ -69,9 +67,12 @@ public class ReviewEmailService {
                 "  <option value='4'>4 - Bueno</option>" +
                 "  <option value='5'>5 - Excelente</option>" +
                 "</select>" +
+                "<label for='description'>Descripción:</label>" +
+                "<textarea id='description' name='description' required  style=background-color: #effaff; border-left: 4px solid #06c9d7; border: 1px solid #ccc; padding: 10px;></textarea>" +
                 "<button type='submit'>Enviar Reseña</button>" +
                 "</form>" +
                 "</div>" +
+                "<p><span style='font-weight: bold; color: #000000;'><img src='cid:logo' style='height: 50px; vertical-align: middle;' alt='Volunteer App Logo' /> Volunteer App</span></p>" +
                 "</body>" +
                 "</html>";
     }

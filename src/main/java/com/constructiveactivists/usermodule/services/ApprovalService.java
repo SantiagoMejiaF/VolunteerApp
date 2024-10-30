@@ -77,8 +77,8 @@ public class ApprovalService {
     }
 
     private String buildHtmlEmailMessage(UserEntity user, StringBuilder userInfo, String actionMessage, boolean approved) {
-        String backgroundColor = approved ? "#1E1450" : "#ED4B4B";
-
+        String backgroundColor = approved ? "#4abac8" : "#Ef8770";
+        String rejectionMessage = "Queremos que sepas que esto no es un adiós, sino un hasta pronto. Si tienes alguna duda comunícate con nosotros.";
         return String.format(
                 "<html>" +
                         "<body style='font-family: Inter, sans-serif; color: #000000;'>" +
@@ -91,12 +91,19 @@ public class ApprovalService {
                         "<h3 style='color: #306e86; font-weight: bold;'>Aquí puedes ver los detalles de tus datos:</h3>" +
                         "<div style='background-color: #dddfe4; padding: 10px; border-radius: 5px;'>%s</div>" +
                         "<p style='color: #000000;'>Un abrazo,</p>" +
+                        "%s" +
                         "<p><span style='font-weight: bold; color: #000000;'><img src='cid:logo' style='height: 50px; vertical-align: middle;' alt='Volunteer App Logo' /> Volunteer App</span></p>" +
                         "</body>" +
                         "</html>",
-                backgroundColor, approved ? "ACEPTADO" : "RECHAZADO",
-                user.getFirstName(), user.getLastName(), actionMessage, userInfo.toString()
+                backgroundColor,
+                approved ? "ACEPTADO" : "RECHAZADO",
+                user.getFirstName(),
+                user.getLastName(),
+                actionMessage,
+                userInfo.toString(),
+                approved ? "" : "<p style='color: #000000;'>" + rejectionMessage + "</p>"
         );
+
     }
 
     void sendHtmlEmail(String to, String subject, String htmlContent, String imageName) {
