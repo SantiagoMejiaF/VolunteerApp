@@ -7,11 +7,12 @@ import { ActivityService } from '../../Coordinators/model/services/activity.serv
 import { ActivatedRoute } from '@angular/router';
 import { OrganizationService } from '../model/services/organization.service';
 import { MissionsService } from '../../Misiones/model/services/mission.service';
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-actividades-o',
   templateUrl: '../view/actividades-o.component.html',
-  styleUrl: '../styles/actividades-o.component.css'
+  styleUrl: '../styles/actividades-o.component.css',
 })
 export class ActividadesOComponent implements AfterViewInit, OnInit {
   currentStep: number = 1;
@@ -23,6 +24,10 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
   missionId: number | null = null; // Id de la misión obtenido
   coordinators: any[] = []; // Lista de coordinadores
   public activities: any[] = [];
+  showAlert = false;
+  showAlert2 = false;
+  startTimes: string[] = [];
+endTimes: string[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -31,8 +36,7 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
     private organizationService: OrganizationService,
     private missionsService: MissionsService
   ) {
-
-
+    this.generateTimeOptions();
     // Inicializamos el formulario sin valores predefinidos
     this.missionForm = this.fb.group({
       title: ['', Validators.required],
@@ -51,14 +55,28 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
       nameCommunityLeader: ['', Validators.required],
       emailCommunityLeader: ['', [Validators.required, Validators.email]],
       phoneCommunityLeader: ['', Validators.required],
-      visibility: [true, Validators.required] // Aquí agregas el control de visibilidad
+      visibility: [true, Validators.required], // Aquí agregas el control de visibilidad
     });
   }
-
+  generateTimeOptions() {
+    const times = [];
+    for (let hour = 0; hour < 24; hour++) {
+      times.push(this.formatTime12Hour(hour, 0));   // Ejemplo: "2:00 AM"
+      times.push(this.formatTime12Hour(hour, 30));  // Ejemplo: "2:30 AM"
+    }
+    this.startTimes = times;
+    this.endTimes = times;
+  }
+  
+  formatTime12Hour(hour: number, minutes: number): string {
+    const suffix = hour >= 12 ? 'PM' : 'AM';
+    const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+    const minuteString = minutes === 0 ? '00' : `${minutes}`;
+    return `${hour12}:${minuteString} ${suffix}`;
+  }
   ngOnInit(): void {
-
     // Obtener missionId desde query params
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.missionId = +params['id']; // Convertir el parámetro en número
       if (this.missionId) {
         console.log('MissionId obtenido de queryParams:', this.missionId);
@@ -70,7 +88,6 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
     this.loadCoordinators();
   }
 
-
   loadMissionActivities(missionId: number): void {
     this.activityService.getActivitiesByMissionId(missionId).subscribe(
       (activities: any[]) => {
@@ -81,16 +98,14 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
 
         // Solo inicializar la tabla una vez que las actividades han sido cargadas
         setTimeout(() => {
-          this.initializeDataTable();  // Inicializar la tabla con las actividades cargadas
-        }, 0);  // Dar un pequeño retraso para asegurar que Angular renderice las actividades
+          this.initializeDataTable(); // Inicializar la tabla con las actividades cargadas
+        }, 0); // Dar un pequeño retraso para asegurar que Angular renderice las actividades
       },
       (error) => {
         console.error('Error al cargar actividades por misión', error);
       }
     );
   }
-
-
 
   ngAfterViewInit(): void {
     // Ya no inicializamos la tabla aquí, lo hacemos cuando las actividades están cargadas
@@ -104,17 +119,22 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
           this.coordinators = []; // Limpiamos la lista de coordinadores
           coordinators.forEach((coordinator) => {
             // Por cada coordinador, obtenemos los detalles del usuario
-            this.organizationService.getUserDetails(coordinator.userId).subscribe(
-              (userDetails) => {
-                this.coordinators.push({
-                  id: coordinator.id,
-                  name: `${userDetails.firstName} ${userDetails.lastName}`, // Combina el nombre y apellido del usuario
-                });
-              },
-              (error) => {
-                console.error('Error al obtener los detalles del usuario:', error);
-              }
-            );
+            this.organizationService
+              .getUserDetails(coordinator.userId)
+              .subscribe(
+                (userDetails) => {
+                  this.coordinators.push({
+                    id: coordinator.id,
+                    name: `${userDetails.firstName} ${userDetails.lastName}`, // Combina el nombre y apellido del usuario
+                  });
+                },
+                (error) => {
+                  console.error(
+                    'Error al obtener los detalles del usuario:',
+                    error
+                  );
+                }
+              );
           });
         },
         (error) => {
@@ -130,11 +150,11 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
     if (this.missionForm.valid) {
       const formData = this.missionForm.value;
       const newActivity = {
-        missionId: this.missionId, // Asignar el id de la misión
+        missionId: this.missionId,
         personalDataCommunityLeaderEntity: {
           nameCommunityLeader: formData.nameCommunityLeader,
           emailCommunityLeader: formData.emailCommunityLeader,
-          phoneCommunityLeader: formData.phoneCommunityLeader
+          phoneCommunityLeader: formData.phoneCommunityLeader,
         },
         activityCoordinator: formData.activityCoordinator,
         title: formData.title,
@@ -149,14 +169,14 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
         requiredHours: formData.requiredHours,
         visibility: 'PUBLICA',
         numberOfBeneficiaries: formData.numberOfBeneficiaries,
-        observations: formData.observations
+        observations: formData.observations,
       };
 
       this.activityService.createActivity(newActivity).subscribe(
-        response => {
+        (response) => {
           console.log('Actividad creada:', response);
 
-          // Agregar el evento al calendario
+          // Crear el nuevo evento
           const newEvent = {
             title: `${formData.title}`,
             start: `${formData.startDate}T${formData.startTime}`,
@@ -164,17 +184,28 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
             description: `${formData.description}`,
             extendedProps: {
               city: formData.city,
-              address: formData.address
-            }
+              address: formData.address,
+            },
           };
+          // Cerrar el modal programáticamente usando la clase `Modal`
+          // Cerrar el modal programáticamente usando la clase `Modal`
+          this.closeModal();
+          this.showAlert = true;
+          setTimeout(() => (this.showAlert = false), 3000);
+          // Añadir el nuevo evento
+          // Asegúrate de que `events` esté definido y sea un array
+          if (!this.calendarOptions.events) {
+            this.calendarOptions.events = [];
+          }
 
           const currentEvents = this.calendarOptions.events as any[];
           this.calendarOptions.events = [...currentEvents, newEvent];
-
-          this.closeModal();
         },
-        error => {
+        (error) => {
           console.error('Error al crear la actividad:', error);
+          this.closeModal();
+          this.showAlert2 = true;
+          setTimeout(() => (this.showAlert2 = false), 3000);
         }
       );
     } else {
@@ -187,6 +218,8 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
     if (modal) {
       const modalInstance = (window as any).bootstrap.Modal.getInstance(modal);
       modalInstance.hide();
+      const backdrops = document.querySelectorAll('.modal-backdrop');
+      backdrops.forEach((backdrop) => backdrop.remove());
     }
   }
 
@@ -195,7 +228,7 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
     this.activityService.getActivityById(activityId).subscribe(
       (activityDetails) => {
         this.selectedActivity = activityDetails; // Asignar los detalles de la actividad
-        this.showCalendar = false;  // Ocultar la lista y mostrar los detalles
+        this.showCalendar = false; // Ocultar la lista y mostrar los detalles
 
         this.loadCoordinatorDetails(this.selectedActivity);
       },
@@ -206,32 +239,40 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
   }
 
   loadCoordinatorDetails(activity: any) {
-    this.missionsService.getActivityCoordinator(activity.activityCoordinator).subscribe(
-      (coordinatorDetails) => {
-        activity.coordinatorPhone = coordinatorDetails.phoneActivityCoordinator;
-        if (coordinatorDetails.userId) {
-          this.organizationService.getUserDetails(coordinatorDetails.userId).subscribe(
-            (userDetails) => {
-              // Asignar los datos del coordinador al objeto de actividad
-              activity.coordinatorName = `${userDetails.firstName} ${userDetails.lastName}`;
-              activity.coordinatorEmail = userDetails.email;
-            },
-            (error) => {
-              console.error('Error al obtener detalles del usuario coordinador', error);
-              activity.coordinatorName = 'No asignado';
-              activity.coordinatorEmail = '';
-              activity.coordinatorPhone = '';
-            }
-          );
+    this.missionsService
+      .getActivityCoordinator(activity.activityCoordinator)
+      .subscribe(
+        (coordinatorDetails) => {
+          activity.coordinatorPhone =
+            coordinatorDetails.phoneActivityCoordinator;
+          if (coordinatorDetails.userId) {
+            this.organizationService
+              .getUserDetails(coordinatorDetails.userId)
+              .subscribe(
+                (userDetails) => {
+                  // Asignar los datos del coordinador al objeto de actividad
+                  activity.coordinatorName = `${userDetails.firstName} ${userDetails.lastName}`;
+                  activity.coordinatorEmail = userDetails.email;
+                },
+                (error) => {
+                  console.error(
+                    'Error al obtener detalles del usuario coordinador',
+                    error
+                  );
+                  activity.coordinatorName = 'No asignado';
+                  activity.coordinatorEmail = '';
+                  activity.coordinatorPhone = '';
+                }
+              );
+          }
+        },
+        (error) => {
+          console.error('Error al obtener detalles del coordinador', error);
+          activity.coordinatorName = 'No asignado';
+          activity.coordinatorEmail = '';
+          activity.coordinatorPhone = '';
         }
-      },
-      (error) => {
-        console.error('Error al obtener detalles del coordinador', error);
-        activity.coordinatorName = 'No asignado';
-        activity.coordinatorEmail = '';
-        activity.coordinatorPhone = '';
-      }
-    );
+      );
   }
 
   toggleEdit() {
@@ -280,14 +321,16 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
         language: {
           info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
           search: '<span style="font-size: 0.875rem;">Buscar</span>',
-          infoEmpty: '<span style="font-size: 0.875rem;">No hay registros</span>',
-          infoFiltered: '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
-          lengthMenu: '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
-          zeroRecords: '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
-        }
+          infoEmpty:
+            '<span style="font-size: 0.875rem;">No hay registros</span>',
+          infoFiltered:
+            '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
+          lengthMenu:
+            '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
+          zeroRecords:
+            '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
+        },
       });
     }, 1);
   }
-
 }
-

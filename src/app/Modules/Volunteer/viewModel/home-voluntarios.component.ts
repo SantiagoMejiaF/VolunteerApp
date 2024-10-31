@@ -111,7 +111,7 @@ export class HomeVoluntariosComponent implements OnInit {
   // Función para filtrar organizaciones recomendadas y todas las organizaciones
   filterOrganizations(): void {
     const searchLower = this.searchText.toLowerCase();
-
+  
     // Filtrar organizaciones recomendadas
     this.filteredRecommendedOrganizations =
       this.organizacionesRecomendadas.filter((org) => {
@@ -122,23 +122,27 @@ export class HomeVoluntariosComponent implements OnInit {
           this.category === 'TODOS' || org.etiquetas.includes(this.category);
         return matchesSearch && matchesCategory;
       });
-
+  
     // Filtrar todas las organizaciones
-    this.filteredAllOrganizations = this.todasLasOrganizaciones.filter(
-      (org) => {
-        const matchesSearch =
-          org.titulo.toLowerCase().includes(searchLower) ||
-          org.descripcion.toLowerCase().includes(searchLower);
-        const matchesCategory =
-          this.category === 'TODOS' || org.etiquetas.includes(this.category);
-        return matchesSearch && matchesCategory;
-      }
-    );
-     // Aquí es donde debes agregar el código de paginación después de filtrar
-  this.totalItems = this.filteredAllOrganizations.length; 
-  this.totalPages = Math.ceil(this.totalItems / this.pageSize); // Actualizar el número total de elementos filtrados
-  this.paginateOrganizations(); 
+    const filteredAllOrgs = this.todasLasOrganizaciones.filter((org) => {
+      const matchesSearch =
+        org.titulo.toLowerCase().includes(searchLower) ||
+        org.descripcion.toLowerCase().includes(searchLower);
+      const matchesCategory =
+        this.category === 'TODOS' || org.etiquetas.includes(this.category);
+      return matchesSearch && matchesCategory;
+    });
+  
+    // Actualizar total de elementos y paginación en base a los resultados filtrados
+    this.totalItems = filteredAllOrgs.length;
+    this.totalPages = Math.ceil(this.totalItems / this.pageSize);
+  
+    // Paginación de los resultados filtrados
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.filteredAllOrganizations = filteredAllOrgs.slice(start, end);
   }
+  
 
   // Función para ver los detalles de una organización
   verDetalles(organizationId: number) {

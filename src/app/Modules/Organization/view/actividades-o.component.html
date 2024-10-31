@@ -1,3 +1,14 @@
+<!-- Alerta en la parte superior centrada y con ancho fijo -->
+<div *ngIf="showAlert" class="alert alert-info fade show" role="alert" 
+     style="background-color: #68997d; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+  Actividad creada exitosamente.
+</div>
+<div *ngIf="showAlert2" class="alert alert-info fade show" role="alert" 
+     style="background-color: #dc6060; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+  La actividad no pudo ser creada.
+</div>
+
+
 <div class="container mt-5">
 
     <!-- Mostrar el calendario si `showCalendar` es true -->
@@ -115,16 +126,18 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="startTime" class="form-label">Hora de Inicio</label>
-                                <input type="time" id="startTime" class="form-control custom-input"
-                                    formControlName="startTime" required>
+                                <select id="startTime" class="form-select custom-input" formControlName="startTime" required>
+                                    <option *ngFor="let time of startTimes" [value]="time">{{ time }}</option>
+                                  </select>
                             </div>
                         </div>
 
                         <!-- Hora de Fin -->
                         <div class="mb-3">
                             <label for="endTime" class="form-label">Hora de Fin</label>
-                            <input type="time" id="endTime" class="form-control custom-input" formControlName="endTime"
-                                required>
+                            <select id="endTime" class="form-select custom-input" formControlName="endTime" required>
+                                <option *ngFor="let time of endTimes" [value]="time">{{ time }}</option>
+                              </select>
                         </div>
 
                         <!-- Ciudad -->
@@ -220,3 +233,6 @@
         </div>
     </div>
 </div>
+
+
+  

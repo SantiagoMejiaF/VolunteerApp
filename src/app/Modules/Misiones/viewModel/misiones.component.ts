@@ -29,6 +29,7 @@ export class MisionesComponent implements OnInit {
     requiredSkillsList: [],
     requiredInterestsList: []
   };
+  showAlert = false;
 
   constructor(private router: Router, private missionsService: MissionsService) { }
 
@@ -209,8 +210,9 @@ export class MisionesComponent implements OnInit {
 
     this.missionsService.createMission(mission).subscribe(
       (response) => {
-        this.showToast();
         this.closeModal();
+        this.showAlert = true;
+        setTimeout(() => (this.showAlert = false), 3000);
         this.loadMissions(mission.organizationId);
       },
       (error) => {
@@ -219,15 +221,7 @@ export class MisionesComponent implements OnInit {
     );
   }
 
-  showToast(): void {
-    const toastElement = document.getElementById('missionCreatedToast');
-    if (toastElement) {
-      toastElement.classList.add('show');
-      setTimeout(() => {
-        toastElement.classList.remove('show');
-      }, 3000);
-    }
-  }
+  
 
   openModal(event: Event): void {
     event.preventDefault();
@@ -253,14 +247,10 @@ export class MisionesComponent implements OnInit {
   closeModal(): void {
     const modalElement = document.getElementById('MissionModal');
     if (modalElement) {
-      modalElement.style.display = 'none';  // Ocultar el modal
-      modalElement.classList.remove('show');  // Remover la clase que lo muestra
-      document.body.classList.remove('modal-open');  // Restaurar el estado del body
-
+      const modalInstance = (window as any).bootstrap.Modal.getInstance(modalElement);
+      modalInstance.hide();
       const backdrops = document.querySelectorAll('.modal-backdrop');
-      backdrops.forEach((backdrop) => {
-        backdrop.remove();
-      });
+      backdrops.forEach((backdrop) => backdrop.remove());
     }
   }
 

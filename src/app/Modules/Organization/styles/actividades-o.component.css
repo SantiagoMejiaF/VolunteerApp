@@ -23,7 +23,10 @@
     color: white !important;              /* Color blanco */
     font-weight: bold;                    /* Negrita */
   }
-  
+  .custom-input {
+    max-height: 50px!important; /* Ajusta según el número de opciones visibles que desees */
+    overflow-y: auto;  /* Habilita el scroll vertical */
+  }
   /* Botones de la barra de herramientas */
   ::ng-deep .fc-button {
     background-color: transparent !important;  /* Fondo transparente para los botones */
@@ -172,4 +175,14 @@
     padding: 4px 8px;
     border-radius: 12px;
     display: inline-block;
+  }
+  select.custom-input {
+    appearance: none;
+    overflow-y: hidden;
+  }
+  
+  /* Estilo para el dropdown cuando está abierto */
+  select.custom-input:focus {
+    max-height: 150px;  /* Ajusta la altura según el número de opciones visibles */
+    overflow-y: auto;   /* Activa el scroll vertical solo en la lista */
   }

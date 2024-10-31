@@ -20,6 +20,8 @@ export class PerfilComponent implements OnInit {
   lastName: string = '';
   email: string = '';
   volunteerId: number = 0;
+  showAlert = false;
+  showAlert2 = false;
 
   showContent(contentId: string) {
     this.currentContent = contentId;
@@ -232,13 +234,16 @@ export class PerfilComponent implements OnInit {
     };
 
     console.log('Updated Data:', updatedData); // Verifica los datos antes de enviarlos
-
+    this.showAlert = true;
+    setTimeout(() => (this.showAlert = false), 3000);
     this.volunteerService.updateVolunteer(this.volunteerId, updatedData).subscribe(
       (response) => {
         console.log('Volunteer data updated successfully:', response);
       },
       (error) => {
         console.error('Error updating volunteer data:', error);
+        this.showAlert2 = true;
+          setTimeout(() => (this.showAlert2 = false), 3000);
       }
     );
   }

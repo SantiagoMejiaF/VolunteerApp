@@ -1,3 +1,12 @@
+<!-- Alerta en la parte superior centrada y con ancho fijo -->
+<div *ngIf="showAlert" class="alert alert-info fade show" role="alert" 
+     style="background-color: #68997d; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+  Se ha mandado la solicitud de forma exitosa.
+</div>
+<div *ngIf="showAlert2" class="alert alert-info fade show" role="alert" 
+     style="background-color: #dc6060; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+  Ocurrió un error al enviar la solicitud
+</div>
 <div class="container">
 
   <!-- Título y botón para volver atrás -->

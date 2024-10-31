@@ -13,14 +13,14 @@ interface Elements {
 @Component({
   selector: 'app-perfil-o',
   templateUrl: '../view/perfil-o.component.html',
-  styleUrls: ['../styles/perfil-o.component.css']
+  styleUrls: ['../styles/perfil-o.component.css'],
 })
 export class PerfilOComponent implements OnInit {
   currentContent: string = 'content1';
   showContent(contentId: string) {
     this.currentContent = contentId;
   }
-
+  showAlert = false;
   currentTab = 0;
   myForm: FormGroup;
   organizationData: any;
@@ -38,34 +38,42 @@ export class PerfilOComponent implements OnInit {
     {
       id: 1,
       title: 'Título de actividad 1',
-      review: 'Reseña que se dio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
+      review:
+        'Reseña que se dio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
       stars: 3,
-      date: '13/01/2018, 13:05'
+      date: '13/01/2018, 13:05',
     },
     {
       id: 2,
       title: 'Título de actividad 2',
-      review: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
+      review:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
       stars: 4,
-      date: '15/02/2019, 14:10'
+      date: '15/02/2019, 14:10',
     },
     {
       id: 3,
       title: 'Título de actividad 3',
-      review: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
+      review:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
       stars: 5,
-      date: '18/03/2020, 16:20'
+      date: '18/03/2020, 16:20',
     },
     {
       id: 3,
       title: 'Título de actividad 3',
-      review: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
+      review:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
       stars: 5,
-      date: '18/03/2020, 16:20'
+      date: '18/03/2020, 16:20',
     },
-    
   ];
-  constructor(private fb: FormBuilder, private organizationService: OrganizationService, private http: HttpClient, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private organizationService: OrganizationService,
+    private http: HttpClient,
+    private router: Router
+  ) {
     this.myForm = this.fb.group({
       responsiblePersonId: [''],
       responsiblePersonPhoneNumber: [''],
@@ -75,7 +83,7 @@ export class PerfilOComponent implements OnInit {
       volunteeringTypeEnum: [''],
       sectorTypeEnum: [''],
       address: [''],
-      acceptTerms: [false]
+      acceptTerms: [false],
     });
 
     this.organizationData = {
@@ -87,7 +95,7 @@ export class PerfilOComponent implements OnInit {
       sectorTypeEnum: '',
       volunteeringTypeEnum: '',
       nit: '',
-      address: ''
+      address: '',
     };
   }
 
@@ -111,21 +119,31 @@ export class PerfilOComponent implements OnInit {
   }
 
   loadTerms() {
-    this.http.get('assets/textos/terminos-y-condiciones.txt', { responseType: 'text' })
-      .subscribe(data => this.termsContent = data);
+    this.http
+      .get('assets/textos/terminos-y-condiciones.txt', { responseType: 'text' })
+      .subscribe((data) => (this.termsContent = data));
   }
 
   loadDropdownData() {
-    this.organizationService.getOrganizationTypes().subscribe(data => {
-      this.typeOrganization = data.map((item: any) => ({ item_id: item, item_text: item }));
+    this.organizationService.getOrganizationTypes().subscribe((data) => {
+      this.typeOrganization = data.map((item: any) => ({
+        item_id: item,
+        item_text: item,
+      }));
     });
 
-    this.organizationService.getVolunteeringTypes().subscribe(data => {
-      this.volunteeringType = data.map((item: any) => ({ item_id: item, item_text: item }));
+    this.organizationService.getVolunteeringTypes().subscribe((data) => {
+      this.volunteeringType = data.map((item: any) => ({
+        item_id: item,
+        item_text: item,
+      }));
     });
 
-    this.organizationService.getSectorTypes().subscribe(data => {
-      this.sectorOrganization = data.map((item: any) => ({ item_id: item, item_text: item }));
+    this.organizationService.getSectorTypes().subscribe((data) => {
+      this.sectorOrganization = data.map((item: any) => ({
+        item_id: item,
+        item_text: item,
+      }));
     });
   }
 
@@ -146,13 +164,20 @@ export class PerfilOComponent implements OnInit {
   setFormValues() {
     this.myForm.patchValue({
       responsiblePersonId: this.organizationData.responsiblePersonId,
-      responsiblePersonPhoneNumber: this.organizationData.responsiblePersonPhoneNumber,
+      responsiblePersonPhoneNumber:
+        this.organizationData.responsiblePersonPhoneNumber,
       organizationName: this.organizationData.organizationName,
       nit: this.organizationData.nit,
-      organizationTypeEnum: this.typeOrganization.filter(type => type.item_text === this.organizationData.organizationTypeEnum),
-      sectorTypeEnum: this.sectorOrganization.filter(sector => sector.item_text === this.organizationData.sectorTypeEnum),
-      volunteeringTypeEnum: this.volunteeringType.filter(type => type.item_text === this.organizationData.volunteeringTypeEnum),
-      address: this.organizationData.address
+      organizationTypeEnum: this.typeOrganization.filter(
+        (type) => type.item_text === this.organizationData.organizationTypeEnum
+      ),
+      sectorTypeEnum: this.sectorOrganization.filter(
+        (sector) => sector.item_text === this.organizationData.sectorTypeEnum
+      ),
+      volunteeringTypeEnum: this.volunteeringType.filter(
+        (type) => type.item_text === this.organizationData.volunteeringTypeEnum
+      ),
+      address: this.organizationData.address,
     });
   }
 
@@ -162,40 +187,54 @@ export class PerfilOComponent implements OnInit {
 
   onSubmit() {
     this.organizationData = {
-      responsiblePersonPhoneNumber: this.myForm.get('responsiblePersonPhoneNumber')?.value,
+      responsiblePersonPhoneNumber: this.myForm.get(
+        'responsiblePersonPhoneNumber'
+      )?.value,
       organizationName: this.myForm.get('organizationName')?.value,
-      organizationTypeEnum: this.myForm.get('organizationTypeEnum')?.value[0].item_text,
+      organizationTypeEnum: this.myForm.get('organizationTypeEnum')?.value[0]
+        .item_text,
       sectorTypeEnum: this.myForm.get('sectorTypeEnum')?.value[0].item_text,
-      volunteeringTypeEnum: this.myForm.get('volunteeringTypeEnum')?.value[0].item_text,
+      volunteeringTypeEnum: this.myForm.get('volunteeringTypeEnum')?.value[0]
+        .item_text,
       address: this.myForm.get('address')?.value,
     };
 
     console.log('Updated Data:', this.organizationData);
-
-    this.organizationService.updateOrganization(this.organizationId, this.organizationData).subscribe(
-      (response) => {
-        console.log('Organization data updated successfully:', response);
-      },
-      (error) => {
-        console.error('Error updating organization data:', error);
-      }
-    );
+    this.showAlert = true;
+    setTimeout(() => (this.showAlert = false), 3000);
+    this.organizationService
+      .updateOrganization(this.organizationId, this.organizationData)
+      .subscribe(
+        (response) => {
+          console.log('Organization data updated successfully:', response);
+        },
+        (error) => {
+          console.error('Error updating organization data:', error);
+        }
+      );
   }
 
   getStars(rating: number): string[] {
     const totalStars = 5;
-    return Array(totalStars).fill('gray').map((_, index) => index < rating ? 'gold' : 'gray');
+    return Array(totalStars)
+      .fill('gray')
+      .map((_, index) => (index < rating ? 'gold' : 'gray'));
   }
 
   verDetalles(index: number | undefined) {
     // Asignar 1 por defecto si el index es undefined o null
     const validIndex = index ?? 1;
-  
+
     // Asegurarse de que la imagenId esté en el rango adecuado (1-3)
     const imagenId = (validIndex % 3) + 1;
     const btnClass = 'btn-outline-primary' + imagenId;
-  
+
     // Navegar a la ruta con los parámetros calculados
-    this.router.navigate(['/actividad', validIndex, `card${imagenId}.jpg`, btnClass]);
+    this.router.navigate([
+      '/actividad',
+      validIndex,
+      `card${imagenId}.jpg`,
+      btnClass,
+    ]);
   }
 }
