@@ -1,6 +1,7 @@
 package com.constructiveactivists.missionandactivitymodule.controllers.configuration.mission;
 
 import com.constructiveactivists.missionandactivitymodule.controllers.request.mission.MissionRequest;
+import com.constructiveactivists.missionandactivitymodule.controllers.request.mission.MissionUpdateRequest;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionStatusEnum;
@@ -122,4 +123,14 @@ public interface MissionAPI {
     })
     @GetMapping("/recent")
     ResponseEntity<List<MissionEntity>> getLastThreeMissions();
+
+    @Operation(summary = "Actualizar una misión existente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Misión actualizada exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Misión no encontrada"),
+            @ApiResponse(responseCode = "400", description = "Solicitud inválida")
+    })
+    @PutMapping("/{id}")
+    ResponseEntity<MissionEntity> updateMission(@PathVariable Integer id, @Valid @RequestBody MissionUpdateRequest missionUpdateRequest);
+
 }

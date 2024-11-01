@@ -104,4 +104,21 @@ public class MissionService {
     public List<MissionEntity> getLastThreeMissions() {
         return missionRepository.findTop3ByOrderByCreatedAtDesc();
     }
+
+    public MissionEntity updateMission(Integer missionId, MissionEntity updatedMissionData) {
+        MissionEntity existingMission = missionRepository.findById(missionId)
+                .orElseThrow(() -> new EntityNotFoundException("Mission with ID " + missionId + " not found"));
+
+        existingMission.setMissionType(updatedMissionData.getMissionType());
+        existingMission.setTitle(updatedMissionData.getTitle());
+        existingMission.setDescription(updatedMissionData.getDescription());
+        existingMission.setStartDate(updatedMissionData.getStartDate());
+        existingMission.setEndDate(updatedMissionData.getEndDate());
+        existingMission.setDepartment(updatedMissionData.getDepartment());
+        existingMission.setVolunteerMissionRequirementsEnumList(updatedMissionData.getVolunteerMissionRequirementsEnumList());
+        existingMission.setRequiredSkillsList(updatedMissionData.getRequiredSkillsList());
+        existingMission.setVisibility(updatedMissionData.getVisibility());
+
+        return missionRepository.save(existingMission);
+    }
 }

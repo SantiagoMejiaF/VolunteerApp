@@ -9,6 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface ActivityCoordinatorRepository extends JpaRepository<ActivityCoordinatorEntity, Integer> {
+
     List<ActivityCoordinatorEntity> findByOrganizationId(Integer organizationId);
+
     Optional<ActivityCoordinatorEntity> findByUserId(Integer userId);
 }

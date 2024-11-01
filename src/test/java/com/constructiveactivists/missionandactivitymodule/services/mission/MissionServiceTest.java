@@ -18,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -274,5 +275,64 @@ class MissionServiceTest {
         assertEquals(3, lastThreeMissions.get(2).getId());
 
         verify(missionRepository, times(1)).findTop3ByOrderByCreatedAtDesc();
+    }
+
+    @Test
+    void testUpdateMission_Success() {
+        MissionEntity existingMission = new MissionEntity();
+        existingMission.setId(1);
+        existingMission.setTitle("Old Title");
+        existingMission.setDescription("Old Description");
+
+        MissionEntity updatedMissionData = getMissionEntity();
+
+        when(missionRepository.findById(1)).thenReturn(Optional.of(existingMission));
+        when(missionRepository.save(existingMission)).thenReturn(existingMission);
+
+        MissionEntity result = missionService.updateMission(1, updatedMissionData);
+
+        assertNotNull(result);
+        assertEquals("New Title", result.getTitle());
+        assertEquals("New Description", result.getDescription());
+        assertEquals(MissionTypeEnum.MEDIO_AMBIENTE, result.getMissionType());
+        assertEquals(LocalDate.of(2024, 9, 1), result.getStartDate());
+        assertEquals(LocalDate.of(2024, 9, 10), result.getEndDate());
+        assertEquals("Cundinamarca", result.getDepartment());
+        assertEquals(VisibilityEnum.PUBLICA, result.getVisibility());
+        assertEquals(List.of(VolunteerMissionRequirementsEnum.EXPERIENCIA_PREVIA), result.getVolunteerMissionRequirementsEnumList());
+        assertEquals(List.of(SkillEnum.TRABAJO_EN_EQUIPO), result.getRequiredSkillsList());
+
+        verify(missionRepository, times(1)).findById(1);
+        verify(missionRepository, times(1)).save(existingMission);
+    }
+
+    private MissionEntity getMissionEntity() {
+        MissionEntity updatedMissionData = new MissionEntity();
+        updatedMissionData.setTitle("New Title");
+        updatedMissionData.setDescription("New Description");
+        updatedMissionData.setMissionType(MissionTypeEnum.MEDIO_AMBIENTE);
+        updatedMissionData.setStartDate(LocalDate.of(2024, 9, 1));
+        updatedMissionData.setEndDate(LocalDate.of(2024, 9, 10));
+        updatedMissionData.setDepartment("Cundinamarca");
+        updatedMissionData.setVisibility(VisibilityEnum.PUBLICA);
+        updatedMissionData.setVolunteerMissionRequirementsEnumList(List.of(VolunteerMissionRequirementsEnum.EXPERIENCIA_PREVIA));
+        updatedMissionData.setRequiredSkillsList(List.of(SkillEnum.TRABAJO_EN_EQUIPO));
+        return updatedMissionData;
+    }
+
+    @Test
+    void testUpdateMission_NotFound() {
+        MissionEntity updatedMissionData = new MissionEntity();
+        updatedMissionData.setTitle("New Title");
+
+        when(missionRepository.findById(999)).thenReturn(Optional.empty());
+
+        EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, () -> {
+            missionService.updateMission(999, updatedMissionData);
+        });
+
+        assertEquals("Mission with ID 999 not found", thrown.getMessage());
+        verify(missionRepository, times(1)).findById(999);
+        verify(missionRepository, never()).save(any(MissionEntity.class));
     }
 }

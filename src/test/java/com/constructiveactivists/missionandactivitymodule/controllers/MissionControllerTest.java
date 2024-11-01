@@ -1,6 +1,7 @@
 package com.constructiveactivists.missionandactivitymodule.controllers;
 
 import com.constructiveactivists.missionandactivitymodule.controllers.request.mission.MissionRequest;
+import com.constructiveactivists.missionandactivitymodule.controllers.request.mission.MissionUpdateRequest;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionStatusEnum;
@@ -258,5 +259,44 @@ class MissionControllerTest {
         assertEquals(3, response.getBody().get(2).getId());
 
         verify(missionService, times(1)).getLastThreeMissions();
+    }
+
+    @Test
+    void testUpdateMission_Success() {
+        Integer missionId = 1;
+        MissionUpdateRequest missionUpdateRequest = new MissionUpdateRequest();
+        MissionEntity updatedMission = new MissionEntity();
+        updatedMission.setId(missionId);
+        updatedMission.setTitle("Updated Title");
+
+        when(missionMapper.toEntity(missionUpdateRequest)).thenReturn(updatedMission);
+        when(missionService.updateMission(missionId, updatedMission)).thenReturn(updatedMission);
+
+        ResponseEntity<MissionEntity> response = missionController.updateMission(missionId, missionUpdateRequest);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("Updated Title", response.getBody().getTitle());
+
+        verify(missionMapper, times(1)).toEntity(missionUpdateRequest);
+        verify(missionService, times(1)).updateMission(missionId, updatedMission);
+    }
+
+    @Test
+    void testUpdateMission_NotFound() {
+        Integer missionId = 1;
+        MissionUpdateRequest missionUpdateRequest = new MissionUpdateRequest();
+        MissionEntity updatedMission = new MissionEntity();
+
+        when(missionMapper.toEntity(missionUpdateRequest)).thenReturn(updatedMission);
+        doThrow(new EntityNotFoundException()).when(missionService).updateMission(missionId, updatedMission);
+
+        ResponseEntity<MissionEntity> response = missionController.updateMission(missionId, missionUpdateRequest);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
+
+        verify(missionMapper, times(1)).toEntity(missionUpdateRequest);
+        verify(missionService, times(1)).updateMission(missionId, updatedMission);
     }
 }

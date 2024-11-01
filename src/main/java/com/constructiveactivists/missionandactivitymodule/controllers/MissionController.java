@@ -2,6 +2,7 @@ package com.constructiveactivists.missionandactivitymodule.controllers;
 
 import com.constructiveactivists.missionandactivitymodule.controllers.configuration.mission.MissionAPI;
 import com.constructiveactivists.missionandactivitymodule.controllers.request.mission.MissionRequest;
+import com.constructiveactivists.missionandactivitymodule.controllers.request.mission.MissionUpdateRequest;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.MissionEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.mission.enums.MissionStatusEnum;
@@ -113,5 +114,15 @@ public class MissionController implements MissionAPI {
     public ResponseEntity<List<MissionEntity>> getLastThreeMissions() {
         List<MissionEntity> lastThreeMissions = missionService.getLastThreeMissions();
         return ResponseEntity.ok(lastThreeMissions);
+    }
+
+    @Override
+    public ResponseEntity<MissionEntity> updateMission(Integer id, MissionUpdateRequest missionUpdateRequest) {
+        try {
+            MissionEntity updatedMission = missionService.updateMission(id, missionMapper.toEntity(missionUpdateRequest));
+            return ResponseEntity.ok(updatedMission);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }
