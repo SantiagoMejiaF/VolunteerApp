@@ -1,6 +1,7 @@
 package com.constructiveactivists.missionandactivitymodule.controllers.configuration.activity;
 
 import com.constructiveactivists.missionandactivitymodule.controllers.request.activity.ActivityRequest;
+import com.constructiveactivists.missionandactivitymodule.controllers.request.activity.ActivityUpdateRequest;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -43,12 +44,14 @@ public interface ActivityAPI {
     @GetMapping
     ResponseEntity<List<ActivityEntity>> getAllActivities();
 
+
     @Operation(summary = "Obtener el código QR para realizar check-in en una actividad")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa")
     })
     @GetMapping("/checkin/{activityId}")
     ResponseEntity<byte[]> getCheckInQrCode(@PathVariable Integer activityId);
+
 
     @Operation(summary = "Obtener el código QR para realizar check-out en una actividad")
     @ApiResponses(value = {
@@ -57,12 +60,14 @@ public interface ActivityAPI {
     @GetMapping("/checkout/{activityId}")
     ResponseEntity<byte[]> getCheckOutQrCode(@PathVariable Integer activityId);
 
+
     @Operation(summary = "Obtener todas las actividades de una misión")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa")
     })
     @GetMapping("/mission/{missionId}")
     ResponseEntity<List<ActivityEntity>> getActivitiesByMissionId(@PathVariable Integer missionId);
+
 
     @Operation(summary = "Eliminar una actividad por su ID")
     @ApiResponses(value = {
@@ -72,6 +77,7 @@ public interface ActivityAPI {
     @DeleteMapping("/{id}")
     ResponseEntity<String> deleteActivity(@PathVariable Integer id);
 
+
     @Operation(summary = "Obtener todas las actividades de un voluntario")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa")
@@ -79,12 +85,14 @@ public interface ActivityAPI {
     @GetMapping("/volunteer/{volunteerId}")
     ResponseEntity<List<ActivityEntity>> getVolunteerActivities(@PathVariable Integer volunteerId);
 
+
     @Operation(summary = "Obtener todas las actividades de un coordinador")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa")
     })
     @GetMapping("/coordinator/{coordinatorId}")
     ResponseEntity<List<ActivityEntity>> getActivitiesByCoordinator(@PathVariable Integer coordinatorId);
+
 
     @Operation(summary = "Obtener todas las actividades programadas (disponibles) de un coordinador")
     @ApiResponses(value = {
@@ -96,18 +104,22 @@ public interface ActivityAPI {
     @GetMapping("/coordinator/{coordinatorId}/available")
     ResponseEntity<List<ActivityEntity>> getAvailableActivitiesByCoordinator(@PathVariable Integer coordinatorId);
 
+
     @Operation(summary = "Obtener todas las actividades completadas de un voluntario")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa")
     })
     @GetMapping("/volunteer/{volunteerId}/completed")
     ResponseEntity<Integer> getCompletedActivitiesCountVolunteer(@PathVariable Integer volunteerId);
+
+
     @Operation(summary = "Obtener el total de beneficiarios impactados por un voluntario")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa")
     })
     @GetMapping("/volunteer/{volunteerId}/beneficiaries")
     ResponseEntity<Integer> getTotalBeneficiariesImpacted(@PathVariable Integer volunteerId);
+
 
     @Operation(summary = "Obtener todas las actividades de un voluntario en un mes y año específico")
     @ApiResponses(value = {
@@ -119,12 +131,14 @@ public interface ActivityAPI {
             @RequestParam int month,
             @RequestParam int year);
 
+
     @Operation(summary = "Obtener el promedio de calificación de un voluntario")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa")
     })
     @GetMapping("/volunteer/{volunteerId}/rating")
     ResponseEntity<Double> getAverageRating(@PathVariable Integer volunteerId);
+
 
     @Operation(summary = "Obtener el total de actividades realizadas de un voluntario por año")
     @ApiResponses(value = {
@@ -134,4 +148,13 @@ public interface ActivityAPI {
     ResponseEntity<Map<String, Long>> getActivitiesCountByVolunteerAndYear(
             @PathVariable Integer volunteerId,
             @PathVariable int year);
+
+
+    @Operation(summary = "Actualizar una actividad existente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Actividad actualizada exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Actividad no encontrada")
+    })
+    @PutMapping("/{activityId}")
+    ResponseEntity<ActivityEntity> updateActivity(@PathVariable Integer activityId, @RequestBody ActivityUpdateRequest activityUpdateRequest);
 }

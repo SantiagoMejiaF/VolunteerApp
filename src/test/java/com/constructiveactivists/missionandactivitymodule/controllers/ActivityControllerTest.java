@@ -1,6 +1,7 @@
 package com.constructiveactivists.missionandactivitymodule.controllers;
 
 import com.constructiveactivists.missionandactivitymodule.controllers.request.activity.ActivityRequest;
+import com.constructiveactivists.missionandactivitymodule.controllers.request.activity.ActivityUpdateRequest;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.AttendanceEntity;
@@ -364,5 +365,43 @@ class ActivityControllerTest {
         assertEquals(expectedActivitiesCount, response.getBody());
 
         verify(activityService, times(1)).getActivitiesCountByVolunteerAndYearInSpanish(volunteerId, year);
+    }
+
+    @Test
+    void testUpdateActivity_Success() {
+        ActivityUpdateRequest updateRequest = new ActivityUpdateRequest();
+        updateRequest.setTitle("Nueva Plantación de árboles");
+
+        ActivityEntity updatedActivity = new ActivityEntity();
+        updatedActivity.setTitle("Nueva Plantación de árboles");
+
+        when(activityMapper.toEntity(updateRequest)).thenReturn(updatedActivity);
+        when(activityService.updateActivity(1, updatedActivity)).thenReturn(updatedActivity);
+
+        ResponseEntity<ActivityEntity> response = activityController.updateActivity(1, updateRequest);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("Nueva Plantación de árboles", response.getBody().getTitle());
+
+        verify(activityMapper, times(1)).toEntity(updateRequest);
+        verify(activityService, times(1)).updateActivity(1, updatedActivity);
+    }
+
+    @Test
+    void testUpdateActivity_NotFound() {
+        ActivityUpdateRequest updateRequest = new ActivityUpdateRequest();
+        ActivityEntity updatedActivity = new ActivityEntity();
+
+        when(activityMapper.toEntity(updateRequest)).thenReturn(updatedActivity);
+        doThrow(new EntityNotFoundException()).when(activityService).updateActivity(1, updatedActivity);
+
+        ResponseEntity<ActivityEntity> response = activityController.updateActivity(1, updateRequest);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNull(response.getBody());
+
+        verify(activityMapper, times(1)).toEntity(updateRequest);
+        verify(activityService, times(1)).updateActivity(1, updatedActivity);
     }
 }

@@ -12,10 +12,10 @@ import com.constructiveactivists.missionandactivitymodule.repositories.*;
 import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupService;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.organizationmodule.repositories.ActivityCoordinatorRepository;
+import com.constructiveactivists.organizationmodule.services.activitycoordinator.ActivityCoordinatorService;
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteeringInformationEntity;
 import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
-import com.constructiveactivists.volunteermodule.services.volunteer.VolunteerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,20 +55,30 @@ class ActivityServiceTest {
     @Mock
     private ActivityCoordinatorRepository activityCoordinatorRepository;
 
-
     @Mock
     private ReviewRepository reviewRepository;
 
     @Mock
-    private VolunteerService volunteerService;
+    private ActivityCoordinatorService activityCoordinatorService;
 
     @InjectMocks
     private ActivityService activityService;
 
+    private ActivityEntity existingActivity;
+    private ActivityEntity updatedActivity;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+
+        existingActivity = new ActivityEntity();
+        existingActivity.setId(1);
+        existingActivity.setTitle("Actividad existente");
+        existingActivity.setActivityCoordinator(1);
+
+        updatedActivity = new ActivityEntity();
+        updatedActivity.setTitle("Actividad actualizada");
+        updatedActivity.setActivityCoordinator(2);
     }
 
     @Test
@@ -603,5 +613,35 @@ class ActivityServiceTest {
         });
 
         assertEquals("El voluntario tiene actividades completadas, pero no hay reseñas disponibles.", exception.getMessage());
+    }
+
+    @Test
+    void testUpdateActivity_Success() {
+        existingActivity.setId(1);
+        existingActivity.setTitle("Actividad antigua");
+        updatedActivity.setTitle("Actividad actualizada");
+        updatedActivity.setActivityCoordinator(2);
+
+        when(activityRepository.findById(1)).thenReturn(Optional.of(existingActivity));
+        when(activityCoordinatorService.getById(2)).thenReturn(Optional.of(new ActivityCoordinatorEntity()));
+        when(activityRepository.save(existingActivity)).thenReturn(existingActivity);
+
+        ActivityEntity result = activityService.updateActivity(1, updatedActivity);
+
+        assertEquals("Actividad actualizada", result.getTitle());
+        assertEquals(2, result.getActivityCoordinator());
+        verify(activityRepository, times(1)).save(existingActivity);
+    }
+
+    @Test
+    void testUpdateActivity_ActivityNotFound() {
+        when(activityRepository.findById(999)).thenReturn(Optional.empty());
+
+        EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, () -> {
+            activityService.updateActivity(999, updatedActivity);
+        });
+
+        assertEquals("La actividad con ID 999 no existe.", thrown.getMessage());
+        verify(activityRepository, never()).save(any(ActivityEntity.class));
     }
 }

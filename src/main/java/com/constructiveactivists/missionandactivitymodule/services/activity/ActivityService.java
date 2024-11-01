@@ -12,7 +12,6 @@ import com.constructiveactivists.missionandactivitymodule.repositories.*;
 import com.constructiveactivists.missionandactivitymodule.services.volunteergroup.VolunteerGroupService;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.organizationmodule.repositories.ActivityCoordinatorRepository;
-
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
 import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -35,7 +34,6 @@ public class ActivityService {
     private final ActivityRepository activityRepository;
     private final ActivityCoordinatorRepository activityCoordinatorRepository;
     private final QRCodeService qrCodeService;
-    private final ReviewEmailService reviewEmailService;
     private final VolunteerGroupMembershipRepository membershipRepository;
     private final VolunteerGroupRepository groupRepository;
     private final ReviewRepository reviewRepository;
@@ -201,12 +199,30 @@ public class ActivityService {
         return activitiesCount;
     }
 
-
-
-
-
     public List<ActivityEntity> getAvailableActivitiesByCoordinator(Integer coordinatorId) {
         return activityRepository.findAllByActivityCoordinatorAndActivityStatus(coordinatorId, ActivityStatusEnum.DISPONIBLE);
     }
 
+    public ActivityEntity updateActivity(Integer id, ActivityEntity updatedActivity) {
+
+        ActivityEntity existingActivity = activityRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("La actividad con ID " + id + " no existe."));
+
+        existingActivity.setTitle(updatedActivity.getTitle());
+        existingActivity.setDescription(updatedActivity.getDescription());
+        existingActivity.setActivityCoordinator(updatedActivity.getActivityCoordinator());
+        existingActivity.setDate(updatedActivity.getDate());
+        existingActivity.setStartTime(updatedActivity.getStartTime());
+        existingActivity.setEndTime(updatedActivity.getEndTime());
+        existingActivity.setCity(updatedActivity.getCity());
+        existingActivity.setLocality(updatedActivity.getLocality());
+        existingActivity.setAddress(updatedActivity.getAddress());
+        existingActivity.setNumberOfVolunteersRequired(updatedActivity.getNumberOfVolunteersRequired());
+        existingActivity.setRequiredHours(updatedActivity.getRequiredHours());
+        existingActivity.setNumberOfBeneficiaries(updatedActivity.getNumberOfBeneficiaries());
+        existingActivity.setObservations(updatedActivity.getObservations());
+        existingActivity.setVisibility(updatedActivity.getVisibility());
+
+        return activityRepository.save(existingActivity);
+    }
 }

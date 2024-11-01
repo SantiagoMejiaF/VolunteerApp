@@ -3,6 +3,7 @@ package com.constructiveactivists.missionandactivitymodule.controllers;
 import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.controllers.configuration.activity.ActivityAPI;
 import com.constructiveactivists.missionandactivitymodule.controllers.request.activity.ActivityRequest;
+import com.constructiveactivists.missionandactivitymodule.controllers.request.activity.ActivityUpdateRequest;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.mappers.activity.ActivityMapper;
 import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
@@ -138,4 +139,13 @@ public class ActivityController implements ActivityAPI {
         return ResponseEntity.ok(activitiesCount);
     }
 
+    @Override
+    public ResponseEntity<ActivityEntity> updateActivity(Integer id, @RequestBody ActivityUpdateRequest activityUpdateRequest) {
+        try {
+            ActivityEntity updatedActivity = activityService.updateActivity(id, activityMapper.toEntity(activityUpdateRequest));
+            return ResponseEntity.ok(updatedActivity);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 }

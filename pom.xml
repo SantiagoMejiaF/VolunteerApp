@@ -245,6 +245,7 @@
 						<exclude>**/missionandactivitymodule/controllers/request/**</exclude>
 						<exclude>**/missionandactivitymodule/entities/**</exclude>
 						<exclude>**/missionandactivitymodule/repositories/**</exclude>
+						<exclude>**/missionandactivitymodule/services/activity/AttendanceService.class</exclude>
 
 						<exclude>**/organizationmodule/controllers/configuration/**</exclude>
 						<exclude>**/organizationmodule/controllers/request/**</exclude>
@@ -271,6 +272,8 @@
 						<exclude>**/notificationsmodule/entities/**</exclude>
 						<exclude>**/notificationsmodule/repositories/**</exclude>
 						<exclude>**/notificationsmodule/models/**</exclude>
+
+
 
 						<exclude>com/constructiveactivists/VolunteerAppBackendApplication.class</exclude>
 					</excludes>
