@@ -140,7 +140,7 @@ public class ActivityController implements ActivityAPI {
     }
 
     @Override
-    public ResponseEntity<ActivityEntity> updateActivity(Integer id, @RequestBody ActivityUpdateRequest activityUpdateRequest) {
+    public ResponseEntity<ActivityEntity> updateActivity(Integer id, ActivityUpdateRequest activityUpdateRequest) {
         try {
             ActivityEntity updatedActivity = activityService.updateActivity(id, activityMapper.toEntity(activityUpdateRequest));
             return ResponseEntity.ok(updatedActivity);

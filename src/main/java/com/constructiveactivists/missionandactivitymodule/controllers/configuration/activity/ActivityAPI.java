@@ -155,6 +155,6 @@ public interface ActivityAPI {
             @ApiResponse(responseCode = "200", description = "Actividad actualizada exitosamente"),
             @ApiResponse(responseCode = "404", description = "Actividad no encontrada")
     })
-    @PutMapping("/{activityId}")
-    ResponseEntity<ActivityEntity> updateActivity(@PathVariable Integer activityId, @RequestBody ActivityUpdateRequest activityUpdateRequest);
+    @PutMapping("/{id}")
+    ResponseEntity<ActivityEntity> updateActivity(@PathVariable Integer id, @Valid @RequestBody ActivityUpdateRequest activityUpdateRequest);
 }
