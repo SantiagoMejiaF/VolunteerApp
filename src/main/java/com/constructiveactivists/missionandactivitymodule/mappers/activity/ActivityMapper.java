@@ -15,5 +15,7 @@ public interface ActivityMapper {
     @Mapping(target = "endTime", source = "endTime")
     ActivityEntity toDomain (ActivityRequest activityRequest);
 
+    @Mapping(target = "startTime", source = "startTime")
+    @Mapping(target = "endTime", source = "endTime")
     ActivityEntity toEntity (ActivityUpdateRequest activityRequest);
 }
