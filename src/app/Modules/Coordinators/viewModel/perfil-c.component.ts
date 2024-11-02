@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { AdminService } from '../../AdminUser/model/services/admin.service';
 
 @Component({
   selector: 'app-perfil-c',
@@ -16,6 +17,8 @@ export class PerfilCComponent implements OnInit {
   lastName: string = '';
   email: string = '';
   volunteerId: number = 0;
+  image: any;
+  phoneNumber: string = '';
 
   showContent(contentId: string) {
     this.currentContent = contentId;
@@ -23,32 +26,58 @@ export class PerfilCComponent implements OnInit {
 
   currentTab = 0;
   myForm: FormGroup;
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadUserInfo();
+    this.loadCoordinatorDetails();
+  }
 
   constructor(
-    private fb: FormBuilder,
-    
+    private fb: FormBuilder, private adminService: AdminService
+
   ) {
     this.myForm = this.fb.group({
       cell: [''],
       email: [''],
-      
+
     });
 
-   
+
   }
-  onSubmit(): void {}
-  currentStep: number = 1;  
+
+  loadUserInfo() {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo')!);
+    if (userInfo) {
+      this.firstName = userInfo.firstName;
+      this.lastName = userInfo.lastName;
+      this.email = userInfo.email;
+      this.image = userInfo.image; // Cargar la URL de la imagen
+    }
+  }
+
+  loadCoordinatorDetails() {
+    const userId = JSON.parse(localStorage.getItem('userInfo')!).id; // Obtener el userId del localStorage
+    this.adminService.getCoordinatorDetails(userId).subscribe(
+      (coordinatorDetails) => {
+        this.phoneNumber = coordinatorDetails.phoneActivityCoordinator; // Asigna el número telefónico
+      },
+      (error) => {
+        console.error('Error loading coordinator details:', error);
+      }
+    );
+  }
+
+  onSubmit(): void { }
+  currentStep: number = 1;
   showCalendar: boolean = true;
-  missionForm: FormGroup;  
-  isEditing=false;
+  missionForm: FormGroup;
+  isEditing = false;
   calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth', 
+    initialView: 'dayGridMonth',
     eventClick: this.handleEventClick.bind(this),
     plugins: [dayGridPlugin, interactionPlugin],
     editable: true,
     selectable: true,
-    locale: 'es', 
+    locale: 'es',
     events: [
       {
         title: 'BCH237',
@@ -61,9 +90,9 @@ export class PerfilCComponent implements OnInit {
       }
     ],
     headerToolbar: {
-      left: 'prev,next', 
-      center: 'title',  
-      right: ''          
+      left: 'prev,next',
+      center: 'title',
+      right: ''
     },
     views: {
       dayGridMonth: {
@@ -71,63 +100,63 @@ export class PerfilCComponent implements OnInit {
         dayHeaderFormat: { weekday: 'short' }
       }
     },
-    height: 'auto', 
-    
+    height: 'auto',
+
     windowResize: () => {
       const width = window.innerWidth;
       if (width <= 768) {
         this.adjustButtonSizes('small');
         this.adjustTitleSize('small');
         this.calendarOptions.headerToolbar = {
-          left: 'prev,next', 
-          center: 'title',   
-          right: ''          
+          left: 'prev,next',
+          center: 'title',
+          right: ''
         };
         this.calendarOptions.views = {
           dayGridMonth: {
             buttonText: 'Mes',
-            dayHeaderFormat: { weekday: 'narrow' } 
+            dayHeaderFormat: { weekday: 'narrow' }
           }
         };
-        this.calendarOptions.contentHeight = 'auto'; 
+        this.calendarOptions.contentHeight = 'auto';
       } else {
         this.adjustButtonSizes('normal');
         this.adjustTitleSize('normal');
         this.calendarOptions.headerToolbar = {
           left: 'prev,next',
           center: 'title',
-          right: '' 
+          right: ''
         };
         this.calendarOptions.views = {
           dayGridMonth: {
             buttonText: 'Mes',
-            dayHeaderFormat: { weekday: 'short' } 
+            dayHeaderFormat: { weekday: 'short' }
           }
         };
-        this.calendarOptions.contentHeight = 600; 
+        this.calendarOptions.contentHeight = 600;
       }
     }
   };
 
   ngAfterViewInit() {
-    this.adjustButtonSizes('normal'); 
-    this.applyWeekdayHeaderStyles(); 
+    this.adjustButtonSizes('normal');
+    this.applyWeekdayHeaderStyles();
   }
 
   adjustButtonSizes(size: 'small' | 'normal') {
     const buttons = document.querySelectorAll('.fc-prev-button, .fc-next-button');
     buttons.forEach((button) => {
-      const htmlButton = button as HTMLElement; 
+      const htmlButton = button as HTMLElement;
       if (size === 'small') {
-        htmlButton.style.fontSize = '0.4rem'; 
-        htmlButton.style.padding = '5px 10px'; 
-        htmlButton.style.background = '#ED4B4B'; 
-        htmlButton.style.border = 'none'; 
+        htmlButton.style.fontSize = '0.4rem';
+        htmlButton.style.padding = '5px 10px';
+        htmlButton.style.background = '#ED4B4B';
+        htmlButton.style.border = 'none';
       } else {
-        htmlButton.style.fontSize = ''; 
-        htmlButton.style.padding = '';  
-        htmlButton.style.background = '#ED4B4B'; 
-        htmlButton.style.border = 'none'; 
+        htmlButton.style.fontSize = '';
+        htmlButton.style.padding = '';
+        htmlButton.style.background = '#ED4B4B';
+        htmlButton.style.border = 'none';
       }
     });
   }
@@ -136,20 +165,20 @@ export class PerfilCComponent implements OnInit {
     const dayHeaders = document.querySelectorAll('.fc-col-header-cell');
     dayHeaders.forEach((header) => {
       const htmlHeader = header as HTMLElement;
-      htmlHeader.style.backgroundColor = '#ED4B4B'; 
-      htmlHeader.style.color = 'white';           
-      htmlHeader.style.fontWeight = 'bold';         
-      htmlHeader.style.textAlign = 'center';        
+      htmlHeader.style.backgroundColor = '#ED4B4B';
+      htmlHeader.style.color = 'white';
+      htmlHeader.style.fontWeight = 'bold';
+      htmlHeader.style.textAlign = 'center';
     });
   }
 
- 
+
   adjustTitleSize(size: 'small' | 'normal') {
     const title = document.querySelector('.fc-toolbar-title') as HTMLElement;
     if (title) {
       if (size === 'small') {
-        title.style.fontSize = '1.2rem'; 
-        title.style.marginLeft = '10px'; 
+        title.style.fontSize = '1.2rem';
+        title.style.marginLeft = '10px';
       } else {
         title.style.fontSize = '';
       }
@@ -158,7 +187,7 @@ export class PerfilCComponent implements OnInit {
   // Manejador cuando se hace clic en un evento
   handleEventClick(info: any) {
     console.log('Evento seleccionado:', info.event);
-    
+
     // Aquí podrías pasar los datos del evento al componente de detalles si lo deseas
     // Cambia el valor de `showCalendar` para mostrar el componente de detalles
     this.showCalendar = false;
@@ -166,8 +195,8 @@ export class PerfilCComponent implements OnInit {
   toggleEdit() {
     this.isEditing = !this.isEditing;
   }
-   // Manejador para el evento "Back" emitido desde el componente `app-detalles-a`
-   handleBack() {
+  // Manejador para el evento "Back" emitido desde el componente `app-detalles-a`
+  handleBack() {
     this.showCalendar = true;  // Volver a mostrar el calendario
     setTimeout(() => {
       this.adjustButtonSizes('normal');

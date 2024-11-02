@@ -102,7 +102,7 @@ export class SidebarComponent implements OnInit {
       this.router.navigate(['/perfilO']);
     } else if (this.userRole === 'VOLUNTARIO') {
       this.router.navigate(['/perfil']);
-    } else if (this.userRole === 'COORDINADOR') {
+    } else if (this.userRole === 'COORDINADOR_ACTIVIDAD') {
       this.router.navigate(['/perfilC']);
     } else {
       console.error('Rol no reconocido');

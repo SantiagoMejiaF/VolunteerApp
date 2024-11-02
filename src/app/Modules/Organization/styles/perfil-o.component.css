@@ -15,6 +15,13 @@ textarea {
   font-family: "Quicksand", sans-serif;
 }
 
+.user-image {
+  border-radius: 50%;
+  /* Esto hace que la imagen sea redonda */
+
+}
+
+
 h2 {
   font-weight: 600;
   font-size: 20px;

@@ -17,6 +17,7 @@ interface Elements {
 })
 export class PerfilOComponent implements OnInit {
   currentContent: string = 'content1';
+  image: any;
   showContent(contentId: string) {
     this.currentContent = contentId;
   }
@@ -34,40 +35,7 @@ export class PerfilOComponent implements OnInit {
   dropdownSettings2: any = {};
   sectorOrganization: Elements[] = [];
   dropdownSettings3: any = {};
-  timelineData = [
-    {
-      id: 1,
-      title: 'Título de actividad 1',
-      review:
-        'Reseña que se dio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
-      stars: 3,
-      date: '13/01/2018, 13:05',
-    },
-    {
-      id: 2,
-      title: 'Título de actividad 2',
-      review:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
-      stars: 4,
-      date: '15/02/2019, 14:10',
-    },
-    {
-      id: 3,
-      title: 'Título de actividad 3',
-      review:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
-      stars: 5,
-      date: '18/03/2020, 16:20',
-    },
-    {
-      id: 3,
-      title: 'Título de actividad 3',
-      review:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
-      stars: 5,
-      date: '18/03/2020, 16:20',
-    },
-  ];
+  timelineData: any[] = [];
   constructor(
     private fb: FormBuilder,
     private organizationService: OrganizationService,
@@ -101,11 +69,13 @@ export class PerfilOComponent implements OnInit {
 
   ngOnInit() {
     const userInfo = JSON.parse(localStorage.getItem('userInfo')!);
-    this.email = userInfo.email; // Extraer el email del localStorage
+    this.email = userInfo.email;
+    this.image = userInfo.image;
 
     this.loadTerms();
     this.loadDropdownData();
     this.loadOrganizationData();
+    this.loadOrganizationHistory();
 
     this.dropdownSettings = {
       singleSelection: true,
@@ -145,6 +115,18 @@ export class PerfilOComponent implements OnInit {
         item_text: item,
       }));
     });
+  }
+
+  loadOrganizationHistory() {
+    const organizationId = JSON.parse(localStorage.getItem('userInfo')!).id; // Asumiendo que el userId es el mismo que el organizationId
+    this.organizationService.getOrganizationHistory(organizationId).subscribe(
+      (history) => {
+        this.timelineData = history; // Asigna el historial obtenido a timelineData
+      },
+      (error) => {
+        console.error('Error loading organization history:', error);
+      }
+    );
   }
 
   loadOrganizationData() {

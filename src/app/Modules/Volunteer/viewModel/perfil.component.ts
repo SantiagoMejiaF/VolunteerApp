@@ -22,6 +22,7 @@ export class PerfilComponent implements OnInit {
   volunteerId: number = 0;
   showAlert = false;
   showAlert2 = false;
+  image: any;
 
   showContent(contentId: string) {
     this.currentContent = contentId;
@@ -42,37 +43,8 @@ export class PerfilComponent implements OnInit {
   relationships: Elements[] = [];
   dropdownSettings4: any = {};
   termsContent: string | undefined;
-  timelineData = [
-    {
-      id: 1,
-      title: 'Título de actividad 1',
-      review: 'Reseña que se dio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
-      stars: 3,
-      date: '13/01/2018, 13:05'
-    },
-    {
-      id: 2,
-      title: 'Título de actividad 2',
-      review: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
-      stars: 4,
-      date: '15/02/2019, 14:10'
-    },
-    {
-      id: 3,
-      title: 'Título de actividad 3',
-      review: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
-      stars: 5,
-      date: '18/03/2020, 16:20'
-    },
-    {
-      id: 3,
-      title: 'Título de actividad 3',
-      review: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
-      stars: 5,
-      date: '18/03/2020, 16:20'
-    },
-    
-  ];
+  timelineData: any[] = [];
+
 
   constructor(
     private fb: FormBuilder,
@@ -142,17 +114,39 @@ export class PerfilComponent implements OnInit {
     this.loadDropdownData();
     this.loadTerms();
     this.loadVolunteerData();
-   
+    this.loadVolunteerHistory();
+
 
     const userInfo = JSON.parse(localStorage.getItem('userInfo')!);
     this.firstName = userInfo.firstName;
     this.lastName = userInfo.lastName;
     this.email = userInfo.email;
+    this.image = userInfo.image;
   }
 
   loadTerms() {
     this.http.get('assets/textos/terminos-y-condiciones.txt', { responseType: 'text' })
       .subscribe(data => this.termsContent = data);
+  }
+
+  loadVolunteerHistory() {
+    const volunteerId = localStorage.getItem('volunteerId');
+
+    if (volunteerId) {
+      this.volunteerService.getVolunteerHistory(+volunteerId).subscribe(
+        (history) => {
+          this.timelineData = history; // Asegúrate de que history sea un array
+          console.log('Historial de voluntario cargado:', this.timelineData); // Verifica el contenido de timelineData
+        },
+        (error) => {
+          console.error('Error loading volunteer history:', error);
+          this.timelineData = []; // Resetea a un array vacío en caso de error
+        }
+      );
+    } else {
+      console.error('Volunteer ID no encontrado en localStorage');
+      this.timelineData = []; // Resetea a un array vacío si no hay volunteerId
+    }
   }
 
   loadDropdownData() {
@@ -243,7 +237,7 @@ export class PerfilComponent implements OnInit {
       (error) => {
         console.error('Error updating volunteer data:', error);
         this.showAlert2 = true;
-          setTimeout(() => (this.showAlert2 = false), 3000);
+        setTimeout(() => (this.showAlert2 = false), 3000);
       }
     );
   }
@@ -254,13 +248,13 @@ export class PerfilComponent implements OnInit {
   verDetalles(index: number | undefined) {
     // Asignar 1 por defecto si el index es undefined o null
     const validIndex = index ?? 1;
-  
+
     // Asegurarse de que la imagenId esté en el rango adecuado (1-3)
     const imagenId = (validIndex % 3) + 1;
     const btnClass = 'btn-outline-primary' + imagenId;
-  
+
     // Navegar a la ruta con los parámetros calculados
     this.router.navigate(['/actividad', validIndex, `card${imagenId}.jpg`, btnClass]);
   }
-  
+
 }
