@@ -44,4 +44,8 @@ export class ActivityService {
     return this.http.get(`${this.apiUrl}/activities/checkout/${activityId}`, { responseType: 'blob' });
   }
 
+  getCoordinatorReviewHistory(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/organizations-dashboard/coordinator-review-history/${userId}`);
+  }
+
 }

@@ -8,8 +8,8 @@
                     </button>
                     <h2 class="mt-1">Detalles de la Actividad </h2>
                 </div>
-
-                <div class="qr" *ngIf="role === 'COORDINADOR_ACTIVIDAD' && status === 'DISPONIBLE'">
+                <!-- *ngIf="role === 'COORDINADOR_ACTIVIDAD' && status === 'DISPONIBLE' -->
+                <div class="qr" *ngIf=" status === 'DISPONIBLE'">
                     <button data-bs-toggle="modal" data-bs-target="#QRInicial" class="mr-3 custom1">Qr Inicial</button>
                     <button data-bs-toggle="modal" data-bs-target="#QRFinal" class="mr-3 custom2">Qr Final</button>
                 </div>

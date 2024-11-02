@@ -26,9 +26,8 @@
                             <td>{{ i + 1 }}</td>
                             <td width="60px">
                                 <div class="d-flex align-items-center">
-                                    <img [src]="user.image || 'assets/img/user2.png'" alt="Perfil"
-                                        (error)="user.image='assets/img/user3.png'"
-                                        style="width:50px; height:50px; border-radius:50%;">
+                                    <img [src]="user.image || 'assets/img/user2.png'" alt="Perfil" (error)="user.image='assets/img/user3.png'
+                                        " style="width:50px; height:50px; border-radius:50%;">
                                 </div>
                             </td>
                             <td class="align-middle">
@@ -37,7 +36,8 @@
                             <td class="align-middle">{{ user.email }}</td>
                             <td class="align-middle text-left">{{ user.identificationCard }}</td>
                             <td class="align-middle">
-                                <a [routerLink]="['/verPerfilC']" style="border: none; background: none;">
+                                <a (click)="viewCoordinatorProfile(user)"
+                                    style="border: none; background: none; cursor: pointer;">
                                     <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
                                         onmouseover="this.style.color='#186dde';"
                                         onmouseout="this.style.color='#80777c';"></i>

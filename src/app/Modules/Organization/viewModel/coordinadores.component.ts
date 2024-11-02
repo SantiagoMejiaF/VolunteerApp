@@ -4,6 +4,7 @@ import { OauthService } from '../../authenticationModule/model/services/oauth.se
 import { TokenDto } from '../../authenticationModule/model/token-dto';
 import { forkJoin } from 'rxjs';
 import * as bootstrap from 'bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-coordinadores',
@@ -16,7 +17,8 @@ export class CoordinadoresComponent implements OnInit {
 
   constructor(
     private organizationService: OrganizationService,
-    private oauthService: OauthService
+    private oauthService: OauthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -147,4 +149,12 @@ export class CoordinadoresComponent implements OnInit {
       });
     }, 1);
   }
+
+  viewCoordinatorProfile(coordinator: any): void {
+    localStorage.setItem('SelectedCoordinator', JSON.stringify(coordinator));
+    console.log('Coordinador seleccionado guardado:', coordinator); // Verifica los datos en la consola
+    this.router.navigate(['/verPerfilC']);
+  }
+
+
 }

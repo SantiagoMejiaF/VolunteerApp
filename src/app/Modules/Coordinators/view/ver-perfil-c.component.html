@@ -4,7 +4,7 @@
             <div class="column1 d-flex">
                 <button class="back mr-2" routerLink="/verCoordinador">
                     <i class="fas fa-chevron-left"></i>
-                  </button>
+                </button>
                 <h2 class="mt-1">Perfil Coordinador de actividad</h2>
             </div>
         </div>
@@ -16,7 +16,7 @@
 
             <div class="column2">
                 <div class="head d-flex">
-                    <img src="assets/img/ejemplo.jpg" id="misionimg">
+                    <img [src]="image" id="misionimg" alt="Imagen de Coordinador">
                     <div class="ml-3 mt-3" style="text-align: left;">
                         <div class="datos">
                             <h6>Nombre</h6>
@@ -24,8 +24,7 @@
                             <h6>Email</h6>
                             <p>{{ email }}</p>
                             <h6>Teléfono</h6>
-                            <p>{{ volunteerData.personalInformation.phoneNumber }}</p>
-
+                            <p>{{ phoneNumber }}</p>
                         </div>
 
                     </div>
@@ -53,7 +52,7 @@
                 <div *ngIf="currentContent === 'content1'" class="content mt-5">
                     <div class="row">
                         <div class="col tittle" id="recentCustomers">
-                
+
                             <div class="table-responsive">
                                 <table class="table table-sm" id="datatableexample">
                                     <thead>
@@ -68,17 +67,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let actividad of data; let i = index">
+                                        <tr *ngFor="let actividad of activities; let i = index">
                                             <td>{{ i + 1 }}</td>
-                                            <td >{{actividad.tittle}}</td>
-                                            <td>{{actividad.city}}</td>
+                                            <td>{{ actividad.title }}</td>
+                                            <td>{{ actividad.city }}</td>
                                             <td>{{ actividad.address }}</td>
-                                            <td>{{ actividad.noVolunteers }}</td>
-                                            <td>
-                                                <span [ngClass]="getStatusClass(actividad.Status)">{{ actividad.Status }}</span>
-                                              </td>
-                                              
-                                            <td style="text-align: center;"><a (click)="verDetallesA()"
+                                            <td>{{ actividad.numberOfVolunteersRequired }}</td>
+                                            <td><span [ngClass]="getStatusClass(actividad.activityStatus)">{{
+                                                    actividad.activityStatus
+                                                    }}</span></td>
+                                            <td style="text-align: center;">
+                                                <a (click)="verDetallesA(actividad)"
                                                     style="border: none; background: none;">
                                                     <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
                                                         onmouseover="this.style.color='#186dde';"
@@ -89,7 +88,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                
+
                         </div>
                     </div>
 
@@ -98,148 +97,32 @@
                     <div class="" id="lindo">
                         <div class="container">
 
-                            <!-- Paso 1 (Fijo) -->
-                            <div class="row align-items-center how-it-works d-flex">
-                                <div
-                                    class="col-2 text-center bottom d-inline-flex justify-content-center align-items-center">
-                                    <div class="circle font-weight-bold">1</div>
-                                </div>
-                                <div class="col-6">
-                                    <h5>Título de actividad</h5>
-                                    <span *ngFor="let star of getStars(3)"
-                                        [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
-                                    <p>Reseña que se dio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                                        porttitor gravida aliquam. Morbi orci urna, iaculis in ligula et, posuere
-                                        interdum lectus.</p>
-                                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 13/01/2018,
-                                            13:05</small></p>
-                                </div>
+                            <!-- Mostrar mensaje si no hay reseñas -->
+                            <div *ngIf="timelineData.length === 0" class="text-center mt-4">
+                                <p>Este usuario aún no cuenta con ninguna reseña.</p>
                             </div>
 
-                            <!-- Línea entre paso 1 y 2 -->
-                            <div class="row timeline">
-                                <div class="col-2">
-                                    <div class="corner top-right"></div>
-                                </div>
-                                <div class="col-8">
-                                    <hr />
-                                </div>
-                                <div class="col-2">
-                                    <div class="corner left-bottom"></div>
-                                </div>
-                            </div>
+                            <!-- Paso 1, Paso 2, Paso 3 y alternancia entre Paso 2 y Paso 3 -->
+                            <ng-container *ngFor="let item of timelineData; let i = index">
 
-                            <!-- Paso 2 (Fijo) -->
-                            <div class="row align-items-center justify-content-end how-it-works d-flex">
-                                <div class="col-6 text-right">
-                                    <h5>Fully Responsive</h5>
-                                    <span *ngFor="let star of getStars(3)"
-                                        [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida
-                                        aliquam. Morbi orci urna, iaculis in ligula et, posuere interdum lectus.</p>
-                                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 13/01/2018,
-                                            13:05</small></p>
-                                </div>
-                                <div
-                                    class="col-2 text-center full d-inline-flex justify-content-center align-items-center">
-                                    <div class="circle font-weight-bold">2</div>
-                                </div>
-                            </div>
-
-                            <!-- Línea entre paso 2 y 3 -->
-                            <div class="row timeline">
-                                <div class="col-2">
-                                    <div class="corner right-bottom"></div>
-                                </div>
-                                <div class="col-8">
-                                    <hr />
-                                </div>
-                                <div class="col-2">
-                                    <div class="corner top-left"></div>
-                                </div>
-                            </div>
-
-                            <!-- Paso 3 (Fijo) -->
-                            <div class="row align-items-center how-it-works d-flex">
-                                <div
-                                    class="col-2 text-center top d-inline-flex justify-content-center align-items-center">
-                                    <div class="circle font-weight-bold">3</div>
-                                </div>
-                                <div class="col-6">
-                                    <h5>Fully Responsive</h5>
-                                    <span *ngFor="let star of getStars(3)"
-                                        [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida
-                                        aliquam. Morbi orci urna, iaculis in ligula et, posuere interdum lectus.</p>
-                                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 13/01/2018,
-                                            13:05</small></p>
-                                </div>
-                            </div>
-
-                            <!-- Línea después del paso 3 -->
-                            <div class="row timeline" *ngIf="timelineData.length > 3">
-                                <div class="col-2">
-                                    <div class="corner top-right"></div>
-                                </div>
-                                <div class="col-8">
-                                    <hr />
-                                </div>
-                                <div class="col-2">
-                                    <div class="corner left-bottom"></div>
-                                </div>
-                            </div>
-
-                            <!-- Nuevos pasos dinámicos a partir del paso 4 -->
-                            <ng-container *ngFor="let item of timelineData.slice(3); let i = index">
-
-                                <!-- Sección Par (Patrón igual que paso 2) -->
-                                <div *ngIf="i % 2 === 0"
-                                    class="row align-items-center justify-content-end how-it-works d-flex">
-                                    <div class="col-6 text-right">
-                                        <h5>{{ item.title }}</h5>
-                                        <span *ngFor="let star of getStars(item.stars)"
-                                            [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
-                                        <p>{{ item.review }}</p>
-                                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{
-                                                item.date }}</small></p>
-                                    </div>
-                                    <div
-                                        class="col-2 text-center full d-inline-flex justify-content-center align-items-center">
-                                        <div class="circle font-weight-bold">{{ i + 4 }}</div>
-                                    </div>
-                                </div>
-
-                                <!-- Línea entre pasos pares e impares -->
-                                <div class="row timeline" *ngIf="i < timelineData.slice(3).length - 1">
-                                    <div class="col-2">
-                                        <div class="corner right-bottom"></div>
-                                    </div>
-                                    <div class="col-8">
-                                        <hr />
-                                    </div>
-                                    <div class="col-2">
-                                        <div class="corner top-left"></div>
-                                    </div>
-                                </div>
-
-                                <!-- Sección Impar (Patrón igual que paso 1) -->
-                                <div *ngIf="i % 2 !== 0" class="row align-items-center how-it-works d-flex">
+                                <!-- Paso 1 (Primer historial) -->
+                                <div *ngIf="i === 0" class="row align-items-center how-it-works d-flex">
                                     <div
                                         class="col-2 text-center bottom d-inline-flex justify-content-center align-items-center">
-                                        <div class="circle font-weight-bold">{{ i + 4 }}</div>
+                                        <div class="circle font-weight-bold">{{ i + 1 }}</div>
                                     </div>
                                     <div class="col-6">
                                         <h5>{{ item.title }}</h5>
-                                        <span *ngFor="let star of getStars(item.stars)"
+                                        <span *ngFor="let star of getStars(item.rating)"
                                             [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
-                                        <p>{{ item.review}}</p>
+                                        <p>{{ item.description }}</p>
                                         <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{
-                                                item.date }}</small></p>
+                                                item.creationDate }}</small></p>
                                     </div>
                                 </div>
 
-                                <!-- Línea entre pasos impares y pares -->
-                                <div class="row timeline" *ngIf="i < timelineData.slice(3).length - 1">
+                                <!-- Línea después del Paso 1 -->
+                                <div class="row timeline" *ngIf="timelineData.length > 1">
                                     <div class="col-2">
                                         <div class="corner top-right"></div>
                                     </div>
@@ -251,6 +134,113 @@
                                     </div>
                                 </div>
 
+                                <!-- Paso 2 (Segundo historial) -->
+                                <div *ngIf="i === 1"
+                                    class="row align-items-center justify-content-end how-it-works d-flex">
+                                    <div class="col-6 text-right">
+                                        <h5>{{ item.title }}</h5>
+                                        <span *ngFor="let star of getStars(item.rating)"
+                                            [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                                        <p>{{ item.description }}</p>
+                                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{
+                                                item.creationDate }}</small></p>
+                                    </div>
+                                    <div
+                                        class="col-2 text-center full d-inline-flex justify-content-center align-items-center">
+                                        <div class="circle font-weight-bold">{{ i + 1 }}</div>
+                                    </div>
+                                </div>
+
+                                <!-- Línea después del Paso 2 -->
+                                <div class="row timeline" *ngIf="timelineData.length > 2">
+                                    <div class="col-2">
+                                        <div class="corner right-bottom"></div>
+                                    </div>
+                                    <div class="col-8">
+                                        <hr />
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="corner top-left"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Paso 3 (Tercer historial) -->
+                                <div *ngIf="i === 2" class="row align-items-center how-it-works d-flex">
+                                    <div
+                                        class="col-2 text-center top d-inline-flex justify-content-center align-items-center">
+                                        <div class="circle font-weight-bold">{{ i + 1 }}</div>
+                                    </div>
+                                    <div class="col-6">
+                                        <h5>{{ item.title }}</h5>
+                                        <span *ngFor="let star of getStars(item.rating)"
+                                            [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                                        <p>{{ item.description }}</p>
+                                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{
+                                                item.creationDate }}</small></p>
+                                    </div>
+                                </div>
+
+                                <!-- Línea después del Paso 3 -->
+                                <div class="row timeline" *ngIf="timelineData.length > 3">
+                                    <div class="col-2">
+                                        <div class="corner top-right"></div>
+                                    </div>
+                                    <div class="col-8">
+                                        <hr />
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="corner left-bottom"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Alternancia entre Paso 2 y Paso 3 para los siguientes elementos -->
+                                <ng-container *ngIf="i > 2">
+                                    <div *ngIf="(i % 2) === 1"
+                                        class="row align-items-center justify-content-end how-it-works d-flex">
+                                        <div class="col-6 text-right">
+                                            <h5>{{ item.title }}</h5>
+                                            <span *ngFor="let star of getStars(item.rating)"
+                                                [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                                            <p>{{ item.description }}</p>
+                                            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{
+                                                    item.creationDate }}</small></p>
+                                        </div>
+                                        <div
+                                            class="col-2 text-center full d-inline-flex justify-content-center align-items-center">
+                                            <div class="circle font-weight-bold">{{ i + 1 }}</div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="(i % 2) === 0" class="row align-items-center how-it-works d-flex">
+                                        <div
+                                            class="col-2 text-center top d-inline-flex justify-content-center align-items-center">
+                                            <div class="circle font-weight-bold">{{ i + 1 }}</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <h5>{{ item.title }}</h5>
+                                            <span *ngFor="let star of getStars(item.rating)"
+                                                [ngClass]="star === 'gold' ? 'star gold' : 'star gray'">★</span>
+                                            <p>{{ item.description }}</p>
+                                            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{
+                                                    item.creationDate }}</small></p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Línea entre los pasos alternos -->
+                                    <div class="row timeline" *ngIf="i < timelineData.length - 1">
+                                        <div class="col-2">
+                                            <div [ngClass]="(i % 2) === 1 ? 'corner right-bottom' : 'corner top-right'">
+                                            </div>
+                                        </div>
+                                        <div class="col-8">
+                                            <hr />
+                                        </div>
+                                        <div class="col-2">
+                                            <div [ngClass]="(i % 2) === 1 ? 'corner top-left' : 'corner left-bottom'">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
                             </ng-container>
 
                         </div>

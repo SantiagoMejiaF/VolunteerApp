@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { VolunteerService } from '../../Volunteer/model/services/volunteer.service';
 import { Router } from '@angular/router';
+import { ActivityService } from '../model/services/activity.service';
 
 @Component({
   selector: 'app-ver-perfil-c',
@@ -14,74 +15,11 @@ export class VerPerfilCComponent {
   lastName: string = '';
   email: string = '';
   volunteerId: number = 0;
-  data = [
-    {
-      tittle: 'Limpieza de parque',
-      city: 'Madrid',
-      address: 'Calle Mayor 123',
-      noVolunteers: 20,
-      Status: 'Activo',
-    },
-    {
-      tittle: 'Reforestación urbana',
-      city: 'Barcelona',
-      address: 'Avenida Diagonal 456',
-      noVolunteers: 15,
-      Status: 'Pendiente',
-    },
-    {
-      tittle: 'Recogida de alimentos',
-      city: 'Valencia',
-      address: 'Calle de la Paz 789',
-      noVolunteers: 30,
-      Status: 'Completado',
-    },
-    {
-      tittle: 'Ayuda en comedor social',
-      city: 'Sevilla',
-      address: 'Plaza Nueva 10',
-      noVolunteers: 25,
-      Status: 'Activo',
-    },
-    {
-      tittle: 'Reciclaje comunitario',
-      city: 'Bilbao',
-      address: 'Gran Vía 14',
-      noVolunteers: 12,
-      Status: 'Aplazado',
-    }
-  ];
-  timelineData = [
-    {
-      id: 1,
-      title: 'Título de actividad 1',
-      review: 'Reseña que se dio: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
-      stars: 3,
-      date: '13/01/2018, 13:05'
-    },
-    {
-      id: 2,
-      title: 'Título de actividad 2',
-      review: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
-      stars: 4,
-      date: '15/02/2019, 14:10'
-    },
-    {
-      id: 3,
-      title: 'Título de actividad 3',
-      review: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
-      stars: 5,
-      date: '18/03/2020, 16:20'
-    },
-    {
-      id: 3,
-      title: 'Título de actividad 3',
-      review: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor gravida aliquam.',
-      stars: 5,
-      date: '18/03/2020, 16:20'
-    },
-    
-  ];
+  phoneNumber: string = '';
+  identificationCard: string = '';
+  image: string = '';
+  activities: any[] = [];
+  timelineData: any[] = [];
   showContent(contentId: string) {
     this.currentContent = contentId;
   }
@@ -92,71 +30,72 @@ export class VerPerfilCComponent {
   disabled = false;
   ShowFilter = false;
   limitSelection = false;
-  
+
 
   constructor(
-    private volunteerService: VolunteerService,
-    private router: Router 
-   
+    private activityService: ActivityService,
+    private router: Router
+
   ) {
-    
-    this.volunteerData = {
-      userId: 0,
-      personalInformation: {
-        identificationCard: '',
-        phoneNumber: '',
-        address: '',
-        birthDate: ''
-      },
-      volunteeringInformation: {
-        availabilityDaysList: [],
-        interestsList: [],
-        skillsList: []
-      },
-      emergencyInformation: {
-        emergencyContactFirstName: '',
-        emergencyContactLastName: '',
-        emergencyContactRelationship: '',
-        emergencyContactPhone: '',
-        emergencyContactEmail: ''
-      }
-    };
   }
+
+  loadCoordinatorData(): void {
+    const coordinator = JSON.parse(localStorage.getItem('SelectedCoordinator')!);
+    if (coordinator) {
+      this.firstName = coordinator.firstName;
+      this.lastName = coordinator.lastName;
+      this.email = coordinator.email;
+      this.phoneNumber = coordinator.phoneActivityCoordinator;
+      this.identificationCard = coordinator.identificationCard;
+      this.image = coordinator.image || 'assets/img/ejemplo.jpg';
+    } else {
+      console.error('No se encontró el coordinador seleccionado en localStorage.');
+    }
+  }
+
+  loadCoordinatorActivities(): void {
+    const coordinator = JSON.parse(localStorage.getItem('SelectedCoordinator')!);
+    if (coordinator && coordinator.id) {
+      this.activityService.getActivitiesByCoordinator(coordinator.id).subscribe(
+        (activities) => {
+          this.activities = activities; // Almacena cada actividad completa
+        },
+        (error) => {
+          console.error('Error al cargar las actividades del coordinador:', error);
+        }
+      );
+    }
+  }
+
+
+  loadCoordinatorHistory(): void {
+    const coordinator = JSON.parse(localStorage.getItem('SelectedCoordinator')!);
+    if (coordinator && coordinator.userId) {
+      this.activityService.getCoordinatorReviewHistory(coordinator.userId).subscribe(
+        (history) => {
+          this.timelineData = history.map(item => ({
+            title: item.activity.title,
+            rating: item.rating,
+            description: item.description,
+            creationDate: item.creationDate
+          }));
+        },
+        (error) => {
+          console.error('Error al cargar el historial del coordinador:', error);
+        }
+      );
+    }
+  }
+
+
 
   ngOnInit() {
-   
-
-    
-    this.loadVolunteerData();
-   
-
-    const userInfo = JSON.parse(localStorage.getItem('userInfo')!);
-    this.firstName = userInfo.firstName;
-    this.lastName = userInfo.lastName;
-    this.email = userInfo.email;
-  }
-
- 
-  
-
-  loadVolunteerData() {
-    const userId = JSON.parse(localStorage.getItem('userInfo')!).id;
-    this.volunteerService.getVolunteerDetails(userId).subscribe(
-      (volunteerDetails) => {
-        this.volunteerData = volunteerDetails;
-        this.volunteerId = volunteerDetails.id;  // Asignar el ID del voluntario
-       
-      },
-      (error) => {
-        console.error('Error loading volunteer details:', error);
-      }
-    );
+    this.loadCoordinatorData();
+    this.loadCoordinatorActivities();
+    this.loadCoordinatorHistory();
   }
 
 
- 
-
-  
   getStars(rating: number): string[] {
     const totalStars = 5;
     return Array(totalStars).fill('gray').map((_, index) => index < rating ? 'gold' : 'gray');
@@ -165,32 +104,63 @@ export class VerPerfilCComponent {
   verDetalles(index: number | undefined) {
     // Asignar 1 por defecto si el index es undefined o null
     const validIndex = index ?? 1;
-  
+
     // Asegurarse de que la imagenId esté en el rango adecuado (1-3)
     const imagenId = (validIndex % 3) + 1;
     const btnClass = 'btn-outline-primary' + imagenId;
-  
+
     // Navegar a la ruta con los parámetros calculados
     this.router.navigate(['/actividad', validIndex, `card${imagenId}.jpg`, btnClass]);
   }
   getStatusClass(status: string): string {
     switch (status) {
-      case 'Activo':
+      case 'COMPLETADA':
+        return 'status-completada';
+      case 'DISPONIBLE':
         return 'status-activo';
-      case 'Pendiente':
+      case 'PENDIENTE':
         return 'status-pendiente';
-      case 'Completado':
-        return 'status-completado';
-      case 'Aplazado':
-        return 'status-aplazado';
+      case 'CANCELADA':
+        return 'status-cancelada';
       default:
         return '';
     }
   }
-  verDetallesA() {
-    this.router.navigate(['/verDetallesAxC'], { queryParams: { from: 'verPerfilC' } });
 
+  verDetallesA(activity: any): void {
+    // Crea el objeto en el formato adecuado, similar al de ActividadesCComponent
+    const formattedActivity = {
+      id: activity.id,
+      title: activity.title,
+      startDate: activity.date,
+      address: activity.address,
+      noVolunteers: activity.numberOfVolunteersRequired,
+      status: activity.activityStatus,
+      startTime: activity.startTime,
+      description: activity.description,
+      city: activity.city,
+      requiredHours: activity.requiredHours,
+      coordinatorId: activity.activityCoordinator,
+      // Incluye el detalle del coordinador si está disponible
+      coordinator: {
+        id: activity.personalDataCommunityLeaderEntity?.id || null,
+        phone: activity.personalDataCommunityLeaderEntity?.phoneCommunityLeader || '',
+        userId: activity.personalDataCommunityLeaderEntity?.id || null,
+        name: `${activity.personalDataCommunityLeaderEntity?.nameCommunityLeader || 'N/A'}`
+      }
+    };
+
+    // Imprime el objeto para verificar
+    console.log('Actividad seleccionada (formateada):', formattedActivity);
+
+    // Guarda en localStorage
+    localStorage.setItem('selectedActivity', JSON.stringify(formattedActivity));
+
+    // Navega a la página de detalles
+    this.router.navigate(['/verDetallesAxC'], { queryParams: { from: 'verPerfilC' } });
   }
+
+
 }
 
 
