@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { AdminService } from '../../../Modules/AdminUser/model/services/admin.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: '../view/sidebar.component.html',
@@ -14,15 +15,10 @@ export class SidebarComponent implements OnInit {
   isSidebarExpanded: boolean = false; // Controla la expansión del sidebar
   isMobileSidebarVisible: boolean = false; // Controla si el sidebar es visible en móvil
 
-  notifications = [
-    { title: 'Título 1', message: 'Fuiste aceptado' },
-    { title: 'Título 2', message: 'Nueva actividad' },
-    { title: 'Título 3', message: 'Has sido invitado' },
-    { title: 'Título 4', message: 'Rechazado' },
-    // Puedes agregar más notificaciones aquí
-  ];
+  notifications: any[] = [];
   ngOnInit(): void {
     this.loadUserInfo();
+    this.loadNotifications();
     console.log(this.userRole);
   }
 
@@ -34,8 +30,28 @@ export class SidebarComponent implements OnInit {
     this.userImage = this.sanitizer.bypassSecurityTrustUrl(userInfo.image || 'assets/img/default-user.png');
   }
 
+  loadNotifications(): void {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+    console.log('User Info:', userInfo); // Añade esto para depuración
+    const userId = userInfo.id; // Asegúrate de que esta propiedad exista
 
-  constructor(private router: Router, private sanitizer: DomSanitizer) { }
+    if (userId) {
+      this.adminService.getNotifications(userId).subscribe(
+        (data) => {
+          this.notifications = data; // Asignar las notificaciones obtenidas
+        },
+        (error) => {
+          console.error('Error al cargar las notificaciones', error);
+        }
+      );
+    } else {
+      console.error('User ID no disponible. Verifica que el usuario esté correctamente autenticado.');
+    }
+  }
+
+
+
+  constructor(private router: Router, private sanitizer: DomSanitizer, private adminService: AdminService) { }
   // Alternar expansión del sidebar
   toggleSidebar(): void {
     if (window.innerWidth <= 768) { // Si es móvil, mostrar u ocultar el sidebar móvil
