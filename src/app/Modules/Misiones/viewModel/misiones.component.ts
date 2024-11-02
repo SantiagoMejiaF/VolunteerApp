@@ -221,7 +221,7 @@ export class MisionesComponent implements OnInit {
     );
   }
 
-  
+
 
   openModal(event: Event): void {
     event.preventDefault();
