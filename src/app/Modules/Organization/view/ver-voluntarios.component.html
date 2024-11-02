@@ -28,12 +28,11 @@
                             <td width="60px">
                                 <div class="imgBx">
                                     <img [src]="user.image || 'assets/img/user2.png'" alt="Perfil"
-                                        (error)="user.image='assets/img/user3.png'"
-                                        style="width:50px; height:50px; border-radius:50%;">
+                                        (error)="user.image='assets/img/user3.png'">
                                 </div>
                             </td>
                             <td>
-                                <h4>{{ user.firstName }} {{ user.lastName }} <br></h4>
+                                <h4>{{ user.firstName }} {{ user.lastName }}</h4>
                             </td>
                             <td>{{ user.email }}</td>
                             <td class="text-left">{{ user.cedula }}</td>

@@ -14,6 +14,7 @@ import {
 } from 'ng-apexcharts';
 import { OrganizationService } from '../model/services/organization.service';
 import { MissionsService } from '../../Misiones/model/services/mission.service';
+import { Router } from '@angular/router';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -66,11 +67,11 @@ export class DashboardOrganizationComponent implements OnInit {
   public chartOptions2: ChartOptions2;
   public chartOptions3: ChartOptions3;
 
-  constructor(private organizationService: OrganizationService, private missionsService: MissionsService,) {
+  constructor(private organizationService: OrganizationService, private missionsService: MissionsService, private router: Router) {
     this.chartOptions = {
       series: [
         {
-          name: 'Actividades Completadas',
+          name: 'Actividades',
           data: [],
           color: "#FF5733"
         },
@@ -229,6 +230,34 @@ export class DashboardOrganizationComponent implements OnInit {
     );
   }
 
+  loadRecentVolunteers() {
+    const orgId = localStorage.getItem('OrgId');
+    if (orgId) {
+      this.organizationService.getRecentAcceptedVolunteers(+orgId).subscribe(recentVolunteers => {
+        recentVolunteers.forEach(volunteer => {
+          this.organizationService.getUserDetails(volunteer.userId).subscribe(userDetails => {
+            this.data.push({
+              id: volunteer.id,
+              identificationCard: volunteer.personalInformation.identificationCard,
+              firstName: userDetails.firstName,
+              lastName: userDetails.lastName,
+              email: userDetails.email,
+              image: userDetails.image || 'assets/img/user2.png',
+            });
+          });
+        });
+      }, error => {
+        console.error('Error al cargar voluntarios recientes', error);
+      });
+    } else {
+      console.error('No se encontró el OrgId en localStorage');
+    }
+  }
+
+  navigateToVolunteers() {
+    this.router.navigate(['/verVoluntarios']);
+  }
+
   // Inicializar el componente y cargar datos iniciales
   ngOnInit(): void {
     const orgId = localStorage.getItem('OrgId'); // Obtener OrgId del localStorage
@@ -239,6 +268,7 @@ export class DashboardOrganizationComponent implements OnInit {
       // Cargar actividades del año actual
       this.loadActivitiesByYear(+orgId, this.currentYear);
       this.loadProgrammedActivities();
+      this.loadRecentVolunteers();
 
       // Cargar otros datos relevantes
       this.organizationService.getCompletedMissionsCount(+orgId).subscribe(data => {
@@ -247,6 +277,10 @@ export class DashboardOrganizationComponent implements OnInit {
 
       this.organizationService.getTotalBeneficiariesImpacted(+orgId).subscribe(data => {
         this.totalBeneficiaries = data;
+      });
+
+      this.organizationService.getAcceptedVolunteersCount(+orgId).subscribe(data => {
+        this.volunteersCount = data;
       });
 
       this.organizationService.getVolunteerAvailabilityCount(+orgId).subscribe(data => {
@@ -266,7 +300,7 @@ export class DashboardOrganizationComponent implements OnInit {
     this.selectedDate = today;
     this.generateCalendar();
   }
-  
+
   isSelected(day: Date): boolean {
     return this.selectedDate && day && day.toDateString() === this.selectedDate.toDateString();
   }

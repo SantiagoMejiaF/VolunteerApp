@@ -104,8 +104,8 @@
                     </div>
 
                     <div class="row text-center" *ngFor="let week of calendarDays">
-                        <div *ngFor="let day of week" class="col" 
-                        [ngClass]="{'selected-day': isSelected(day), 'bg-primary': isToday(day)}"
+                        <div *ngFor="let day of week" class="col"
+                            [ngClass]="{'selected-day': isSelected(day), 'bg-primary': isToday(day)}"
                             (click)="selectDay(day)">
                             <span [class.text-muted]="!day" id="dia">{{ day?.getDate() }}</span>
                             <span *ngIf="hasActivities(day)" class="activity-dot"></span>
@@ -176,7 +176,8 @@
         <div class="col tittle" id="recentCustomers">
             <div class="cardHeader mb-2 d-flex justify-content-between align-items-center">
                 <h2>Voluntarios Recientes</h2>
-                <button type="button" id="buttonStyle" class="btn btn-outline-warning">Ver todos</button>
+                <button type="button" id="buttonStyle" class="btn btn-outline-warning"
+                    (click)="navigateToVolunteers()">Ver todos</button>
             </div>
             <div class="table-responsive">
                 <table class="table table-sm" id="datatableDashOrga">
@@ -190,22 +191,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let user of data; let i = index">
+                        <tr *ngFor="let volunteer of data; let i = index">
                             <td>{{ i + 1 }}</td>
                             <td width="60px">
                                 <div class="imgBx">
-                                    <img [src]="user.image || 'assets/img/user2.png'" alt="Perfil"
-                                        (error)="user.image='assets/img/user3.png'"
-                                        style="width:50px; height:50px; border-radius:50%;">
+                                    <img [src]="volunteer.image" alt="Perfil"
+                                        (error)="volunteer.image='assets/img/user3.png'">
                                 </div>
                             </td>
                             <td>
-                                <h4>{{ user.firstName }} {{ user.lastName }} <br> <span>Voluntario</span></h4>
+                                <h4>{{ volunteer.firstName }} {{ volunteer.lastName }} </h4>
                             </td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.cedula }}</td>
+                            <td>{{ volunteer.email }}</td>
+                            <td>{{ volunteer.identificationCard }}</td>
                         </tr>
                     </tbody>
+
                 </table>
             </div>
         </div>

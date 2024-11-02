@@ -110,4 +110,12 @@ export class OrganizationService {
     return this.http.get<any[]>(`${this.apiUrl}/volunteers-organizations/accepted/${orgId}`);
   }
 
+  getAcceptedVolunteersCount(orgId: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/volunteers-organizations/count/accepted/${orgId}`);
+  }
+
+  getRecentAcceptedVolunteers(orgId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/volunteers-organizations/recent/list/accepted/${orgId}`);
+  }
+
 }

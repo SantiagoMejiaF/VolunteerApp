@@ -22,3 +22,5 @@ CMD ["nginx", "-g", "daemon off;"]
 #docker run -d -p 8080:80 --name front-volunteerapp volunteer-app:production
 #sudo nano /etc/nginx/sites-available/volunteerapp
 #sudo systemctl restart nginx
+#npx ng build --configuration=production
+#sudo cp -r dist/volunteer-app/browser/* /usr/share/nginx/html/
