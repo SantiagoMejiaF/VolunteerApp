@@ -61,6 +61,8 @@ export class MissionsService {
         return this.http.get<Blob>(`${this.apiUrl}/activities/checkout/${activityId}`, { responseType: 'blob' as 'json' });
     }
 
-
+    joinActivity(volunteerId: number, activityId: number): Observable<string> {
+        return this.http.post(`${this.apiUrl}/volunteers/${volunteerId}/activities/${activityId}/signup`, {}, { responseType: 'text' });
+    }
 
 }

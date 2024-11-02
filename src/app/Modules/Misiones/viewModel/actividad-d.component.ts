@@ -13,6 +13,7 @@ export class ActividadDComponent implements OnInit {
   btnClass: string = '';
   showAlert = false;
   showAlert2 = false;
+  showAlert3 = false;
   origen: string = '';
   actividadId: number = 0;
   public mostrarBotonUnirse: boolean = true;
@@ -83,13 +84,37 @@ export class ActividadDComponent implements OnInit {
     );
   }
 
-  // Método para unirse a la actividad
   unirse(event: Event) {
     event.preventDefault(); // Prevenir el comportamiento predeterminado del enlace
 
-    this.showAlert = true;
-    setTimeout(() => (this.showAlert = false), 3000);
+    const volunteerId = Number(localStorage.getItem('volunteerId')); // Obtener el volunteerId del localStorage
+
+    if (volunteerId) {
+      this.missionsService.joinActivity(volunteerId, this.actividadId).subscribe(
+        (response) => {
+          // Imprimir la respuesta del servidor
+          console.log(response);
+          this.showAlert = true; // Mostrar alerta de éxito
+          setTimeout(() => (this.showAlert = false), 3000);
+        },
+        (error) => {
+          if (error.status === 400) {
+            this.showAlert3 = true; // Mostrar alerta de éxito
+            setTimeout(() => (this.showAlert3 = false), 3000);
+          } else {
+            this.showAlert2 = true; // Mostrar alerta de error
+            setTimeout(() => (this.showAlert2 = false), 3000);
+          }
+        }
+      );
+    } else {
+      console.error('No se encontró el ID del voluntario en localStorage');
+      this.showAlert2 = true; // Mostrar alerta de error si no hay volunteerId
+      setTimeout(() => (this.showAlert2 = false), 3000);
+    }
   }
+
+
 
   // Método para volver a la pantalla anterior
   volver() {

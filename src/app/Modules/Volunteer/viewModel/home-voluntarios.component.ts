@@ -34,12 +34,12 @@ export class HomeVoluntariosComponent implements OnInit {
     private volunteerService: VolunteerService,
     private organizationService: OrganizationService,
     private router: Router
-  ) {}
+  ) { }
   onPageChange(page: number) {
     this.currentPage = page;
     this.paginateOrganizations();
   }
-  
+
   // Función para paginar las organizaciones filtradas
   paginateOrganizations() {
     const start = (this.currentPage - 1) * this.pageSize;
@@ -84,7 +84,7 @@ export class HomeVoluntariosComponent implements OnInit {
         }));
         this.totalItems = this.todasLasOrganizaciones.length;
         this.totalPages = Math.ceil(this.totalItems / this.pageSize);  // Establecer el número total de organizaciones
-      this.paginateOrganizations(); // Inicialmente muestra todas
+        this.paginateOrganizations(); // Inicialmente muestra todas
 
       },
       (error) => {
@@ -111,7 +111,7 @@ export class HomeVoluntariosComponent implements OnInit {
   // Función para filtrar organizaciones recomendadas y todas las organizaciones
   filterOrganizations(): void {
     const searchLower = this.searchText.toLowerCase();
-  
+
     // Filtrar organizaciones recomendadas
     this.filteredRecommendedOrganizations =
       this.organizacionesRecomendadas.filter((org) => {
@@ -122,7 +122,7 @@ export class HomeVoluntariosComponent implements OnInit {
           this.category === 'TODOS' || org.etiquetas.includes(this.category);
         return matchesSearch && matchesCategory;
       });
-  
+
     // Filtrar todas las organizaciones
     const filteredAllOrgs = this.todasLasOrganizaciones.filter((org) => {
       const matchesSearch =
@@ -132,22 +132,26 @@ export class HomeVoluntariosComponent implements OnInit {
         this.category === 'TODOS' || org.etiquetas.includes(this.category);
       return matchesSearch && matchesCategory;
     });
-  
+
     // Actualizar total de elementos y paginación en base a los resultados filtrados
     this.totalItems = filteredAllOrgs.length;
     this.totalPages = Math.ceil(this.totalItems / this.pageSize);
-  
+
     // Paginación de los resultados filtrados
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
     this.filteredAllOrganizations = filteredAllOrgs.slice(start, end);
   }
-  
+
 
   // Función para ver los detalles de una organización
-  verDetalles(organizationId: number) {
+  // Función para ver los detalles de una organización
+  verDetalles(organization: any) {
+    localStorage.setItem('SelectedOrganization', JSON.stringify(organization));
+
     this.router.navigate(['/verPerfilO'], {
-      queryParams: { id: organizationId, from: 'homeV' },
+      queryParams: { id: organization.id, from: 'homeV' },
     });
   }
+
 }
