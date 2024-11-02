@@ -48,4 +48,8 @@ export class ActivityService {
     return this.http.get<any[]>(`${this.apiUrl}/organizations-dashboard/coordinator-review-history/${userId}`);
   }
 
+  getVolunteersByActivity(activityId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/volunteers-dashboard/volunteers-by-activity/${activityId}`, cabecera);
+  }
+
 }

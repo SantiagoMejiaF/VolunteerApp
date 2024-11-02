@@ -50,7 +50,7 @@ export class ActividadesCComponent implements OnInit, AfterViewInit {
               requiredHours: activity.requiredHours,
               coordinatorId: activity.activityCoordinator // Guardar el ID del coordinador
             }));
-
+            let completedRequests = 0;
             // Obtener los detalles del coordinador para cada actividad
             this.data.forEach(activity => {
               this.missionsService.getActivityCoordinator(activity.coordinatorId).subscribe(coordinatorDetails => {
@@ -63,6 +63,12 @@ export class ActividadesCComponent implements OnInit, AfterViewInit {
                 // Obtener el nombre del usuario
                 this.organizationService.getUserDetails(coordinatorDetails.userId).subscribe(userDetails => {
                   activity.coordinator.name = userDetails.firstName + ' ' + userDetails.lastName; // Asumiendo que el campo se llama 'name'
+
+                  completedRequests++;
+                  if (completedRequests === this.data.length) {
+                    this.loadingComplete = true; // Marca la carga como completa cuando todas las solicitudes hayan terminado
+                    this.initializeDataTable();
+                  }
                 });
               }, error => {
                 console.error('Error fetching coordinator details', error);
@@ -70,7 +76,6 @@ export class ActividadesCComponent implements OnInit, AfterViewInit {
             });
 
             console.log('Mapped data:', this.data);
-            this.loadingComplete = true; // Marca la carga como completa
             this.initializeDataTable(); // Inicializa la tabla después de cargar los datos
           } else {
             console.log('No activities found for this coordinator.');
@@ -116,7 +121,7 @@ export class ActividadesCComponent implements OnInit, AfterViewInit {
         return 'status-pendiente';
       case 'COMPLETADA':
         return 'status-completado';
-      case 'APLAZADO':
+      case 'CANCELADA':
         return 'status-aplazado';
       default:
         return '';
@@ -125,10 +130,12 @@ export class ActividadesCComponent implements OnInit, AfterViewInit {
 
   verDetalles(activity: any): void {
     if (!this.loadingComplete) {
-    }
+      alert('Los datos aún están cargando. Por favor, espera hasta que se completen.');
+      return;
+    } else
 
-    // Guardar la información de la actividad seleccionada en localStorage
-    localStorage.setItem('selectedActivity', JSON.stringify(activity));
+      // Guardar la información de la actividad seleccionada en localStorage
+      localStorage.setItem('selectedActivity', JSON.stringify(activity));
 
     // Redirigir a la vista de detalles
     this.router.navigate(['/verDetallesAxC'], { queryParams: { from: 'misAC' } });

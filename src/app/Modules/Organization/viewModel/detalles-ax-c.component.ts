@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MissionsService } from '../../Misiones/model/services/mission.service';
+import { ActivityService } from '../../Coordinators/model/services/activity.service';
 
 @Component({
   selector: 'app-detalles-ax-c',
@@ -17,46 +18,11 @@ export class DetallesAxCComponent implements OnInit {
   qrCodeUrlInicial: string = '';
   qrCodeUrlFinal: string = '';
   activityDetails: any;
+  data: any[] = [];
 
-  public data: any[] = [
-    {
-      firstName: 'Juan',
-      lastName: 'Pérez',
-      email: 'juan.perez@example.com',
-      cedula: '12345678',
-      image: 'assets/img/user1.png',
-    },
-    {
-      firstName: 'María',
-      lastName: 'Gómez',
-      email: 'maria.gomez@example.com',
-      cedula: '87654321',
-      image: 'assets/img/user2.png',
-    },
-    {
-      firstName: 'Carlos',
-      lastName: 'Rodríguez',
-      email: 'carlos.rodriguez@example.com',
-      cedula: '12349876',
-      image: 'assets/img/user3.png',
-    },
-    {
-      firstName: 'Lucía',
-      lastName: 'Martínez',
-      email: 'lucia.martinez@example.com',
-      cedula: '98761234',
-      image: '',
-    },
-    {
-      firstName: 'Pedro',
-      lastName: 'Sánchez',
-      email: 'pedro.sanchez@example.com',
-      cedula: '13579246',
-      image: 'assets/img/user5.png',
-    }
-  ];
-
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private missionsService: MissionsService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private missionsService: MissionsService,
+    private activityService: ActivityService
+  ) {
     this.route.queryParams.subscribe(params => {
       this.origen = params['from'];
     });
@@ -70,6 +36,7 @@ export class DetallesAxCComponent implements OnInit {
       this.actividadId = this.activityDetails.id;
       this.status = this.activityDetails.status; // Obtener el status de la actividad
       this.setImagenByStatus(this.status); // Configurar la imagen según el estado
+      this.loadVolunteers();
 
       this.missionsService.getQRInicial(this.actividadId).subscribe(
         (response) => {
@@ -102,6 +69,15 @@ export class DetallesAxCComponent implements OnInit {
     }
   }
 
+  loadVolunteers(): void {
+    this.activityService.getVolunteersByActivity(this.actividadId).subscribe(
+      (volunteers) => {
+        this.data = volunteers; // Almacena la lista de voluntarios en 'data'
+      },
+      (error) => console.error('Error al cargar los voluntarios inscritos:', error)
+    );
+  }
+
   setImagenByStatus(status: string) {
     switch (status) {
       case 'DISPONIBLE':
@@ -113,7 +89,7 @@ export class DetallesAxCComponent implements OnInit {
       case 'COMPLETADA':
         this.imagen = 'assets/img/card5.svg';
         break;
-      case 'APLAZADO':
+      case 'CANCELADA':
         this.imagen = 'assets/img/card3.svg';
         break;
       default:
@@ -130,7 +106,7 @@ export class DetallesAxCComponent implements OnInit {
         return 'status-pendiente';
       case 'COMPLETADA':
         return 'status-completado';
-      case 'APLAZADO':
+      case 'CANCELADA':
         return 'status-aplazado';
       default:
         return '';

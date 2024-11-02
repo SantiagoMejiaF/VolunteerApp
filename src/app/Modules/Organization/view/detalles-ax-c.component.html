@@ -9,7 +9,7 @@
                     <h2 class="mt-1">Detalles de la Actividad </h2>
                 </div>
                 <!-- *ngIf="role === 'COORDINADOR_ACTIVIDAD' && status === 'DISPONIBLE' -->
-                <div class="qr" *ngIf=" status === 'DISPONIBLE'">
+                <div class="qr" *ngIf=" status !== 'CANCELADA'">
                     <button data-bs-toggle="modal" data-bs-target="#QRInicial" class="mr-3 custom1">Qr Inicial</button>
                     <button data-bs-toggle="modal" data-bs-target="#QRFinal" class="mr-3 custom2">Qr Final</button>
                 </div>
@@ -74,16 +74,15 @@
                                 <td width="60px">
                                     <div class="imgBx">
                                         <img [src]="user.image || 'assets/img/user2.png'" alt="Perfil"
-                                            (error)="user.image='assets/img/user3.png'"
-                                            style="width:50px; height:50px; border-radius:50%;">
+                                            (error)="user.image='assets/img/user3.png'">
                                     </div>
                                 </td>
                                 <td>
-                                    <h4>{{user.firstName}} {{user.lastName}} <br></h4>
+                                    <h4>{{user.name}} <br></h4>
                                 </td>
                                 <td>{{ user.email }}</td>
-                                <td>{{ user.cedula }}</td>
-                                <td>5</td>
+                                <td>{{ user.identificationCard }}</td>
+                                <td>{{ user.hoursDone }}</td>
 
                                 <td style="text-align: center;"><a (click)="verDetalles()"
                                         style="border: none; background: none;">
