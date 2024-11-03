@@ -1,5 +1,6 @@
 package com.constructiveactivists.missionandactivitymodule.entities.activity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,9 +20,10 @@ public class ReviewEntity {
     @Column(name = "ID", columnDefinition = "INTEGER", nullable = false)
     private Integer id;
 
-    @OneToOne
-    @JoinColumn(name = "ACTIVIDAD_ID", referencedColumnName = "ID", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ACTIVIDAD_ID", referencedColumnName = "ID")
     @Comment("Actividad a la que pertenece esta reseña")
+    @JsonIgnore
     private ActivityEntity activity;
 
     @Column(name = "DESCRIPCION", length = 1000, nullable = false)

@@ -20,7 +20,7 @@ public class MissionStatusUpdaterService {
     private ActivityRepository activityRepository;
 
     @Transactional
-    @Scheduled(fixedRate = 1800000)
+    @Scheduled(fixedRate = 60000)
     public void updateMissionStatus() {
         missionRepository.findByMissionStatus(MissionStatusEnum.EN_CURSO).stream()
                 .filter(mission -> allActivitiesCompleted(mission.getId()))
