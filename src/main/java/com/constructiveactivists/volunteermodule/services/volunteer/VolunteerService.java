@@ -206,7 +206,6 @@ public class VolunteerService {
         }
 
         volunteerGroupMembershipService.removeVolunteerFromGroup(volunteerGroup.getId(), volunteerId);
-
         volunteerGroup.setCurrentVolunteers(volunteerGroup.getCurrentVolunteers() - 1);
         volunteerGroupService.save(volunteerGroup);
     }
@@ -364,5 +363,17 @@ public class VolunteerService {
 
         return finalRanking;
     }
+
+    public void addCompletedActivity(Integer volunteerId, Integer activityId) {
+        VolunteerEntity volunteerEntity = volunteerRepository.findById(volunteerId)
+                .orElseThrow(() -> new IllegalArgumentException("Voluntario no encontrado"));
+        VolunteeringInformationEntity volunteeringInfo = volunteerEntity.getVolunteeringInformation();
+        if (!volunteeringInfo.getActivitiesCompleted().contains(activityId)) {
+            volunteeringInfo.getActivitiesCompleted().add(activityId);
+            volunteerRepository.save(volunteerEntity);
+        }
+    }
+
+
 
 }

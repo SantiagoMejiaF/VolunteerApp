@@ -26,8 +26,8 @@ public class MissionStatusUpdaterService {
                 .filter(mission -> allActivitiesCompleted(mission.getId()))
                 .forEach(mission -> {
                     MissionStatusEnum newStatus = LocalDate.now().isAfter(mission.getEndDate())
-                            ? MissionStatusEnum.COMPLETADA
-                            : MissionStatusEnum.NO_CUMPLIDA;
+                            ? MissionStatusEnum.NO_CUMPLIDA
+                            : MissionStatusEnum.COMPLETADA;
                     mission.setMissionStatus(newStatus);
                     missionRepository.save(mission);
                 });
