@@ -3,6 +3,7 @@ package com.constructiveactivists.organizationmodule.services.activitycoordinato
 import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.services.activity.ActivityService;
+import com.constructiveactivists.organizationmodule.controllers.request.activitycoordinator.ActivityCoordinatorUpdateRequest;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.organizationmodule.models.CoordinatorAvailabilityModel;
 import com.constructiveactivists.organizationmodule.entities.organization.OrganizationEntity;
@@ -76,20 +77,6 @@ class ActivityCoordinatorServiceTest {
         verify(userService, times(1)).saveUser(user);
         assertEquals(RoleType.COORDINADOR_ACTIVIDAD, user.getRole().getRoleType());
         assertEquals(AuthorizationStatus.AUTORIZADO, user.getAuthorizationType());
-    }
-
-    @Test
-    void testSave_UserNotFound() {
-        Integer userId = 1;
-        ActivityCoordinatorEntity coordinator = new ActivityCoordinatorEntity();
-        when(userService.getUserById(userId)).thenReturn(Optional.empty());
-
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
-            activityCoordinatorService.save(coordinator, userId);
-        });
-
-        assertEquals("Usuario no encontrado", exception.getMessage());
-        verify(activityCoordinatorRepository, never()).save(any());
     }
 
     @Test
@@ -302,5 +289,73 @@ class ActivityCoordinatorServiceTest {
 
         assertEquals(COORDINATOR_MESSAGE_ID + userId + NOT_FOUND_MESSAGE, exception.getMessage());
         verify(activityCoordinatorRepository, times(1)).findByUserId(userId);
+    }
+
+    @Test
+    void testUpdateCoordinatorInfo_Success() {
+        Integer coordinatorId = 1;
+        Integer userId = 2;
+
+        ActivityCoordinatorEntity coordinator = new ActivityCoordinatorEntity();
+        coordinator.setId(coordinatorId);
+        coordinator.setUserId(userId);
+        coordinator.setPhoneActivityCoordinator("3001234567");
+
+        UserEntity user = new UserEntity();
+        user.setId(userId);
+        user.setFirstName("Juan");
+        user.setLastName("Pérez");
+
+        ActivityCoordinatorUpdateRequest request = new ActivityCoordinatorUpdateRequest();
+        request.setFirstName("Carlos");
+        request.setLastName("Gómez");
+        request.setPhone("3009876543");
+
+        when(activityCoordinatorRepository.findById(coordinatorId)).thenReturn(Optional.of(coordinator));
+        when(userService.getUserById(userId)).thenReturn(Optional.of(user));
+
+        ActivityCoordinatorEntity result = activityCoordinatorService.updateCoordinatorInfo(coordinatorId, request);
+
+        assertEquals("Carlos", user.getFirstName());
+        assertEquals("Gómez", user.getLastName());
+        assertEquals("3009876543", coordinator.getPhoneActivityCoordinator());
+
+        verify(userService, times(1)).saveUser(user);
+        verify(activityCoordinatorRepository, times(1)).save(coordinator);
+    }
+
+    @Test
+    void testUpdateCoordinatorInfo_CoordinatorNotFound() {
+        Integer coordinatorId = 1;
+        ActivityCoordinatorUpdateRequest request = new ActivityCoordinatorUpdateRequest();
+
+        when(activityCoordinatorRepository.findById(coordinatorId)).thenReturn(Optional.empty());
+
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () ->
+                activityCoordinatorService.updateCoordinatorInfo(coordinatorId, request));
+
+        assertEquals("Coordinador de actividad con ID 1 no encontrado.", exception.getMessage());
+        verify(activityCoordinatorRepository, never()).save(any());
+    }
+
+    @Test
+    void testUpdateCoordinatorInfo_UserNotFound() {
+        Integer coordinatorId = 1;
+        Integer userId = 2;
+
+        ActivityCoordinatorEntity coordinator = new ActivityCoordinatorEntity();
+        coordinator.setId(coordinatorId);
+        coordinator.setUserId(userId);
+
+        ActivityCoordinatorUpdateRequest request = new ActivityCoordinatorUpdateRequest();
+
+        when(activityCoordinatorRepository.findById(coordinatorId)).thenReturn(Optional.of(coordinator));
+        when(userService.getUserById(userId)).thenReturn(Optional.empty());
+
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () ->
+                activityCoordinatorService.updateCoordinatorInfo(coordinatorId, request));
+
+        assertEquals("Usuario con ID 2 no encontrado.", exception.getMessage());
+        verify(activityCoordinatorRepository, never()).save(any());
     }
 }

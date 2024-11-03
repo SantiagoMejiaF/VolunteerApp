@@ -2,6 +2,7 @@ package com.constructiveactivists.organizationmodule.services.activitycoordinato
 
 import com.constructiveactivists.configurationmodule.exceptions.BusinessException;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
+import com.constructiveactivists.organizationmodule.controllers.request.activitycoordinator.ActivityCoordinatorUpdateRequest;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.organizationmodule.models.CoordinatorAvailabilityModel;
 import com.constructiveactivists.organizationmodule.repositories.ActivityCoordinatorRepository;
@@ -35,15 +36,23 @@ public class ActivityCoordinatorService {
     private final OrganizationService organizationService;
 
     public ActivityCoordinatorEntity save(ActivityCoordinatorEntity activityCoordinator, Integer userId) {
+
+        Optional<ActivityCoordinatorEntity> existingCoordinator = activityCoordinatorRepository.findByUserId(userId);
+        if (existingCoordinator.isPresent()) {
+            throw new BusinessException("El coordinador de actividad con el ID de usuario " + userId + " ya existe.");
+        }
+
+        Optional<OrganizationEntity> organizationOpt = organizationService.getOrganizationById(activityCoordinator.getOrganizationId());
+        if (organizationOpt.isEmpty()) {
+            throw new BusinessException("La organización con ID " + activityCoordinator.getOrganizationId() + " no existe.");
+        }
+
         UserEntity user = userService.getUserById(userId)
                 .orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND));
         user.getRole().setRoleType(COORDINATOR_ROLE);
         user.setAuthorizationType(AuthorizationStatus.AUTORIZADO);
         userService.saveUser(user);
-        Optional<OrganizationEntity> organizationOpt = organizationService.getOrganizationById(activityCoordinator.getOrganizationId());
-        if (organizationOpt.isEmpty()) {
-            throw new BusinessException("La organización con ID " + activityCoordinator.getOrganizationId() + " no existe.");
-        }
+
         activityCoordinator.setUserId(userId);
         return activityCoordinatorRepository.save(activityCoordinator);
     }
@@ -98,4 +107,19 @@ public class ActivityCoordinatorService {
                 .orElseThrow(() -> new EntityNotFoundException(COORDINATOR_MESSAGE_ID + userId+NOT_FOUND_MESSAGE));
     }
 
+    public ActivityCoordinatorEntity updateCoordinatorInfo(Integer coordinatorId, ActivityCoordinatorUpdateRequest request) {
+
+        ActivityCoordinatorEntity coordinator = activityCoordinatorRepository.findById(coordinatorId)
+                .orElseThrow(() -> new EntityNotFoundException("Coordinador de actividad con ID " + coordinatorId + " no encontrado."));
+
+        UserEntity user = userService.getUserById(coordinator.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("Usuario con ID " + coordinator.getUserId() + " no encontrado."));
+
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        userService.saveUser(user);
+
+        coordinator.setPhoneActivityCoordinator(request.getPhone());
+        return activityCoordinatorRepository.save(coordinator);
+    }
 }

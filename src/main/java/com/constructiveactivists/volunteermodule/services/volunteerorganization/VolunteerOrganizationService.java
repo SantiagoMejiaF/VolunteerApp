@@ -42,7 +42,17 @@ public class VolunteerOrganizationService {
     private final UserRepository userRepository;
 
     public List<VolunteerOrganizationEntity> getOrganizationsByVolunteerId(Integer volunteerId) {
-        return volunteerOrganizationRepository.findByVolunteerId(volunteerId);
+
+        List<VolunteerOrganizationEntity> volunteerOrganizations = volunteerOrganizationRepository.findByVolunteerId(volunteerId);
+
+        return volunteerOrganizations.stream()
+                .filter(volOrg -> {
+                    PostulationEntity postulation = postulationRepository
+                            .findById(volOrg.getId())
+                            .orElseThrow(() -> new EntityNotFoundException("El voluntario con ID " + volunteerId + " no se ha postulado a ninguna organización."));
+                    return postulation.getStatus() == OrganizationStatusEnum.ACEPTADO;
+                })
+                .toList();
     }
 
     public List<VolunteerOrganizationEntity> getVolunteersByOrganizationId(Integer organizationId) {

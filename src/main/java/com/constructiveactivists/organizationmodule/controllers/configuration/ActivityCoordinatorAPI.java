@@ -1,11 +1,13 @@
 package com.constructiveactivists.organizationmodule.controllers.configuration;
 
 import com.constructiveactivists.organizationmodule.controllers.request.activitycoordinator.ActivityCoordinatorRequest;
+import com.constructiveactivists.organizationmodule.controllers.request.activitycoordinator.ActivityCoordinatorUpdateRequest;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,7 @@ public interface ActivityCoordinatorAPI {
     @GetMapping
     ResponseEntity<List<ActivityCoordinatorEntity>> getAllActivityCoordinators();
 
+
     @Operation(summary = "Crear un nuevo coordinador de actividad")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Coordinador creado exitosamente"),
@@ -31,6 +34,7 @@ public interface ActivityCoordinatorAPI {
     @PostMapping
     ResponseEntity<ActivityCoordinatorEntity> createActivityCoordinator(@RequestBody ActivityCoordinatorRequest request);
 
+
     @Operation(summary = "Eliminar un coordinador de actividad")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Coordinador eliminado exitosamente"),
@@ -38,6 +42,8 @@ public interface ActivityCoordinatorAPI {
     })
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteActivityCoordinator(@PathVariable Integer id);
+
+
     @Operation(summary = "Buscar coordinadores de actividad disponibles")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa")
@@ -72,4 +78,16 @@ public interface ActivityCoordinatorAPI {
     })
     @GetMapping("/user/{userId}")
     ResponseEntity<ActivityCoordinatorEntity> getActivityCoordinatorByUserId(@PathVariable Integer userId);
+
+
+    @Operation(summary = "Actualizar información del coordinador de actividad")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Información actualizada exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Coordinador o usuario no encontrado")
+    })
+    @PatchMapping("/{id}")
+    ResponseEntity<ActivityCoordinatorEntity> updateActivityCoordinator(
+            @PathVariable Integer id,
+            @RequestBody @Valid ActivityCoordinatorUpdateRequest request);
+
 }
