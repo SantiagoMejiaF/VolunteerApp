@@ -10,7 +10,6 @@ import com.constructiveactivists.missionandactivitymodule.services.volunteergrou
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.services.UserService;
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
-import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteeringInformationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
@@ -153,7 +152,9 @@ public class AttendanceService {
             return false;
         }
         Integer volunteerId = volunteerOpt.get().getId();
-        return volunteerGroupMembershipService.isVolunteerInGroup(activityId, volunteerId);
+        ActivityEntity activityEntity = activityService.getById(activityId)
+                .orElseThrow(() -> new AttendanceException(ACTIVITY_NOT_FOUND));
+        return volunteerGroupMembershipService.isVolunteerInGroup(activityEntity.getVolunteerGroup(), volunteerId);
     }
 
     void checkInTimeValidity(Integer activityId) {
