@@ -42,13 +42,12 @@
                     <form [formGroup]="myForm">
                         <!-- Datos Personales -->
                         <div class="tab ml-3" [formGroup]="myForm">
+                            <h6>Digita tu nombre</h6>
+                            <p><input id="nor" placeholder="{{ firstName }} {{ lastName }}" formControlName="email"
+                                    oninput="this.className = ''"></p>
                             <h6>Digita tu número celular</h6>
                             <p><input id="nor" placeholder="{{ phoneNumber }}" formControlName="cell"
                                     oninput="this.className = ''"></p>
-                            <h6>Digita tu email</h6>
-                            <p><input id="nor" placeholder="{{ email }}" formControlName="email"
-                                    oninput="this.className = ''"></p>
-
                         </div>
                     </form>
                     <button class="btn-secondary" (click)="onSubmit()">Actualizar datos</button>
