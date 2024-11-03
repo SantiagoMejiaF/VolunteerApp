@@ -324,7 +324,7 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
         return 'status-pendiente';
       case 'COMPLETADA':
         return 'status-completado';
-      case 'APLAZADO':
+      case 'CANCELADA':
         return 'status-aplazado';
       default:
         return '';
