@@ -3,6 +3,7 @@ package com.constructiveactivists.missionandactivitymodule.services.activity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.ActivityEntity;
 import com.constructiveactivists.missionandactivitymodule.entities.activity.enums.ActivityStatusEnum;
 import com.constructiveactivists.missionandactivitymodule.repositories.ActivityRepository;
+import com.constructiveactivists.organizationmodule.repositories.ActivityCoordinatorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ public class ActivityStatusService {
     private ActivityRepository activityRepository;
     private ReviewEmailService reviewEmailService;
 
+    private ActivityCoordinatorRepository activityCoordinatorRepository;
+
     @Scheduled(fixedRate = 60000)
     public void updateActivityStatus() {
         LocalDateTime now = LocalDateTime.now();
@@ -29,9 +32,14 @@ public class ActivityStatusService {
                     activity.setActivityStatus(ActivityStatusEnum.EN_CURSO);
                 }
             }
-            else if (now.isAfter(endDateTime) && activity.getActivityStatus() != ActivityStatusEnum.COMPLETADA) {
+            else if (now.isAfter(endDateTime) && activity.getActivityStatus() == ActivityStatusEnum.EN_CURSO) {
                 activity.setActivityStatus(ActivityStatusEnum.COMPLETADA);
                 reviewEmailService.sendFormEmail(activity.getPersonalDataCommunityLeaderEntity().getEmailCommunityLeader(), activity.getId());
+                activityCoordinatorRepository.findByUserId(activity.getActivityCoordinator())
+                        .ifPresent(coordinator -> {
+                            coordinator.getCompletedActivities().add(activity.getId());
+                            activityCoordinatorRepository.save(coordinator);
+                        });
             }
         });
         if (activities.stream().anyMatch(activity -> activity.getActivityStatus() == ActivityStatusEnum.EN_CURSO || activity.getActivityStatus() == ActivityStatusEnum.COMPLETADA)) {

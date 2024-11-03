@@ -10,8 +10,10 @@ import com.constructiveactivists.missionandactivitymodule.services.volunteergrou
 import com.constructiveactivists.usermodule.entities.UserEntity;
 import com.constructiveactivists.usermodule.services.UserService;
 import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteerEntity;
+import com.constructiveactivists.volunteermodule.entities.volunteer.VolunteeringInformationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.VolunteerOrganizationEntity;
+import com.constructiveactivists.volunteermodule.repositories.VolunteerRepository;
 import com.constructiveactivists.volunteermodule.services.volunteer.VolunteerService;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.PostulationService;
 import com.constructiveactivists.volunteermodule.services.volunteerorganization.VolunteerOrganizationService;
@@ -36,6 +38,8 @@ public class AttendanceService {
     private final ActivityService activityService;
     private final VolunteerOrganizationService volunteerOrganizationService;
     private final PostulationService postulationService;
+
+    private final VolunteerRepository voluneerRepository;
 
     private static final long CHECK_IN_WINDOW_BEFORE = 30;
     private static final long CHECK_IN_WINDOW_AFTER = 60;
@@ -99,6 +103,7 @@ public class AttendanceService {
 
         volunteerService.addVolunteerHours(volunteerEntity.getId(), activityEntity.getRequiredHours());
         volunteerService.addVolunteerActivity(volunteerEntity.getId(), activityEntity.getId());
+        volunteerService.addCompletedActivity(volunteerEntity.getId(), activityId);
     }
 
     void registerCheckOut(String email, Integer activityId) {
