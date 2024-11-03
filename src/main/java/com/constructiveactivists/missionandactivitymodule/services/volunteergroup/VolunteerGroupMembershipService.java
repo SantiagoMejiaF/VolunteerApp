@@ -2,6 +2,7 @@ package com.constructiveactivists.missionandactivitymodule.services.volunteergro
 
 import com.constructiveactivists.missionandactivitymodule.entities.volunteergroup.VolunteerGroupMembershipEntity;
 import com.constructiveactivists.missionandactivitymodule.repositories.VolunteerGroupMembershipRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class VolunteerGroupMembershipService {
         volunteerGroupMembershipRepository.save(membership);
     }
 
+    @Transactional
     public void removeVolunteerFromGroup(Integer groupId, Integer volunteerId) {
         volunteerGroupMembershipRepository.deleteByGroupIdAndVolunteerId(groupId, volunteerId);
     }

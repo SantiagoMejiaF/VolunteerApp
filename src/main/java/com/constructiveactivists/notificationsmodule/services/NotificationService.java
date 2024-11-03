@@ -63,7 +63,7 @@ public class NotificationService {
     public void  createNotification(Integer userId, String title, String description) {
         Optional<UserEntity> user = userRepository.findById(userId);
         if (user.isEmpty()) {
-            throw new EntityNotFoundException(String.format(USER_NOT_FOUND, userId));
+            throw new EntityNotFoundException(String.format(USER_NOT_FOUND));
         }
         NotificationEntity notification = new NotificationEntity();
         notification.setTitle(title);
@@ -90,13 +90,13 @@ public class NotificationService {
                         .distinct()
                         .forEach(volunteerId -> createNotification(volunteerId, activity.getTitle(),
                                 "Faltan " + daysUntilStart + " días para la actividad."));
-            }
             if (activity.getActivityCoordinator() != null) {
                 int idActivityCoordinator = activity.getActivityCoordinator();
                 activityCoordinatorService.getCoordinatorById(idActivityCoordinator)
                         .ifPresent(coordinator -> createNotification(coordinator.getUserId(), activity.getTitle(),
                                 "Faltan " + daysUntilStart + " días para la actividad."));
             }
+        }
         });
     }
 
@@ -108,28 +108,24 @@ public class NotificationService {
                     .flatMap(mission -> activityService.getActivitiesByMissionId(mission.getId()).stream())
                     .filter(activity -> activity.getActivityStatus() == ActivityStatusEnum.DISPONIBLE)
                     .toList();
+
             activities.forEach(activity -> {
                 long daysUntilActivity = ChronoUnit.DAYS.between(now, activity.getDate());
 
-                switch ((int) daysUntilActivity) {
-                    case 14:
-                        createNotificationForOrganization(organization.getUserId(), activity, "Faltan 2 semanas para la actividad: " + activity.getTitle());
-                        break;
-                    case 7:
-                        createNotificationForOrganization(organization.getUserId(), activity, "Falta 1 semana para la actividad: " + activity.getTitle());
-                        break;
-                    case 3:
-                        createNotificationForOrganization(organization.getUserId(), activity, "Faltan 3 días para la actividad: " + activity.getTitle());
-                        break;
-                    case 1:
-                        createNotificationForOrganization(organization.getUserId(), activity, "Falta 1 día para la actividad: " + activity.getTitle());
-                        break;
-                    default:
-                        break;
+                // Using if statements instead of switch
+                if (daysUntilActivity == 14) {
+                    createNotificationForOrganization(organization.getUserId(), activity, "Faltan 2 semanas para la actividad: " + activity.getTitle());
+                } else if (daysUntilActivity == 7) {
+                    createNotificationForOrganization(organization.getUserId(), activity, "Falta 1 semana para la actividad: " + activity.getTitle());
+                } else if (daysUntilActivity == 3) {
+                    createNotificationForOrganization(organization.getUserId(), activity, "Faltan 3 días para la actividad: " + activity.getTitle());
+                } else if (daysUntilActivity == 1) {
+                    createNotificationForOrganization(organization.getUserId(), activity, "Falta 1 día para la actividad: " + activity.getTitle());
                 }
             });
         });
     }
+
 
     @Scheduled(cron = "0 0 0 * * ?")
     public void checkActivityRegistration() {
@@ -152,15 +148,15 @@ public class NotificationService {
         int requiredVolunteers = activity.getNumberOfVolunteersRequired();
         int registeredVolunteers = activity.getAttendances().size();
 
+        String message;
         if (registeredVolunteers < requiredVolunteers) {
-            String message = String.format("¡Atención! La actividad \"%s\" requiere %d voluntarios, pero solo se han registrado %d. ¡Necesitamos más apoyo!",
+            message = String.format("¡Atención! La actividad \"%s\" requiere %d voluntarios, pero solo se han registrado %d. ¡Necesitamos más apoyo!",
                     activity.getTitle(), requiredVolunteers, registeredVolunteers);
-            createNotificationForOrganization(organization.getId(), activity, message);
         } else {
-            String message = String.format("¡Genial! Todos los %d voluntarios necesarios para la actividad \"%s\" ya están registrados. ¡Gracias por su compromiso!",
+            message = String.format("¡Genial! Todos los %d voluntarios necesarios para la actividad \"%s\" ya están registrados. ¡Gracias por su compromiso!",
                     requiredVolunteers, activity.getTitle());
-            createNotificationForOrganization(organization.getId(), activity, message);
         }
+        createNotificationForOrganization(organization.getId(), activity, message);
     }
     private void createNotificationForOrganization(Integer organizationId, ActivityEntity activity, String message) {
         this.createNotification(organizationId, activity.getTitle(), message);
