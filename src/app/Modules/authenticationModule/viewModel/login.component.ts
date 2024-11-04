@@ -125,7 +125,7 @@ export class LoginComponent implements OnInit {
             (volunteerDetails) => {
               console.log('VolunteerId:', volunteerDetails.id);
               localStorage.setItem('volunteerId', volunteerDetails.id.toString()); // Guardar el volunteerId en localStorage
-              this.router.navigate(['/dashVolunteer']);
+              this.router.navigate(['/homeV']);
             },
             (error) => {
               console.error('Error al obtener los detalles del voluntario:', error);

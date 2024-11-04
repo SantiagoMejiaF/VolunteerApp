@@ -25,7 +25,7 @@ export class HomeVoluntariosComponent implements OnInit {
   ];
   sectors: string[] = ['TODOS']; // Lista de sectores para el filtro
   // Variables para la paginación
-  pageSize: number = 3; // Número de elementos por página
+  pageSize: number = 6; // Número de elementos por página
   currentPage: number = 1; // Página actual
   totalItems: number = 0; // Total de organizaciones
   totalPages: number = 0;
