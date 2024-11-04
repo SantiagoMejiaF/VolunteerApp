@@ -1,6 +1,7 @@
 footer{
     background-color: #F9F7F6;
     color: #170F49;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
 }
 .ft2{
     height: 50px;
