@@ -65,7 +65,7 @@ export class MisActividadesComponent implements OnInit {
       processing: true,
       lengthMenu: [5, 10, 25],
       scrollX: true,
-      autoWidth: true, // Cambiado a true para ajuste automático de ancho
+      autoWidth: true, 
       language: {
         info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
         search: '<span style="font-size: 0.875rem;">Buscar</span>',
@@ -76,14 +76,7 @@ export class MisActividadesComponent implements OnInit {
       },
     });
   
-    // Ajuste de columnas en cada cambio de página
-    table.on('page.dt', () => {
-      setTimeout(() => {
-        table.columns.adjust().draw(false); // Ajusta y redibuja sin recargar datos
-      }, 0);
-    });
-    
-    // Ajuste inicial después de la creación de la tabla
+  
     table.columns.adjust();
   }
   
