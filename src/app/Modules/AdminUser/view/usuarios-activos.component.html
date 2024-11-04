@@ -39,19 +39,19 @@
                             data-bs-target="#VolunteerModal" (click)="openModal(user)"
                             *ngIf="user.rol === 'VOLUNTARIO'">
                             <i class="fa fa-search" style="font-size: 1rem; color: #80777c;"
-                                onmouseover="this.style.color='#186dde';" onmouseout="this.style.color='#80777c';"></i>
+                                onmouseover="this.style.color='#186dde';" onmouseout="this.style.color='#80777c';" title="Detalles"></i>
                         </button>
                         <button style="border: none; background: none;" data-bs-toggle="modal"
                             data-bs-target="#organizationModal" (click)="openModal(user)"
                             *ngIf="user.rol === 'ORGANIZACION'">
                             <i class="fa fa-search" style="font-size: 1rem; color: #80777c;"
-                                onmouseover="this.style.color='#186dde';" onmouseout="this.style.color='#80777c';"></i>
+                                onmouseover="this.style.color='#186dde';" onmouseout="this.style.color='#80777c';" title="Detalles"></i>
                         </button>
                         <button style="border: none; background: none;" data-bs-toggle="modal"
                             data-bs-target="#coordinatorModal" (click)="openModal(user)"
                             *ngIf="user.rol === 'COORDINADOR_ACTIVIDAD'">
                             <i class="fa fa-search" style="font-size: 1rem; color: #80777c;"
-                                onmouseover="this.style.color='#186dde';" onmouseout="this.style.color='#80777c';"></i>
+                                onmouseover="this.style.color='#186dde';" onmouseout="this.style.color='#80777c';" title="Detalles"></i>
                         </button>
                     </td>
                 </tr>

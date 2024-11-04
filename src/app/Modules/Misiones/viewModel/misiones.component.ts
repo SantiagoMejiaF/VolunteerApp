@@ -104,10 +104,10 @@ export class MisionesComponent implements OnInit {
               let bgColor = 'lightyellow';
               let textColor = '#ADBF38';
 
-              if (data === 'Completada') {
+              if (data === 'COMPLETADA') {
                 bgColor = 'rgba(82, 243, 101, 0.1)';
                 textColor = '#1CC52A';
-              } else if (data === 'Cancelada') {
+              } else if (data === 'CANCELADA') {
                 bgColor = '#FEEEEE';
                 textColor = '#F35252';
               }
