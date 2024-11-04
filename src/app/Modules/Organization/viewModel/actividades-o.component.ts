@@ -190,7 +190,7 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
         address: formData.address,
         numberOfVolunteersRequired: formData.numberOfVolunteersRequired,
         requiredHours: formData.requiredHours,
-        visibility: 'PUBLICA',
+        visibility: formData.visibility ? 'PUBLICA' : 'PRIVADA',
         numberOfBeneficiaries: formData.numberOfBeneficiaries,
         observations: formData.observations,
       };
