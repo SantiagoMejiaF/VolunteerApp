@@ -48,7 +48,7 @@ export class MisActividadesComponent implements OnInit {
       case 'COMPLETADA':
         return 'status-completado';
       case 'CANCELADA':
-        return 'status-aplazada';
+        return 'status-aplazado';
       default:
         return '';
     }
