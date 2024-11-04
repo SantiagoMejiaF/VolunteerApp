@@ -77,10 +77,8 @@ export class MisActividadesComponent implements OnInit {
           '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
       },
     });
-    // Ajustar columnas cuando se cambia de página o se redimensiona
-    table.on('page.dt', function () {
-      table.columns.adjust().draw();
-    });
+    table.columns.adjust().draw();
+    
   }
 
   verDetalles(id: number): void {
