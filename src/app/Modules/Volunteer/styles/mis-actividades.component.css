@@ -7,15 +7,6 @@
     font-weight: bold;
   }
   
-  .status-pendiente {
-    background-color: rgba(220, 234, 255, 1);
-    color: #fec96c;
-    padding: 4px 8px;
-    border-radius: 12px;
-    display: inline-block;
-    font-weight: bold;
-  }
-  
   .status-aplazado {
     background-color: rgba(255,229,220,255);
     color: #F36060;
