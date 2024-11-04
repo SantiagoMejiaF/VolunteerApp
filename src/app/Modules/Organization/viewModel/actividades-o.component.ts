@@ -389,11 +389,20 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
           {
             data: 'activityStatus',
             title: 'Status',
-            createdCell: (cell, cellData) => {
-              // Aplica la clase de estado en la celda
-              const statusClass = this.getStatusClass(cellData);
-              $(cell).addClass(statusClass);
-            },
+            render: (data) => {
+              let bgColor = 'rgba(229, 250, 251, 255)';
+              let textColor = '#03A3AE';
+
+              if (data === 'COMPLETADA') {
+                bgColor = 'rgba(82, 243, 101, 0.1)';
+                textColor = '#1CC52A';
+              } else if (data === 'CANCELADA') {
+                bgColor = '#FEEEEE';
+                textColor = '#F35252';
+              }
+
+              return `<span style="background-color:${bgColor}; color:${textColor}; padding: 4px 8px; border-radius: 12px; display: inline-block;">${data}</span>`;
+            }
           },
           {
             data: null,
