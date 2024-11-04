@@ -2,6 +2,7 @@ package com.constructiveactivists.organizationmodule.controllers;
 
 import com.constructiveactivists.organizationmodule.controllers.configuration.ActivityCoordinatorAPI;
 import com.constructiveactivists.organizationmodule.controllers.request.activitycoordinator.ActivityCoordinatorRequest;
+import com.constructiveactivists.organizationmodule.controllers.request.activitycoordinator.ActivityCoordinatorUpdateRequest;
 import com.constructiveactivists.organizationmodule.controllers.request.activitycoordinator.CoordinatorAvailabilityRequest;
 import com.constructiveactivists.organizationmodule.entities.activitycoordinator.ActivityCoordinatorEntity;
 import com.constructiveactivists.organizationmodule.mappers.activitycoordinator.ActivityCoordinatorMapper;
@@ -84,5 +85,11 @@ public class ActivityCoordinatorController implements ActivityCoordinatorAPI {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(404).body(null);
         }
+    }
+
+    @Override
+    public ResponseEntity<ActivityCoordinatorEntity> updateActivityCoordinator(Integer id, ActivityCoordinatorUpdateRequest request) {
+        ActivityCoordinatorEntity updatedCoordinator = activityCoordinatorService.updateCoordinatorInfo(id, request);
+        return ResponseEntity.ok(updatedCoordinator);
     }
 }

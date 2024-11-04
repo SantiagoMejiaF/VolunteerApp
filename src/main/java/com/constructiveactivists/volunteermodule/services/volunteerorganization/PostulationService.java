@@ -1,6 +1,5 @@
 package com.constructiveactivists.volunteermodule.services.volunteerorganization;
 
-
 import com.constructiveactivists.volunteermodule.entities.volunteer.enums.OrganizationStatusEnum;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.DataShareVolunteerOrganizationEntity;
 import com.constructiveactivists.volunteermodule.entities.volunteerorganization.PostulationEntity;

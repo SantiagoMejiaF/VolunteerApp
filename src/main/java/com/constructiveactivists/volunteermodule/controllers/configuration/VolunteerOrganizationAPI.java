@@ -18,7 +18,7 @@ import java.util.List;
 @Tag(name = "Módulo de Voluntarios", description = "Servicios relacionados con la gestión de voluntarios en la aplicación.")
 public interface VolunteerOrganizationAPI {
 
-    @Operation(summary = "Obtener organizaciones de voluntarios por ID de voluntario")
+    @Operation(summary = "Obtener las organizaciones en las que un voluntario ha sido aceptado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operación exitosa")
     })

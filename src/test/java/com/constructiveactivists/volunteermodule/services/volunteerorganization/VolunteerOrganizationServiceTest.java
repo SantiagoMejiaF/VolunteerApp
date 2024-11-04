@@ -294,14 +294,26 @@ class VolunteerOrganizationServiceTest {
 
     @Test
     void testGetOrganizationsByVolunteerId() {
+        volunteerOrganization = new VolunteerOrganizationEntity();
+        volunteerOrganization.setId(1);
+        volunteerOrganization.setVolunteerId(1);
+        volunteerOrganization.setOrganizationId(1);
+
         List<VolunteerOrganizationEntity> volunteerOrganizations = List.of(volunteerOrganization);
 
         when(volunteerOrganizationRepository.findByVolunteerId(1)).thenReturn(volunteerOrganizations);
 
+        postulation = new PostulationEntity();
+        postulation.setVolunteerOrganizationId(volunteerOrganization.getId());
+        postulation.setStatus(OrganizationStatusEnum.ACEPTADO);
+
+        when(postulationRepository.findById(volunteerOrganization.getId())).thenReturn(Optional.of(postulation));
+
         List<VolunteerOrganizationEntity> result = volunteerOrganizationService.getOrganizationsByVolunteerId(1);
 
-        assertEquals(1, result.size());
+        assertEquals(1, result.size(), "Se espera una sola organización aceptada para el voluntario.");
         verify(volunteerOrganizationRepository, times(1)).findByVolunteerId(1);
+        verify(postulationRepository, times(1)).findById(volunteerOrganization.getId());
     }
 
     @Test
@@ -431,7 +443,7 @@ class VolunteerOrganizationServiceTest {
         Integer volunteerId = 1;
         volunteerOrganization.setId(101);
         when(volunteerOrganizationRepository.findByVolunteerId(volunteerId))
-                .thenReturn(Arrays.asList(volunteerOrganization));
+                .thenReturn(Collections.singletonList(volunteerOrganization));
         when(postulationRepository.findByVolunteerOrganizationIdIn(Collections.singletonList(101)))
                 .thenReturn(Collections.emptyList());
         List<OrganizationEntity> recentOrganizations = volunteerOrganizationService.getRecentOrganizationsByVolunteerId(volunteerId);

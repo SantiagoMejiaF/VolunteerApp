@@ -32,6 +32,4 @@ public class ActivityCoordinatorRequest {
     @Pattern(regexp = "^\\d{10}$", message = "El número de celular debe tener exactamente 10 dígitos.")
     @Schema(description = "Número de celular del coordinador de actividad", example = "3109876543")
     private String phoneActivityCoordinator;
-
 }
-
