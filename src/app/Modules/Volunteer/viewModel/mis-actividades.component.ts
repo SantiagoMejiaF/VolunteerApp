@@ -76,8 +76,6 @@ export class MisActividadesComponent implements OnInit {
       },
     });
   
-  
-    table.columns.adjust();
   }
   
 
