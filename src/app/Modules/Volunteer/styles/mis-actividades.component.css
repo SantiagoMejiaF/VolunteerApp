@@ -12,6 +12,7 @@
     padding: 4px 8px;
     border-radius: 12px;
     display: inline-block;
+    font-weight: bold;
   }
   
   .status-aplazado {
@@ -20,9 +21,10 @@
     padding: 4px 8px;
     border-radius: 12px;
     display: inline-block;
+    font-weight: bold;
   }
   .status-completado {
-    background-color: rgba(63, 194, 138, 0.1);
+    background-color: rgba(51, 156, 111, 0.38);
     color: #3FC28A;
     padding: 4px 8px;
     border-radius: 12px;
