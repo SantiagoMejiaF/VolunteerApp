@@ -7,7 +7,7 @@
   }
   
   .status-pendiente {
-    background-color: rgba(255,248,236,255);
+    background-color: rgba(220, 234, 255, 1);
     color: #fec96c;
     padding: 4px 8px;
     border-radius: 12px;
@@ -24,7 +24,7 @@
     font-weight: bold;
   }
   .status-completado {
-    background-color: rgba(51, 156, 111, 0.28);
+    background-color: rgba(220, 255, 229, 1);
     color: #3FC28A;
     padding: 4px 8px;
     border-radius: 12px;
