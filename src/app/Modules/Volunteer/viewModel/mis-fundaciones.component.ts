@@ -24,7 +24,7 @@ export class MisFundacionesComponent implements OnInit {
       this.volunteerService.getVolunteerFoundations(Number(volunteerId)).subscribe(
         (data) => {
           this.organizaciones = data.map((org) => ({
-            organizationId: org.organizationId,  // Aquí agregamos el organizationId
+            id: org.organizationId,  // Aquí agregamos el organizationId
             titulo: org.name,
             descripcion: org.description,
             voluntarios: org.authorizedVolunteersCount,
@@ -76,8 +76,11 @@ export class MisFundacionesComponent implements OnInit {
     }
   }
 
-  verDetalles(organizationId: number) {
-    console.log('Organization ID:', organizationId);
-    this.router.navigate(['/verPerfilO'], { queryParams: { id: organizationId , from: 'misF'} });
+  verDetalles(organizacion: any) {
+    // Almacena toda la información de la organización en localStorage
+    localStorage.setItem('SelectedOrganization', JSON.stringify(organizacion));
+
+    // Navega a la pantalla de verPerfilO
+    this.router.navigate(['/verPerfilO'], { queryParams: { id: organizacion.id, from: 'misF' } });
   }
 }
