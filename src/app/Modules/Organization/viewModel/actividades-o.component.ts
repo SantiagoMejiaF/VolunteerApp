@@ -237,15 +237,50 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
     }
   }
 
-  closeModal() {
-    const modal = document.getElementById('VolunteerModal');
-    if (modal) {
-      const modalInstance = (window as any).bootstrap.Modal.getInstance(modal);
-      modalInstance.hide();
+  openModal(event: Event): void {
+    event.preventDefault();
+    const modalElement = document.getElementById('VolunteerModal');
+
+    if (modalElement) {
+      modalElement.style.display = 'block';  // Mostrar el modal
+      modalElement.classList.add('show');  // Agregar la clase que lo hace visible
+      document.body.classList.add('modal-open');  // Asegurarse de que el body esté en modo modal
+
+      // Monitorea la adición de backdrops
+      const observer = new MutationObserver((mutationsList) => {
+        for (let mutation of mutationsList) {
+          mutation.addedNodes.forEach((node) => {
+            if (node instanceof HTMLElement && node.classList.contains('modal-backdrop')) {
+              console.log('Se ha añadido un modal-backdrop');
+            }
+          });
+        }
+      });
+
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+  }
+
+  closeModal(): void {
+    const modalElement = document.getElementById('VolunteerModal');
+    if (modalElement) {
+      const modalInstance = (window as any).bootstrap.Modal.getInstance(modalElement);
+      if (modalInstance) {
+        modalInstance.hide();
+      }
+
+      // Limpiar el formulario después de cerrar el modal
+      this.missionForm.reset(); // Reiniciar el formulario
+      this.currentStep = 1;
+      // Limpiar cualquier estado adicional relacionado con la actividad
+      this.selectedActivity = null; // Resetear la actividad seleccionada
+
+      // Remover backdrops
       const backdrops = document.querySelectorAll('.modal-backdrop');
       backdrops.forEach((backdrop) => backdrop.remove());
     }
   }
+
 
   mostrar(activityId: number): void {
     // Obtener detalles de la actividad seleccionada
