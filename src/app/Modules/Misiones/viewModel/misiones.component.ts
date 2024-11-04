@@ -101,8 +101,8 @@ export class MisionesComponent implements OnInit {
           {
             data: 'missionStatus',
             render: (data) => {
-              let bgColor = 'lightyellow';
-              let textColor = '#ADBF38';
+              let bgColor = 'rgba(229, 250, 251, 255)';
+              let textColor = '#03A3AE';
 
               if (data === 'COMPLETADA') {
                 bgColor = 'rgba(82, 243, 101, 0.1)';

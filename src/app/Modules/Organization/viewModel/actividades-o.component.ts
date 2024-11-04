@@ -242,15 +242,18 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
     const modalElement = document.getElementById('VolunteerModal');
 
     if (modalElement) {
-      modalElement.style.display = 'block';  // Mostrar el modal
-      modalElement.classList.add('show');  // Agregar la clase que lo hace visible
-      document.body.classList.add('modal-open');  // Asegurarse de que el body esté en modo modal
+      modalElement.style.display = 'block'; // Mostrar el modal
+      modalElement.classList.add('show'); // Agregar la clase que lo hace visible
+      document.body.classList.add('modal-open'); // Asegurarse de que el body esté en modo modal
 
       // Monitorea la adición de backdrops
       const observer = new MutationObserver((mutationsList) => {
         for (let mutation of mutationsList) {
           mutation.addedNodes.forEach((node) => {
-            if (node instanceof HTMLElement && node.classList.contains('modal-backdrop')) {
+            if (
+              node instanceof HTMLElement &&
+              node.classList.contains('modal-backdrop')
+            ) {
               console.log('Se ha añadido un modal-backdrop');
             }
           });
@@ -264,7 +267,9 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
   closeModal(): void {
     const modalElement = document.getElementById('VolunteerModal');
     if (modalElement) {
-      const modalInstance = (window as any).bootstrap.Modal.getInstance(modalElement);
+      const modalInstance = (window as any).bootstrap.Modal.getInstance(
+        modalElement
+      );
       if (modalInstance) {
         modalInstance.hide();
       }
@@ -280,7 +285,6 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
       backdrops.forEach((backdrop) => backdrop.remove());
     }
   }
-
 
   mostrar(activityId: number): void {
     // Obtener detalles de la actividad seleccionada
@@ -385,9 +389,10 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
           {
             data: 'activityStatus',
             title: 'Status',
-            render: (data, type, row) => {
-              const statusClass = this.getStatusClass(data);
-              return `<span class="${statusClass}">${data}</span>`;
+            createdCell: (cell, cellData) => {
+              // Aplica la clase de estado en la celda
+              const statusClass = this.getStatusClass(cellData);
+              $(cell).addClass(statusClass);
             },
           },
           {
