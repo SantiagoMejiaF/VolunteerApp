@@ -59,35 +59,34 @@ export class MisActividadesComponent implements OnInit {
     if ($.fn.dataTable.isDataTable('#datatableActividadesO')) {
       $('#datatableActividadesO').DataTable().destroy();
     }
-    const table = $('#datatableActividadesO')
-      .DataTable({
-        pagingType: 'full_numbers',
-        pageLength: 5,
-        processing: true,
-        lengthMenu: [5, 10, 25],
-        scrollX: true,
-        autoWidth: false,
-        language: {
-          info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
-          search: '<span style="font-size: 0.875rem;">Buscar</span>',
-          infoEmpty:
-            '<span style="font-size: 0.875rem;">No hay registros</span>',
-          infoFiltered:
-            '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
-          lengthMenu:
-            '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
-          zeroRecords:
-            '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
-        },
-      })
-      .columns.adjust();
+    const table = $('#datatableActividadesO').DataTable({
+      pagingType: 'full_numbers',
+      pageLength: 5,
+      processing: true,
+      lengthMenu: [5, 10, 25],
+      scrollX: true,
+      autoWidth: true, // Cambiado a true para ajuste automático de ancho
+      language: {
+        info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
+        search: '<span style="font-size: 0.875rem;">Buscar</span>',
+        infoEmpty: '<span style="font-size: 0.875rem;">No hay registros</span>',
+        infoFiltered: '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
+        lengthMenu: '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
+        zeroRecords: '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
+      },
+    });
+  
     // Ajuste de columnas en cada cambio de página
     table.on('page.dt', () => {
       setTimeout(() => {
-        table.columns.adjust();
+        table.columns.adjust().draw(false); // Ajusta y redibuja sin recargar datos
       }, 0);
     });
+    
+    // Ajuste inicial después de la creación de la tabla
+    table.columns.adjust();
   }
+  
 
   verDetalles(id: number): void {
     // Método para ver los detalles de una actividad
