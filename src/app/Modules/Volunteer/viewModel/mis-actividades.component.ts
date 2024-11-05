@@ -84,6 +84,12 @@ export class MisActividadesComponent implements OnInit {
         { width: '25%', targets: 3 }, 
         { width: '20%', targets: 4 }, 
       ],
+      drawCallback: function() {
+        $('#datatableActividadesO thead th').css({
+          'white-space': 'nowrap', 
+          'font-weight': 'bold' 
+        });
+      }
     });
   }
 
