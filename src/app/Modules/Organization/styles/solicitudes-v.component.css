@@ -59,29 +59,17 @@
     color: var(--white);
   }
 
-  .status-activo {
-    background-color: rgba(229,250,251,255);
-    color: #03A3AE;
-    padding: 4px 8px;
-    border-radius: 12px;
-    display: inline-block;
-  }
-  
+ 
   .status-pendiente {
-    background-color: rgba(255,248,236,255);
-    color: #fec96c;
+    background-color: rgba(255, 233, 220, 1);
+    color: #E4901B;
     padding: 4px 8px;
     border-radius: 12px;
     display: inline-block;
+    font-weight: bold;
   }
   
-  .status-rechazado {
-    background-color: rgba(255,229,220,255);
-    color: #F36060;
-    padding: 4px 8px;
-    border-radius: 12px;
-    display: inline-block;
-  }
+ 
   
   /*AJAAA*/
  

@@ -26,7 +26,7 @@ body {
 
 h1 {
   font-weight: bold;
-  color: #ED4B4B;
+  color: #ed4b4b;
 }
 
 h2 {
@@ -44,7 +44,9 @@ h5 {
   font-size: 18px;
 }
 
-.select2-container--default .select2-selection--multiple .select2-selection__choice {
+.select2-container--default
+  .select2-selection--multiple
+  .select2-selection__choice {
   background-color: #0d6efd;
   color: white;
   border: 1px solid #0d6efd;
@@ -52,16 +54,12 @@ h5 {
   margin-right: 5px;
 }
 
-
 .modal-body {
   overflow-y: auto;
 }
 
-
 /**/
 /* Personalización general del formulario */
-
-
 
 .form-label {
   font-weight: bold;
@@ -87,8 +85,6 @@ h5 {
   margin-left: 5px;
 }
 
-
-
 .modal-body {
   padding: 20px;
   max-height: 70vh;
@@ -102,7 +98,7 @@ h5 {
 }
 
 .custom-button {
-  background-color: #03A3AE;
+  background-color: #03a3ae;
   color: white !important;
   font-weight: 600;
 }
@@ -111,13 +107,12 @@ h5 {
   z-index: 1040 !important;
 }
 
-
 .custom-button:focus {
   outline: none;
 }
 
 #Crear {
-  background: #FB9778;
+  background: #fb9778;
   color: white;
   font-size: 14px;
   font-weight: 600;
@@ -126,32 +121,34 @@ h5 {
   border: none !important;
 }
 
-
 .status-activo {
-  background-color: rgba(229, 250, 251, 255);
-  color: #03A3AE;
+  background-color: rgba(220, 234, 255, 1);
+  color: #03a3ae;
   padding: 5px 10px 0px 10px;
   border-radius: 20px;
   display: inline-block;
   vertical-align: middle;
+  font-weight: bold;
 }
 
 .status-cancelado {
   background-color: rgba(255, 229, 220, 255);
-  color: #F36060;
+  color: #f36060;
   padding: 5px 10px 0px 10px;
   border-radius: 20px;
   display: inline-block;
   vertical-align: middle;
+  font-weight: bold;
 }
 
 .status-completado {
-  background-color: rgba(63, 194, 138, 0.1);
-  color: #3FC28A;
+  background-color: rgba(220, 255, 229, 1);
+  color: #3fc28a;
   padding: 5px 10px 0px 10px;
   border-radius: 20px;
   display: inline-block;
   vertical-align: middle;
+  font-weight: bold;
 }
 
 .toast-notification {
@@ -197,10 +194,10 @@ h5 {
   margin-left: 10px;
 }
 
-.custom-button{
-  font-size: 16px!important;
-    font-weight: 400 !important;
-    font-family: "Quicksand", sans-serif!important;
-    background-color: #03A3AE!important;
-    color: white!important;
+.custom-button {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  font-family: "Quicksand", sans-serif !important;
+  background-color: #03a3ae !important;
+  color: white !important;
 }

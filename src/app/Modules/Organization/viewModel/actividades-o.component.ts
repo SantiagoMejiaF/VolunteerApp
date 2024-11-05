@@ -390,18 +390,18 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
             data: 'activityStatus',
             title: 'Status',
             render: (data) => {
-              let bgColor = 'rgba(229, 250, 251, 255)';
+              let bgColor = 'rgba(220, 234, 255, 1)';
               let textColor = '#03A3AE';
 
               if (data === 'COMPLETADA') {
-                bgColor = 'rgba(82, 243, 101, 0.1)';
-                textColor = '#1CC52A';
+                bgColor = 'rgba(220, 255, 229, 1)';
+                textColor = '#3FC28A';
               } else if (data === 'CANCELADA') {
-                bgColor = '#FEEEEE';
-                textColor = '#F35252';
+                bgColor = 'rgba(255,229,220,255)';
+                textColor = '#F36060';
               }
 
-              return `<span style="background-color:${bgColor}; color:${textColor}; padding: 4px 8px; border-radius: 12px; display: inline-block;">${data}</span>`;
+              return `<span style="background-color:${bgColor}; color:${textColor}; padding: 4px 8px; border-radius: 12px; display: inline-block;font-weight: bold;">${data}</span>`;
             }
           },
           {
