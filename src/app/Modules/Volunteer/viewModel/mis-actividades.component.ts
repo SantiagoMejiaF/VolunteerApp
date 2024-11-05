@@ -66,6 +66,7 @@ export class MisActividadesComponent implements OnInit {
       lengthMenu: [5, 10, 25],
       scrollX: true,
       autoWidth: false,
+      
       language: {
         info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
         search: '<span style="font-size: 0.875rem;">Buscar</span>',
@@ -77,13 +78,7 @@ export class MisActividadesComponent implements OnInit {
         zeroRecords:
           '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
       },
-      drawCallback: function() {
-        $('#datatableActividadesO thead th').css({
-          'white-space': 'nowrap', 
-          'font-weight': 'bold',
-          'text-align': 'left' 
-        });
-      }
+      
     });
   }
 
