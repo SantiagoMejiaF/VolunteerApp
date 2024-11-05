@@ -80,7 +80,8 @@ export class MisActividadesComponent implements OnInit {
       drawCallback: function() {
         $('#datatableActividadesO thead th').css({
           'white-space': 'nowrap', 
-          'font-weight': 'bold' 
+          'font-weight': 'bold',
+          'text-align': 'left' 
         });
       }
     });
