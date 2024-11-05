@@ -77,13 +77,6 @@ export class MisActividadesComponent implements OnInit {
         zeroRecords:
           '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
       },
-      columnDefs: [
-        { width: '10%', targets: 0 },
-        { width: '25%', targets: 1 }, 
-        { width: '20%', targets: 2 }, 
-        { width: '25%', targets: 3 }, 
-        { width: '20%', targets: 4 }, 
-      ],
       drawCallback: function() {
         $('#datatableActividadesO thead th').css({
           'white-space': 'nowrap', 
