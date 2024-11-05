@@ -65,19 +65,27 @@ export class MisActividadesComponent implements OnInit {
       processing: true,
       lengthMenu: [5, 10, 25],
       scrollX: true,
-      autoWidth: false, 
+      autoWidth: false,
       language: {
         info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
         search: '<span style="font-size: 0.875rem;">Buscar</span>',
         infoEmpty: '<span style="font-size: 0.875rem;">No hay registros</span>',
-        infoFiltered: '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
-        lengthMenu: '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
-        zeroRecords: '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
+        infoFiltered:
+          '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
+        lengthMenu:
+          '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
+        zeroRecords:
+          '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
       },
+      columnDefs: [
+        { width: '10%', targets: 0 },
+        { width: '25%', targets: 1 }, 
+        { width: '20%', targets: 2 }, 
+        { width: '25%', targets: 3 }, 
+        { width: '20%', targets: 4 }, 
+      ],
     });
-  
   }
-  
 
   verDetalles(id: number): void {
     // Método para ver los detalles de una actividad
