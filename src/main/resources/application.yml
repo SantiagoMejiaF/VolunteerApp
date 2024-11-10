@@ -1,6 +1,6 @@
 spring:
   application:
-    name: volunteer-app.asesordigital
+    name: volunteer-app.asesordigital # Nuevo nombre de la aplicación
 
   datasource:
     url: jdbc:postgresql://db-postgresql-volunteerapp-do-user-10100634-0.e.db.ondigitalocean.com:25060/defaultdb
