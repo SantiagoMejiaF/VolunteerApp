@@ -16,6 +16,7 @@ export class ActividadesVComponent implements OnInit {
   isEditing = false;
   selectedEvent: any = null;
   isModalOpen: boolean = false;
+  showAlert = false;
 
   calendarEvents: EventInput[] = [];
   calendarOptions: CalendarOptions;
@@ -94,18 +95,29 @@ export class ActividadesVComponent implements OnInit {
     const difference = differenceInCalendarDays(eventDate, today);
 
     if (difference < 2) {
-      alert('No puedes cancelar la suscripción con menos de 2 días de antelación al evento.');
+      this.closeModal();
+      this.showAlert = true;
+      setTimeout(() => (this.showAlert = false), 3000);
     } else {
       const confirmacion = confirm('¿Estás seguro de que quieres cancelar la suscripción?');
       if (confirmacion) {
         this.eliminarEvento(this.selectedEvent);
-        alert('Evento cancelado exitosamente.');
         this.closeModal();
       }
     }
   }
 
   eliminarEvento(event: any) {
-    // Aquí implementa la lógica para eliminar el evento
+    this.volunteerService.removeActivity(this.volunteerId, event.id).subscribe(
+      response => {
+        alert(response); // Mostrar el mensaje recibido en la respuesta
+        this.loadActividades(); // Recargar las actividades para reflejar el cambio
+        this.closeModal();
+      },
+      error => {
+        console.error('Error al eliminar la actividad:', error);
+        alert('Hubo un problema al eliminar la actividad. Intenta nuevamente más tarde.');
+      }
+    );
   }
 }
