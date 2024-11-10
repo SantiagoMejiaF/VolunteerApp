@@ -95,6 +95,7 @@ margin-bottom:20px;
   border-radius: 8px;
   background: #fb9778;
   color: white;
+  border:none !important;
 }
 #recentCustomers .imgBx {
   position: relative;

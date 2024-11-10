@@ -16,7 +16,9 @@ export class VerPerfilVComponent implements OnInit {
   origen: string;
   timelineData: any[] = []; // Historial de actividades del voluntario
   organizationId: number = 0; // Guardamos el organizationId
-
+  showAlert=false;
+  showAlert2=false;
+  showAlert3=false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -69,15 +71,15 @@ export class VerPerfilVComponent implements OnInit {
     this.volunteerService.approveVolunteer(volunteerId, this.organizationId, approved).subscribe(
       () => {
         if (approved) {
-          alert('Voluntario aceptado con éxito');
+          this.showAlert=true;
         } else {
-          alert('Voluntario rechazado con éxito');
+          this.showAlert2=true;
         }
         this.volver(); // Regresar después de la acción
       },
       (error) => {
         console.error('Error en la aprobación/rechazo del voluntario:', error);
-        alert('Ocurrió un error al procesar la solicitud');
+        this.showAlert3=true;
       }
     );
   }

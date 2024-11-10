@@ -5,7 +5,7 @@ import { VolunteerService } from '../model/services/volunteer.service';
 @Component({
   selector: 'app-mis-actividades',
   templateUrl: '../view/mis-actividades.component.html',
-  styleUrls: ['../styles/mis-actividades.component.css']
+  styleUrls: ['../styles/mis-actividades.component.css'],
 })
 export class MisActividadesComponent implements OnInit {
   public activities: any[] = []; // Variable para almacenar las actividades obtenidas
@@ -14,7 +14,7 @@ export class MisActividadesComponent implements OnInit {
   constructor(
     private router: Router,
     private volunteerService: VolunteerService // Inyectar el servicio de voluntarios
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.volunteerId = Number(localStorage.getItem('volunteerId')); // Obtener el volunteerId del localStorage
@@ -48,7 +48,7 @@ export class MisActividadesComponent implements OnInit {
       case 'COMPLETADA':
         return 'status-completado';
       case 'CANCELADA':
-        return 'status-aplazada';
+        return 'status-aplazado';
       default:
         return '';
     }
@@ -59,26 +59,35 @@ export class MisActividadesComponent implements OnInit {
     if ($.fn.dataTable.isDataTable('#datatableActividadesO')) {
       $('#datatableActividadesO').DataTable().destroy();
     }
-    $('#datatableActividadesO').DataTable({
+    const table = $('#datatableActividadesO').DataTable({
       pagingType: 'full_numbers',
       pageLength: 5,
       processing: true,
       lengthMenu: [5, 10, 25],
       scrollX: true,
+      autoWidth: false,
+      
       language: {
         info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
         search: '<span style="font-size: 0.875rem;">Buscar</span>',
         infoEmpty: '<span style="font-size: 0.875rem;">No hay registros</span>',
-        infoFiltered: '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
-        lengthMenu: '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
-        zeroRecords: '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
-      }
+        infoFiltered:
+          '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
+        lengthMenu:
+          '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
+        zeroRecords:
+          '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
+      },
+      
     });
   }
 
   verDetalles(id: number): void {
     // Método para ver los detalles de una actividad
     const imagenId = (id % 6) + 1;
-    this.router.navigate(['/actividad', id, `card${imagenId}.svg`, { fromMisActividades: true }], { queryParams: { from: 'misA' } });
+    this.router.navigate(
+      ['/actividad', id, `card${imagenId}.svg`, { fromMisActividades: true }],
+      { queryParams: { from: 'misA' } }
+    );
   }
 }

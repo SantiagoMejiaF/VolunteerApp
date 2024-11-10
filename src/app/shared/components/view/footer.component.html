@@ -1,34 +1,30 @@
-<footer>
+<footer id="footer1">
     <div class="container">
         <nav class="row py-5">
             <!--Logo-->
             <div class="col-12 col-md-3 text-center text-md-left px-5 mb-4 mb-md-0">
-                <a href="#">
+                <a >
                     <img src="assets/img/LOGO_VOLUNTEERE.png" alt="Logo talent" class="img-logo mr-2">
                 </a>
             </div>
             <!--menu1-->
             <div class="col-12 col-md-3 text-center text-md-left mb-4 mb-md-0">
                 <ul class="list-unstyled">
-                    <li><a href="#faq" class="text">Home</a></li>
+                    <li><a [routerLink]="['/landing']" fragment="inicio-section" class="text">Home</a></li>
                 </ul>
             </div>
             <!--menu2-->
             <div class="col-12 col-md-3 text-center text-md-left px-5 mb-4 mb-md-0">
                 <ul class="list-unstyled">
-                    <li><a class="text">Nosotros</a></li>
-                    <li><a class="text2">¿Por qué escogernos?</a></li>
-                    <li><a class="text2">¿Cómo funciona?</a></li>
-                    <li><a class="text2">Valores</a></li>
-                    <li><a class="text2">Testimonios</a></li>
+                    <li><a class="text" [routerLink]="['/landing']" fragment="about-section">Nosotros</a></li>
+                    <li><a class="text2" [routerLink]="['/landing']" fragment="choose-us">¿Por qué escogernos?</a></li>
+                    <li><a class="text2" [routerLink]="['/landing']" fragment="testimonials">Testimonios</a></li>
                 </ul>
             </div>
             <!--menu3-->
             <div class="col-12 col-md-3 text-center text-md-left mb-4 mb-md-0">
                 <ul class="list-unstyled">
-                    <li><a href="#faq" class="text">Misiones</a></li>
-                    <li class="text2">Recientes</li>
-                    <li class="text2">Urgentes</li>
+                    <li><a  class="text" [routerLink]="['/landing']" fragment="misiones-section">Misiones</a></li>
                 </ul>
             </div>
         </nav>

@@ -1,3 +1,16 @@
+<!-- Alerta en la parte superior centrada y con ancho fijo -->
+<div *ngIf="showAlert" class="alert alert-info fade show" role="alert"
+    style="background-color: #68997d; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+    Coordinador creado con éxito.
+</div>
+<div *ngIf="showAlert2" class="alert alert-info fade show" role="alert"
+    style="background-color: #dc6060; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+    Ocurrió un error al crear el coordinador.
+</div>
+<div *ngIf="showAlert3" class="alert alert-info fade show" role="alert"
+    style="background-color: #F5C620; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+    Por favor llene todos los campos.
+</div>
 <div class="container">
     <div class="row">
         <div class="col d-flex justify-content-between align-items-center tittle">
@@ -40,12 +53,12 @@
                                     style="border: none; background: none; cursor: pointer;">
                                     <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"
                                         onmouseover="this.style.color='#186dde';"
-                                        onmouseout="this.style.color='#80777c';"></i>
+                                        onmouseout="this.style.color='#80777c';" title="Detalles"></i>
                                 </a>
                                 <button style="border: none; background: none;">
                                     <i class="bi bi-trash3" style="font-size: 1.2rem; color: #000000;"
                                         onmouseover="this.style.color='#186dde';"
-                                        onmouseout="this.style.color='#80777c';"></i>
+                                        onmouseout="this.style.color='#80777c';" title="Eliminar"></i>
                                 </button>
                             </td>
                         </tr>
@@ -66,7 +79,8 @@
                     <h4>Empecemos</h4>
                     <h5>Crea un nuevo coordinador</h5>
                 </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="closeModal()"></button>
             </div>
             <div class="modal-body">
                 <!-- Mostrar botones sociales o campos de cédula y celular según la variable de estado -->

@@ -1,33 +1,28 @@
 .status-activo {
-  background-color: rgba(229, 250, 251, 255);
+  background-color: rgba(220, 234, 255, 1);
   color: #03A3AE;
   padding: 4px 8px;
   border-radius: 12px;
   display: inline-block;
+  font-weight: bold;
 }
 
-.status-pendiente {
-  background-color: rgba(255, 248, 236, 255);
-  color: #fec96c;
-  padding: 4px 8px;
-  border-radius: 12px;
-  display: inline-block;
-}
-
-.status-aplazada {
+.status-aplazado {
   background-color: rgba(255, 229, 220, 255);
   color: #F36060;
   padding: 4px 8px;
   border-radius: 12px;
   display: inline-block;
+  font-weight: bold;
 }
 
 .status-completado {
-  background-color: rgba(63, 194, 138, 0.1);
+  background-color: rgba(220, 255, 229, 1);
   color: #3FC28A;
   padding: 4px 8px;
   border-radius: 12px;
   display: inline-block;
+  font-weight: bold;
 }
 
 h2 {
@@ -46,4 +41,12 @@ h2 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   /* Sombra para darle profundidad */
   margin-bottom: 20px;
+}
+
+#datatableActividadesO td,
+#datatableActividadesO th {
+  table-layout: fixed;
+  /* Fija el diseño de la tabla */
+  overflow: hidden;
+  /* Evita que el contenido modifique el ancho */
 }

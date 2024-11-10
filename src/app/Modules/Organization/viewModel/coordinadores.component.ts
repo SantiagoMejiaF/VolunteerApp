@@ -14,7 +14,9 @@ import { Router } from '@angular/router';
 export class CoordinadoresComponent implements OnInit {
   public data: any[] = [];
   public showSocialButtons: boolean = true;
-
+  showAlert = false;
+  showAlert2 = false;
+  showAlert3 = false;
   constructor(
     private organizationService: OrganizationService,
     private oauthService: OauthService,
@@ -108,22 +110,18 @@ export class CoordinadoresComponent implements OnInit {
       this.organizationService.createActivityCoordinator(coordinatorData).subscribe(
         (response) => {
           console.log('Coordinator created:', response);
-          alert('Coordinador creado exitosamente.');
+          this.closeModal();
+          this.showAlert=true;
 
-          // Ocultar el modal usando Bootstrap
-          const modalElement = document.getElementById('VolunteerModal');
-          if (modalElement) {
-            const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
-            modalInstance.hide();
-          }
         },
         (error) => {
+          this.closeModal();
           console.error('Error creating coordinator:', error);
-          alert('Hubo un error al crear el coordinador.');
+          this.showAlert2=true;
         }
       );
     } else {
-      alert('Por favor complete todos los campos.');
+      this.showAlert3=true;
     }
   }
 
@@ -156,5 +154,13 @@ export class CoordinadoresComponent implements OnInit {
     this.router.navigate(['/verPerfilC']);
   }
 
-
+  closeModal() {
+    const modal = document.getElementById('VolunteerModal');
+    if (modal) {
+      const modalInstance = (window as any).bootstrap.Modal.getInstance(modal);
+      modalInstance.hide();
+      const backdrops = document.querySelectorAll('.modal-backdrop');
+      backdrops.forEach((backdrop) => backdrop.remove());
+    }
+  }
 }

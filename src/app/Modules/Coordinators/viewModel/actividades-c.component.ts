@@ -117,8 +117,6 @@ export class ActividadesCComponent implements OnInit, AfterViewInit {
     switch (status) {
       case 'DISPONIBLE':
         return 'status-activo';
-      case 'PENDIENTE':
-        return 'status-pendiente';
       case 'COMPLETADA':
         return 'status-completado';
       case 'CANCELADA':

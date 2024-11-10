@@ -1,11 +1,11 @@
 <!-- Alerta en la parte superior centrada y con ancho fijo -->
-<div *ngIf="showAlert" class="alert alert-info fade show" role="alert" 
-     style="background-color: #68997d; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
-  Actividad creada exitosamente.
+<div *ngIf="showAlert" class="alert alert-info fade show" role="alert"
+    style="background-color: #68997d; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+    Actividad creada exitosamente.
 </div>
-<div *ngIf="showAlert2" class="alert alert-info fade show" role="alert" 
-     style="background-color: #dc6060; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
-  La actividad no pudo ser creada.
+<div *ngIf="showAlert2" class="alert alert-info fade show" role="alert"
+    style="background-color: #dc6060; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+    La actividad no pudo ser creada.
 </div>
 
 
@@ -16,9 +16,10 @@
 
         <div class="d-flex justify-content-between align-items-center">
             <h2>Mis actividades</h2>
-            <button data-bs-toggle="modal" data-bs-target="#VolunteerModal" id="Crear">
+            <button data-bs-toggle="modal" data-bs-target="#VolunteerModal" id="Crear" (click)="openModal($event)">
                 <i class="bi bi-plus-circle mr-2"></i> Crear Actividad
             </button>
+
         </div>
         <hr>
         <div class="row">
@@ -80,7 +81,8 @@
                     <h4>Empecemos</h4>
                     <h5>Crea una nueva actividad</h5>
                 </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="closeModal()"></button>
             </div>
             <div class="modal-body">
                 <form [formGroup]="missionForm" (ngSubmit)="submitForm()">
@@ -126,9 +128,10 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="startTime" class="form-label">Hora de Inicio</label>
-                                <select id="startTime" class="form-select custom-input" formControlName="startTime" required>
+                                <select id="startTime" class="form-select custom-input" formControlName="startTime"
+                                    required>
                                     <option *ngFor="let time of startTimes" [value]="time">{{ time }}</option>
-                                  </select>
+                                </select>
                             </div>
                         </div>
 
@@ -137,7 +140,7 @@
                             <label for="endTime" class="form-label">Hora de Fin</label>
                             <select id="endTime" class="form-select custom-input" formControlName="endTime" required>
                                 <option *ngFor="let time of endTimes" [value]="time">{{ time }}</option>
-                              </select>
+                            </select>
                         </div>
 
                         <!-- Ciudad -->
@@ -233,6 +236,3 @@
         </div>
     </div>
 </div>
-
-
-  

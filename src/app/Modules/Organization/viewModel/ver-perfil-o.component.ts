@@ -85,14 +85,29 @@ export class VerPerfilOComponent implements OnInit {
             // Obtener las actividades de la organización
             this.organizationService.getOrganizationActivities(organizationId).subscribe(
               (activitiesData) => {
-                this.actividades = activitiesData.map((activity) => ({
-                  id: activity.id,
-                  nombre: activity.title,
-                  descripcion: activity.description,
-                  fecha: activity.date,
-                  cuposRestantes: activity.numberOfVolunteersRequired,
-                  cuposTotales: activity.numberOfVolunteersRequired,
-                }));
+                // Filtrar las actividades para excluir las completadas
+                console.log('Todas las actividades:', activitiesData);
+                this.actividades = activitiesData
+                  .filter(activity => {
+                    if (this.fromPage === 'homeV') {
+                      // En homeV, excluir completadas y canceladas, y solo mostrar públicas
+                      return activity.activityStatus !== 'COMPLETADA' &&
+                        activity.activityStatus !== 'CANCELADA' &&
+                        activity.visibility === 'PUBLICA';
+                    } else {
+                      // En misF, mostrar tanto privadas como públicas, excluyendo solo completadas y canceladas
+                      return activity.activityStatus !== 'COMPLETADA' &&
+                        activity.activityStatus !== 'CANCELADA';
+                    }
+                  }) // Filtrar por estado
+                  .map((activity) => ({
+                    id: activity.id,
+                    nombre: activity.title,
+                    descripcion: activity.description,
+                    fecha: activity.date,
+                    cuposRestantes: activity.numberOfVolunteersRequired,
+                    cuposTotales: activity.numberOfVolunteersRequired,
+                  }));
                 console.log('Datos de actividades:', this.actividades);
               },
               (error) => {

@@ -61,8 +61,8 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
   generateTimeOptions() {
     const times = [];
     for (let hour = 0; hour < 24; hour++) {
-      times.push(this.formatTime12Hour(hour, 0));   // Ejemplo: "2:00 AM"
-      times.push(this.formatTime12Hour(hour, 30));  // Ejemplo: "2:30 AM"
+      times.push(this.formatTime12Hour(hour, 0)); // Ejemplo: "2:00 AM"
+      times.push(this.formatTime12Hour(hour, 30)); // Ejemplo: "2:30 AM"
     }
     this.startTimes = times;
     this.endTimes = times;
@@ -153,7 +153,9 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
       hours = 0; // Convertir 12 AM a 0
     }
 
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`; // Retornar en formato HH:mm
+    return `${hours.toString().padStart(2, '0')}:${minutes
+      .toString()
+      .padStart(2, '0')}`; // Retornar en formato HH:mm
   }
 
   refreshActivities(): void {
@@ -163,7 +165,6 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
       console.error('MissionId no disponible para refrescar las actividades.');
     }
   }
-
 
   submitForm() {
     if (this.missionForm.valid) {
@@ -189,7 +190,7 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
         address: formData.address,
         numberOfVolunteersRequired: formData.numberOfVolunteersRequired,
         requiredHours: formData.requiredHours,
-        visibility: 'PUBLICA',
+        visibility: formData.visibility ? 'PUBLICA' : 'PRIVADA',
         numberOfBeneficiaries: formData.numberOfBeneficiaries,
         observations: formData.observations,
       };
@@ -236,11 +237,50 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
     }
   }
 
-  closeModal() {
-    const modal = document.getElementById('VolunteerModal');
-    if (modal) {
-      const modalInstance = (window as any).bootstrap.Modal.getInstance(modal);
-      modalInstance.hide();
+  openModal(event: Event): void {
+    event.preventDefault();
+    const modalElement = document.getElementById('VolunteerModal');
+
+    if (modalElement) {
+      modalElement.style.display = 'block'; // Mostrar el modal
+      modalElement.classList.add('show'); // Agregar la clase que lo hace visible
+      document.body.classList.add('modal-open'); // Asegurarse de que el body esté en modo modal
+
+      // Monitorea la adición de backdrops
+      const observer = new MutationObserver((mutationsList) => {
+        for (let mutation of mutationsList) {
+          mutation.addedNodes.forEach((node) => {
+            if (
+              node instanceof HTMLElement &&
+              node.classList.contains('modal-backdrop')
+            ) {
+              console.log('Se ha añadido un modal-backdrop');
+            }
+          });
+        }
+      });
+
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+  }
+
+  closeModal(): void {
+    const modalElement = document.getElementById('VolunteerModal');
+    if (modalElement) {
+      const modalInstance = (window as any).bootstrap.Modal.getInstance(
+        modalElement
+      );
+      if (modalInstance) {
+        modalInstance.hide();
+      }
+
+      // Limpiar el formulario después de cerrar el modal
+      this.missionForm.reset(); // Reiniciar el formulario
+      this.currentStep = 1;
+      // Limpiar cualquier estado adicional relacionado con la actividad
+      this.selectedActivity = null; // Resetear la actividad seleccionada
+
+      // Remover backdrops
       const backdrops = document.querySelectorAll('.modal-backdrop');
       backdrops.forEach((backdrop) => backdrop.remove());
     }
@@ -346,13 +386,33 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
           { data: 'date', title: 'Fecha inicio' },
           { data: 'address', title: 'Dirección' },
           { data: 'numberOfVolunteersRequired', title: '# voluntarios' },
-          { data: 'activityStatus', title: 'Status' },
           {
-            data: null, title: 'Acción', render: (data, type, row) => `
+            data: 'activityStatus',
+            title: 'Status',
+            render: (data) => {
+              let bgColor = 'rgba(220, 234, 255, 1)';
+              let textColor = '#03A3AE';
+
+              if (data === 'COMPLETADA') {
+                bgColor = 'rgba(220, 255, 229, 1)';
+                textColor = '#3FC28A';
+              } else if (data === 'CANCELADA') {
+                bgColor = 'rgba(255,229,220,255)';
+                textColor = '#F36060';
+              }
+
+              return `<span style="background-color:${bgColor}; color:${textColor}; padding: 4px 8px; border-radius: 12px; display: inline-block;font-weight: bold;">${data}</span>`;
+            }
+          },
+          {
+            data: null,
+            title: 'Acción',
+            render: (data, type, row) => `
                     <a href="#" class="show-details" data-id="${row.id}" style="border: none; background: none;">
                         <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"></i>
                     </a>
-                ` }
+                `,
+          },
         ],
         pagingType: 'full_numbers',
         pageLength: 5,
@@ -362,10 +422,14 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
         language: {
           info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
           search: '<span style="font-size: 0.875rem;">Buscar</span>',
-          infoEmpty: '<span style="font-size: 0.875rem;">No hay registros</span>',
-          infoFiltered: '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
-          lengthMenu: '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
-          zeroRecords: '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
+          infoEmpty:
+            '<span style="font-size: 0.875rem;">No hay registros</span>',
+          infoFiltered:
+            '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
+          lengthMenu:
+            '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
+          zeroRecords:
+            '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
         },
       });
 
@@ -377,5 +441,4 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
       });
     }, 1);
   }
-
 }

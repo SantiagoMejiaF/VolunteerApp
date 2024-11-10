@@ -56,7 +56,7 @@ export class PerfilComponent implements OnInit {
       dni: [''],
       cell: [''],
       address: [''],
-      birthDate: [''],
+      bornDate: [''],
       skills: [''],
       intereses: [''],
       days: [''],
@@ -74,7 +74,7 @@ export class PerfilComponent implements OnInit {
         identificationCard: '',
         phoneNumber: '',
         address: '',
-        birthDate: ''
+        bornDate: ''
       },
       volunteeringInformation: {
         availabilityDaysList: [],
@@ -186,7 +186,7 @@ export class PerfilComponent implements OnInit {
       dni: this.volunteerData.personalInformation.identificationCard,
       cell: this.volunteerData.personalInformation.phoneNumber,
       address: this.volunteerData.personalInformation.address,
-      birthDate: this.volunteerData.personalInformation.birthDate,
+      bornDate: this.volunteerData.personalInformation.bornDate,
       skills: this.skills.filter(skill => this.volunteerData.volunteeringInformation.skillsList.includes(skill.item_text)),
       intereses: this.intereses.filter(interest => this.volunteerData.volunteeringInformation.interestsList.includes(interest.item_text)),
       days: this.days.filter(day => this.volunteerData.volunteeringInformation.availabilityDaysList.includes(day.item_text)),
@@ -211,7 +211,7 @@ export class PerfilComponent implements OnInit {
       personalUpdateInformationRequest: {
         phoneNumber: this.myForm.get('cell')?.value,
         address: this.myForm.get('address')?.value,
-        birthDate: this.myForm.get('birthDate')?.value
+        bornDate: this.myForm.get('bornDate')?.value
       },
       volunteeringInformation: {
         availabilityDaysList: this.myForm.get('days')?.value.map((item: any) => item.item_text),

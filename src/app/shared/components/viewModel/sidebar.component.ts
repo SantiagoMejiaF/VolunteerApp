@@ -123,4 +123,27 @@ export class SidebarComponent implements OnInit {
   toggleMenu4() {
     this.menuOpen = !this.menuOpen;
   }
+  // Detectar clics en cualquier lugar de la pantalla
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const clickedElement = event.target as HTMLElement;
+
+    // Ocultar el menú de notificaciones si se hace clic fuera de él
+    if (
+      this.isMenu2Visible &&
+      !clickedElement.closest('.notification-icon') &&
+      !clickedElement.closest('.user-menu')
+    ) {
+      this.isMenu2Visible = false;
+    }
+
+    // Ocultar el menú de usuario si se hace clic fuera de él
+    if (
+      this.isMenuVisible &&
+      !clickedElement.closest('.user-img') &&
+      !clickedElement.closest('.user-menu')
+    ) {
+      this.isMenuVisible = false;
+    }
+  }
 }
