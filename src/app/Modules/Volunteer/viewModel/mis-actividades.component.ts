@@ -65,7 +65,6 @@ export class MisActividadesComponent implements OnInit {
       processing: true,
       lengthMenu: [5, 10, 25],
       scrollX: true,
-      autoWidth: false,
       
       language: {
         info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',

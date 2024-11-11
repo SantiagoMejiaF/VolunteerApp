@@ -10,6 +10,7 @@ import { MissionsService } from '../model/services/mission.service';
 export class EditMComponent implements OnInit {
   @Input() mission: Mission | null = null; // Recibimos la misión desde el padre
   @Output() cancel = new EventEmitter<void>();
+  @Output() missionUpdated = new EventEmitter<void>();
 
   missionType = '';
   title = '';
@@ -64,6 +65,7 @@ export class EditMComponent implements OnInit {
           console.log('Misión actualizada con éxito:', response);
           this.showAlert=true;
           setTimeout(() => (this.showAlert = false), 3000);
+          this.missionUpdated.emit();
           // Aquí puedes manejar la respuesta si es necesario, por ejemplo, redirigir a otra página
         },
         (error) => {

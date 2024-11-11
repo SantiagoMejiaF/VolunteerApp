@@ -57,6 +57,10 @@ export class DetallesMComponent implements OnInit {
    toggleSidebar(): void {
     this.isSidebarVisible = !this.isSidebarVisible;
   }
-
+  onMissionUpdated(): void {
+    if (this.missionId) {
+      this.getMissionDetails(this.missionId);
+    }
+  }
   
 }

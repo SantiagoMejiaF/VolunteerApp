@@ -86,7 +86,7 @@
                     </div>
 
                     <!-- Formulario de edición -->
-                    <app-edit-m *ngIf="isEditing" [mission]="missionDetails" (cancel)="toggleEdit()"></app-edit-m>
+                    <app-edit-m *ngIf="isEditing" [mission]="missionDetails" (cancel)="toggleEdit()" (missionUpdated)="onMissionUpdated()"></app-edit-m>
                 </div>
 
 
