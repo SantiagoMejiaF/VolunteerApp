@@ -16,6 +16,8 @@ export class EditAComponent implements OnInit {
 
   // Formulario reactivo
   myForm: FormGroup;
+  showAlert=false;
+  showAlert2=false;
 
   coordinators: any[] = [];  // Lista de coordinadores disponibles
 
@@ -113,10 +115,14 @@ export class EditAComponent implements OnInit {
       this.missionsService.updateActivity(this.activity.id, updatedActivity).subscribe(
         (response) => {
           console.log('Actividad actualizada correctamente', response);
+          this.showAlert=true;
+          setTimeout(() => (this.showAlert = false), 3000);
           this.currentStep = 1;  // Volver al paso 1
         },
         (error) => {
           console.error('Error al actualizar la actividad:', error);
+          this.showAlert2=true;
+          setTimeout(() => (this.showAlert2 = false), 3000);
         }
       );
     }

@@ -11,6 +11,14 @@
     style="background-color: #F5C620; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
     Por favor llene todos los campos.
 </div>
+<div *ngIf="showAlert4" class="alert alert-info fade show" role="alert"
+    style="background-color: #68997d; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+    Coordinador eliminado con éxito.
+</div>
+<div *ngIf="showAlert5" class="alert alert-info fade show" role="alert"
+    style="background-color: #dc6060; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+    Ocurrió un error al eliminr el coordinador.
+</div>
 <div class="container">
     <div class="row">
         <div class="col d-flex justify-content-between align-items-center tittle">
