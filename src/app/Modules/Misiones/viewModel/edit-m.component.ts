@@ -20,6 +20,8 @@ export class EditMComponent implements OnInit {
   volunteerRequirements: string[] = [];
   requiredSkills: string[] = [];
   visibility = false;
+  showAlert = false;
+  showAlert2 = false;
 
   constructor(private missionsService: MissionsService) { }
 
@@ -60,14 +62,20 @@ export class EditMComponent implements OnInit {
       this.missionsService.updateMission(this.mission.id, updatedMission).subscribe(
         (response) => {
           console.log('Misión actualizada con éxito:', response);
+          this.showAlert=true;
+          setTimeout(() => (this.showAlert = false), 3000);
           // Aquí puedes manejar la respuesta si es necesario, por ejemplo, redirigir a otra página
         },
         (error) => {
           console.error('Error al actualizar la misión:', error);
+          this.showAlert2=true;
+          setTimeout(() => (this.showAlert2 = false), 3000);
         }
       );
     } else {
       console.error('La misión no tiene un ID válido');
+      this.showAlert2=true;
+          setTimeout(() => (this.showAlert2 = false), 3000);
     }
   }
 }

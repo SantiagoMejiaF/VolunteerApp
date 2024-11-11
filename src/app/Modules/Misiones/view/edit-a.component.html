@@ -1,3 +1,11 @@
+<div *ngIf="showAlert" class="alert alert-info fade show" role="alert"
+    style="background-color: #68997d; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+    Actividad editada exitosamente.
+</div>
+<div *ngIf="showAlert2" class="alert alert-info fade show" role="alert"
+    style="background-color: #dc6060; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+    Error al editar la Actividad.
+</div>
 <div>
     <form [formGroup]="myForm" style="text-align: left;">
         <!-- Paso 1: Datos de la Actividad -->
@@ -106,40 +114,13 @@
             </div>
 
             <div style="text-align: left;">
-                <button type="button" class="btn btn-primary mt-3 mr-2" (click)="nextStep()">Siguiente</button>
+                <button type="button" class="btn btn-primary mt-3 mr-2" (click)="updateActivity()">Actualizar</button>
                 <button type="button" class="btn btn-success mt-3" (click)="onCancel()">Cancelar</button>
             </div>
 
         </div>
 
-        <!-- Paso 2: Datos del Líder de la Actividad -->
-        <div *ngIf="currentStep === 2" style="text-align: left;">
-            <h5>Datos del Líder de la Actividad</h5>
-
-            <div class="mb-3">
-                <label for="leaderName" class="form-label">Nombre del Líder de la Comunidad</label>
-                <input type="text" id="leaderName" class="form-control custom-input" formControlName="leaderName"
-                    placeholder="Nombre del líder" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="leaderEmail" class="form-label">Email del Líder de la Comunidad</label>
-                <input type="email" id="leaderEmail" class="form-control custom-input" formControlName="leaderEmail"
-                    placeholder="Email del líder" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="leaderPhone" class="form-label">Teléfono del Líder de la Comunidad</label>
-                <input type="tel" id="leaderPhone" class="form-control custom-input" formControlName="leaderPhone"
-                    placeholder="Teléfono del líder" required>
-            </div>
-
-            <div style="text-align: left;">
-                <button type="button" class="btn btn-primary mt-3 mr-2" (click)="previousStep()">Anterior</button>
-                <button type="button" class="btn btn-success mt-3" (click)="updateActivity()">Actualizar</button>
-            </div>
-
-        </div>
+       
 
     </form>
 </div>

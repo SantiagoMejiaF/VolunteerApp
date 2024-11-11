@@ -342,9 +342,9 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
     this.isEditing = !this.isEditing;
   }
 
-  handleBack2() {
+  onComeBack() {
     this.showCalendar = true;
-    this.selectedActivity = null;
+    this.initializeDataTable();
   }
 
   // Métodos para avanzar y retroceder entre los pasos del formulario
@@ -408,8 +408,11 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
             data: null,
             title: 'Acción',
             render: (data, type, row) => `
-                    <a href="#" class="show-details" data-id="${row.id}" style="border: none; background: none;">
+                    <a  class="show-details" data-id="${row.id}" style="border: none; background: none;">
                         <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"></i>
+                    </a>
+                    <a   data-id="${row.id}" style="border: none; background: none;">
+                        <i class="bi bi-trash" style="font-size: 1.3rem; color: #000000;"></i>
                     </a>
                 `,
           },

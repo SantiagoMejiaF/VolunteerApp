@@ -56,6 +56,12 @@
                                                 onmouseover="this.style.color='#186dde';"
                                                 onmouseout="this.style.color='#80777c';"></i>
                                         </a>
+                                        <a  style="border: none; background: none;">
+                                            <i class="bi bi-trash" style="font-size: 1.3rem; color: #000000;"
+                                                onmouseover="this.style.color='#186dde';"
+                                                onmouseout="this.style.color='#80777c';"></i>
+                                        </a>
+                                        
                                     </td>
                                 </tr>
                             </tbody>
@@ -68,7 +74,7 @@
 
     <!-- Usar `ng-template` para mostrar el componente `app-detalles-a` cuando showCalendar sea false -->
     <ng-template #detalles>
-        <app-detalles-a *ngIf="selectedActivity" [activity]="selectedActivity" [iconType]="'back'"></app-detalles-a>
+        <app-detalles-a *ngIf="selectedActivity" [activity]="selectedActivity" [iconType]="'back'" (back)="onComeBack()"></app-detalles-a>
     </ng-template>
 </div>
 

@@ -31,6 +31,7 @@ export class MisionesComponent implements OnInit {
     requiredInterestsList: []
   };
   showAlert = false;
+  showAlert2 = false;
 
   constructor(private router: Router, private missionsService: MissionsService) { }
 
@@ -241,6 +242,8 @@ export class MisionesComponent implements OnInit {
 
     const confirmDelete = confirm('¿Estás seguro de que deseas cancelar esta misión?');
     if (confirmDelete) {
+      this.showAlert2 = true;
+      setTimeout(() => (this.showAlert2 = false), 3000);
       this.missionsService.removeMission(missionId).subscribe(
         (response) => {
           console.log('Misión eliminada:', response);  // Verifica si la respuesta es correcta

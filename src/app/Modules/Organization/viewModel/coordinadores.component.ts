@@ -17,6 +17,8 @@ export class CoordinadoresComponent implements OnInit {
   showAlert = false;
   showAlert2 = false;
   showAlert3 = false;
+  showAlert4 = false;
+  showAlert5 = false;
   constructor(
     private organizationService: OrganizationService,
     private oauthService: OauthService,
@@ -112,16 +114,19 @@ export class CoordinadoresComponent implements OnInit {
           console.log('Coordinator created:', response);
           this.closeModal();
           this.showAlert = true;
+          setTimeout(() => (this.showAlert = false), 3000);
 
         },
         (error) => {
           this.closeModal();
           console.error('Error creating coordinator:', error);
           this.showAlert2 = true;
+          setTimeout(() => (this.showAlert2= false), 3000);
         }
       );
     } else {
       this.showAlert3 = true;
+      setTimeout(() => (this.showAlert3 = false), 3000);
     }
   }
 
@@ -171,11 +176,13 @@ export class CoordinadoresComponent implements OnInit {
         (response) => {
           console.log('Coordinador eliminado:', response);
           this.loadCoordinators(); // Recargar la lista de coordinadores
-          this.showAlert = true;
+          this.showAlert4 = true;
+          setTimeout(() => (this.showAlert4 = false), 3000);
         },
         (error) => {
           console.error('Error deleting coordinator:', error);
-          this.showAlert2 = true;
+          this.showAlert5 = true;
+          setTimeout(() => (this.showAlert5 = false), 3000);
         }
       );
     }
