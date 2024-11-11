@@ -111,17 +111,17 @@ export class CoordinadoresComponent implements OnInit {
         (response) => {
           console.log('Coordinator created:', response);
           this.closeModal();
-          this.showAlert=true;
+          this.showAlert = true;
 
         },
         (error) => {
           this.closeModal();
           console.error('Error creating coordinator:', error);
-          this.showAlert2=true;
+          this.showAlert2 = true;
         }
       );
     } else {
-      this.showAlert3=true;
+      this.showAlert3 = true;
     }
   }
 
@@ -161,6 +161,23 @@ export class CoordinadoresComponent implements OnInit {
       modalInstance.hide();
       const backdrops = document.querySelectorAll('.modal-backdrop');
       backdrops.forEach((backdrop) => backdrop.remove());
+    }
+  }
+
+  deleteCoordinator(coordinatorId: number): void {
+    const confirmDelete = confirm('¿Estás seguro de que deseas eliminar a este coordinador?');
+    if (confirmDelete) {
+      this.organizationService.removeActivityCoordinator(coordinatorId).subscribe(
+        (response) => {
+          console.log('Coordinador eliminado:', response);
+          this.loadCoordinators(); // Recargar la lista de coordinadores
+          this.showAlert = true;
+        },
+        (error) => {
+          console.error('Error deleting coordinator:', error);
+          this.showAlert2 = true;
+        }
+      );
     }
   }
 }
