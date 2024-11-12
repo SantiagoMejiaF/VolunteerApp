@@ -28,7 +28,7 @@ public class MissionService {
 
     private final MissionRepository missionRepository;
     private final OrganizationService organizationService;
-    private final ActivityService activityService;
+    private final ActivityService activityService; // ajuste
 
     public MissionEntity save(MissionEntity mission) {
         if (organizationService.getOrganizationById(mission.getOrganizationId()).isEmpty()) {
