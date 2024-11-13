@@ -44,9 +44,10 @@ export class PerfilCComponent implements OnInit {
 
   ) {
     this.myForm = this.fb.group({
+      firstName: [''], // Agrega este control
+      lastName: [''],  // Agrega este control
       cell: [''],
       email: [''],
-
     });
 
 

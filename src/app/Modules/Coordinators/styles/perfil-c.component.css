@@ -15,27 +15,32 @@ textarea {
   font-family: "Quicksand", sans-serif;
 }
 
-h2  {
+h2 {
   font-weight: 600;
   font-size: 20px;
 }
-a{
-    font-weight: 400;
-    font-size: 16px;
-  }
+
+a {
+  font-weight: 400;
+  font-size: 16px;
+}
+
 p {
   font-weight: 400;
   font-size: 14px;
 }
+
 h4 {
   font-weight: 500;
   font-size: 18px;
   color: #949494;
 }
-h6{
-    font-weight: 700;
-    font-size: 15px;
+
+h6 {
+  font-weight: 700;
+  font-size: 15px;
 }
+
 .column1 img {
   width: 120px;
   height: auto !important;
@@ -43,14 +48,19 @@ h6{
 
 .column1,
 .column2 {
-  background-color: white; /* Fondo blanco */
-  border-radius: 20px; /* Bordes redondeados */
-  padding: 20px; /* Espaciado interno */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  background-color: white;
+  /* Fondo blanco */
+  border-radius: 20px;
+  /* Bordes redondeados */
+  padding: 20px;
+  /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Sombra para darle profundidad */
   margin-bottom: 20px;
 }
-.profile {
-}
+
+.profile {}
+
 /* Start: Estilo para los enlaces de navegación */
 .nav-link {
   border-radius: 10px;
@@ -63,7 +73,8 @@ h6{
 }
 
 /* Cuando el enlace está activo, cambia el color */
-.nav-link.active-link, .nav-link.active-link i {
+.nav-link.active-link,
+.nav-link.active-link i {
   color: #fb9778;
 }
 
@@ -78,100 +89,114 @@ h6{
   background-color: #fb9778;
   border-radius: 5px;
 }
-#misionimg{
+
+#misionimg {
   width: 135px;
   height: 135px;
   border-radius: 50%;
 
 }
+
 p {
-    font-family: "Quicksand", sans-serif;
-    font-weight: regular;
-    font-size: 20px;
-    color: #ffffff;
+  font-family: "Quicksand", sans-serif;
+  font-weight: regular;
+  font-size: 20px;
+  color: #ffffff;
 }
-.datos h6{
-    color: #b7c0c7;
-    font-weight: 500;
+
+.datos h6 {
+  color: #b7c0c7;
+  font-weight: 500;
 }
-.datos p{
-    color: #000;
-    font-size: 14px;
+
+.datos p {
+  color: #000;
+  font-size: 14px;
 }
 
 #nor {
-    padding: 10px;
-    width: 100%;
-    font-size: 17px;
-    font-family: "Quicksand", sans-serif;
-    border: 1px solid #c6c6c6;
-    border-radius: 10px;
-    -webkit-appearance: none;
-    transition: border-color 0.3s ease; /* Añade una transición suave */
+  padding: 10px;
+  width: 100%;
+  font-size: 17px;
+  font-family: "Quicksand", sans-serif;
+  border: 1px solid #c6c6c6;
+  border-radius: 10px;
+  -webkit-appearance: none;
+  transition: border-color 0.3s ease;
+  /* Añade una transición suave */
 }
 
 #nor:focus {
-    border-color: #186dde; 
-    outline: none; 
+  border-color: #186dde;
+  outline: none;
 }
 
 ng-multiselect-dropdown {
-    width: 100%;
-    font-size: 17px;
-    font-family: "Quicksand", sans-serif;
-    display: block;
+  width: 100%;
+  font-size: 17px;
+  font-family: "Quicksand", sans-serif;
+  display: block;
 }
 
 .btn-secondary {
-    font-family: "Quicksand", sans-serif;
-    background-color:#fb9778;
-    border: 2px; 
-    padding: 8px 15px;
-    color: white;
-    font-size: 14px;
-    border-radius: 8px;
-    transition: background-color 0.1s, color 0.3s, border-color 0.3s;
-    margin-top: 10px;
-    margin-left: 12px;
-    font-weight: 500;
-  }
-  
+  font-family: "Quicksand", sans-serif;
+  background-color: #fb9778;
+  border: 2px;
+  padding: 8px 15px;
+  color: white;
+  font-size: 14px;
+  border-radius: 8px;
+  transition: background-color 0.1s, color 0.3s, border-color 0.3s;
+  margin-top: 10px;
+  margin-left: 12px;
+  font-weight: 500;
+}
 
-  
-  
 
-  .award-container {
-    display: flex; /* Alinea los elementos en una fila */
-    align-items: center; /* Alinea verticalmente los elementos en el centro */
-    justify-content: center; /* Centra los elementos horizontalmente */
-    gap: 8px; /* Espacio entre el ícono y el número */
-    margin-top: 10px; /* Espacio encima del contenedor, ajusta según sea necesario */
-    transition: color 0.3s ease; /* Suaviza el cambio de color del texto e ícono */
+
+
+
+.award-container {
+  display: flex;
+  /* Alinea los elementos en una fila */
+  align-items: center;
+  /* Alinea verticalmente los elementos en el centro */
+  justify-content: center;
+  /* Centra los elementos horizontalmente */
+  gap: 8px;
+  /* Espacio entre el ícono y el número */
+  margin-top: 10px;
+  /* Espacio encima del contenedor, ajusta según sea necesario */
+  transition: color 0.3s ease;
+  /* Suaviza el cambio de color del texto e ícono */
 }
 
 .award-container:hover {
-    color: blue; /* Cambia el color del texto e ícono al pasar el mouse */
+  color: blue;
+  /* Cambia el color del texto e ícono al pasar el mouse */
 }
 
 .award-container i {
-    font-size: 24px; /* Tamaño del ícono */
+  font-size: 24px;
+  /* Tamaño del ícono */
 }
 
 .award-container h4 {
-    margin: 0; 
+  margin: 0;
 }
+
 @media (max-width: 768px) {
   .head {
     flex-direction: column;
     align-items: flex-start;
   }
 
- 
+
   #misionimg {
     text-align: center;
   }
 
   .ml-3 {
-    margin-left: 0 !important; 
+    margin-left: 0 !important;
   }
 }
