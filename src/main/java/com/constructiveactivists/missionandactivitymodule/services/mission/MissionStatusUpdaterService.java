@@ -23,13 +23,14 @@ public class MissionStatusUpdaterService {
     @Scheduled(fixedRate = 60000)
     public void updateMissionStatus() {
         missionRepository.findByMissionStatus(MissionStatusEnum.DISPONIBLE).stream()
-                .filter(mission -> allActivitiesCompleted(mission.getId()))
                 .forEach(mission -> {
-                    MissionStatusEnum newStatus = LocalDate.now().isAfter(mission.getEndDate())
-                            ? MissionStatusEnum.NO_CUMPLIDA
-                            : MissionStatusEnum.COMPLETADA;
-                    mission.setMissionStatus(newStatus);
-                    missionRepository.save(mission);
+                    if (LocalDate.now().isAfter(mission.getEndDate())) {
+                        MissionStatusEnum newStatus = allActivitiesCompleted(mission.getId())
+                                ? MissionStatusEnum.COMPLETADA
+                                : MissionStatusEnum.NO_CUMPLIDA;
+                        mission.setMissionStatus(newStatus);
+                        missionRepository.save(mission);
+                    }
                 });
     }
     private boolean allActivitiesCompleted(Integer missionId) {
