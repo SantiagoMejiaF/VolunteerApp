@@ -7,7 +7,14 @@
     style="background-color: #dc6060; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
     La actividad no pudo ser creada.
 </div>
-
+<div *ngIf="showAlert3" class="alert alert-info fade show" role="alert"
+    style="background-color: #68997d; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+    Actividad eliminada exitosamente.
+</div>
+<div *ngIf="showAlert4" class="alert alert-info fade show" role="alert"
+    style="background-color: #dc6060; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+    La actividad no pudo ser eliminada.
+</div>
 
 <div class="container mt-5">
 
@@ -56,6 +63,12 @@
                                                 onmouseover="this.style.color='#186dde';"
                                                 onmouseout="this.style.color='#80777c';"></i>
                                         </a>
+                                        <a style="border: none; background: none;">
+                                            <i class="bi bi-trash" style="font-size: 1.3rem; color: #000000;"
+                                                onmouseover="this.style.color='#186dde';"
+                                                onmouseout="this.style.color='#80777c';"></i>
+                                        </a>
+
                                     </td>
                                 </tr>
                             </tbody>
@@ -68,7 +81,8 @@
 
     <!-- Usar `ng-template` para mostrar el componente `app-detalles-a` cuando showCalendar sea false -->
     <ng-template #detalles>
-        <app-detalles-a *ngIf="selectedActivity" [activity]="selectedActivity" [iconType]="'back'"></app-detalles-a>
+        <app-detalles-a *ngIf="selectedActivity" [activity]="selectedActivity" [iconType]="'back'"
+            (back)="onComeBack()"></app-detalles-a>
     </ng-template>
 </div>
 

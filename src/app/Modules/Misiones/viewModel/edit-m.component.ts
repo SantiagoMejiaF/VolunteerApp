@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Mission } from '../model/mission.model';
+import { MissionsService } from '../model/services/mission.service';
 
 @Component({
   selector: 'app-edit-m',
@@ -9,6 +10,7 @@ import { Mission } from '../model/mission.model';
 export class EditMComponent implements OnInit {
   @Input() mission: Mission | null = null; // Recibimos la misión desde el padre
   @Output() cancel = new EventEmitter<void>();
+  @Output() missionUpdated = new EventEmitter<void>();
 
   missionType = '';
   title = '';
@@ -19,6 +21,10 @@ export class EditMComponent implements OnInit {
   volunteerRequirements: string[] = [];
   requiredSkills: string[] = [];
   visibility = false;
+  showAlert = false;
+  showAlert2 = false;
+
+  constructor(private missionsService: MissionsService) { }
 
   ngOnInit(): void {
     if (this.mission) {
@@ -40,19 +46,38 @@ export class EditMComponent implements OnInit {
 
   // Aquí iría la lógica para actualizar la misión en el backend
   onSubmit() {
-    const updatedMission = {
-      missionType: this.missionType,
-      title: this.title,
-      description: this.description,
-      startDate: this.startDate,
-      endDate: this.endDate,
-      department: this.department,
-      volunteerMissionRequirementsEnumList: this.volunteerRequirements,
-      requiredSkillsList: this.requiredSkills,
-      visibility: this.visibility ? 'PUBLICA' : 'PRIVADA'
-    };
+    if (this.mission && this.mission.id !== undefined) {
+      const updatedMission = {
+        missionType: this.missionType,
+        title: this.title,
+        description: this.description,
+        startDate: this.startDate,
+        endDate: this.endDate,
+        department: this.department,
+        volunteerMissionRequirementsEnumList: this.volunteerRequirements,
+        requiredSkillsList: this.requiredSkills,
+        visibility: this.visibility ? 'PUBLICA' : 'PRIVADA'
+      };
 
-    // Aquí puedes emitir un evento o llamar un servicio para actualizar la misión en el servidor.
-    console.log('Misión actualizada:', updatedMission);
+      // Llamamos al servicio para actualizar la misión
+      this.missionsService.updateMission(this.mission.id, updatedMission).subscribe(
+        (response) => {
+          console.log('Misión actualizada con éxito:', response);
+          this.showAlert=true;
+          setTimeout(() => (this.showAlert = false), 3000);
+          this.missionUpdated.emit();
+          // Aquí puedes manejar la respuesta si es necesario, por ejemplo, redirigir a otra página
+        },
+        (error) => {
+          console.error('Error al actualizar la misión:', error);
+          this.showAlert2=true;
+          setTimeout(() => (this.showAlert2 = false), 3000);
+        }
+      );
+    } else {
+      console.error('La misión no tiene un ID válido');
+      this.showAlert2=true;
+          setTimeout(() => (this.showAlert2 = false), 3000);
+    }
   }
 }

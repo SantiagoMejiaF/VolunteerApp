@@ -65,4 +65,16 @@ export class MissionsService {
         return this.http.post(`${this.apiUrl}/volunteers/${volunteerId}/activities/${activityId}/signup`, {}, { responseType: 'text' });
     }
 
+    removeMission(missionId: number): Observable<any> {
+        console.log('Eliminando misión con ID:', missionId); // Verifica si el id se pasa correctamente
+        return this.http.delete<any>(`${this.apiUrl}/missions/${missionId}`);
+    }
+
+    updateMission(missionId: number, mission: any): Observable<Mission> {
+        return this.http.put<Mission>(`${this.apiUrl}/missions/${missionId}`, mission);
+    }
+
+    updateActivity(activityId: number, activity: any): Observable<any> {
+        return this.http.put<any>(`${this.apiUrl}/activities/${activityId}`, activity);
+    }
 }

@@ -4,11 +4,12 @@ import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { AdminService } from '../../AdminUser/model/services/admin.service';
+import { ActivityService } from '../model/services/activity.service';
 
 @Component({
   selector: 'app-perfil-c',
   templateUrl: '../view/perfil-c.component.html',
-  styleUrl: '../styles/perfil-c.component.css'
+  styleUrl: '../styles/perfil-c.component.css',
 })
 export class PerfilCComponent implements OnInit {
   currentContent: string = 'content1';
@@ -19,6 +20,8 @@ export class PerfilCComponent implements OnInit {
   volunteerId: number = 0;
   image: any;
   phoneNumber: string = '';
+  showAlert = false;
+  showAlert2 = false;
 
   showContent(contentId: string) {
     this.currentContent = contentId;
@@ -29,19 +32,26 @@ export class PerfilCComponent implements OnInit {
   ngOnInit() {
     this.loadUserInfo();
     this.loadCoordinatorDetails();
+
+    this.myForm.setValue({
+      firstName: this.firstName,
+      lastName: this.lastName,
+      cell: this.phoneNumber,
+      email: this.email,
+    });
   }
 
   constructor(
-    private fb: FormBuilder, private adminService: AdminService
-
+    private fb: FormBuilder,
+    private adminService: AdminService,
+    private activityService: ActivityService
   ) {
     this.myForm = this.fb.group({
+      firstName: [''], // Agrega este control
+      lastName: [''], // Agrega este control
       cell: [''],
       email: [''],
-
     });
-
-
   }
 
   loadUserInfo() {
@@ -66,7 +76,47 @@ export class PerfilCComponent implements OnInit {
     );
   }
 
-  onSubmit(): void { }
+  onSubmit(): void {
+    if (this.myForm.valid) {
+      // Crear un objeto con los valores actuales o del formulario, si se han modificado
+      const updatedData = {
+        firstName: this.myForm.value.firstName || this.firstName,
+        lastName: this.myForm.value.lastName || this.lastName,
+        phone: this.myForm.value.cell || this.phoneNumber,
+      };
+
+      // Obtener el coordinatorId del localStorage
+      const coordinatorId = localStorage.getItem('coordinatorId');
+      if (coordinatorId) {
+        this.activityService
+          .updateCoordinatorDetails(parseInt(coordinatorId), updatedData)
+          .subscribe(
+            (response) => {
+              console.log('Datos actualizados:', response);
+              this.showAlert = true;
+              setTimeout(() => (this.showAlert = false), 3000);
+              // Actualizar la información en el componente después de la actualización
+              this.firstName = updatedData.firstName;
+              this.lastName = updatedData.lastName;
+              this.phoneNumber = updatedData.phone;
+            },
+            (error) => {
+              console.error('Error al actualizar los datos:', error);
+              this.showAlert2 = true;
+              setTimeout(() => (this.showAlert2 = false), 3000);
+            }
+          );
+      } else {
+        console.error('No se encontró el coordinatorId en localStorage');
+        this.showAlert2 = true;
+        setTimeout(() => (this.showAlert2 = false), 3000);
+      }
+    } else {
+      this.showAlert2 = true;
+      setTimeout(() => (this.showAlert2 = false), 3000);
+    }
+  }
+
   currentStep: number = 1;
   showCalendar: boolean = true;
   missionForm: FormGroup;
@@ -84,21 +134,21 @@ export class PerfilCComponent implements OnInit {
         start: '2024-09-17',
         end: '2024-09-17T11:30:00',
         extendedProps: {
-          department: 'BioChemistry'
+          department: 'BioChemistry',
         },
-        description: 'Lecture'
-      }
+        description: 'Lecture',
+      },
     ],
     headerToolbar: {
       left: 'prev,next',
       center: 'title',
-      right: ''
+      right: '',
     },
     views: {
       dayGridMonth: {
         buttonText: 'Mes',
-        dayHeaderFormat: { weekday: 'short' }
-      }
+        dayHeaderFormat: { weekday: 'short' },
+      },
     },
     height: 'auto',
 
@@ -110,13 +160,13 @@ export class PerfilCComponent implements OnInit {
         this.calendarOptions.headerToolbar = {
           left: 'prev,next',
           center: 'title',
-          right: ''
+          right: '',
         };
         this.calendarOptions.views = {
           dayGridMonth: {
             buttonText: 'Mes',
-            dayHeaderFormat: { weekday: 'narrow' }
-          }
+            dayHeaderFormat: { weekday: 'narrow' },
+          },
         };
         this.calendarOptions.contentHeight = 'auto';
       } else {
@@ -125,17 +175,17 @@ export class PerfilCComponent implements OnInit {
         this.calendarOptions.headerToolbar = {
           left: 'prev,next',
           center: 'title',
-          right: ''
+          right: '',
         };
         this.calendarOptions.views = {
           dayGridMonth: {
             buttonText: 'Mes',
-            dayHeaderFormat: { weekday: 'short' }
-          }
+            dayHeaderFormat: { weekday: 'short' },
+          },
         };
         this.calendarOptions.contentHeight = 600;
       }
-    }
+    },
   };
 
   ngAfterViewInit() {
@@ -144,7 +194,9 @@ export class PerfilCComponent implements OnInit {
   }
 
   adjustButtonSizes(size: 'small' | 'normal') {
-    const buttons = document.querySelectorAll('.fc-prev-button, .fc-next-button');
+    const buttons = document.querySelectorAll(
+      '.fc-prev-button, .fc-next-button'
+    );
     buttons.forEach((button) => {
       const htmlButton = button as HTMLElement;
       if (size === 'small') {
@@ -172,7 +224,6 @@ export class PerfilCComponent implements OnInit {
     });
   }
 
-
   adjustTitleSize(size: 'small' | 'normal') {
     const title = document.querySelector('.fc-toolbar-title') as HTMLElement;
     if (title) {
@@ -197,11 +248,10 @@ export class PerfilCComponent implements OnInit {
   }
   // Manejador para el evento "Back" emitido desde el componente `app-detalles-a`
   handleBack() {
-    this.showCalendar = true;  // Volver a mostrar el calendario
+    this.showCalendar = true; // Volver a mostrar el calendario
     setTimeout(() => {
       this.adjustButtonSizes('normal');
       this.applyWeekdayHeaderStyles();
-    }, 0);  // Asegurarse de que las personalizaciones se apliquen después de que el calendario se renderice
+    }, 0); // Asegurarse de que las personalizaciones se apliquen después de que el calendario se renderice
   }
-
 }

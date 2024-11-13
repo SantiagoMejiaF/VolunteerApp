@@ -1,3 +1,11 @@
+<div *ngIf="showAlert" class="alert alert-info fade show" role="alert"
+    style="background-color: #68997d; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+    Perfil editado exitosamente.
+</div>
+<div *ngIf="showAlert2" class="alert alert-info fade show" role="alert"
+    style="background-color: #dc6060; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+    El perfil no pudo ser editado.
+</div>
 <div class="container">
     <div class="row">
         <div class="col">
@@ -43,11 +51,15 @@
                         <!-- Datos Personales -->
                         <div class="tab ml-3" [formGroup]="myForm">
                             <h6>Digita tu nombre</h6>
-                            <p><input id="nor" placeholder="{{ firstName }} {{ lastName }}" formControlName="email"
+                            <p><input id="nor" placeholder="{{ firstName }}" formControlName="firstName"
+                                    oninput="this.className = ''"></p>
+                            <h6>Digita tu apellido</h6>
+                            <p><input id="nor" placeholder="{{ lastName }}" formControlName="lastName"
                                     oninput="this.className = ''"></p>
                             <h6>Digita tu número celular</h6>
                             <p><input id="nor" placeholder="{{ phoneNumber }}" formControlName="cell"
                                     oninput="this.className = ''"></p>
+
                         </div>
                     </form>
                     <button class="btn-secondary" (click)="onSubmit()">Actualizar datos</button>

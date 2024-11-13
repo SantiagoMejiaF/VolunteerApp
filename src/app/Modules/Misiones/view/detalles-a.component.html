@@ -56,7 +56,7 @@
                         <div class="row mb-3">
                             <div class="col d-flex justify-content-end">
                                 <button class="editar" (click)="toggleEdit()">
-                                    <i class="bi bi-pencil"></i> Editar
+                                    <i class="bi bi-pencil"></i> 
                                 </button>
                                 <button class="editar1" (click)="onComeBack()">
                                     <i class="bi"
@@ -68,7 +68,7 @@
                 </div>
 
                 <!-- Formulario de edición (Opcional) -->
-                <app-edit-a *ngIf="isEditing"></app-edit-a>
+                <app-edit-a *ngIf="isEditing" [activity]="activity" (cancel)="onCancelEdit()"></app-edit-a>
             </div>
         </div>
 

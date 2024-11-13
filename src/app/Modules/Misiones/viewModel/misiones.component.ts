@@ -10,6 +10,7 @@ import { Mission } from '../model/mission.model';
 })
 export class MisionesComponent implements OnInit {
   selectedMission: any = {};
+  isEventBound: boolean = false;
   data: Mission[] = [];
   dataTable: any;  // Variable para manejar la tabla
   tableInitialized = false; // Bandera para saber si la tabla ya ha sido inicializada
@@ -30,6 +31,7 @@ export class MisionesComponent implements OnInit {
     requiredInterestsList: []
   };
   showAlert = false;
+  showAlert2 = false;
 
   constructor(private router: Router, private missionsService: MissionsService) { }
 
@@ -124,11 +126,10 @@ export class MisionesComponent implements OnInit {
                       onmouseover="this.style.color='#186dde';"
                       onmouseout="this.style.color='#80777c';"></i>
                 </a>
-                <button style="border: none; background: none;">
-                  <i class="bi bi-trash3" style="font-size: 1.1rem; color: #000000;"
-                      onmouseover="this.style.color='#186dde';"
-                      onmouseout="this.style.color='#80777c';"></i>
-                </button>
+                <button class="delete-btn" style="border: none; background: none;" data-id="${row.id}">
+                <i class="bi bi-trash3" style="font-size: 1.1rem; color: #000000;" 
+                    onmouseover="this.style.color='#186dde';" onmouseout="this.style.color='#80777c';"></i>
+              </button>
               `;
             }
           }
@@ -142,6 +143,16 @@ export class MisionesComponent implements OnInit {
           zeroRecords: '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
         }
       });
+      if (!this.isEventBound) {
+        // Delegación del evento de eliminación
+        $('#datatableMisiones').on('click', '.delete-btn', (event) => {
+          event.stopPropagation();  // Evita que el evento se propague
+          const missionId = $(event.target).closest('button').data('id'); // Obtener el ID de la misión
+          console.log('ID de la misión a eliminar:', missionId);  // Verifica si el ID se obtiene correctamente
+          this.deleteMission(missionId);  // Llamar a deleteMission con el ID
+        });
+        this.isEventBound = true;  // Marca que el evento ya está agregado
+      }
     }, 1);
   }
 
@@ -221,6 +232,29 @@ export class MisionesComponent implements OnInit {
     );
   }
 
+  deleteMission(missionId: number): void {
+    console.log('Método deleteMission llamado con ID:', missionId);  // Esto debería aparecer en la consola
+
+    if (missionId === undefined) {
+      console.error('El ID de la misión es inválido');
+      return;
+    }
+
+    const confirmDelete = confirm('¿Estás seguro de que deseas cancelar esta misión?');
+    if (confirmDelete) {
+      this.showAlert2 = true;
+      setTimeout(() => (this.showAlert2 = false), 3000);
+      this.missionsService.removeMission(missionId).subscribe(
+        (response) => {
+          console.log('Misión eliminada:', response);  // Verifica si la respuesta es correcta
+          this.loadMissions(parseInt(localStorage.getItem('OrgId') || '0')); // Recargar las misiones
+        },
+        (error) => {
+          console.error('Error al eliminar la misión:', error);
+        }
+      );
+    }
+  }
 
 
   openModal(event: Event): void {

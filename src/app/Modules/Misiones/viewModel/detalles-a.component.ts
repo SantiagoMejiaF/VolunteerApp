@@ -40,6 +40,7 @@ export class DetallesAComponent {
   @Input() iconType: 'calendar' | 'back' = 'calendar'; // Tipo de ícono que se muestra
   currentContent: string = 'content1';
   isEditing = false;
+  @Output() back = new EventEmitter<void>();
 
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: ChartOptions;
@@ -167,10 +168,15 @@ export class DetallesAComponent {
 
   onComeBack() {
     console.log('Back button clicked'); // Simplemente para depuración
+    this.back.emit();
   }
 
   ngOnChanges() {
     console.log('Activity:', this.activity);
   }
+  onCancelEdit() {
+    this.isEditing = false;
+  }
+  
 
 }

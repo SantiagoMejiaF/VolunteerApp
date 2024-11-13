@@ -26,6 +26,8 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
   public activities: any[] = [];
   showAlert = false;
   showAlert2 = false;
+  showAlert3 = false;
+  showAlert4 = false;
   startTimes: string[] = [];
   endTimes: string[] = [];
 
@@ -237,6 +239,25 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
     }
   }
 
+  deleteActivity(activityId: number): void {
+    if (confirm('¿Estás seguro de que deseas cancelar esta actividad?')) {
+      this.organizationService.removeActivity(activityId).subscribe(
+        () => {
+          console.log('Actividad cancelada con éxito');
+          this.showAlert3 = true;
+          setTimeout(() => (this.showAlert3 = false), 3000);
+          this.refreshActivities(); // Refrescar la lista de actividades después de la eliminación
+        },
+        (error) => {
+          console.error('Error al cancelar la actividad:', error);
+          this.showAlert4 = true;
+          setTimeout(() => (this.showAlert4 = false), 3000);
+        }
+      );
+    }
+  }
+
+
   openModal(event: Event): void {
     event.preventDefault();
     const modalElement = document.getElementById('VolunteerModal');
@@ -342,9 +363,9 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
     this.isEditing = !this.isEditing;
   }
 
-  handleBack2() {
+  onComeBack() {
     this.showCalendar = true;
-    this.selectedActivity = null;
+    this.initializeDataTable();
   }
 
   // Métodos para avanzar y retroceder entre los pasos del formulario
@@ -408,10 +429,13 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
             data: null,
             title: 'Acción',
             render: (data, type, row) => `
-                    <a href="#" class="show-details" data-id="${row.id}" style="border: none; background: none;">
-                        <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"></i>
-                    </a>
-                `,
+              <a class="show-details" data-id="${row.id}" style="border: none; background: none;">
+                <i class="bi bi-eye" style="font-size: 1.3rem; color: #000000;"></i>
+              </a>
+              <a class="delete-activity" data-id="${row.id}" style="border: none; background: none;">
+                <i class="bi bi-trash" style="font-size: 1.3rem; color: #000000;"></i>
+              </a>
+            `,
           },
         ],
         pagingType: 'full_numbers',
@@ -422,22 +446,25 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
         language: {
           info: '<span style="font-size: 0.875rem;">Mostrar página _PAGE_ de _PAGES_</span>',
           search: '<span style="font-size: 0.875rem;">Buscar</span>',
-          infoEmpty:
-            '<span style="font-size: 0.875rem;">No hay registros</span>',
-          infoFiltered:
-            '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
-          lengthMenu:
-            '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
-          zeroRecords:
-            '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
+          infoEmpty: '<span style="font-size: 0.875rem;">No hay registros</span>',
+          infoFiltered: '<span style="font-size: 0.875rem;">(Filtrado de _MAX_ registros)</span>',
+          lengthMenu: '<span style="font-size: 0.875rem;">_MENU_ registros por página</span>',
+          zeroRecords: '<span style="font-size: 0.875rem;">No se encuentra - perdón</span>',
         },
       });
 
-      // Delegación de eventos para el botón de mostrar
+      // Delegación de eventos para el botón de mostrar detalles
       $('#datatableActividadesO').on('click', '.show-details', (event) => {
         event.preventDefault();
         const activityId = $(event.currentTarget).data('id'); // Obtener el ID de la actividad
         this.mostrar(activityId); // Llamar al método mostrar con el ID
+      });
+
+      // Delegación de eventos para el botón de cancelar
+      $('#datatableActividadesO').on('click', '.delete-activity', (event) => {
+        event.preventDefault();
+        const activityId = $(event.currentTarget).data('id'); // Obtener el ID de la actividad
+        this.deleteActivity(activityId); // Llamar al método deleteActivity con el ID
       });
     }, 1);
   }

@@ -101,4 +101,9 @@ export class VolunteerService {
     const url = `${this.apiUrl}/organizations/approve-volunteer?volunteerId=${volunteerId}&organizationId=${organizationId}&approved=${approved}`;
     return this.http.post<any>(url, {}, cabecera); // Se hace la solicitud POST al servidor
   }
+
+  removeActivity(volunteerId: number, activityId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/volunteers/${volunteerId}/activities/${activityId}/remove`, { responseType: 'text' as 'json' });
+  }
+
 }

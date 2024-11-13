@@ -1,6 +1,10 @@
-<div *ngIf="showAlert" class="alert alert-info fade show" role="alert" 
-     style="background-color: #68997d; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
-  Misión creada exitosamente.
+<div *ngIf="showAlert" class="alert alert-info fade show" role="alert"
+    style="background-color: #68997d; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+    Misión creada exitosamente.
+</div>
+<div *ngIf="showAlert2" class="alert alert-info fade show" role="alert"
+    style="background-color: #68997d; color: #ffffff; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: auto; max-width: 300px; text-align: center; border-radius: 8px;">
+    Misión eliminada exitosamente.
 </div>
 <div class="container ">
     <div class="row">
@@ -51,6 +55,7 @@
                                         onmouseover="this.style.color='#186dde';"
                                         onmouseout="this.style.color='#000000';" title="Eliminar"></i>
                                 </button>
+
                             </td>
                         </tr>
                     </tbody>
@@ -137,9 +142,10 @@
                     </div>
                     <div class="mb-3">
                         <label for="requiredInterestsList">Intereses </label>
-                        <select id="requiredInterestsList" [(ngModel)]="newMission.requiredInterestsList" name="requiredInterestsList"
-                            class="form-select" multiple>
-                            <option *ngFor="let interest of requiredInterestsList" [value]="interest">{{ interest }}</option>
+                        <select id="requiredInterestsList" [(ngModel)]="newMission.requiredInterestsList"
+                            name="requiredInterestsList" class="form-select" multiple>
+                            <option *ngFor="let interest of requiredInterestsList" [value]="interest">{{ interest }}
+                            </option>
                         </select>
                     </div>
                     <!-- Visibilidad -->
@@ -148,7 +154,7 @@
                             [(ngModel)]="newMission.visibility" name="visibility" checked>
                         <label class="form-check-label" for="visibility">Visible al público</label>
                     </div>
-                    
+
                     <!-- Botón de Envío -->
                     <button type="submit" class="btn custom-button">
                         Crear Misión

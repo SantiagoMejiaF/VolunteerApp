@@ -42,11 +42,3 @@ h2 {
   /* Sombra para darle profundidad */
   margin-bottom: 20px;
 }
-
-#datatableActividadesO td,
-#datatableActividadesO th {
-  table-layout: fixed;
-  /* Fija el diseño de la tabla */
-  overflow: hidden;
-  /* Evita que el contenido modifique el ancho */
-}

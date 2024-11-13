@@ -52,4 +52,8 @@ export class ActivityService {
     return this.http.get<any[]>(`${this.apiUrl}/volunteers-dashboard/volunteers-by-activity/${activityId}`, cabecera);
   }
 
+  updateCoordinatorDetails(coordinatorId: number, data: any): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/activity-coordinators/${coordinatorId}`, data, cabecera);
+  }
+
 }

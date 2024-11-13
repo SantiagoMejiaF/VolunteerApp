@@ -118,4 +118,12 @@ export class OrganizationService {
     return this.http.get<any[]>(`${this.apiUrl}/volunteers-organizations/recent/list/accepted/${orgId}`);
   }
 
+  removeActivityCoordinator(coordinatorId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/activity-coordinators/${coordinatorId}`, cabecera);
+  }
+
+  removeActivity(activityId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/activities/${activityId}`);
+  }
+
 }

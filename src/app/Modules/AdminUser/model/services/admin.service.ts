@@ -46,6 +46,6 @@ export class AdminService {
   }
 
   public getNotifications(userId: number): Observable<any[]> {
-    return this.httpClient.get<any[]>(`${this.apiUrl}/notifications/${userId}`, cabecera);
+    return this.httpClient.get<any[]>(`${this.apiUrl}/notifications/recent/${userId}`, cabecera);
   }
 }
