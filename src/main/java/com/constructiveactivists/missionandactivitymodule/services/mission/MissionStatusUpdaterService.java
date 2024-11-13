@@ -22,7 +22,7 @@ public class MissionStatusUpdaterService {
     @Transactional
     @Scheduled(fixedRate = 60000)
     public void updateMissionStatus() {
-        missionRepository.findByMissionStatus(MissionStatusEnum.EN_CURSO).stream()
+        missionRepository.findByMissionStatus(MissionStatusEnum.DISPONIBLE).stream()
                 .filter(mission -> allActivitiesCompleted(mission.getId()))
                 .forEach(mission -> {
                     MissionStatusEnum newStatus = LocalDate.now().isAfter(mission.getEndDate())
