@@ -85,9 +85,8 @@ public interface ActivityCoordinatorAPI {
             @ApiResponse(responseCode = "200", description = "Información actualizada exitosamente"),
             @ApiResponse(responseCode = "404", description = "Coordinador o usuario no encontrado")
     })
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     ResponseEntity<ActivityCoordinatorEntity> updateActivityCoordinator(
             @PathVariable Integer id,
             @RequestBody @Valid ActivityCoordinatorUpdateRequest request);
-
 }
