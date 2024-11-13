@@ -225,4 +225,10 @@ public class ActivityService {
 
         return activityRepository.save(existingActivity);
     }
+
+    public boolean hasVolunteers(Integer volunteerGroupId) {
+        return groupRepository.findById(volunteerGroupId)
+                .map(group -> !group.getMemberships().isEmpty())
+                .orElse(false);
+    }
 }

@@ -20,6 +20,8 @@ public class ActivityStatusService {
 
     private ActivityCoordinatorRepository activityCoordinatorRepository;
 
+    private ActivityService activityService;
+
     @Scheduled(fixedRate = 60000)
     public void updateActivityStatus() {
         LocalDateTime now = LocalDateTime.now();
@@ -33,13 +35,18 @@ public class ActivityStatusService {
                 }
             }
             else if (now.isAfter(endDateTime) && activity.getActivityStatus() == ActivityStatusEnum.EN_CURSO) {
-                activity.setActivityStatus(ActivityStatusEnum.COMPLETADA);
-                reviewEmailService.sendFormEmail(activity.getPersonalDataCommunityLeaderEntity().getEmailCommunityLeader(), activity.getId());
-                activityCoordinatorRepository.findByUserId(activity.getActivityCoordinator())
-                        .ifPresent(coordinator -> {
-                            coordinator.getCompletedActivities().add(activity.getId());
-                            activityCoordinatorRepository.save(coordinator);
-                        });
+                if (!activityService.hasVolunteers(activity.getVolunteerGroup())) {
+                    activity.setActivityStatus(ActivityStatusEnum.CANCELADA);
+                } else {
+                    activity.setActivityStatus(ActivityStatusEnum.COMPLETADA);
+                    reviewEmailService.sendFormEmail(activity.getPersonalDataCommunityLeaderEntity().getEmailCommunityLeader(), activity.getId());
+
+                    activityCoordinatorRepository.findByUserId(activity.getActivityCoordinator())
+                            .ifPresent(coordinator -> {
+                                coordinator.getCompletedActivities().add(activity.getId());
+                                activityCoordinatorRepository.save(coordinator);
+                            });
+                }
             }
         });
         if (activities.stream().anyMatch(activity -> activity.getActivityStatus() == ActivityStatusEnum.EN_CURSO || activity.getActivityStatus() == ActivityStatusEnum.COMPLETADA)) {
