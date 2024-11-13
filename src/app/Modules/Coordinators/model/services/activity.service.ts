@@ -53,7 +53,7 @@ export class ActivityService {
   }
 
   updateCoordinatorDetails(coordinatorId: number, data: any): Observable<any> {
-    return this.http.patch(`${this.apiUrl}/activity-coordinators/${coordinatorId}`, data, cabecera);
+    return this.http.put(`${this.apiUrl}/activity-coordinators/${coordinatorId}`, data, cabecera);
   }
 
 }
