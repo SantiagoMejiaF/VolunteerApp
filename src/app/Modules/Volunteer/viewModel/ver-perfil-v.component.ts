@@ -72,14 +72,17 @@ export class VerPerfilVComponent implements OnInit {
       () => {
         if (approved) {
           this.showAlert=true;
+          setTimeout(() => (this.showAlert = false), 3000);
         } else {
           this.showAlert2=true;
+          setTimeout(() => (this.showAlert2 = false), 3000);
         }
         this.volver(); // Regresar después de la acción
       },
       (error) => {
         console.error('Error en la aprobación/rechazo del voluntario:', error);
         this.showAlert3=true;
+        setTimeout(() => (this.showAlert3 = false), 3000);
       }
     );
   }

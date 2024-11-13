@@ -22,6 +22,9 @@ export class CalendarAComponent implements AfterViewInit, OnInit {
   selectedActivity: any = null;
   missionId: number | null = null; // Id de la misión obtenido
   coordinators: any[] = []; // Lista de coordinadores
+  showAlert=false;
+  showAlert2=false;
+  showAlert3=false;
 
   constructor(
     private fb: FormBuilder,
@@ -188,6 +191,8 @@ export class CalendarAComponent implements AfterViewInit, OnInit {
       this.activityService.createActivity(newActivity).subscribe(
         response => {
           console.log('Actividad creada:', response);
+          this.showAlert=true;
+          setTimeout(() => (this.showAlert = false), 3000);
 
           // Agregar el evento al calendario
           const newEvent = {
@@ -208,10 +213,14 @@ export class CalendarAComponent implements AfterViewInit, OnInit {
         },
         error => {
           console.error('Error al crear la actividad:', error);
+          this.showAlert2=true;
+          setTimeout(() => (this.showAlert2 = false), 3000);
+
         }
       );
     } else {
-      alert('Por favor complete todos los campos requeridos.');
+      this.showAlert3=true;
+        setTimeout(() => (this.showAlert3 = false), 3000);
     }
   }
 

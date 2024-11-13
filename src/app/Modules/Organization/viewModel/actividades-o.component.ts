@@ -26,6 +26,8 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
   public activities: any[] = [];
   showAlert = false;
   showAlert2 = false;
+  showAlert3 = false;
+  showAlert4 = false;
   startTimes: string[] = [];
   endTimes: string[] = [];
 
@@ -242,12 +244,14 @@ export class ActividadesOComponent implements AfterViewInit, OnInit {
       this.organizationService.removeActivity(activityId).subscribe(
         () => {
           console.log('Actividad cancelada con éxito');
-          alert('Actividad cancelada exitosamente');
+          this.showAlert3 = true;
+          setTimeout(() => (this.showAlert3 = false), 3000);
           this.refreshActivities(); // Refrescar la lista de actividades después de la eliminación
         },
         (error) => {
           console.error('Error al cancelar la actividad:', error);
-          alert('Hubo un error al cancelar la actividad');
+          this.showAlert4 = true;
+          setTimeout(() => (this.showAlert4 = false), 3000);
         }
       );
     }
