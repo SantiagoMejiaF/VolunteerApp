@@ -198,16 +198,23 @@ public class VolunteerOrganizationService {
         if (volunteerOrganizations.isEmpty()) {
             return List.of();
         }
+
         List<Integer> volunteerOrganizationIds = volunteerOrganizations.stream()
                 .map(VolunteerOrganizationEntity::getId)
                 .toList();
-        List<PostulationEntity> recentPostulations = postulationRepository.findByVolunteerOrganizationIdIn(volunteerOrganizationIds);
-        if (recentPostulations.isEmpty()) {
-            return List.of();
-        }
-        List<Integer> organizationIds = recentPostulations.stream()
+
+        List<PostulationEntity> acceptedPostulations = postulationRepository.findByVolunteerOrganizationIdIn(volunteerOrganizationIds)
+                .stream()
+                .filter(postulation -> postulation.getStatus() == OrganizationStatusEnum.ACEPTADO)
                 .sorted(Comparator.comparing(PostulationEntity::getRegistrationDate).reversed())
                 .limit(5)
+                .toList();
+
+        if (acceptedPostulations.isEmpty()) {
+            return List.of();
+        }
+
+        List<Integer> organizationIds = acceptedPostulations.stream()
                 .map(PostulationEntity::getVolunteerOrganizationId)
                 .map(volunteerOrganizationId -> volunteerOrganizationRepository.findById(volunteerOrganizationId)
                         .map(VolunteerOrganizationEntity::getOrganizationId)
@@ -215,6 +222,7 @@ public class VolunteerOrganizationService {
                 .filter(Objects::nonNull)
                 .distinct()
                 .toList();
+
         return organizationRepository.findAllById(organizationIds);
     }
 

@@ -513,9 +513,12 @@ class VolunteerOrganizationServiceTest {
         PostulationEntity postulation1 = new PostulationEntity();
         postulation1.setVolunteerOrganizationId(1);
         postulation1.setRegistrationDate(LocalDate.of(2024, 10, 20));
+        postulation1.setStatus(OrganizationStatusEnum.ACEPTADO);
+
         PostulationEntity postulation2 = new PostulationEntity();
         postulation2.setVolunteerOrganizationId(2);
         postulation2.setRegistrationDate(LocalDate.of(2024, 10, 18));
+        postulation2.setStatus(OrganizationStatusEnum.ACEPTADO);
 
         OrganizationEntity organization1 = new OrganizationEntity();
         organization1.setId(100);
@@ -535,6 +538,7 @@ class VolunteerOrganizationServiceTest {
 
         List<OrganizationEntity> recentOrganizations = volunteerOrganizationService.getRecentOrganizationsByVolunteerId(1);
 
+        // Verificar que las organizaciones se obtuvieron correctamente
         assertEquals(2, recentOrganizations.size());
         assertEquals(organization1.getId(), recentOrganizations.get(0).getId());
         assertEquals(organization2.getId(), recentOrganizations.get(1).getId());
