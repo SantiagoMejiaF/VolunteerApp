@@ -64,7 +64,7 @@ public class MissionEntity {
     @Comment("Visibilidad de la misión")
     private VisibilityEnum visibility;
 
-    @Column(name = "ESTADO", length = 10, nullable = false)
+    @Column(name = "ESTADO", length = 12, nullable = false)
     @Enumerated(EnumType.STRING)
     @Comment("Estado actual de la misión")
     private MissionStatusEnum missionStatus;
