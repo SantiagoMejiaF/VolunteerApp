@@ -122,4 +122,8 @@ export class OrganizationService {
     return this.http.delete<any>(`${this.apiUrl}/activity-coordinators/${coordinatorId}`, cabecera);
   }
 
+  removeActivity(activityId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/activities/${activityId}`);
+  }
+
 }

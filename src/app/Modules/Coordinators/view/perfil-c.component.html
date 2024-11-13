@@ -42,11 +42,14 @@
                     <form [formGroup]="myForm">
                         <!-- Datos Personales -->
                         <div class="tab ml-3" [formGroup]="myForm">
+                            <h6>Digita tu nombre</h6>
+                            <p><input id="nor" placeholder="{{ firstName }}" formControlName="firstName"
+                                    oninput="this.className = ''"></p>
+                            <h6>Digita tu apellido</h6>
+                            <p><input id="nor" placeholder="{{ lastName }}" formControlName="lastName"
+                                    oninput="this.className = ''"></p>
                             <h6>Digita tu número celular</h6>
                             <p><input id="nor" placeholder="{{ phoneNumber }}" formControlName="cell"
-                                    oninput="this.className = ''"></p>
-                            <h6>Digita tu email</h6>
-                            <p><input id="nor" placeholder="{{ email }}" formControlName="email"
                                     oninput="this.className = ''"></p>
 
                         </div>

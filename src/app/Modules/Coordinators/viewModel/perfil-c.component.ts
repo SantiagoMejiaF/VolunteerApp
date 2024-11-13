@@ -4,6 +4,7 @@ import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { AdminService } from '../../AdminUser/model/services/admin.service';
+import { ActivityService } from '../model/services/activity.service';
 
 @Component({
   selector: 'app-perfil-c',
@@ -29,10 +30,17 @@ export class PerfilCComponent implements OnInit {
   ngOnInit() {
     this.loadUserInfo();
     this.loadCoordinatorDetails();
+
+    this.myForm.setValue({
+      firstName: this.firstName,
+      lastName: this.lastName,
+      cell: this.phoneNumber,
+      email: this.email
+    });
   }
 
   constructor(
-    private fb: FormBuilder, private adminService: AdminService
+    private fb: FormBuilder, private adminService: AdminService, private activityService: ActivityService
 
   ) {
     this.myForm = this.fb.group({
@@ -66,7 +74,41 @@ export class PerfilCComponent implements OnInit {
     );
   }
 
-  onSubmit(): void { }
+  onSubmit(): void {
+    if (this.myForm.valid) {
+      // Crear un objeto con los valores actuales o del formulario, si se han modificado
+      const updatedData = {
+        firstName: this.myForm.value.firstName || this.firstName,
+        lastName: this.myForm.value.lastName || this.lastName,
+        phone: this.myForm.value.cell || this.phoneNumber
+      };
+
+      // Obtener el coordinatorId del localStorage
+      const coordinatorId = localStorage.getItem('coordinatorId');
+      if (coordinatorId) {
+        this.activityService.updateCoordinatorDetails(parseInt(coordinatorId), updatedData).subscribe(
+          (response) => {
+            console.log('Datos actualizados:', response);
+            alert('Datos actualizados correctamente');
+            // Actualizar la información en el componente después de la actualización
+            this.firstName = updatedData.firstName;
+            this.lastName = updatedData.lastName;
+            this.phoneNumber = updatedData.phone;
+          },
+          (error) => {
+            console.error('Error al actualizar los datos:', error);
+            alert('Hubo un error al actualizar los datos');
+          }
+        );
+      } else {
+        console.error('No se encontró el coordinatorId en localStorage');
+        alert('Hubo un error al obtener el ID del coordinador');
+      }
+    } else {
+      alert('Por favor, completa los campos requeridos');
+    }
+  }
+
   currentStep: number = 1;
   showCalendar: boolean = true;
   missionForm: FormGroup;
